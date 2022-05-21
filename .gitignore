@@ -131,4 +131,10 @@ dmypy.json
 # vim ide
 tags*
 
+# pycharm
+
+# mac
+.DS_Store
+.idea/
+
 mit-ocw-exercises/
