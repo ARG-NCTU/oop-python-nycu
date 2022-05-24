@@ -12,6 +12,15 @@ public:
         m_x = (rand() % range) + min;
         m_y = (rand() % range) + min;
     }
+    void setRandom(int xmin, int xmax, int ymin, int ymax) {
+        if((xmin >= xmax) || (ymin >= ymax))
+            return;
+        int xrange = xmax - xmin;
+        m_x = (rand() % xrange) + xmin;
+
+        int yrange = ymax - ymin;
+        m_y = (rand() % yrange) + ymin;
+    }
     string getSpec() {
         stringstream ss;
         ss << "x=" << m_x << ",y=" << m_y;
@@ -27,7 +36,7 @@ protected:
 };
 
 int main(){
-    VertexSimple vertex;
+    VertexSimple vertex(10,10);
     cout<<vertex.getSpec()<<endl;
     vertex.setRandom(0, 100);
     cout<<vertex.getSpec();
