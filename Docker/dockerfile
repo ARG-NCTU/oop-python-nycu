@@ -82,7 +82,7 @@ RUN pip3 install \
 
 ##################################### vim-python-ide ######################################
 
-RUN git clone https://github.com/rapphil/vim-python-ide.git && \
+RUN git clone https://github.com/ARG-NCTU/vim-python-ide.git && \
     cd vim-python-ide && ./install.sh
 
 ##################################### setting #####################################
