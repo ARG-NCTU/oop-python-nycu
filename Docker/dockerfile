@@ -79,7 +79,9 @@ RUN pip3 install \
     virtualenv \
     pytest \
     flask \
-    flask-socketio 
+    flask-socketio \
+    jupyter \
+    virtualenv 
 
 ##################################### vim-python-ide ######################################
 
