@@ -64,6 +64,7 @@ RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
     libxpm-dev \
     libxt-dev \
     python3-dev \
+    pybind11-dev \
     ctags \
     curl \
     && apt-get clean \
