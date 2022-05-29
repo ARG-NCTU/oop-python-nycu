@@ -13,11 +13,3 @@ We have a Dockerfile with minimum installations of the packages we will use.
 source docker_run.sh
 ```
 
-## Submodule
-
-We have a submodule using pybind11 to use C++ classes in Python.
-
-Clone the repo with submodules
-```
-git clone --recursive git@github.com:ARG-NCTU/oop-python-nycu.git
-```
