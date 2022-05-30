@@ -1,3 +1,0 @@
-[submodule "ivp_python"]
-	path = ivp_python
-	url = git@github.com:ARG-NCTU/ivp_python.git
