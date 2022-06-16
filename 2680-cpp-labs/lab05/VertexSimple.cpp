@@ -29,4 +29,4 @@
    int range = max - min;
    m_x = (rand() % range) + min;
    m_y = (rand() % range) + min;
- }s
+ }
