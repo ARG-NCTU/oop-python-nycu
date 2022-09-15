@@ -9,7 +9,18 @@ We have a Dockerfile with minimum installations of the packages we will use.
 * vim-python-ide
 * pybind11
 
+For first time user or any Dockerfile update
+```
+argnctu/oop:latest
+```
+
+For your first docker terminal:
 ```
 source docker_run.sh
+```
+
+More terminal:
+```
+source docker_join.sh
 ```
 
