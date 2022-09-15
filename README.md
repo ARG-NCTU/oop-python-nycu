@@ -16,7 +16,11 @@ docker pull argnctu/oop:latest
 
 Clone the repo
 ```
-git clone 
+git clone git@github.com:ARG-NCTU/oop-python-nycu.git
+```
+or if you do not have ssh key yet (you should set it up soon)
+```
+git clone https://github.com/ARG-NCTU/oop-python-nycu.git
 ```
 
 For your first docker terminal:
