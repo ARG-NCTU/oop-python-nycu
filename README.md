@@ -11,7 +11,7 @@ We have a Dockerfile with minimum installations of the packages we will use.
 
 For first time user or any Dockerfile update
 ```
-argnctu/oop:latest
+docker pull argnctu/oop:latest
 ```
 
 For your first docker terminal:
