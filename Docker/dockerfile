@@ -83,7 +83,8 @@ RUN pip3 install \
     flask \
     flask-socketio \
     jupyter \
-    virtualenv 
+    virtualenv \
+    nbdev
 
 ##################################### vim-python-ide ######################################
 
