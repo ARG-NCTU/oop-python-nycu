@@ -1,6 +1,7 @@
 # 2.680 C++ Labs
 
-[Ten C++ Labs](https://oceanai.mit.edu/ivpman/pmwiki/pmwiki.php?n=Lab.HomePageCPP)
+This is adapted from the 
+[Ten C++ Labs](https://oceanai.mit.edu/ivpman/pmwiki/pmwiki.php?n=Lab.HomePageCPP) used in the MIT 2.680 course.
 
 ## [lab05](https://oceanai.mit.edu/ivpman/pmwiki/pmwiki.php?n=Lab.CPPClasses#section3.2)
 
