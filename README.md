@@ -1,4 +1,4 @@
-# oop-python-nycu-2022
+# oop-python-nycu
 
 This repo is used for OOP class in NYCU.
 
