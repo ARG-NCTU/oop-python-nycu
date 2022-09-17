@@ -1,4 +1,7 @@
-# Contents
+# vim-python-ide
+
+We include the https://github.com/ARG-NCTU/vim-python-ide.git while buidng the
+Dockerfile. 
 
 This project aims to use Vim as a powerful and complete Python IDE. In order
 to do that, we curated a list of awesome plugins available in the community and
