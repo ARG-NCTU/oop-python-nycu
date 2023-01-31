@@ -27,7 +27,7 @@ class Button():
 		#draw button on screen
 		surface.blit(self.image, (self.rect.x, self.rect.y))
 
-		return 
+		return action
 
 #create display window
 SCREEN_HEIGHT = 500
@@ -37,8 +37,8 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Button Demo')
 
 #load button images
-start_img = pygame.image.load('start_btn.png').convert_alpha()
-exit_img = pygame.image.load('exit_btn.png').convert_alpha()
+start_img = pygame.image.load('./img/start_btn.png').convert_alpha()
+exit_img = pygame.image.load('./img/exit_btn.png').convert_alpha()
 
 #create button instances
 start_button = Button(100, 200, start_img, 0.8)
