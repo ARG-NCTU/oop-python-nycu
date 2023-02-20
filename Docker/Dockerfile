@@ -93,7 +93,8 @@ RUN pip3 install \
     Pillow \
     matplotlib \
     tensorflow \
-    tensorboard 
+    tensorboard \
+    pygwidgets
 
 RUN pip install \
     torch==1.10 \
