@@ -32,7 +32,6 @@ docker run \
     -e XAUTHORITY=$XAUTH \
     -v "$XAUTH:$XAUTH" \
     -v "/home/$USER/oop-python-nycu:/home/arg/oop-python-nycu" \
-    -v "/home/$USER/Object-Oriented-Python-Code:/home/arg/Object-Oriented-Python-Code" \
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
