@@ -108,6 +108,11 @@ RUN pip3 install gym[all]
 
 RUN git clone https://github.com/ARG-NCTU/vim-python-ide.git && \
     cd vim-python-ide && ./install.sh
+####################################### pyivp ###########################################
+
+RUN cd ${HOME} && git clone https://github.com/ARG-NCTU/pyivp.git \
+    && cd pyivp \
+    && make -f oop.Makefile
 
 ##################################### setting #####################################
 
