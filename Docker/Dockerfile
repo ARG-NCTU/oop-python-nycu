@@ -114,6 +114,8 @@ RUN cd ${HOME} && git clone https://github.com/ARG-NCTU/pyivp.git \
     && cd pyivp \
     && make -f oop.Makefile
 
+####################################### openai ###########################################
+RUN pip install openai
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
