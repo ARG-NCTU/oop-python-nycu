@@ -1,0 +1,29 @@
+ClassDiagram {
+class SegList {
+    protected _vertices: list_Vertex
+    protected _label: str
+  
+    public __init__()
+    public addVertex(x: float, y: float) : None
+    public addVertex(vertex: Vertex) : None
+    public size() : int
+    public totalEdgeLength() : float
+    public getSpec() : str
+}
+
+class Vertex {
+    protected _x: int
+    protected _y: int
+    
+    public __init__(x: int, y: int): void
+    public setXY(x: int, y: int): void
+    public setRandom(minimum: int, maximum: int): void
+    public setRandom(xmin: int, xmax: int, ymin: int, ymax: int): void
+    public getX(): int
+    public getY(): int
+    public getSpec(): string
+    public __str__(): string
+}
+
+SegList "1" --> "0..*" Vertex
+}
