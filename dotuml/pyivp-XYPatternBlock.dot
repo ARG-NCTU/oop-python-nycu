@@ -1,0 +1,130 @@
+ClassDiagram {
+
+class XYPatternBlock {
+  public XYPatternBlock()
+  public setParam(name: string, value: string): bool
+  public setParam(name: string, value: double): bool
+  public addIDPoint(point: XYPoint): void
+  public setCoreWidth(v: bool): void
+  public setAutoDrop(v: bool): void
+  public buildCompositeSegList(osx: double, osy: double): void
+  public distanceToClosestEntry(osx: double, osy: double, b: bool): double
+  public distanceToCrossAxis(osx: double, osy: double): double
+  public getLanePoints(): vec_XYPoint
+  public getLaneSegments(): vec_XYSegList
+  public getCompositeSegList(): XYSegList
+  public setLanePoints(): int
+  public setLaneSegments(): int
+  public setCompositeSegList(osx: double, osy: double): int
+  public idPointCenter(x_r: double, y_r: double) const: void
+
+  private m_blocklen: double
+  private m_blockwid: double
+  private m_swathwid: double
+  private m_angle: double
+  private m_core_wid: bool
+  private m_auto_drop: bool
+  private m_id_points: vec_XYPoint
+  private m_lane_points: vec_XYPoint
+  private m_lane_segments: vec_XYSegList
+  private m_composite_seglist: XYSegList
+}
+
+class XYPoint {
+  private m_x: double
+  private m_y: double
+  private m_z: double
+  private m_valid: bool
+  private m_sdigits: int
+  public XYPoint()
+  public XYPoint(x: double, y: double)
+  public clear(): void
+  public set_vertex(x: double, y: double, z: double): void
+  public set_vx(v: double): void
+  public set_vy(v: double): void
+  public set_vz(v: double): void
+  public set_spec_digits(v: uint): void
+  public shift_x(val: double): void
+  public shift_y(val: double): void
+  public shift_z(val: double): void
+  public apply_snap(snapval: double): void
+  public get_vx(): double
+  public get_vy(): double
+  public get_vz(): double
+  public x(): double
+  public y(): double
+  public z(): double
+  public valid(): bool
+  public projectPt(pt: XYPoint, ang: double, dist: double): void
+  public get_spec(s: string): string
+}
+
+class XYSegList {
+  public XYSegList()
+  public add_vertex(pt: XYPoint, s: string ): void
+  public add_vertex(x: double, y: double, z: double, s: string ): void
+  public mod_vertex(i: uint, x: double, y: double, z: double, s: string): void
+  public alter_vertex(x: double, y: double, z: double, s: string): void
+  public delete_vertex(x: double, y: double): void
+  public delete_vertex(i: uint): void
+  public insert_vertex(x: double, y: double, z: double, s: string): void
+  public set_edge_tags(v: EdgeTagSet): void
+  public pop_last_vertex(): void
+  public clear(): void
+  public shift_horz(val: double): void
+  public shift_vert(val: double): void
+  public grow_by_pct(pct: double): void
+  public grow_by_amt(amt: double): void
+  public apply_snap(snapval: double): void
+  public rotate(degrees: double): void
+  public rotate(degrees: double, cx: double, cy: double): void
+  public reverse(): void
+  public new_center(x: double, y: double): void
+  public new_centroid(x: double, y: double): void
+  public is_clockwise(): bool
+  public valid(): bool
+  public size(): unsigned int
+  public get_vx(i: uint): double
+  public get_vy(i: uint): double
+  public get_vz(i: uint): double
+  public get_vprop(i: uint): string
+  public get_center_x(): double
+  public get_center_y(): double
+  public get_centroid_x(): double
+  public get_centroid_y(): double
+  public get_min_x(): double
+  public get_max_x(): double
+  public get_min_y(): double
+  public get_max_y(): double
+  public get_avg_x(): double
+  public get_avg_y(): double
+  public dist_to_point(x: double, y: double): double
+  public dist_to_ctr(x: double, y: double): double
+  public max_dist_to_ctr(): double
+  public segs_cross(loop: bool): bool
+  public length(): double
+  public get_spec(vertex_prec: uint): string
+  public get_spec(param: string): string
+  public get_spec(vertex_prec: uint, param: string): string
+  public get_spec_pts(vertex_prec: uint): string
+  public get_spec_pts_label(vertex_prec: uint): string
+  public get_spec_inactive(): string
+  public closest_vertex(x: double, y: double): uint
+  public closest_segment(x: double, y: double, implseg: bool): uint
+  public get_edge_tags(): EdgeTagSet
+  
+  private m_vx: vec_double
+  private m_vy: vec_double
+  private m_vz: vec_double
+  private m_vprop: vec_string
+  private m_edge_tags: EdgeTagSet
+  private m_transparency: double
+
+}
+
+  // has-a relationship
+  XYPatternBlock "1" --> "0..*" XYSegList;
+  XYPatternBlock "1" --> "0..*" XYPoint;
+
+
+}
