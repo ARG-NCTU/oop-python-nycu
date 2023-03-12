@@ -90,7 +90,7 @@ class XYPolygon {
     public add_vertex(double, double, bool) : bool
     public add_vertex_delta(double, double, double, bool) : bool
     public add_vertex(double, double, double, bool) : bool
-    public add_vertex(double, double, double, std::string, bool) : bool
+    public add_vertex(double, double, double, string, bool) : bool
     public alter_vertex(double, double, double) : bool
     public delete_vertex(double, double) : bool
     public delete_vertex(uint) : bool
@@ -103,10 +103,10 @@ class XYPolygon {
     public rotate(double, double, double)
     public rotate(double)
     public contains(double, double) const : bool
-    public contains(const XYPolygon_r) const : bool
-    public intersects(const XYPolygon_r) const : bool
-    public intersects(const XYSquare_r) const : bool
-    public dist_to_poly(const XYPolygon_r) const : double
+    public contains(XYPolygon_r) const : bool
+    public intersects(XYPolygon_r) const : bool
+    public intersects(XYSquare_r) const : bool
+    public dist_to_poly(XYPolygon_r) const : double
     public dist_to_poly(double, double) const : double
     public dist_to_poly(double, double, double, double) const : double
     public dist_to_poly(double, double, double) const : double
@@ -126,8 +126,7 @@ class XYPolygon {
     private set_side(int)
 }
 
-
   XYPolygon -g-> XYSegList
-  XYHexgon -g-> XYPolygon
+  XYHexagon -g-> XYPolygon
 
 }
