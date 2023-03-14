@@ -23,7 +23,7 @@ if [ ! -f $XAUTH ]; then
 fi
 
 BASH_OPTION=bash
-
+xhost +
 docker run \
     -it \
     --rm \
@@ -43,3 +43,4 @@ docker run \
     --security-opt seccomp=unconfined \
     argnctu/oop:latest \
     $BASH_OPTION
+xhost -

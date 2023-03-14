@@ -11,34 +11,23 @@ This is an example based on 2.680 CPP Labs (lab05 and lab06)
 
 ### Compile and Install Library
 
-In Docker,
 ```
-cd ~/pyivp/examples/cpplabs
-make
+$ cd ~/oop-python-nycu
+$ source docker_run.sh
+# cd cpplabs/
+# make
 ```
 
 Note that 
 * We will compile the lib_geometry and install it to /usr/local/lib, which is inside container. (so no worries to mess up your own system)
-* We also run a python code to test the installed library in python (pytest/test_plus.py)
+* We also run a python code to test the installed library in python (pytest/test_*.py)
 
 <img width="599" alt="image" src="https://user-images.githubusercontent.com/16217256/175802286-c1e5174b-0f45-4eed-98bb-eaafcca12bb7.png">
 
-## pybind11 example
+## DotUML 
 
-```
-source docker_run.sh
-cd example
-make
-python3 pytest/test.py
-```
-
-You should see:
-
-```
-Made a bike called: Yamaha
-Zoom Zoom on road: mullholland
-```
-without import errors or assert fails
+* You can draw the UML diagram by https://dotuml.com/playground.html
+* DotUML Script https://github.com/ARG-NCTU/oop-python-nycu/tree/main/dotuml
 
 <img width="699" alt="image" src="https://user-images.githubusercontent.com/16217256/172060720-61cdd29c-e1f8-4990-84fa-5f274e1ad31e.png">
 
