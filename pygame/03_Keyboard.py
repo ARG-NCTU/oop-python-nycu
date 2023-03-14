@@ -16,7 +16,10 @@ class Keyboard():
         self.dotX = random.randrange(MAX_WIDTH)
         self.dotY = random.randrange(MAX_HEIGHT)
 
-    def draw(self, surface, N_PIXELS_TO_MOVE = 5):
+    def draw(self, surface):
+        surface.blit(self.image ,(self.dotX , self.dotY))
+
+    def move(self, N_PIXELS_TO_MOVE = 5):
         if event.key ==pygame.K_LEFT:
             self.dotX  -= N_PIXELS_TO_MOVE 
             print('left')
@@ -33,7 +36,7 @@ class Keyboard():
             self.dotX  = 300 
             self.dotY = 200 
             print('@@@ out of range @@@')
-        surface.blit(self.image ,(self.dotX , self.dotY))
+        
     
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -41,20 +44,21 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('03_Keyboard')
 
 #load image
-dot = pygame.image.load('./img/dot.png').convert_alpha() 
+dot = pygame.image.load('./img/dot.png')
 start_keyboard= Keyboard(dot, 0.01)
 
 #game loop
 run = True
-while run:
+while run: 
+    screen.fill((0,0,0))  
+    start_keyboard.draw(screen)
     #event handler
     for event in pygame.event.get():
         #quit game
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.KEYDOWN:
-            screen.fill((0,0,0))    
-            start_keyboard.draw(screen, 10)
+        if event.type == pygame.KEYDOWN:  
+            start_keyboard.move(10)
             
     pygame.display.update()
     clock.tick(FRAMES_PER_SECOND)
