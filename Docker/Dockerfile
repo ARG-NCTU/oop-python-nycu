@@ -104,11 +104,17 @@ RUN pip install \
 ##################################### gym #####################################
 RUN pip3 install gym[all]
 
-##################################### vim-python-ide ######################################
 
+####################################### pyivp ###########################################
+
+RUN cd ${HOME} && git clone https://github.com/ARG-NCTU/pyivp.git \
+    && cd pyivp \
+    && make -f oop.Makefile
+##################################### vim-python-ide ######################################
 RUN git clone https://github.com/ARG-NCTU/vim-python-ide.git && \
     cd vim-python-ide && ./install.sh
-
+####################################### openai ###########################################
+RUN pip install openai
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
