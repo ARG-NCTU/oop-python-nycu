@@ -10,7 +10,7 @@ build:
 	make -C pybind11
 
 tests:
-	python3 pytest/test_cpplabs_pybind11.py
+	pytest
 
 clean:
 	make -C lib_geometry clean
