@@ -26,7 +26,6 @@ while run:
 
     #event handler
     for event in pygame.event.get():
-        #screen.blit(dot_resize,(100,100))  
         #quit game
         if event.type == pygame.QUIT:
             run = False
