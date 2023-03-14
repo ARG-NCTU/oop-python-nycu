@@ -2,32 +2,32 @@ import pygame
 
 #button class
 class Button():
-	def __init__(self, x, y, image, scale):
-		width = image.get_width()
-		height = image.get_height()
-		self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
-		self.rect = self.image.get_rect()
-		self.rect.topleft = (x, y)
-		self.clicked = False
+    def __init__(self, x, y, image, scale):
+        width = image.get_width()
+        height = image.get_height()
+        self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+        self.clicked = False
 
-	def draw(self, surface):
-		action = False
-		#get mouse position
-		pos = pygame.mouse.get_pos()
+    def draw(self, surface):
+        action = False
+        #get mouse position
+        pos = pygame.mouse.get_pos()
 
-		#check mouseover and clicked conditions
-		if self.rect.collidepoint(pos):
-			if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-				self.clicked = True
-				action = True
+        #check mouseover and clicked conditions
+        if self.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                self.clicked = True
+                action = True
 
-		if pygame.mouse.get_pressed()[0] == 0:
-			self.clicked = False
+        if pygame.mouse.get_pressed()[0] == 0:
+            self.clicked = False
 
-		#draw button on screen
-		surface.blit(self.image, (self.rect.x, self.rect.y))
+        #draw button on screen
+        surface.blit(self.image, (self.rect.x, self.rect.y))
 
-		return action
+        return action
 
 #create display window
 SCREEN_HEIGHT = 500
@@ -48,19 +48,19 @@ exit_button = Button(450, 200, exit_img, 0.8)
 run = True
 while run:
 
-	screen.fill((202, 228, 241))
+    screen.fill((202, 228, 241))
 
-	if start_button.draw(screen):
-		print('START')
-	if exit_button.draw(screen):
-		print('EXIT')
+    if start_button.draw(screen):
+        print('START')
+    if exit_button.draw(screen):
+        print('EXIT')
 
-	#event handler
-	for event in pygame.event.get():
-		#quit game
-		if event.type == pygame.QUIT:
-			run = False
+    #event handler
+    for event in pygame.event.get():
+        #quit game
+        if event.type == pygame.QUIT:
+            run = False
 
-	pygame.display.update()
+    pygame.display.update()
 
 pygame.quit()
