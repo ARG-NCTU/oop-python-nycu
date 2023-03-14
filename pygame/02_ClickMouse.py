@@ -1,5 +1,4 @@
 import pygame
-import random
 
 # define param
 SCREEN_WIDTH = 640
