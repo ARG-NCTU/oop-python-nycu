@@ -6,15 +6,14 @@ import math
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 FRAMES_PER_SECOND = 60
-shape_list=['circle', 'square', 'polygon','arc']
 
-class shape():
-    def __init__(self,line_width):
-        self.line_width = line_width
+class Shape():
+    def __init__(self):
+        self.line_width = 1
         self.X = random.randrange(SCREEN_WIDTH)
         self.Y = random.randrange(SCREEN_HEIGHT)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-    def circle(self,screen, radius):
+    def circle(self,screen, radius = 10):
         '''
         random (x, y) in __init__
         '''
@@ -25,49 +24,31 @@ class shape():
         start point (x, y)  
         line length: step
         '''
-        if ((self.X + step) < SCREEN_WIDTH and (self.X + step) > 0 and (self.Y +step) < SCREEN_HEIGHT and (self.Y +step) > 0):
-            pygame.draw.line(screen, (255, 255, 255), (self.X, self.Y), (self.X + step, self.Y ), self.line_width)
-            pygame.draw.line(screen, (255, 255, 255), (self.X, self.Y), (self.X, self.Y +step), self.line_width)
-            pygame.draw.line(screen, (255, 255, 255), (self.X + step, self.Y), (self.X + step, self.Y + step), self.line_width)
-            pygame.draw.line(screen, (255, 255, 255), (self.X, self.Y + step), (self.X + step, self.Y + step), self.line_width)
-        else:
-            print('@@@ out of range @@@')
+        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(30, 30, 60, 60),  2)
             
-    def polygon (self, screen, point_list):
+    def polygon (self, screen, point_list = ((100,100), (200,100), (250,200), (200,300), (100,300), (50,200)) ):
         '''
         point_list: ((x1,y1), (x2,y2), (x3,y3), (x4,y4),...)
         '''
         pygame.draw.polygon(screen, (255, 255, 255), point_list)
 
-    def arc(self,screen, rect = (50, 100, 200, 200), angle_start = 0, angle_stop = math.pi):
+    def arc(self,screen, rect = (300, 200, 50, 30), angle_start = 0, angle_stop = math.pi):
         '''
         rect : (point_x, point_y, diameter_x, diameter_y)
         angle_start (rad)
         angle_stop  (rad)
         '''
-        if ((rect[0]-rect[2]>0) and (rect[0]+rect[2])<SCREEN_WIDTH and (rect[1]+rect[3])>0 and (rect[1]+rect[3])< SCREEN_HEIGHT) :
-            pygame.draw.arc(screen, (255, 255, 255), rect, angle_start, angle_stop, self.line_width)
-        else:
-            print('@@@ out of range @@@')
+        pygame.draw.arc(screen, (255, 255, 255), rect, angle_start, angle_stop, self.line_width)
 
-    def decision(self, screen, shape):
+    def decision(self, screen):
         '''
         To decide the output according to the input
         '''
+        shape_list = [self.circle, self.square, self.polygon, self.arc]
         screen.fill((0,0,0)) 
-        print(shape)
-        if shape == 'circle':       
-            self.circle(screen, random.randint(20,50))
-        elif shape == 'square':
-            self.square(screen, random.randint(20,100))  
-        elif shape == 'polygon':
-            #self.polygon(screen,((100,100), (200,100), (250,200), (200,300), (100,300), (50,200)))  
-            self.polygon(screen,((self.X,self.Y), (self.X+50, self.Y), (self.X+75,self.Y+50), (self.X+50,self.Y+100), (self.X,self.Y+100), (self.X-25,self.Y+50)))  
-        elif shape == 'arc':
-            self.arc(screen, (self.X, self.Y, 200, 200), random.uniform(0, 2*math.pi), random.uniform(0, 2*math.pi))    
-        else: 
-            pass
-    
+        random.choice(shape_list)(screen)
+
+        
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
@@ -80,14 +61,14 @@ print('===== Press anykey to generate random shape. =====')
 run = True
 
 while run: 
-    draw_shape=shape(1) 
+    draw_shape = Shape() 
     #event handler
     for event in pygame.event.get():
         #quit game
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.KEYDOWN:
-            draw_shape.decision(screen, shape_list[random.randint(0,3)])
+            draw_shape.decision(screen)
 
     pygame.display.update()
     clock.tick(FRAMES_PER_SECOND)
