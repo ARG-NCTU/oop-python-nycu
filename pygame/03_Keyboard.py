@@ -12,28 +12,31 @@ class Keyboard():
         height = image.get_height()
         MAX_WIDTH = SCREEN_WIDTH - width*scale
         MAX_HEIGHT = SCREEN_HEIGHT - height*scale
-        self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
+        self.image = pygame.transform.scale(image, 
+                                            (int(width * scale), 
+                                            int(height * scale)))
         self.dotX = random.randrange(MAX_WIDTH)
         self.dotY = random.randrange(MAX_HEIGHT)
 
     def draw(self, surface):
         surface.blit(self.image ,(self.dotX , self.dotY))
-
+        
     def move(self, N_PIXELS_TO_MOVE = 5):
-        if event.key ==pygame.K_LEFT:
+        if event.key == pygame.K_LEFT:
             self.dotX  -= N_PIXELS_TO_MOVE 
             print('left')
-        elif event.key ==pygame.K_RIGHT:
+        elif event.key == pygame.K_RIGHT:
             self.dotX  += N_PIXELS_TO_MOVE 
             print('right')
-        elif event.key ==pygame.K_UP:
+        elif event.key == pygame.K_UP:
             self.dotY -= N_PIXELS_TO_MOVE 
             print('up')
-        elif event.key ==pygame.K_DOWN:
+        elif event.key == pygame.K_DOWN:
             self.dotY += N_PIXELS_TO_MOVE 
             print('down')
-        if (self.dotX  > 640) or (self.dotX  < 0) or (self.dotY > 480) or (self.dotY < 0):
-            self.dotX  = 300 
+        if (self.dotX > 640) or (self.dotX < 0) or \
+            (self.dotY > 480) or (self.dotY < 0):
+            self.dotX = 300 
             self.dotY = 200 
             print('@@@ out of range @@@')
         
