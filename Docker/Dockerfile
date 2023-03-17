@@ -96,10 +96,10 @@ RUN pip3 install \
     tensorboard \
     pygwidgets
 
-RUN pip install \
-    torch==1.10 \
-    torchvision==0.11.1 \
-    -f https://download.pytorch.org/whl/cu111/torch_stable.html
+# RUN pip install \
+#     torch==1.10 \
+#     torchvision==0.11.1 \
+#     -f https://download.pytorch.org/whl/cu111/torch_stable.html
 
 ##################################### gym #####################################
 RUN pip3 install gym[all]
