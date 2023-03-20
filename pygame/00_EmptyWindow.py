@@ -11,7 +11,7 @@ pygame.display.set_caption('00_EmptyWindow')
 #game loop
 run = True
 while run:
-    screen.fill((255,255,255))
+    screen.fill((255, 255, 255))
     #event handler
     for event in pygame.event.get():
         #quit game

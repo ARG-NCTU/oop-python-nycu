@@ -10,8 +10,8 @@ class Keyboard():
     def __init__(self, image, scale = 0.01):
         width = image.get_width()
         height = image.get_height()
-        MAX_WIDTH = SCREEN_WIDTH - width*scale
-        MAX_HEIGHT = SCREEN_HEIGHT - height*scale
+        MAX_WIDTH = SCREEN_WIDTH - width * scale
+        MAX_HEIGHT = SCREEN_HEIGHT - height * scale
         self.image = pygame.transform.scale(image, 
                                             (int(width * scale), 
                                             int(height * scale)))
@@ -19,7 +19,7 @@ class Keyboard():
         self.dotY = random.randrange(MAX_HEIGHT)
 
     def draw(self, surface):
-        surface.blit(self.image ,(self.dotX , self.dotY))
+        surface.blit(self.image, (self.dotX , self.dotY))
         
     def move(self, N_PIXELS_TO_MOVE = 5):
         if event.key == pygame.K_LEFT:
@@ -53,7 +53,7 @@ start_keyboard= Keyboard(dot, 0.01)
 #game loop
 run = True
 while run: 
-    screen.fill((0,0,0))  
+    screen.fill((0, 0, 0))  
     start_keyboard.draw(screen)
     #event handler
     for event in pygame.event.get():
