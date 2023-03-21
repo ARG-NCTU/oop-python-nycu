@@ -13,26 +13,26 @@ class Shape():
         self.X = random.randrange(SCREEN_WIDTH)
         self.Y = random.randrange(SCREEN_HEIGHT)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-    def circle(self,screen, radius = 10):
+    def circle(self,screen, radius=10):
         '''
         random (x, y) in __init__
         '''
         pygame.draw.circle(screen, (255, 255, 255), (self.X, self.Y), radius, self.line_width)
 
-    def square(self, screen, step = 50):
+    def square(self, screen, step=50):
         '''
         start point (x, y)  
         line length: step
         '''
         pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(30, 30, 60, 60),  2)
             
-    def polygon (self, screen, point_list = ((100, 100), (200, 100), (250, 200), (200, 300), (100, 300), (50, 200))):
+    def polygon (self, screen, point_list=((100, 100), (200, 100), (250, 200), (200, 300), (100, 300), (50, 200))):
         '''
         point_list: ((x1, y1), (x2, y2), (x3, y3), (x4, y4),...)
         '''
         pygame.draw.polygon(screen, (255, 255, 255), point_list)
 
-    def arc(self, screen, rect = (300, 200, 50, 30), angle_start = 0, angle_stop = math.pi):
+    def arc(self, screen, rect=(300, 200, 50, 30), angle_start=0, angle_stop=math.pi):
         '''
         rect : (point_x, point_y, diameter_x, diameter_y)
         angle_start (rad)
