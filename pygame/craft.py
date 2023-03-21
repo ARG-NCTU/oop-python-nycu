@@ -87,9 +87,9 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
-run = True
+is_runnung = True
 pause = False
-while run:
+while is_runnung:
     screen.fill((0, 0, 0))
     pygame.draw.circle(screen, (255, 255, 255), (ship_loc['x'], ship_loc['y']), 6)
     key = pygame.key.get_pressed()
@@ -106,7 +106,7 @@ while run:
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                is_runnung = False
                 pause = False
 
     for i in range(total_msl):
@@ -114,7 +114,7 @@ while run:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            is_runnung = False
     clock.tick(50)
     pygame.display.flip()
     pygame.display.update()

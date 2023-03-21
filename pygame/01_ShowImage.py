@@ -18,14 +18,14 @@ height = load_img.get_height()
 image_resize = pygame.transform.scale(load_img, (width * 0.15, height * 0.15))
 
 #game loop
-run = True
-while run:
+is_runnung = True
+while is_runnung:
     screen.blit(load_background, (0, 0))
     screen.blit(image_resize, (300, 200))
     #event handler
     for event in pygame.event.get():
         #quit game
         if event.type == pygame.QUIT:
-            run = False
+            is_runnung = False
     pygame.display.update()
 pygame.quit()
