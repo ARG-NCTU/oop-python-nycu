@@ -58,15 +58,15 @@ screen.fill((0, 0, 0))
 print('===== Press anykey to generate random shape. =====')
 
 #game loop
-run = True
+is_runnung = True
 
-while run: 
+while is_runnung: 
     draw_shape = Shape() 
     #event handler
     for event in pygame.event.get():
         #quit game
         if event.type == pygame.QUIT:
-            run = False
+            is_runnung = False
         if event.type == pygame.KEYDOWN:
             draw_shape.decision(screen)
 

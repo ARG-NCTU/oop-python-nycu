@@ -12,8 +12,8 @@ pattern = pyivp.string2SegList(" format=lawnmower, x = 200, y = 200, height = 20
 waypoint_ploy = pyivp.string2Poly("x = 600, y = 200, format = radial, radius = 100, pts = 8")
 waypoint_seg = waypoint_ploy.exportSegList(500, 200)
 
-run = True
-while run:
+is_runnung = True
+while is_runnung:
 
     screen.fill((202, 228, 241))
 
@@ -37,7 +37,7 @@ while run:
     #event handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            is_runnung = False
 
     pygame.display.update()
 
