@@ -9,23 +9,22 @@ import pyivp
 from env import EmptyEnv
 
 
-def parseArgs():
+def parse_args():
     parser = argparse.ArgumentParser()
     # env 
-    parser.add_argument('--env_dim', default=[100, 100], type=int, nargs='+', help='[width, height], unit = meter')
-    parser.add_argument('--env_px', default=1000, type=int, help='pixel size about display window')
-    parser.add_argument('--fps', default=100, type=int, help='frame per second for display update usage')
+    parser.add_argument('--env_dim', default = [100, 100], type = int, nargs = '+', help = '[width, height], unit = meter')
+    parser.add_argument('--env_px', default = 1000, type = int, help = 'pixel size about display window')
+    parser.add_argument('--fps', default = 100, type = int, help = 'frame per second for display update usage')
 
     args = parser.parse_args()
     return args
 
-
-def getPatternWaypoint(pattern_point, pattern_type, stride):
+def get_pattern_waypoint(pattern_point, pattern_type, stride):
     wp_with_deg = []
 
 
     for i in range(pattern_point.size()):
-        if i == pattern_point.size()-1:
+        if i == pattern_point.size() - 1:
             if pattern_type == "polygon":
                 x1 = int(pattern_point.get_vx(i))
                 y1 = int(pattern_point.get_vy(i))
@@ -37,37 +36,37 @@ def getPatternWaypoint(pattern_point, pattern_type, stride):
             x1 = int(pattern_point.get_vx(i))
             y1 = int(pattern_point.get_vy(i))
 
-            x2 = int(pattern_point.get_vx(i+1))
-            y2 = int(pattern_point.get_vy(i+1))
+            x2 = int(pattern_point.get_vx(i + 1))
+            y2 = int(pattern_point.get_vy(i + 1))
 
         
-        resolution = round(math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2)) / stride)
+        resolution = round(math.sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)) / stride)
 
         degree = 0
-        if x2-x1 == 0:
-            if y2-y1 >= 0:
+        if x2 - x1 == 0:
+            if y2 - y1 >= 0:
                 degree = 90
             else:
                 degree = -90
         else:
-            degree = abs(np.rad2deg(math.atan((y2-y1)/(x2-x1))))
+            degree = abs(np.rad2deg(math.atan((y2 - y1) / (x2 - x1))))
 
-            if y2-y1 == 0:
-                if x2-x1 >= 0:
+            if y2 - y1 == 0:
+                if x2 - x1 >= 0:
                     degree = 0
                 else:
                     degree = 180
             else:
-                if x2-x1 < 0 and y2-y1 >= 0:
+                if x2 - x1 < 0 and y2 - y1 >= 0:
                     degree = 180 - degree
-                elif x2-x1 >= 0 and y2-y1 < 0:
+                elif x2 - x1 >= 0 and y2 - y1 < 0:
                     degree = -degree
-                elif x2-x1 < 0 and y2-y1 < 0:
+                elif x2 - x1 < 0 and y2 - y1 < 0:
                     degree = degree - 180
             
         waypoints = list(zip(
-            np.linspace(x1, x2, resolution+1),
-            np.linspace(y1, y2, resolution+1),
+            np.linspace(x1, x2, resolution + 1),
+            np.linspace(y1, y2, resolution + 1),
         ))
 
         for waypoint in waypoints:
@@ -78,22 +77,22 @@ def getPatternWaypoint(pattern_point, pattern_type, stride):
 
 
 def plotPattern(env, script_set):
-    screen = env.displayInit()
-    character1 = env.characterInit("./img/duck.png", 200)
-    character2 = env.characterInit("./img/duckie.png", 100)
-    character3 = env.characterInit("./img/duckie.png", 100)
+    screen = env.display_init()
+    character1 = env.character_init("./img/duck.png", 200)
+    character2 = env.character_init("./img/duckie.png", 100)
+    character3 = env.character_init("./img/duckie.png", 100)
 
     while True:
         for single_script in script_set:
             for step in itertools.count(start=0):
                 if step >= len(single_script):
                     break
-                env.renderBackground(screen)
-                env.renderPath(screen, single_script, step)
-                env.renderCharacter(screen, character1, single_script, step)
-                env.renderCharacter(screen, character2, single_script, step-25)
-                env.renderCharacter(screen, character3, single_script, step-40)
-                env.renderUpdate()
+                env.render_background(screen)
+                env.render_path(screen, single_script, step)
+                env.render_character(screen, character1, single_script, step)
+                env.render_character(screen, character2, single_script, step - 25)
+                env.render_character(screen, character3, single_script, step - 40)
+                env.render_update()
             
             env.clearPath()
         
@@ -102,7 +101,7 @@ def plotPattern(env, script_set):
 
 
 if __name__ == "__main__":
-    arg = parseArgs()
+    arg = parse_args()
 
     env = EmptyEnv(arg)
 
@@ -124,11 +123,11 @@ if __name__ == "__main__":
     poly_3 = poly_init_3.exportSegList(-10, -10)
 
     # transfer vertices to waypoints
-    wp_pattern_1 = getPatternWaypoint(pattern_1, "pattern_block", 0.5)
-    wp_pattern_2 = getPatternWaypoint(pattern_2, "pattern_block", 0.5)
-    wp_poly_1  = getPatternWaypoint(poly_1, "polygon",  0.5)
-    wp_poly_2  = getPatternWaypoint(poly_2, "polygon",  0.5)
-    wp_poly_3  = getPatternWaypoint(poly_3, "polygon",  0.5)
+    wp_pattern_1 = get_pattern_waypoint(pattern_1, "pattern_block", 0.5)
+    wp_pattern_2 = get_pattern_waypoint(pattern_2, "pattern_block", 0.5)
+    wp_poly_1  = get_pattern_waypoint(poly_1, "polygon",  0.5)
+    wp_poly_2  = get_pattern_waypoint(poly_2, "polygon",  0.5)
+    wp_poly_3  = get_pattern_waypoint(poly_3, "polygon",  0.5)
 
 
     script_set.append(wp_pattern_1)
