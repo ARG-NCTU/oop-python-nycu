@@ -4,10 +4,10 @@ import random
 # define param
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
-FRAMES_PER_SECOND = 60
+FRAMES_PER_SECOND = 30
 
 class Keyboard():
-    def __init__(self, image, scale = 0.01):
+    def __init__(self, image, scale=0.01):
         width = image.get_width()
         height = image.get_height()
         MAX_WIDTH = SCREEN_WIDTH - width * scale
@@ -21,12 +21,12 @@ class Keyboard():
     def draw(self, surface):
         surface.blit(self.image, (self.dotX , self.dotY))
         
-    def move(self, N_PIXELS_TO_MOVE = 5):
+    def move(self, N_PIXELS_TO_MOVE=5):
         if event.key == pygame.K_LEFT:
-            self.dotX  -= N_PIXELS_TO_MOVE 
+            self.dotX -= N_PIXELS_TO_MOVE 
             print('left')
         elif event.key == pygame.K_RIGHT:
-            self.dotX  += N_PIXELS_TO_MOVE 
+            self.dotX += N_PIXELS_TO_MOVE 
             print('right')
         elif event.key == pygame.K_UP:
             self.dotY -= N_PIXELS_TO_MOVE 
