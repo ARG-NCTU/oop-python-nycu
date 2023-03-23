@@ -25,6 +25,7 @@ See https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-u
 ## Copilot
 
 Now we are ready to install Copilot
+https://docs.github.com/en/copilot/getting-started-with-github-copilot/getting-started-with-github-copilot-in-neovim?platform=linux
 
 ```
 git clone https://github.com/github/copilot.vim \
@@ -38,5 +39,8 @@ nvim
 
 You will be asked to add code to enable the device.
 
-https://docs.github.com/en/copilot/getting-started-with-github-copilot/getting-started-with-github-copilot-in-neovim?platform=linux
+
+You will see this
+
+<img width="559" alt="image" src="https://user-images.githubusercontent.com/16217256/227206765-a5b992bd-223a-4f12-b7f1-906b1846efd4.png">
 
