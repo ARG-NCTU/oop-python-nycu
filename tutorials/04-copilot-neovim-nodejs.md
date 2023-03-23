@@ -31,6 +31,11 @@ git clone https://github.com/github/copilot.vim \
    ~/.config/nvim/pack/github/start/copilot.vim
 ```
 
+Use neovim
+```
+nvim
+```
+
 You will be asked to add code to enable the device.
 
 https://docs.github.com/en/copilot/getting-started-with-github-copilot/getting-started-with-github-copilot-in-neovim?platform=linux
