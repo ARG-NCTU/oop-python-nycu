@@ -57,9 +57,9 @@ In navigation mode
 * Create docstring for a class 
 ```
 class Point:
-   ```
+   """
    Auto-complete for the docstring will appear here; tab to confirm
-   ```
+   """
 ```
 
 * Create code from comment
