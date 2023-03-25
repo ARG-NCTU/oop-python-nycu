@@ -13,7 +13,7 @@ class Brick():
         self.x = x
         self.y = y
         self.radius = radius
-        self.poly = pyivp.string2poly(
+        self.poly = pyivp.string_to_poly(
             "x = " + str(x) + ", y = " + str(y) + ", format = radial, radius = " + str(radius) + ", pts = 4")
         self.get_vertex()
 
