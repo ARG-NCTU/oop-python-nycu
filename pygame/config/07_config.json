@@ -1,0 +1,8 @@
+{
+    "ball_x": 300,
+    "ball_y": 400,
+    "ball_radius": 10,
+    "brick_x": 340,
+    "brick_y": 200,
+    "brick_radius": 100
+}
