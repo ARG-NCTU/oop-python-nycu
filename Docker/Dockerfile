@@ -109,14 +109,14 @@ RUN pip3 install gymnasium[all]==0.26.2
 RUN /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
 RUN export PATH=/home/${USER}/.codon/bin:$PATH
 
+##################################### vim-python-ide ######################################
+RUN git clone https://github.com/ARG-NCTU/vim-python-ide.git && \
+    cd vim-python-ide && ./install.sh
 ####################################### pyivp ###########################################
 
 RUN cd ${HOME} && git clone https://github.com/ARG-NCTU/pyivp.git \
     && cd pyivp \
     && make -f oop.Makefile
-##################################### vim-python-ide ######################################
-RUN git clone https://github.com/ARG-NCTU/vim-python-ide.git && \
-    cd vim-python-ide && ./install.sh
 ####################################### openai ###########################################
 RUN pip install openai
 ##################################### setting #####################################
