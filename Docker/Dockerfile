@@ -104,7 +104,7 @@ RUN pip3 install \
 ##################################### gym #####################################
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install gymnasium[all]==0.26.2
-
+RUN pip install gymnasium[box2d]
 ##################################### codon #####################################
 RUN /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
 RUN export PATH=/home/${USER}/.codon/bin:$PATH
