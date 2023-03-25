@@ -44,3 +44,34 @@ You will see this
 
 <img width="559" alt="image" src="https://user-images.githubusercontent.com/16217256/227206765-a5b992bd-223a-4f12-b7f1-906b1846efd4.png">
 
+## Get Started
+
+```
+nvim [your python file].py
+```
+In navigation mode
+```
+:Copilot enable
+```
+
+* Create docstring for a class 
+```
+class Point:
+   """
+   Auto-complete for the docstring will appear here; tab to confirm
+   """
+```
+
+* Create code from comment
+```
+# Create a point at the origin
+origin = Point() # this will appear automatically
+
+# Create a point at 3, 4
+point = Point()   # keep press tab and enter
+point.x = 3.0     # keep press tab and enter
+point.y = 4.0     # keep press tab and enter
+
+```
+
+

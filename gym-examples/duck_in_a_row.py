@@ -6,7 +6,7 @@ import itertools
 import pyivp
 
 
-from env import EmptyEnv
+from duck_env import EmptyEnv
 
 
 def parse_args():
@@ -94,11 +94,10 @@ def plotPattern(env, script_set):
                 env.render_character(screen, character3, single_script, step - 40)
                 env.render_update()
             
-            env.clearPath()
+            env.clear_path()
         
     env.close()
     return
-
 
 if __name__ == "__main__":
     arg = parse_args()
@@ -107,20 +106,22 @@ if __name__ == "__main__":
 
     script_set = []
     # pyivp - get pattern block vertices
-    pattern_1 = pyivp.string2SegList("format=lawnmower, x=0, y=0, height=70, \
-                                    width=50, lane_width=10, rows=north-south, startx=0, starty=0, degs=0")
+    pattern_1 = pyivp.string2_seglist("format=lawnmower, x=0, y=0, height=70, \
+                                    width=50, lane_width=10, rows=north-south, \
+                                      startx=0, starty=0, degs=0")
     # pyivp - get pattern block vertices
-    pattern_2 = pyivp.string2SegList("format=lawnmower, x=0, y=0, height=60, \
-                                    width=60, lane_width=6, rows=north-south, startx=0, starty=0, degs=25")
+    pattern_2 = pyivp.string2_seglist("format=lawnmower, x=0, y=0, height=60, \
+                                    width=60, lane_width=6, rows=north-south, \
+                                      startx=0, starty=0, degs=25")
     # pyivp - get polygon vertices
-    poly_init_1 = pyivp.string2Poly("x=0, y=0, format=radial, radius=25, pts=9")
-    poly_1 = poly_init_1.exportSegList(-10, 10)
+    poly_init_1 = pyivp.string2poly("x=0, y=0, format=radial, radius=25, pts=9")
+    poly_1 = poly_init_1.export_seglist(-10, 10)
     # pyivp - get polygon vertices
-    poly_init_2 = pyivp.string2Poly("x=10, y=10, format=radial, radius=20, pts=8")
-    poly_2 = poly_init_2.exportSegList(10, -10)
+    poly_init_2 = pyivp.string2poly("x=10, y=10, format=radial, radius=20, pts=8")
+    poly_2 = poly_init_2.export_seglist(10, -10)
     # pyivp - get polygon vertices
-    poly_init_3 = pyivp.string2Poly("x=0, y=0, format=radial, radius=10, pts=6")
-    poly_3 = poly_init_3.exportSegList(-10, -10)
+    poly_init_3 = pyivp.string2poly("x=0, y=0, format=radial, radius=10, pts=6")
+    poly_3 = poly_init_3.export_seglist(-10, -10)
 
     # transfer vertices to waypoints
     wp_pattern_1 = get_pattern_waypoint(pattern_1, "pattern_block", 0.5)
@@ -129,24 +130,11 @@ if __name__ == "__main__":
     wp_poly_2  = get_pattern_waypoint(poly_2, "polygon",  0.5)
     wp_poly_3  = get_pattern_waypoint(poly_3, "polygon",  0.5)
 
-
     script_set.append(wp_pattern_1)
     script_set.append(wp_poly_1)
     script_set.append(wp_poly_2)
     script_set.append(wp_pattern_2)
     script_set.append(wp_poly_3)
-    
 
     plotPattern(env, script_set)
 
-
-    
-
-
-    
-    
-    
-
-    
-
-    
