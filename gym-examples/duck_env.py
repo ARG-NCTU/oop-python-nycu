@@ -1,5 +1,5 @@
 import pygame
-import gym
+import gymnasium as gym
 import time
 import random
 import matplotlib.pyplot as plt
