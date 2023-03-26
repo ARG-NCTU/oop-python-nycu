@@ -78,9 +78,9 @@ def get_pattern_waypoint(pattern_point, pattern_type, stride):
 
 def plotPattern(env, script_set):
     screen = env.display_init()
-    character1 = env.character_init("./img/duck.png", 200)
-    character2 = env.character_init("./img/duckie.png", 100)
-    character3 = env.character_init("./img/duckie.png", 100)
+    character1 = env.character_init("../images/duck.png", 200)
+    character2 = env.character_init("../images/duckie.png", 100)
+    character3 = env.character_init("../images/duckie.png", 100)
 
     while True:
         for single_script in script_set:
@@ -106,21 +106,21 @@ if __name__ == "__main__":
 
     script_set = []
     # pyivp - get pattern block vertices
-    pattern_1 = pyivp.string2_seglist("format=lawnmower, x=0, y=0, height=70, \
+    pattern_1 = pyivp.string_to_seglist("format=lawnmower, x=0, y=0, height=70, \
                                     width=50, lane_width=10, rows=north-south, \
                                       startx=0, starty=0, degs=0")
     # pyivp - get pattern block vertices
-    pattern_2 = pyivp.string2_seglist("format=lawnmower, x=0, y=0, height=60, \
+    pattern_2 = pyivp.string_to_seglist("format=lawnmower, x=0, y=0, height=60, \
                                     width=60, lane_width=6, rows=north-south, \
                                       startx=0, starty=0, degs=25")
     # pyivp - get polygon vertices
-    poly_init_1 = pyivp.string2poly("x=0, y=0, format=radial, radius=25, pts=9")
+    poly_init_1 = pyivp.string_to_poly("x=0, y=0, format=radial, radius=25, pts=9")
     poly_1 = poly_init_1.export_seglist(-10, 10)
     # pyivp - get polygon vertices
-    poly_init_2 = pyivp.string2poly("x=10, y=10, format=radial, radius=20, pts=8")
+    poly_init_2 = pyivp.string_to_poly("x=10, y=10, format=radial, radius=20, pts=8")
     poly_2 = poly_init_2.export_seglist(10, -10)
     # pyivp - get polygon vertices
-    poly_init_3 = pyivp.string2poly("x=0, y=0, format=radial, radius=10, pts=6")
+    poly_init_3 = pyivp.string_to_poly("x=0, y=0, format=radial, radius=10, pts=6")
     poly_3 = poly_init_3.export_seglist(-10, -10)
 
     # transfer vertices to waypoints
