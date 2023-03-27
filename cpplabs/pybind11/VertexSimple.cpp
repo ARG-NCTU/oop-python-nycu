@@ -9,6 +9,7 @@ void init_VertexSimple(py::module &m) {
     
     py::class_<VertexSimple>(m, "VertexSimple")
     .def(py::init())
+    .def(py::init<int, int>())
     .def("setRandom", &VertexSimple::setRandom)
     .def("getSpec", &VertexSimple::getSpec);
 }
