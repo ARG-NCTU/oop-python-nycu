@@ -96,19 +96,29 @@ RUN pip3 install \
     tensorboard \
     pygwidgets
 
-RUN pip install \
-    torch==1.10 \
-    torchvision==0.11.1 \
-    -f https://download.pytorch.org/whl/cu111/torch_stable.html
+# RUN pip install \
+#     torch==1.10 \
+#     torchvision==0.11.1 \
+#     -f https://download.pytorch.org/whl/cu111/torch_stable.html
 
 ##################################### gym #####################################
-RUN pip3 install gym[all]
+RUN python3 -m pip install --upgrade pip
+RUN pip3 install gymnasium[all]==0.26.2
+RUN pip install gymnasium[box2d]
+##################################### codon #####################################
+RUN /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+RUN export PATH=/home/${USER}/.codon/bin:$PATH
 
 ##################################### vim-python-ide ######################################
-
 RUN git clone https://github.com/ARG-NCTU/vim-python-ide.git && \
     cd vim-python-ide && ./install.sh
+####################################### pyivp ###########################################
 
+RUN cd ${HOME} && git clone https://github.com/ARG-NCTU/pyivp.git \
+    && cd pyivp \
+    && make -f oop.Makefile
+####################################### openai ###########################################
+RUN pip install openai
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
