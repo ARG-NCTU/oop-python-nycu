@@ -1,5 +1,5 @@
 import pygame
-import gym
+import gymnasium as gym
 import time
 import random
 import matplotlib.pyplot as plt
@@ -8,10 +8,6 @@ import math
 import csv
 
 
-
-# log usage
-from datetime import datetime
-# log usage
 
 
 DISPLAY_WATER = (14, 180, 255)
@@ -45,7 +41,7 @@ class EmptyEnv(gym.Env):
 
 
 
-    def blitRotateImg(self, surface, image, pos, angle, img_size):
+    def blit_rotate_img(self, surface, image, pos, angle, img_size):
         image_rect = image.get_rect(topleft = (pos[0] - img_size, pos[1] - img_size))
         offset_center_to_pivot = pygame.math.Vector2(pos) - image_rect.center
         
@@ -59,27 +55,27 @@ class EmptyEnv(gym.Env):
         surface.blit(rotated_image, rotated_image_rect)
         return
 
-    def transToDispaly(self, standard_x, standard_y):
-        pygame_x = round(self.cfg.env_px / 2 - standard_y * self.env_grid_px_per_m)
-        pygame_y = round(self.cfg.env_px / 2 - standard_x * self.env_grid_px_per_m)
+    def trans_to_dispaly(self, standard_x, standard_y):
+        pygame_x = round(self.cfg.env_px/2 - standard_y*self.env_grid_px_per_m)
+        pygame_y = round(self.cfg.env_px/2 - standard_x*self.env_grid_px_per_m)
         transfer_tuple = (pygame_x, pygame_y)
         return transfer_tuple
 
-    def distanceP2P(self, p1, p2):
+    def distance(self, p1, p2):
         return math.sqrt(pow(p1[0] - p2[0], 2) + pow(p1[1] - p2[1], 2))
         
-    def displayInit(self):
+    def display_init(self):
         pygame.init()
         pygame.display.init()
         screen = pygame.display.set_mode([self.cfg.env_px, self.cfg.env_px])
         return screen
 
-    def characterInit(self, img_name, img_px_size):
+    def character_init(self, img_name, img_px_size):
         character = pygame.image.load(img_name)
         character_resize = pygame.transform.scale(character, (img_px_size, img_px_size))
         return character_resize
 
-    def renderBackground(self, screen):
+    def render_background(self, screen):
         self.clock.tick(self.fps)
         env = pygame.Surface((self.cfg.env_dim[0], self.cfg.env_dim[1]))
         pygame.surfarray.blit_array(env, self.display_map)
@@ -87,30 +83,32 @@ class EmptyEnv(gym.Env):
         screen.blit(env, (0, 0))
         return
 
-    def renderPath(self, screen, waypoint, current_frame = 0):
+    def render_path(self, screen, waypoint, current_frame=0):
         if current_frame < 0:
             return
+        
         if len(waypoint[current_frame]) == 3:
             self.visited_waypoints.append(waypoint[current_frame])
             for waypoint[current_frame] in self.visited_waypoints:
                 pygame.draw.circle(
                     screen, 
                     (250, 15, 30), 
-                    self.transToDispaly(
+                    self.trans_to_dispaly(
                         waypoint[current_frame][0],
                         waypoint[current_frame][1]
                     ), 
                     0.5 * self.env_grid_px_per_m
                 )
 
-    def renderCharacter(self, screen, character, waypoint, current_frame = 0):
+    def render_character(self, screen, character, waypoint, current_frame=0):
         if current_frame < 0:
             return
+        
         if len(waypoint[current_frame]) == 3:
-            self.blitRotateImg(
+            self.blit_rotate_img(
                 screen, 
                 character, 
-                self.transToDispaly(
+                self.trans_to_dispaly(
                     waypoint[current_frame][0],
                     waypoint[current_frame][1]
                 ),
@@ -119,10 +117,10 @@ class EmptyEnv(gym.Env):
             )
         else:
             for agent in range(self.cfg.usv_agent_num):
-                self.blitRotateImg(
+                self.blit_rotate_img(
                     screen, 
                     character, 
-                    self.transToDispaly(
+                    self.trans_to_dispaly(
                         self.observatiopn_space["pos"][agent][0],
                         self.observatiopn_space["pos"][agent][1]
                     ),
@@ -130,7 +128,7 @@ class EmptyEnv(gym.Env):
                 )
         return
 
-    def renderUpdate(self):
+    def render_update(self):
         pygame.display.flip()
         return
 
@@ -139,6 +137,6 @@ class EmptyEnv(gym.Env):
         pygame.quit()
         return
 
-    def clearPath(self):
+    def clear_path(self):
         self.visited_waypoints = []
         return

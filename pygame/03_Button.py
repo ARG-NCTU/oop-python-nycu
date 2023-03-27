@@ -45,8 +45,8 @@ start_button = Button(100, 200, start_img, 0.8)
 exit_button = Button(450, 200, exit_img, 0.8)
 
 #game loop
-run = True
-while run:
+is_running = True
+while is_running:
 
     screen.fill((202, 228, 241))
 
@@ -59,7 +59,7 @@ while run:
     for event in pygame.event.get():
         #quit game
         if event.type == pygame.QUIT:
-            run = False
+            is_running = False
 
     pygame.display.update()
 
