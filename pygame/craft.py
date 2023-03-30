@@ -57,9 +57,9 @@ def check_reset_msl(msl_num):
     global no
     if not any(msl_f[msl_num]):
         from random import randint
-        randomX = randint(20, 940)
-        randomY = randint(20, 700)
-        set_msl(msl_num, x = randomX, y = randomY)
+        random_x = randint(20, 940)
+        random_y = randint(20, 700)
+        set_msl(msl_num, x = random_x, y = random_y)
         no = [0] * total_msl
 
 
