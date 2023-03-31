@@ -1,8 +1,4 @@
-def fib(n):
-    a, b = 0, 1
-    while a < n:
-        print(a, end=' ')
-        a, b = b, a+b
-    print()
+from fib_lib import *
 
-fib(1000)
+for i in range(36):
+    print('fib(' + str(i) + ') =', fib(i))
