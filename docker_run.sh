@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ARGS=("$@")
-
+USER_NAME="arg"
 # Make sure processes in the container can connect to the x server
 # Necessary so gazebo can create a context for OpenGL rendering (even headless)
 XAUTH=/tmp/.docker.xauth
@@ -37,7 +37,7 @@ docker run \
     -v "/dev:/dev" \
     -v "/var/run/docker.sock:/var/run/docker.sock" \
     -w "/home/arg/oop-python-nycu" \
-    --user "root:root" \
+    --user "${USER_NAME}" \
     --network host \
     --privileged \
     --security-opt seccomp=unconfined \
