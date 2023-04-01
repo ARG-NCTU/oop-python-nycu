@@ -37,7 +37,7 @@ docker run \
     -v "/dev:/dev" \
     -v "/var/run/docker.sock:/var/run/docker.sock" \
     -w "/home/arg/oop-python-nycu" \
-    --user "${USER_NAME}" \
+    --user "root:root" \
     --network host \
     --privileged \
     --security-opt seccomp=unconfined \
