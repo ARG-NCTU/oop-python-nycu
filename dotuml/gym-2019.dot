@@ -1,0 +1,82 @@
+ClassDiagram {
+  class Env {
+    action_space
+    observation_space
+    reward_range
+    metadata
+    spec
+		public setp(self, action)
+    public render(self, mode)
+    public reset(self)
+    public close(self)
+    public seed(self, seed)
+    public unwrapped(self)
+    public __enter__(self)
+    public __exit__(self, args)
+    public __str__(self)
+  }
+  
+  class GoalEnv {
+    public compute_reward()  
+    public reset()
+  }
+
+  class DiscreteEnv {
+    nS
+    nA
+    P
+    s
+    isd
+    lastaction
+    public __init__(self)
+    public step()
+    public seed()
+    public reset()
+  }
+
+  class FrozenLakeEnv {
+    metadata
+    public __init__(self)
+    public render()
+  }  
+
+  class TaxiEnv {
+    metadata
+    public __init__(self)
+    public encode()
+    public decode()
+    public render()
+  }  
+
+  class LunarLander {
+    metadata
+    public __init__(self)
+		public setp(self, action)
+    public render(self, mode)
+    public reset(self)
+    public close(self)
+    public seed(self, seed)
+  }    
+
+  class LunarLanderContinuous {
+    continuous
+  }  
+  
+  class EzPickle {
+    _ezpickle_args
+    _ezpickle_kwargs
+    public __init__(self)  
+    public __getstate__(self)
+    public __setstate__(self)
+  }
+  
+  GoalEnv -g-> Env
+  DiscreteEnv -g-> Env
+  FrozenLakeEnv -g-> DiscreteEnv
+  TaxiEnv -g-> DiscreteEnv
+  LunarLander -g-> Env
+  LunarLander -g-> EzPickle
+  LunarLanderContinuous -g-> LunarLander
+  #EzPickle -g-> Object
+  #Env -g-> Object
+}
