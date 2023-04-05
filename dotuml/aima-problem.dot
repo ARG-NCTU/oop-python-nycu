@@ -1,0 +1,38 @@
+ClassDiagram {
+class Problem {
+  initial
+  goal
+  __init__()
+  actions(self, state)
+  result(self, state, action)
+  is_goal(self, state)
+  action_cost(self, s, a, s1)
+  h(self, node)
+}
+
+class RouteProblem {
+  start
+  goal
+  map
+  actions(self, state)
+  result(self, state, action)
+  action_cost(self, s, action, s1)
+  h(self, node)
+}
+
+class GridProblem {
+  initial
+  goal
+  directions
+  obstacles
+  __init__()
+  action_cost(self, s, action, s1)
+  h(self, node)
+  result(self, state, action)
+  actions(self, state)
+}
+
+  RouteProblem -g-> Problem
+  GridProblem -g-> Problem
+
+}
