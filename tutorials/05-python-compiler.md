@@ -3,10 +3,10 @@
 ```
 $ cd ~/oop-python-nycu
 $ source docker_run.sh
-cd ~/oop-python-nycu/sample-code/
+# cd ~/oop-python-nycu/sample-code/
 ```
 
-## Run the OCW Examples via CPython interpreter 
+## Run the OCW Examples via CPython Interpreter 
 
 ```
 # time python3 fib.py
@@ -16,7 +16,8 @@ cd ~/oop-python-nycu/sample-code/
 ## Run the Nuitka Example
 
 ```
-nuitka --follow-imports fib.py
+nuitka3 --follow-imports fib.py
+# time ./fib.bin
 ```
 
 ## Run the Codon Example
