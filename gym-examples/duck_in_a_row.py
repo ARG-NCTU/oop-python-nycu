@@ -76,7 +76,7 @@ def get_pattern_waypoint(pattern_point, pattern_type, stride):
     return wp_with_deg
 
 
-def plotPattern(env, script_set):
+def plot_pattern(env, script_set):
     screen = env.display_init()
     character1 = env.character_init("../images/duck.png", 200)
     character2 = env.character_init("../images/duckie.png", 100)
@@ -136,5 +136,5 @@ if __name__ == "__main__":
     script_set.append(wp_pattern_2)
     script_set.append(wp_poly_3)
 
-    plotPattern(env, script_set)
+    plot_pattern(env, script_set)
 
