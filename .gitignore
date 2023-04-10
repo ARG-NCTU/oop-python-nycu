@@ -138,3 +138,5 @@ tags*
 .idea/
 
 mit-ocw-exercises/
+*.bin
+*.build/
