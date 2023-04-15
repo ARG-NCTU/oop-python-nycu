@@ -5,6 +5,7 @@ import math
 import sys
 from collections import defaultdict, deque, Counter
 from itertools import combinations
+import pytest
 import sys
 sys.path.append('../utils')
 from search import * 
@@ -21,12 +22,23 @@ def test_map():
      'M': (160, 343), 'N': (407, 561), 'O': (117, 580), 'P': (311, 372), 'R': (227, 412),
      'S': (187, 463), 'T': ( 83, 414), 'U': (471, 363), 'V': (535, 473), 'Z': (92, 539)})
 
+    assert str(romania.neighbors['A']) == "['Z', 'S', 'T']"
+    assert romania.distances['A', 'Z'] == 75
+    assert sldistance(romania.locations['A'], romania.locations['B']) == \
+        pytest.approx(366, abs=0.5)
 
     r0 = RouteProblem('A', 'A', map=romania)
     r1 = RouteProblem('A', 'B', map=romania)
     r2 = RouteProblem('N', 'L', map=romania)
     r3 = RouteProblem('E', 'T', map=romania)
     r4 = RouteProblem('O', 'M', map=romania)
+
+    assert r1.initial == 'A'
+    assert r1.goal == 'B'
+    assert str(r1.actions('A')) == "['Z', 'S', 'T']"
+    assert r1.result('A', 'S') == 'S'
+    assert r1.result('A', 'B') == 'A'
+    assert r1.action_cost('A', 'S', 'S') == 140
 
     assert str(path_states(breadth_first_search(r1))) == "['A', 'S', 'F', 'B']"
     assert str(path_states(depth_first_recursive_search(r1))) == \
