@@ -56,6 +56,11 @@ def test_expand():
     romania = get_romania()
     r1 = RouteProblem('A', 'B', map=romania)
 
+    node_a = Node('A')
+    print(expand(r1, node_a))
+    for c_node in expand(r1, node_a):
+        print(f"child node: {c_node}, parent node:{c_node.parent}")
+
 def test_search():
 
     romania = get_romania()
