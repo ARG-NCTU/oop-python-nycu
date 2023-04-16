@@ -69,3 +69,5 @@ def test_search():
     assert str(path_states(breadth_first_search(r1))) == "['A', 'S', 'F', 'B']"
     assert str(path_states(depth_first_recursive_search(r1))) == \
         "['A', 'Z', 'O', 'S', 'R', 'C', 'P', 'B']"
+    assert str(path_states(uniform_cost_search(r1))) == "['A', 'S', 'F', 'B']"
+    assert str(path_states(astar_search(r1))) == "['A', 'S', 'F', 'B']"
