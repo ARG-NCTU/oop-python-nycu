@@ -137,7 +137,7 @@ def grid_problem_init(args):
 def plot_search(args, display, grid_map):
     # display setting
     screen = display.display_init()
-    solution, reached = astar_search(grid_map)
+    solution, reached = astar_search(grid_map, return_search_history=True)
     path = path_states(solution)
     visited = []
 
