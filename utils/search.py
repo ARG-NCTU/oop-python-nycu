@@ -202,14 +202,20 @@ def best_first_search(problem, f):
                 frontier.add(child)
     return failure
 
-def uniform_cost_search(problem):
+def uniform_cost_search(problem, return_search_history=False):
     "Search nodes with minimum path cost first."
-    return best_first_search(problem, f=lambda node: node.path_cost), reached
+    if return_search_history:
+        return best_first_search(problem, f=lambda node: node.path_cost), reached
+    else:
+        return best_first_search(problem, f=lambda node: node.path_cost)
 
-def astar_search(problem, h=None):
+def astar_search(problem, h=None, return_search_history=False):
     """Search nodes with minimum f(n) = g(n) + h(n)."""
     h = h or problem.h
-    return best_first_search(problem, f=lambda node: node.path_cost + h(node)), reached
+    if return_search_history:
+        return best_first_search(problem, f=lambda node: node.path_cost + h(node)), reached
+    else:
+        return best_first_search(problem, f=lambda node: node.path_cost + h(node))
 
 def random_lines(X=range(15, 130), Y=range(60), N=150, lengths=range(6, 12)):
     """The set of cells in N random lines of the given lengths."""
