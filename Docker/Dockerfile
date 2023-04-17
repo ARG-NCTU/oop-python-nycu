@@ -128,6 +128,11 @@ RUN apt install -y pypy3
 ####################################### nuitka ###########################################
 RUN pip install nuitka
 RUN apt install ccache
+
+############################### pydot & grapghviz ###################################
+RUN apt update
+RUN apt install graphviz -y
+RUN pip3 install pydot
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
