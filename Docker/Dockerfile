@@ -133,6 +133,8 @@ RUN apt install ccache
 RUN apt update
 RUN apt install graphviz -y
 RUN pip3 install pydot
+##################################### meld #####################################
+RUN apt-get install meld -y
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
