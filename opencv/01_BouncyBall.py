@@ -4,7 +4,7 @@ from random import choice
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 WHITE = (255, 255, 255)
-
+BLACK = (0, 0, 0)
 
 class Ball():
     def __init__(self):
@@ -12,7 +12,7 @@ class Ball():
         self.y = SCREEN_HEIGHT / 2
         self.x_direction = choice((-2, 2))
         self.y_direction = choice((-2, 2))
-        self.radius = 20
+        self.radius = 40
 
     def move(self):
         self.x += self.x_direction
@@ -29,7 +29,7 @@ class Ball():
             self.y_direction = -self.y_direction
 
     def draw(self, screen):
-        pygame.draw.circle(screen, WHITE, (self.x, self.y), self.radius)
+        pygame.draw.circle(screen, BLACK, (self.x, self.y), self.radius)
 
 
 pygame.init()
@@ -37,13 +37,16 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 pygame.display.set_caption('BouncyBall')
 ball = Ball()
+ball_2 = Ball()
 
 # game loop
 is_running = True
 while is_running:
-    screen.fill((0, 0, 0))
+    screen.fill(WHITE)
     ball.move()
     ball.draw(screen)
+    ball_2.move()
+    ball_2.draw(screen)
 
     # event handler
     for event in pygame.event.get():
@@ -52,5 +55,6 @@ while is_running:
             is_running = False
 
     pygame.display.update()
+    pygame.image.save(screen, "screen.png")
     clock.tick(30)
 pygame.quit()
