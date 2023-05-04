@@ -1,4 +1,3 @@
 ![My Image](../images/drawing_TA.png)
 # Tutorial
-- You could see task and demo instruction in [here](https://docs.google.com/document/d/1mUEYPLgOjfn8fjTVfcmZXZhxOXH_VHghzZ3bmzI8MBc/edit?usp=share_link)
-- The link will chagne to NAS pdf file after editing
+- You could see task and demo instruction in [here](http://gofile.me/773h8/gvo3S6Tsb)
