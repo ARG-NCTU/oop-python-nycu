@@ -55,6 +55,6 @@ while is_running:
             is_running = False
 
     pygame.display.update()
-    pygame.image.save(screen, "screen.png")
+    pygame.image.save(screen, "../images/screen.png")
     clock.tick(30)
 pygame.quit()
