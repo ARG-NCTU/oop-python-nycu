@@ -111,3 +111,25 @@ def sim_walks(num_steps, num_trials, d_class):
         f.add_drunk(Homer, origin)
         distances.append(round(walk(f, Homer, num_steps), 1))
     return distances
+
+class StyleIterator:
+    def __init__(self, styles):
+        self.index = 0
+        self.styles = styles
+
+    def next_style(self):
+        result = self.styles[self.index]
+        if self.index == len(self.styles) - 1:
+            self.index = 0
+        else:
+            self.index += 1
+        return result
+
+def sim_drunk(num_trials, d_class, walk_lengths):
+    mean_distances = []
+    for num_steps in walk_lengths:
+        print('Starting simulation of', num_steps, 'steps')
+        trials = sim_walks(num_steps, num_trials, d_class)
+        mean = sum(trials) / len(trials)
+        mean_distances.append(mean)
+    return mean_distances
