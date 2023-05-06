@@ -17,3 +17,6 @@ plt.subplot(122),plt.imshow(filtered_img[:,:,::-1])
 plt.title('Filtered Image'), plt.xticks([]), plt.yticks([])
 
 plt.show()
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
