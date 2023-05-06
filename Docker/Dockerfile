@@ -135,6 +135,9 @@ RUN apt install graphviz -y
 RUN pip3 install pydot
 ##################################### meld #####################################
 RUN apt-get install meld -y
+################################# cloc ripgrep #####################################
+RUN apt-get install cloc -y
+RUN apt-get install ripgrep -y
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
