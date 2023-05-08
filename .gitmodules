@@ -1,0 +1,3 @@
+[submodule "movingpandas"]
+	path = movingpandas
+	url = git@github.com:ARG-NCTU/movingpandas.git
