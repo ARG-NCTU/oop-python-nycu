@@ -119,10 +119,31 @@ RUN cd ${HOME} && git clone https://github.com/ARG-NCTU/pyivp.git \
     && make -f oop.Makefile
 ####################################### openai ###########################################
 RUN pip install openai
+####################################### pypy ###########################################
+RUN apt update
+RUN apt install --yes software-properties-common
+RUN add-apt-repository --yes ppa:pypy/ppa
+RUN apt install -y pypy3
+
+####################################### nuitka ###########################################
+RUN pip install nuitka
+RUN apt install ccache
+
+############################### pydot & grapghviz ###################################
+RUN apt update
+RUN apt install graphviz -y
+RUN pip3 install pydot
+##################################### meld #####################################
+RUN apt-get install meld -y
+################################# cloc ripgrep #####################################
+RUN apt-get install cloc -y
+RUN apt-get install ripgrep -y
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
-RUN echo "kl ALL=(ALL)  ALL" > /etc/sudoers
+RUN echo "${USER} ALL=(ALL)  NOPASSWD: ALL" > /etc/sudoers
+RUN echo "export PATH=/home/${USER}/.codon/bin:$PATH" > /home/${USER}/.bashrc
+    
 
 USER ${USER}
 
