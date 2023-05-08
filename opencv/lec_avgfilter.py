@@ -18,5 +18,3 @@ plt.title('Filtered Image'), plt.xticks([]), plt.yticks([])
 
 plt.show()
 
-cv2.waitKey(0)
-cv2.destroyAllWindows()

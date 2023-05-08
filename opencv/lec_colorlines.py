@@ -105,5 +105,3 @@ plt.imshow(image_with_lines,cmap = 'brg')
 plt.title('Line Image'), plt.xticks([]), plt.yticks([])
 plt.show()
 
-cv2.waitKey(0)
-cv2.destroyAllWindows()
