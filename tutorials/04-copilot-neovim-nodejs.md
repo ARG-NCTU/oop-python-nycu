@@ -11,16 +11,18 @@ sudo apt install neovim
 See https://unixcop.com/how-to-install-neovim-on-ubuntu-20-04-22-04-lts/
 
 ## Install Node.js
+See https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
+install with option 3 — Installing Node Using the Node Version Manager 
 
 We need 16
 ```
-cd ~
-curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
-sudo bash /tmp/nodesource_setup.sh
-sudo apt install nodejs
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source ~/.bashrc
+nvm list-remote
+nvm install v16.10.0
 ```
 
-See https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
 
 ## Copilot
 
@@ -36,9 +38,14 @@ Use neovim
 ```
 nvim
 ```
-
+In navigation mode
+```
+:Copilot setup
+```
+```
+:Copilot enable
+```
 You will be asked to add code to enable the device.
-
 
 You will see this
 
@@ -48,10 +55,6 @@ You will see this
 
 ```
 nvim [your python file].py
-```
-In navigation mode
-```
-:Copilot enable
 ```
 
 * Create docstring for a class 
