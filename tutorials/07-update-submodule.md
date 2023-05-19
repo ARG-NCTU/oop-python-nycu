@@ -26,3 +26,13 @@ $ cd movingpandas
 $ git checkout master
 $ git pull
 ```
+
+## When you modify the notebooks
+
+You can use stash to save your changes and make your submodule clean.
+```
+$ cd ~/oop-python-nycu/
+$ cd movingpandas
+$ git stash
+```
+
