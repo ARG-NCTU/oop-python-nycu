@@ -1,0 +1,62 @@
+ClassDiagram {
+
+  class Sprite {
+    
+  }
+ 
+  class Entity {
+    __init__()
+    move(self,speed)
+    collision(self,direction)
+    wave_value(self)
+  }
+
+  class Player {
+    health
+    energy
+    exp
+    speed
+		__init__()
+    get_status(self)
+    animate(self)
+    import_player_assets(self)
+    get_random_position(self)
+    input(self)
+    cooldowns(self)
+    energy_recovery(self)
+  }
+
+  class Enemy {
+    health
+    exp
+    speed
+    notice_radius
+    damage_player
+    
+    __init__()
+    get_status(self, player)
+    animate(self)
+		get_player_distance_direction(self, player)
+    actions(self, player)
+    get_damage(self, player, attack_type)
+    check_death(self)
+  }
+  
+  class Weapon {
+		__init__(self,player,groups)
+  }
+  
+  class MagicPlayer {
+    __init__(self,animation_player)
+    heal(self,player,strength,cost,groups)
+    teleport(self,player,strength,cost,groups)
+    flame(self,player,cost,groups)
+  }
+
+  Entity -g-> Sprite
+  Weapon -g-> Sprite
+  Player -g-> Entity
+  Enemy -g-> Entity
+  Player "1" --> "0..*" Weapon;
+  Player "1" --> "0..*" MagicPlayer;
+}
