@@ -77,4 +77,34 @@ point.y = 4.0     # keep press tab and enter
 
 ```
 
+# Install NeoVim Plugins
 
+```
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
+Edit the init.vim
+```
+nvim ~/.config/nvim/init.vim
+```
+
+Add the plugin to it
+```
+call plug#begin('~/.local/share/nvim/site/plugged')
+Plug 'junegunn/goyo.vim'
+call plug#end()
+```
+
+In neovim, call InstallPlugin to install
+```
+nvim
+:InstallPlugin
+```
+
+## More Plugins
+
+## Set up init.vim for neovim like .vimrc for vim
+
+Check the sample init.vim
+
+https://github.com/ARG-NCTU/vim-python-ide/blob/master/nvim/init.vim
