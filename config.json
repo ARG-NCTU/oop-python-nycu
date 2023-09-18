@@ -1,0 +1,12 @@
+{
+    "ball":{
+	"ball_x": 300,
+    	"ball_y": 300,
+    	"ball_radius": 10
+    },
+    "brick":{
+	"brick_x": 200,
+    	"brick_y": 200,
+    	"brick_radius": 50
+    }
+}
