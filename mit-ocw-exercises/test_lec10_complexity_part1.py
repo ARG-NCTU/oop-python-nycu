@@ -37,4 +37,11 @@ def test_linear_search_int_list_factory(int_list_factory):
     assert lec10.linear_search(int_list_factory(10000), 4) == True
     #assert lec10.linear_search(int_list_factory(100000000), 4) == True
 
+# create a fixture for num_elements with parameters 10, 10000, 1000000
+@pytest.fixture(params=[10, 10000, 10000000])
+def num_elements(request):
+    return request.param
+
+def test_linear_search_int_list_factory_enum(int_list_factory, num_elements):
+    assert lec10.linear_search(int_list_factory(num_elements), 4) == True
 
