@@ -5,13 +5,8 @@ import random
 #################################
 class Animal(object):
     '''Animal Class 
-<<<<<<< HEAD
-    attributes: age
-    methods: get_age, set_age, get_name, set_name, __str__
-=======
     Attributes: age, name
     Methods: get_age, get_name, set_age, set_name, __str__
->>>>>>> a8f2c23 (09252023)
     '''
     def __init__(self, age):
         self.age = age
