@@ -1,6 +1,11 @@
 import lec10_complexity_part1 as lec10
 import pytest
 
+# create a fixture for the empty list
+@pytest.fixture
+def empty_list():
+    return []
+
 # create a fixture for the list of integers
 @pytest.fixture
 def sample_data():
@@ -35,7 +40,7 @@ def int_list_factory():
 def test_linear_search_int_list_factory(int_list_factory):
     assert lec10.linear_search(int_list_factory(10), 4) == True
     assert lec10.linear_search(int_list_factory(10000), 4) == True
-    #assert lec10.linear_search(int_list_factory(100000000), 4) == True
+    assert lec10.linear_search(int_list_factory(100000000), 4) == True
 
 # create a fixture for num_elements with parameters 10, 10000, 1000000
 @pytest.fixture(params=[10, 10000, 10000000])
@@ -44,4 +49,19 @@ def num_elements(request):
 
 def test_linear_search_int_list_factory_enum(int_list_factory, num_elements):
     assert lec10.linear_search(int_list_factory(num_elements), 4) == True
+
+# test intersection
+def test_intersect():
+    assert lec10.intersect([1, 2, 3, 2, 3], [2, 3, 4]) == [2, 3]
+    assert lec10.intersect([1, 2, 3], [4, 5, 6]) == []
+    assert lec10.intersect([], [4, 5, 6]) == []
+
+# check elements in a list via python built-in function
+def test_intersect_in():
+    assert 2 in [1, 2, 3]
+    assert 4 not in [1, 2, 3]
+    
+
+
+
 
