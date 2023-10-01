@@ -66,8 +66,26 @@ def test_intersect(sample1):
 def test_intersect_in(sample1):
     assert 2 in sample1
     assert 4 not in sample1
-    
 
+@pytest.fixture
+def test_set():
+    data = [1,2,3,4,5]
+    return data
+
+# test subset
+def test_subset(test_set):
+    assert lec10.isSubset([2,3,4],test_set) == True
+    assert lec10.isSubset([2,7],test_set) == False
+
+@pytest.fixture
+def test_list():
+    data = [1,3,4,5,9,18,27]
+    return data
+
+#test search
+def test_search(test_list):
+    assert lec10.search(test_list,27) == True
+    assert lec10.search(test_list,6) == False
 
 
 
