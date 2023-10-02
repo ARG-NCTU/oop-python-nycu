@@ -17,13 +17,13 @@ class Coordinate(object):
         return (x_diff_sq + y_diff_sq)**0.5
 
 
-c = Coordinate(3,4)
-origin = Coordinate(0,0)
-print(c.x, origin.x)
-print(c.distance(origin))
-print(Coordinate.distance(c, origin))
-print(origin.distance(c))
-print(c)
+# c = Coordinate(3,4)
+# origin = Coordinate(0,0)
+# print(c.x, origin.x)
+# print(c.distance(origin))
+# print(Coordinate.distance(c, origin))
+# print(origin.distance(c))
+# print(c)
 
 
 #################
