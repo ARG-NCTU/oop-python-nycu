@@ -1,4 +1,4 @@
-import lec11_complexcity_part2.py as lec11
+import lec11_complexity_part2.py as lec11
 import pytest
 
 def test_bisect_search2(L,e):
