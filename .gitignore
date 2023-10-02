@@ -137,6 +137,6 @@ tags*
 .DS_Store
 .idea/
 
-mit-ocw-exercises/
+# mit-ocw-exercises/
 *.bin
 *.build/

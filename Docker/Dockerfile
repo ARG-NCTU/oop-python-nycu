@@ -138,6 +138,15 @@ RUN apt-get install meld -y
 ################################# cloc ripgrep #####################################
 RUN apt-get install cloc -y
 RUN apt-get install ripgrep -y
+################################# movingpandas #####################################
+RUN pip3 install movingpandas
+RUN apt install libgeos-dev
+RUN pip3 install hvplot
+RUN pip install geoviews
+RUN pip install pykdtree
+RUN apt install libsnappy-dev
+################################# unzip #####################################
+RUN apt-get install unzip
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
