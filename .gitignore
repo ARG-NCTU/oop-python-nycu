@@ -140,3 +140,6 @@ tags*
 # mit-ocw-exercises/
 *.bin
 *.build/
+
+# local files
+myname.txt
