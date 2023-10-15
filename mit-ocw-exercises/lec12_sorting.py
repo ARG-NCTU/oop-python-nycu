@@ -16,13 +16,7 @@ def bubble_sort(L):
                 temp = L[j]
                 L[j] = L[j-1]
                 L[j-1] = temp
-
-testList = [1,3,5,7,2,6,25,18,13]
-
-print('')
-print(bubble_sort(testList))
-print(testList)
-
+    return L
 
 def selection_sort(L):
     suffixSt = 0
@@ -33,12 +27,6 @@ def selection_sort(L):
                 L[suffixSt], L[i] = L[i], L[suffixSt]
         suffixSt += 1
  
-testList = [1,3,5,7,2,6,25,18,13]
-       
-print('')
-print(selection_sort(testList))
-print(testList)
-
 
 def merge(left, right):
     result = []
@@ -69,8 +57,3 @@ def merge_sort(L):
         right = merge_sort(L[middle:])
         return merge(left, right)
         
-testList = [1,3,5,7,2,6,25,18,13]
-
-#print('')
-#print(merge_sort(testList))
-
