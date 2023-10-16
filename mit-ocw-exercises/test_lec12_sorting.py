@@ -40,7 +40,7 @@ def diff_in_time():
         test_list.append(a)
 
     for i in (3):
-        test = test_list
+        test = test_list.copy()
         start_time = time.time()
         test = sorting_methods_func[i](test)
         end_time = time.time()
