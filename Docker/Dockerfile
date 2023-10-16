@@ -147,6 +147,12 @@ RUN pip install pykdtree
 RUN apt install libsnappy-dev
 ################################# unzip #####################################
 RUN apt-get install unzip
+################################# ply #####################################
+RUN pip3 install ply
+
+RUN apt-get install less
+RUN pip3 install pytest-profiling
+RUN apt install python3-ipdb -y
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
