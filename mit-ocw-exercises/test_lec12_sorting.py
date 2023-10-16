@@ -34,8 +34,9 @@ def diff_in_time():
     sorting_methods = ['selectiom sort', 'bubble sort', 'merge sort'] 
     sorting_methods_func = [selection_sort, bubble_sort, merge_sort]
     test_list = []
-    for j in (100000):
-        a = random.randrange(100000)
+
+    for i in (1000000):
+        a = random.randrange(1000000)
         test_list.append(a)
 
     for i in (3):
@@ -44,4 +45,5 @@ def diff_in_time():
         test = sorting_methods_func[i](test)
         end_time = time.time()
         print(f'The time that {sorting_methods[i]} cost is {end_time - start_time}')
-        
+
+diff_in_time()
