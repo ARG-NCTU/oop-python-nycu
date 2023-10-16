@@ -4,10 +4,10 @@ import random
 ## Animal abstract data type 
 #################################
 class Animal(object):
-    ```Animal Class 
-    attributes: age
-    methods: get_age, set_age, get_name, set_name, __str__
-    ```
+    '''Animal Class 
+    Attributes: age, name
+    Methods: get_age, get_name, set_age, set_name, __str__
+    '''
     def __init__(self, age):
         self.age = age
         self.name = None
