@@ -25,12 +25,14 @@ class Edge(object):
         return self.dest
     def __str__(self):
         return self.src.getName() + '->' + self.dest.getName()
-               
+
+ # directed graph
+ # self.edges = {NodeA: [NodeB, NodeC], NodeB: [NodeC], NodeC: []}              
 class Digraph(object):
     """edges is a dict mapping each node to a list of
     its children"""
     def __init__(self):
-        self.edges = {}
+        self.edges = {} 
     def addNode(self, node):
         if node in self.edges:
             raise ValueError('Duplicate node')
@@ -46,6 +48,7 @@ class Digraph(object):
         return self.edges[node]
     def hasNode(self, node):
         return node in self.edges
+    # returns a node with a given name.
     def getNode(self, name):
         for n in self.edges:
             if n.getName() == name:
@@ -59,6 +62,7 @@ class Digraph(object):
                          + dest.getName() + '\n'
         return result[:-1] #omit final newline
 
+# undirected graph
 class Graph(Digraph):
     def addEdge(self, edge):
         Digraph.addEdge(self, edge)
@@ -119,6 +123,19 @@ def shortestPath(graph, start, end, toPrint = False):
 
 def testSP(source, destination):
     g = buildCityGraph(Digraph)
+    # check if the nodes are in the graph
+    for n in g.edges:
+        if n.getName() == source:
+            break
+    else:
+        print('Source node not in graph')
+        return
+    for n in g.edges:
+        if n.getName() == destination:
+            break
+    else:
+        print('Destination node not in graph')
+        return
     sp = shortestPath(g, g.getNode(source), g.getNode(destination),
                       toPrint = True)
     if sp != None:

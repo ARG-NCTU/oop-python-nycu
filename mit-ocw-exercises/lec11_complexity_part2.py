@@ -60,3 +60,4 @@ def genSubsets(L):
 
 testSet = [1,2,3,4]
 print(genSubsets(testSet))
+
