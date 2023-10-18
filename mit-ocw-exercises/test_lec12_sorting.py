@@ -31,15 +31,15 @@ def test_merge_sort():
     print(merge_sort(testList))
 
 def diff_in_time():
-    sorting_methods = ['selectiom sort', 'bubble sort', 'merge sort'] 
+    sorting_methods = ['selection sort', 'bubble sort', 'merge sort'] 
     sorting_methods_func = [selection_sort, bubble_sort, merge_sort]
     test_list = []
 
-    for i in (1000000):
+    for i in range(1000000):
         a = random.randrange(1000000)
         test_list.append(a)
 
-    for i in (3):
+    for i in range(3):
         test = test_list.copy()
         start_time = time.time()
         test = sorting_methods_func[i](test)
