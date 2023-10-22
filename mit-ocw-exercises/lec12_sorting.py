@@ -8,7 +8,6 @@ Created on Wed Oct 19 09:21:39 2016
 def bubble_sort(L):
     swap = False
     while not swap:
-        print('bubble sort: ' + str(L))
         swap = True
         for j in range(1, len(L)):
             if L[j-1] > L[j]:
@@ -21,7 +20,6 @@ def bubble_sort(L):
 def selection_sort(L):
     suffixSt = 0
     while suffixSt != len(L):
-        print('selection sort: ' + str(L))
         for i in range(suffixSt, len(L)):
             if L[i] < L[suffixSt]:
                 L[suffixSt], L[i] = L[i], L[suffixSt]
@@ -44,11 +42,9 @@ def merge(left, right):
     while (j < len(right)):
         result.append(right[j])
         j += 1
-    print('merge: ' + str(left) + '&' + str(right) + ' to ' +str(result))
     return result
 
 def merge_sort(L):
-    print('merge sort: ' + str(L))
     if len(L) < 2:
         return L[:]
     else:
@@ -56,4 +52,4 @@ def merge_sort(L):
         left = merge_sort(L[:middle])
         right = merge_sort(L[middle:])
         return merge(left, right)
-        
+    
