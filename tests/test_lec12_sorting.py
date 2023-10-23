@@ -1,5 +1,8 @@
-from lec12_sorting import *
+
 import pytest
+
+import add_path
+from mit_ocw_exercises.lec12_sorting import *
 
 # Test bubble_sort
 def test_bubble_sort():
