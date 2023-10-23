@@ -1,6 +1,6 @@
 import numpy as np
-import add_path
-from utils.utils import sigmoid, derivative_sigmoid
+
+from utils import sigmoid, derivative_sigmoid
 
 
 class MLP(object):

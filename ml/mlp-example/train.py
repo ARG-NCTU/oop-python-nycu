@@ -1,8 +1,8 @@
-# import numpy as np
-import add_path
+import numpy as np
+
 from data import X, y
 from model import MLP
-from utils.utils import sigmoid, derivative_sigmoid
+from utils import sigmoid, derivative_sigmoid
 
 # Initialize a MLP model
 mlp = MLP(d_in=2, d_h=3, d_out=2)
