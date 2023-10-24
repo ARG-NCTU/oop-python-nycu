@@ -6,7 +6,7 @@ import numpy as np
 
 # Handle the image saving path
 module_path = Path(__file__).absolute()
-data_path = module_path.parent.parent / "images"
+data_path = module_path.parent.parent.parent / "images"
 if not os.path.exists(data_path):
     os.makedirs(data_path)
 
