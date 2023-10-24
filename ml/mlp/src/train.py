@@ -1,6 +1,5 @@
 # import numpy as np
-import add_path
-from data import X, y
+from package.data import X, y
 from package.model import MLP
 from package.utils import sigmoid, derivative_sigmoid
 
