@@ -156,7 +156,8 @@ RUN pip3 install pytest-profiling
 RUN apt install python3-ipdb -y
 ################################# sklearn #####################################
 RUN pip3 install scikit-learn
-
+################################# tkinter #####################################
+RUN apt-get install -y python3-tk
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
