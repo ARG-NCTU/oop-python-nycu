@@ -1,5 +1,5 @@
 import numpy as np
-from package.utils import sigmoid, derivative_sigmoid
+from mlp.utils import sigmoid, derivative_sigmoid
 
 
 class MLP(object):

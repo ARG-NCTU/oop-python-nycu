@@ -1,7 +1,7 @@
 import add_path
 import numpy as np
 import pytest
-from package.dataset import ConcentricCircle, GaussianMixture, TwoMoon
+from dbscan.dataset import ConcentricCircle, GaussianMixture, TwoMoon
 
 
 # Tests for GaussianMixture dataset
