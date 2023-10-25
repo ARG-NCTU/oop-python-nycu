@@ -1,7 +1,7 @@
 # import numpy as np
-from package.data import X, y
-from package.model import MLP
-from package.utils import sigmoid, derivative_sigmoid
+from mlp.data import X, y
+from mlp.model import MLP
+from mlp.utils import derivative_sigmoid, sigmoid
 
 # Initialize a MLP model
 mlp = MLP(d_in=2, d_h=3, d_out=2)
