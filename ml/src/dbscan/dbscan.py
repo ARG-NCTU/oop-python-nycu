@@ -1,4 +1,4 @@
-import package.plot_utils as plot_utils
+import dbscan.plot_utils as plot_utils
 from sklearn import cluster, metrics
 
 

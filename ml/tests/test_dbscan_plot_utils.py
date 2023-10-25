@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from package.plot_utils import plot_scatter, plot_scatter_center
+from dbscan.plot_utils import plot_scatter, plot_scatter_center
 
 # Sample data for testing
 data = np.array([[1, 2], [3, 4], [5, 6]])
