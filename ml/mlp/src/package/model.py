@@ -1,5 +1,4 @@
 import numpy as np
-import add_path
 from package.utils import sigmoid, derivative_sigmoid
 
 
