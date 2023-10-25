@@ -1,6 +1,5 @@
-from package.dataset import ConcentricCircle, GaussianMixture, TwoMoon
-
-from package.dbscan import DBSCAN
+from dbscan.dataset import ConcentricCircle, GaussianMixture, TwoMoon
+from dbscan.dbscan import DBSCAN
 
 ###
 # Gaussian Mixture

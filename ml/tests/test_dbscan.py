@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from package.dbscan import DBSCAN
+from dbscan.dbscan import DBSCAN
 
 
 class MockDataset:

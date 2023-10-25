@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
+import dbscan.plot_utils as plot_utils
 import numpy as np
-import package.plot_utils as plot_utils
 from sklearn import datasets
 
 
