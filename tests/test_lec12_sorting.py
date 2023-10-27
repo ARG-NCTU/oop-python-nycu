@@ -1,5 +1,6 @@
-
 import pytest
+import add_path
+from mit_ocw_exercises.lec12_sorting import *
 import time
 import random
 
@@ -51,17 +52,17 @@ def test_bubble_sort(int_list_factory_shuffled):
     testList2 = int_list_factory_shuffled(100)
     testList3 = int_list_factory_shuffled(10000)
     start = time.time()
-    bubble_sort(testList1)
+    bubble_sort_np(testList1)
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for bubble sort with 10 elements shuffled list: {end-start:.2e}')
     start = time.time()
-    bubble_sort(testList2)                                                   
+    bubble_sort_np(testList2)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for bubble sort with 100 elements shuffled list: {end-start:.2e}')
     start = time.time()
-    bubble_sort(testList3)                                                   
+    bubble_sort_np(testList3)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for bubble sort with 10000 elements shuffled list: {end-start:.2e}') 
@@ -72,17 +73,17 @@ def test_selection_sort(int_list_factory_shuffled):
     testList2 = int_list_factory_shuffled(100)                                
     testList3 = int_list_factory_shuffled(10000)        
     start = time.time()
-    selection_sort(testList1)                                                   
+    selection_sort_np(testList1)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for selection sort with 10 elements shuffled list: {end-start:.2e}')                  
     start = time.time()
-    selection_sort(testList2)                                                   
+    selection_sort_np(testList2)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for selection sort with 100 elements shuffled list: {end-start:.2e}')
     start = time.time()
-    selection_sort(testList3)                                                   
+    selection_sort_np(testList3)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for selection sort with 10000 elements shuffled list: {end-start:.2e}')
@@ -94,17 +95,17 @@ def test_merge_sort(int_list_factory_shuffled):
     testList2 = int_list_factory_shuffled(100)                                
     testList3 = int_list_factory_shuffled(10000)        
     start = time.time()
-    merge_sort(testList1)                                                   
+    merge_sort_np(testList1)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for merge sort with 10 elements shuffled list: {end-start:.2e}')                  
     start = time.time()
-    merge_sort(testList2)                                                   
+    merge_sort_np(testList2)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for merge sort with 100 elements shuffled list: {end-start:.2e}')
     start = time.time()
-    merge_sort(testList3)                                                   
+    merge_sort_np(testList3)                                                   
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for merge sort with 10000 elements shuffled list: {end-start:.2e}')
