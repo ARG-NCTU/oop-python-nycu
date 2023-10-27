@@ -1,4 +1,4 @@
-from lec12_sorting import *
+
 import pytest
 import time
 import random
@@ -11,6 +11,9 @@ def int_list_factory_shuffled():
         return data
     return _int_list
 
+
+import add_path
+from mit_ocw_exercises.lec12_sorting import *
 
 # Test bubble_sort
 def test_bubble_sort():
