@@ -1,4 +1,5 @@
-import lec10_complexity_part1 as lec10
+import add_path
+import mit_ocw_exercises.lec10_complexity_part1 as lec10
 import pytest
 import time
 import random
