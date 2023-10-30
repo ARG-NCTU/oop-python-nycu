@@ -1,5 +1,7 @@
-import matplotlib.pyplot as plt
-import numpy
+import matplotlib.pyplot as plt  # type: ignore
+import numpy as np
+
+from typing import List
 #import pylab
 
 #set line width
@@ -15,8 +17,15 @@ plt.rcParams['ytick.major.size'] = 5
 #set size of markers
 plt.rcParams['lines.markersize'] = 10
 
-def minkowskiDist(v1, v2, p):
+def minkowskiDist(v1: List[float], v2: List[float], p: int) -> float:
     #Assumes v1 and v2 are equal length arrays of numbers
+    # Add doctest for the function
+    """
+    >>> minkowskiDist([0,0], [3,4], 2)
+    5.0
+    >>> minkowskiDist([1,2,3], [4,5,6], 1)
+    9.0
+    """
     dist = 0
     for i in range(len(v1)):
         dist += abs(v1[i] - v2[i])**p
