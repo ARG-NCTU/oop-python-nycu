@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt  # type: ignore
 import numpy as np
 
 from typing import List
+from dataclasses import dataclass
+
 #import pylab
 
 #set line width
@@ -17,7 +19,7 @@ plt.rcParams['ytick.major.size'] = 5
 #set size of markers
 plt.rcParams['lines.markersize'] = 10
 
-def minkowski_dist(v1: List[float], v2: List[float], p: int) -> float:
+def minkowski_dist(v1: List[float], v2: List[float], p: float) -> float:
     #Assumes v1 and v2 are equal length arrays of numbers
     # Add doctest for the function
     """
@@ -31,8 +33,24 @@ def minkowski_dist(v1: List[float], v2: List[float], p: int) -> float:
         dist += abs(v1[i] - v2[i])**p
     return dist**(1/p)
 
+
+@dataclass
+class Sample:
+    """
+    Add doctest for the class
+    >>> Sample('test', [1,2,3], 'test')
+    Sample(name='test', features=[1, 2, 3], label='test')
+    """
+    name: str
+    features: List[float]
+    label: str
+
 class Example(object):
-    
+    """
+    Add doctest for the class
+    >>> print(Example('test', [1,2,3], 'test'))
+    test:[1, 2, 3]:test
+    """
     def __init__(self, name, features, label = None):
         #Assumes features is an array of floats
         self.name = name
@@ -58,8 +76,20 @@ class Example(object):
         return self.name +':'+ str(self.features) + ':'\
                + str(self.label)
 
+
+@dataclass
+class Cluster1:
+    examples: List[Example]
+    centroid: Example
+
+
 class Cluster(object):
-    
+    """
+    Add doctest for the class
+    >>> print(Cluster([Example('test', [1,2,3], 'test')]))
+    Cluster with centroid [1. 2. 3.] contains:
+      test
+    """
     def __init__(self, examples):
         """Assumes examples a non-empty list of Examples"""
         self.examples = examples
@@ -74,7 +104,7 @@ class Cluster(object):
         return oldCentroid.distance(self.centroid)
     
     def computeCentroid(self):
-        vals = numpy.array([0.0]*self.examples[0].dimensionality())
+        vals = np.array([0.0]*self.examples[0].dimensionality())
         for e in self.examples: #compute mean
             vals += e.getFeatures()
         centroid = Example('centroid', vals/len(self.examples))
