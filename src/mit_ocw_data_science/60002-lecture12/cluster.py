@@ -1,17 +1,19 @@
-import pylab
+import matplotlib.pyplot as plt
+import numpy
+#import pylab
 
 #set line width
-pylab.rcParams['lines.linewidth'] = 6
+plt.rcParams['lines.linewidth'] = 6
 #set general font size 
-pylab.rcParams['font.size'] = 12
+plt.rcParams['font.size'] = 12
 #set font size for labels on axes
-pylab.rcParams['axes.labelsize'] = 18
+plt.rcParams['axes.labelsize'] = 18
 #set size of numbers on x-axis
-pylab.rcParams['xtick.major.size'] = 5
+plt.rcParams['xtick.major.size'] = 5
 #set size of numbers on y-axis
-pylab.rcParams['ytick.major.size'] = 5
+plt.rcParams['ytick.major.size'] = 5
 #set size of markers
-pylab.rcParams['lines.markersize'] = 10
+plt.rcParams['lines.markersize'] = 10
 
 def minkowskiDist(v1, v2, p):
     #Assumes v1 and v2 are equal length arrays of numbers
@@ -63,7 +65,7 @@ class Cluster(object):
         return oldCentroid.distance(self.centroid)
     
     def computeCentroid(self):
-        vals = pylab.array([0.0]*self.examples[0].dimensionality())
+        vals = numpy.array([0.0]*self.examples[0].dimensionality())
         for e in self.examples: #compute mean
             vals += e.getFeatures()
         centroid = Example('centroid', vals/len(self.examples))

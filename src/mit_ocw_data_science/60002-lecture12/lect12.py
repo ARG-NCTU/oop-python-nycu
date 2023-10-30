@@ -1,11 +1,14 @@
+import random
+import matplotlib.pyplot as plt
+import numpy
+
 import cluster
-import random, pylab, numpy
 
 class Patient(cluster.Example):
     pass
 
 def scaleAttrs(vals):
-    vals = pylab.array(vals)
+    vals = numpy.array(vals)
     mean = sum(vals)/len(vals)
     sd = numpy.std(vals)
     vals = vals - mean
@@ -15,8 +18,16 @@ def getData(toScale = False):
     #read in data
     hrList, stElevList, ageList, prevACSList, classList = [],[],[],[],[]
     cardiacData = open('cardiacData.txt', 'r')
+    #j = 0
     for l in cardiacData:
+        #j += 1
+        #print(j)
+        # handle the csv line properly; remove \n; check for empty lines
+        if l == '\n':
+            continue
+        l = l.replace('\n', '')
         l = l.split(',')
+        #breakpoint()
         hrList.append(int(l[0]))
         stElevList.append(int(l[1]))
         ageList.append(int(l[2]))
@@ -30,7 +41,7 @@ def getData(toScale = False):
     #Build points
     points = []
     for i in range(len(hrList)):
-        features = pylab.array([hrList[i], prevACSList[i],\
+        features = numpy.array([hrList[i], prevACSList[i],\
                                 stElevList[i], ageList[i]])
         pIndex = str(i)
         points.append(Patient('P'+ pIndex, features, classList[i]))
@@ -116,7 +127,7 @@ def printClustering(clustering):
         posFracs.append(fracPos)
         print('Cluster of size', numPts, 'with fraction of positives =',
               round(fracPos, 4))
-    return pylab.array(posFracs)
+    return numpy.array(posFracs)
 
 def testClustering(patients, numClusters, seed = 0, numTrials = 5):
     random.seed(seed)
@@ -126,7 +137,7 @@ def testClustering(patients, numClusters, seed = 0, numTrials = 5):
 
 patients = getData()
 for k in (2,):
-    print('\n     Test k-means (k = ' + str(k) + ')')
+    print('Test k-means (k = ' + str(k) + ')')
     posFracs = testClustering(patients, k, 2)
 
 #numPos = 0
