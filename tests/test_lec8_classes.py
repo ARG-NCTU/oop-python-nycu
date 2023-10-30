@@ -1,4 +1,5 @@
-import lec8_classes as lc
+import add_path
+import mit_ocw_exercises.lec8_classes as lc
 
 def test_coordinate():
     c = lc.Coordinate(3, 4)
