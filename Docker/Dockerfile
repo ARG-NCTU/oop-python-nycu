@@ -158,6 +158,8 @@ RUN apt install python3-ipdb -y
 RUN pip3 install scikit-learn
 ################################# tkinter #####################################
 RUN apt-get install -y python3-tk
+
+RUN pip3 install mypy
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
