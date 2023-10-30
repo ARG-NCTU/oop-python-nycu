@@ -17,13 +17,13 @@ plt.rcParams['ytick.major.size'] = 5
 #set size of markers
 plt.rcParams['lines.markersize'] = 10
 
-def minkowskiDist(v1: List[float], v2: List[float], p: int) -> float:
+def minkowski_dist(v1: List[float], v2: List[float], p: int) -> float:
     #Assumes v1 and v2 are equal length arrays of numbers
     # Add doctest for the function
     """
-    >>> minkowskiDist([0,0], [3,4], 2)
+    >>> minkowski_dist([0,0], [3,4], 2)
     5.0
-    >>> minkowskiDist([1,2,3], [4,5,6], 1)
+    >>> minkowski_dist([1,2,3], [4,5,6], 1)
     9.0
     """
     dist = 0
@@ -52,7 +52,7 @@ class Example(object):
         return self.name
     
     def distance(self, other):
-        return minkowskiDist(self.features, other.getFeatures(), 2)
+        return minkowski_dist(self.features, other.getFeatures(), 2)
     
     def __str__(self):
         return self.name +':'+ str(self.features) + ':'\
