@@ -160,6 +160,10 @@ RUN pip3 install scikit-learn
 RUN apt-get install -y python3-tk
 
 RUN pip3 install mypy
+################################# mkdocs #####################################
+RUN pip3 install mkdocs
+RUN pip3 install mkdocs-with-pdf
+RUN pip3 install mkdocstrings
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
