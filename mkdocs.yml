@@ -1,0 +1,14 @@
+site_name: My Docs
+
+theme:
+  name: "material"
+
+nav:
+    - Home: index.md
+    - About: about.md
+
+plugins:
+    - with-pdf
+    - search
+    - mkdocstrings
+
