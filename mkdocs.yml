@@ -11,4 +11,3 @@ plugins:
     - with-pdf
     - search
     - mkdocstrings
-

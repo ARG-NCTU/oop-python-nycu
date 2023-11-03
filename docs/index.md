@@ -15,3 +15,12 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
     docs/
         index.md  # The documentation homepage.
         ...       # Other markdown pages, images and other files.
+
+## Python Package
+
+This part of the project documentation focuses on
+an **information-oriented** approach. Use it as a
+reference for the technical implementation of the
+`calculator` project code.
+
+::: src.calculator.calculations
