@@ -1,21 +1,8 @@
-import pytest
 import add_path
 from mit_ocw_exercises.lec12_sorting import *
+import pytest
 import time
 import random
-
-@pytest.fixture
-def int_list_factory_shuffled():
-    def _int_list(n):
-        data = list(range(n))
-        random.shuffle(data)
-        return data
-    return _int_list
-
-
-import add_path
-from mit_ocw_exercises.lec12_sorting import *
-
 # Test bubble_sort
 def test_bubble_sort():
     testList = [1,3,5,7,2,6,25,18,13]
@@ -29,8 +16,8 @@ def test_bubble_sort():
 def test_selection_sort():
 
     testList = [1,3,5,7,2,6,25,18,13]
-    assert selection_sort(testList) == [1,2,3,5,6,7,13,18,25]
 
+    assert bubble_sort(testList) == [1,2,3,5,6,7,13,18,25]
     print('')
     print(selection_sort(testList))
     print(testList)
@@ -39,75 +26,25 @@ def test_selection_sort():
 def test_merge_sort():
 
     testList = [1,3,5,7,2,6,25,18,13]
+
     assert merge_sort(testList) == [1,2,3,5,6,7,13,18,25]
-    
     print('')
     print(merge_sort(testList))
-    print(testList)
 
+def diff_in_time():
+    sorting_methods = ['selection sort', 'bubble sort', 'merge sort'] 
+    sorting_methods_func = [selection_sort, bubble_sort, merge_sort]
+    test_list = []
 
-# Test bubble_sort_time
-def test_bubble_sort(int_list_factory_shuffled):
-    testList1 = int_list_factory_shuffled(10)
-    testList2 = int_list_factory_shuffled(100)
-    testList3 = int_list_factory_shuffled(10000)
-    start = time.time()
-    bubble_sort_np(testList1)
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for bubble sort with 10 elements shuffled list: {end-start:.2e}')
-    start = time.time()
-    bubble_sort_np(testList2)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for bubble sort with 100 elements shuffled list: {end-start:.2e}')
-    start = time.time()
-    bubble_sort_np(testList3)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for bubble sort with 10000 elements shuffled list: {end-start:.2e}') 
+    for i in range(1000000):
+        a = random.randrange(1000000)
+        test_list.append(a)
 
-# Test selection_sort_time
-def test_selection_sort(int_list_factory_shuffled):
-    testList1 = int_list_factory_shuffled(10)
-    testList2 = int_list_factory_shuffled(100)                                
-    testList3 = int_list_factory_shuffled(10000)        
-    start = time.time()
-    selection_sort_np(testList1)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for selection sort with 10 elements shuffled list: {end-start:.2e}')                  
-    start = time.time()
-    selection_sort_np(testList2)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for selection sort with 100 elements shuffled list: {end-start:.2e}')
-    start = time.time()
-    selection_sort_np(testList3)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for selection sort with 10000 elements shuffled list: {end-start:.2e}')
+    for i in range(3):
+        test = test_list.copy()
+        start_time = time.time()
+        test = sorting_methods_func[i](test)
+        end_time = time.time()
+        print(f'The time that {sorting_methods[i]} cost is {end_time - start_time}')
 
-
-# Test merge_sort_time
-def test_merge_sort(int_list_factory_shuffled):
-    testList1 = int_list_factory_shuffled(10)
-    testList2 = int_list_factory_shuffled(100)                                
-    testList3 = int_list_factory_shuffled(10000)        
-    start = time.time()
-    merge_sort_np(testList1)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for merge sort with 10 elements shuffled list: {end-start:.2e}')                  
-    start = time.time()
-    merge_sort_np(testList2)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for merge sort with 100 elements shuffled list: {end-start:.2e}')
-    start = time.time()
-    merge_sort_np(testList3)                                                   
-    end = time.time()
-    # print the result using exponential notation
-    print(f'Time taken for merge sort with 10000 elements shuffled list: {end-start:.2e}')
-
-
+diff_in_time()
