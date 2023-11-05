@@ -166,6 +166,8 @@ RUN pip3 install mkdocs-with-pdf
 RUN pip3 install mkdocstrings
 RUN pip3 install mkdocs-material
 RUN pip3 install mkdocstrings[python]
+
+RUN apt install tree
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
