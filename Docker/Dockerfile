@@ -168,6 +168,8 @@ RUN pip3 install mkdocs-material
 RUN pip3 install mkdocstrings[python]
 
 RUN apt install tree
+
+RUN pip3 install xdoctest
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
