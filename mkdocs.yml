@@ -1,0 +1,23 @@
+site_name: My Docs
+
+theme:
+  name: "material"
+
+nav:
+    - Home: index.md
+    - 'ARG-Tutorials':
+      - 'ssh-key': '00-ssh-key.md'
+      - 'workstation': '01-workstation.md'
+      - 'vim-python-ide': '02-vim-python-ide.md'
+      - 'cpplabs-pybind11': '03-cpplabs-pybind11.md'
+      - 'copilot-neovim-nodejs': '04-copilot-neovim-nodejs.md'
+      - 'python-compiler': '05-python-compiler.md'
+      - 'pydot': '06-pydot.md'
+      - 'update-submodule': '07-update-submodule.md'
+      - 'movingpandas': '08-movingpandas.md'
+    # - About: about.md
+
+plugins:
+    - with-pdf
+    - search
+    - mkdocstrings

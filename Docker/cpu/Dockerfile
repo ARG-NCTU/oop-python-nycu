@@ -103,6 +103,7 @@ RUN pip3 install \
 
 ##################################### gym #####################################
 RUN python3 -m pip install --upgrade pip
+RUN pip3 install swig
 RUN pip3 install gymnasium[all]==0.26.2
 RUN pip install gymnasium[box2d]
 ##################################### codon #####################################
@@ -153,11 +154,27 @@ RUN pip3 install ply
 RUN apt-get install less
 RUN pip3 install pytest-profiling
 RUN apt install python3-ipdb -y
+################################# sklearn #####################################
+RUN pip3 install scikit-learn
+################################# tkinter #####################################
+RUN apt-get install -y python3-tk
+
+RUN pip3 install mypy
+################################# mkdocs #####################################
+RUN pip3 install mkdocs
+RUN pip3 install mkdocs-with-pdf
+RUN pip3 install mkdocstrings
+RUN pip3 install mkdocs-material
+RUN pip3 install mkdocstrings[python]
+
+RUN apt install tree
+
+RUN pip3 install xdoctest
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
 RUN echo "${USER} ALL=(ALL)  NOPASSWD: ALL" > /etc/sudoers
-RUN echo "export PATH=/home/${USER}/.codon/bin:$PATH" > /home/${USER}/.bashrc
+RUN echo "export PATH=/home/${USER}/.codon/bin:$PATH" >> /home/${USER}/.bashrc
     
 
 USER ${USER}

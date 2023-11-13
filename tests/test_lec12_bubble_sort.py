@@ -1,6 +1,7 @@
 import random
 
-from lec12_sorting import *
+import add_path
+from mit_ocw_exercises.lec12_sorting import *
 
 #testList = [1,3,5,7,2,6,25,18,13]
 
