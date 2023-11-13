@@ -1,7 +1,8 @@
-import lec11_complexity_part2.py as lec11
+import add_path
+import mit_ocw_exercises.lec11_complexity_part2 as lec11
 import pytest
 
-def test_bisect_search2(L,e):
+def test_bisect_search2():
     testList= [0,1,2,3,4,5,6,7,8,9]
     assert lec11.bisect_search2(testList, 5) == True
     assert lec11.bisect_search2(testList, 10) == False
