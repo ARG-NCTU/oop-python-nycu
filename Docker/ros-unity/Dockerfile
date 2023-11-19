@@ -59,6 +59,22 @@ RUN pip3 install --upgrade pip \
         pytransform3d
 
 
+RUN apt-get install less
+RUN pip3 install pytest-profiling
+RUN apt install python3-ipdb -y
+
+RUN pip3 install mypy
+################################# mkdocs #####################################
+RUN pip3 install mkdocs
+RUN pip3 install mkdocs-with-pdf
+RUN pip3 install mkdocstrings
+RUN pip3 install mkdocs-material
+RUN pip3 install mkdocstrings[python]
+
+RUN apt install tree
+
+RUN pip3 install xdoctest
+
 RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
 && apt-get -o Acquire::ForceIPv4=true install -yq --no-install-recommends \
 ros-${ROS_DISTRO}-rosbridge-server
