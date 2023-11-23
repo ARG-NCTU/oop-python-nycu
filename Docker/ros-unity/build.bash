@@ -20,8 +20,8 @@ SCRIPT_PATH=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
 
 # Check if the Dockerfile exist
 
-if [ -f "${SCRIPT_PATH}/dockerfile" ]; then
-  DOCKERFILE_PATH="${SCRIPT_PATH}/dockerfile"
+if [ -f "${SCRIPT_PATH}/Dockerfile" ]; then
+  DOCKERFILE_PATH="${SCRIPT_PATH}/Dockerfile"
 else
   echo "Parse Dockerfile path error"
   return 1
