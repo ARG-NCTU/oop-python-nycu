@@ -170,6 +170,7 @@ RUN pip3 install mkdocstrings[python]
 RUN apt install tree
 
 RUN pip3 install xdoctest
+RUN pip3 install networkx[all]
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
