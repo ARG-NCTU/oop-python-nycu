@@ -1,0 +1,120 @@
+ClassDiagram{
+    class PPO{
+        MlpPolicy: ActorCriticPolicy
+        CnnPolicy: ActorCriticPolicy
+        MultiInputPolicy: MultiInputPolicy
+
+        __init__(policy: ActorCriticPolicy,
+                 env: GymEnv,
+                 rollout_buffer_class: RolloutBuffer): None
+        train(): None
+        learn(): SelfPPO
+    }
+
+    class OnPolicyAlgorithm{
+        
+        __init__(policy: ActorCriticPolicy,
+                rollout_buffer_class: RolloutBuffer)
+        collect_rollouts(env: VecEnv,
+                        callback: BaseCallback,
+                        rollout_buffer: RolloutBuffer): bool
+        train(): None
+        learn(): SelfOnPolicyAlgorithm
+    }
+
+    class MultiInputPolicy{
+        __init__(observation_space: spaces.Dict,
+                action_space: spaces.Discrete,
+                lr_schedule: Schedule,
+                activation_fn: nn.Module,
+                features_extractor_class: CombinedExtractor,
+                optimizer_class: th.optim.Adam)
+    }
+
+    class BaseAlgorithm{
+        __init__(policy: BasePolicy, env: GymEnv): None
+    }
+
+    class BaseCallback{
+        __init__()
+        training_env(): VecEnv
+    }
+
+    class ActorCriticPolicy{
+        __init__(observation_space: spaces.Space,
+                action_space: spaces.Space,
+                features_extractor_class: BaseFeaturesExtractor)
+        forward(): Tuple
+        extract_features(features_extractor: BaseFeaturesExtractor): th.Tensor
+        evaluate_actions(): Tuple
+        get_distribution(): Distribution
+        predict_value(): th.Tensor
+    }
+    class BasePolicy{
+        features_extractor: BaseFeaturesExtractor
+        __init__()
+        init_weights(module: nn.Module, gain: float): None
+        _predict(observation: th.Tensor, deterministic: bool): th.Tensor
+        scale_action(action: np.ndarray): np.ndarray
+        unscale_action(scled_action: np.ndarray): np.ndarray
+    }
+    class BaseFeaturesExtractor{
+        __init__(bservation_space: gym.Space, features_dim: int): None
+    }
+
+    class BaseModel{
+        __init__(observation_space: spaces.Space,
+        action_space: spaces.Space,
+        features_extractor_class: FlattenExtractor,
+        features_extractor: BaseFeaturesExtractor)
+        _update_features_extractor(): Dict
+        make_features_extractor(): BaseFeaturesExtractor
+        extract_features(): th.Tensor
+        _get_constructor_parameters(): Dict
+
+        save(): None
+        load(): SelfBaseModel
+    }
+
+    class RolloutBuffer{
+        __init__(observation_space: spaces.Space,
+                action_space: spaces.Space)
+        reset(): None
+        compute_returns_and_advantage(): None
+        add(): None
+        get(): RolloutBufferSamples
+    }
+    class BaseBuffer{
+        __init__(observation_space: spaces.Space,
+                action_space: spaces.Space)
+        size(): int
+        add(): None
+        extend(): None
+        reset(): None
+        sample(): None
+    }
+
+    class nnModule{}
+
+    
+//======================================================================================================================
+    ActorCriticPolicy --> "0..*" PPO;
+    MultiInputPolicy --> "0..*" PPO;
+    RolloutBuffer --> "0..*" PPO;
+    PPO -g-> OnPolicyAlgorithm;
+
+    OnPolicyAlgorithm -g-> BaseAlgorithm;
+    RolloutBuffer -->"0..*" OnPolicyAlgorithm;
+    ActorCriticPolicy --> "0..*" OnPolicyAlgorithm;
+    BaseCallback --> "0..*" OnPolicyAlgorithm;
+
+    ActorCriticPolicy -g-> BasePolicy;
+    BasePolicy -g-> BaseModel;
+    BaseModel -g-> nnModule;
+    BaseFeaturesExtractor -g-> nnModule;
+    BaseFeaturesExtractor --> "0..*" BasePolicy;
+    BaseFeaturesExtractor --> "0..*" BaseModel;
+    BaseFeaturesExtractor --> "0..*" ActorCriticPolicy;
+
+    RolloutBuffer -g-> BaseBuffer;
+}
