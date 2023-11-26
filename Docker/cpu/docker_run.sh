@@ -2,6 +2,8 @@
 
 ARGS=("$@")
 USER_NAME="arg"
+PROJ_NAME="oop-python-nycu"
+
 # Make sure processes in the container can connect to the x server
 # Necessary so gazebo can create a context for OpenGL rendering (even headless)
 XAUTH=/tmp/.docker.xauth
@@ -31,12 +33,12 @@ docker run \
     -e QT_X11_NO_MITSHM=1 \
     -e XAUTHORITY=$XAUTH \
     -v "$XAUTH:$XAUTH" \
-    -v "/home/$USER/oop-python-nycu:/home/arg/oop-python-nycu" \
+    -v "/home/$USER/$PROJ_NAME:/home/arg/$PROJ_NAME" \
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
     -v "/dev:/dev" \
     -v "/var/run/docker.sock:/var/run/docker.sock" \
-    -w "/home/arg/oop-python-nycu" \
+    -w "/home/arg/$PROJ_NAME" \
     --user "root:root" \
     --network host \
     --privileged \
