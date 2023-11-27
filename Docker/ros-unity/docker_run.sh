@@ -3,7 +3,7 @@
 ARGS=("$@")
 
 NAME=rsa
-REPOSITORY="argnctu/aoop_unity"
+REPOSITORY="argnctu/ros-unity"
 TAG="latest"
 REPO_NAME=oop-proj-unity-ros
 
