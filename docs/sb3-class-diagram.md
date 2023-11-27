@@ -1,6 +1,7 @@
 # Stable Baselines3 Class Diagrams
 
 ```mermaid
+classDiagram
     nnModule <|-- BaseModel
     nnModule <|-- BaseFeaturesExtractor
     nnModule <|-- MlpExtractor
@@ -48,4 +49,52 @@
 
     }
 
+```
+
+```mermaid
+classDiagram
+    ABC <|-- BaseAlgorithm
+    BaseAlgorithm <|-- OnPolicyAlgorithm
+    BaseAlgorithm <|-- OffPolicyAlgorithm
+
+    OnPolicyAlgorithm <|-- PPO
+    OnPolicyAlgorithm <|-- A2C
+
+    OffPolicyAlgorithm <|-- DQN
+    OffPolicyAlgorithm <|-- SAC
+    OffPolicyAlgorithm <|-- TD3
+```
+
+```mermaid
+classDiagram
+    direction LR:
+    ABC <|-- BaseBuffer
+    BaseBuffer <|-- ReplayBuffer
+    BaseBuffer <|-- RolloutBuffer
+
+    ReplayBuffer  <|-- DictReplayBuffer
+    RolloutBuffer <|-- DictRolloutBuffer
+
+    DictReplayBuffer <|-- HerReplayBuffer
+
+    NamedTuple <|-- ReplayBufferSamples
+    NamedTuple <|-- RolloutBufferSamples
+    NamedTuple <|-- DictReplayBufferSamples
+    NamedTuple <|-- DictRolloutBufferSamples
+
+
+```
+
+```mermaid
+classDiagram
+    direction LR:
+    ABC <|-- BaseCallback
+    BaseCallback <|-- EventCallback
+    BaseCallback <|-- CallbackList
+    BaseCallback <|-- CheckpointCallback
+    BaseCallback <|-- ConvertCallback
+    BaseCallback <|-- StopTrainingOnRewardThreshold
+    BaseCallback <|-- StopTrainingOnMaxEpisodes
+    BaseCallback <|-- StopTrainingOnNoModelImprovement
+    BaseCallback <|-- ProgressBarCallback
 ```
