@@ -74,6 +74,11 @@ RUN pip3 install mkdocs-with-pdf
 RUN pip3 install mkdocstrings
 RUN pip3 install mkdocs-material
 RUN pip3 install mkdocstrings[python]
+################################# mkdocs-mermaid2-plugin ################################
+RUN cd ${HOME} && git clone https://github.com/fralau/mkdocs-mermaid2-plugin.git \
+    && cd mkdocs-mermaid2-plugin \
+    && python3 setup.py install
+
 
 RUN apt install tree
 
