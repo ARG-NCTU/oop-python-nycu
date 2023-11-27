@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 NAME=aoop
-REPOSITORY="argnctu/ros-unity"
-TAG="latest"
+REPOSITORY="argnctu/oop"
+TAG="ros-unity"
 REPO_NAME=oop-proj-unity-ros
 
 IMG="${REPOSITORY}:${TAG}"
