@@ -21,7 +21,7 @@ WORKDIR /home/${USER}
 RUN cp /root/.bashrc ~/.bashrc
 
 RUN echo "root:root" | chpasswd
-RUN echo "${USER}:aoop" | chpasswd
+RUN echo "${USER}:111111" | chpasswd
 
 RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
     && apt-get -o Acquire::ForceIPv4=true install -yq --no-install-recommends \
@@ -78,7 +78,8 @@ RUN pip3 install mkdocstrings[python]
 RUN cd ${HOME} && git clone https://github.com/fralau/mkdocs-mermaid2-plugin.git \
     && cd mkdocs-mermaid2-plugin \
     && python3 setup.py install
-
+################################# networkx[all] #########################################
+RUN pip3 install networkx[all]
 
 RUN apt install tree
 
