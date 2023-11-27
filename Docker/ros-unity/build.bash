@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-REPOSITORY="argnctu/aoop_unity"
-TAG="latest"
+REPOSITORY="argnctu/oop"
+TAG="ros-unity"
 
 IMG="${REPOSITORY}:${TAG}"
 
