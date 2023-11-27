@@ -171,6 +171,8 @@ RUN apt install tree
 
 RUN pip3 install xdoctest
 RUN pip3 install networkx[all]
+
+RUN pip install mkdocs-mermaid2-plugin
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
