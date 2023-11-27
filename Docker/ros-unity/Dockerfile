@@ -56,7 +56,8 @@ RUN pip3 install --upgrade pip \
         scipy \
         opencv-python \
         dbg \
-        pytransform3d
+        pytransform3d \
+        pandas
 
 
 RUN apt-get install less
@@ -83,7 +84,7 @@ RUN pip3 install networkx[all]
 
 RUN apt install tree
 
-RUN pip3 install xdoctest
+RUN pip3 install xdoctest 
 
 RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
 && apt-get -o Acquire::ForceIPv4=true install -yq --no-install-recommends \
