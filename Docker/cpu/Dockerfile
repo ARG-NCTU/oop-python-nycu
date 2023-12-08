@@ -173,6 +173,9 @@ RUN pip3 install xdoctest
 RUN pip3 install networkx[all]
 
 RUN pip install mkdocs-mermaid2-plugin
+
+################################# llama #####################################
+RUN pip3 install llama-cpp-python
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
