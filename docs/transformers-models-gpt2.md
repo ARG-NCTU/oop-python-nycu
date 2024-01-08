@@ -72,13 +72,14 @@ classDiagram
 ### Tokenizer 
 ```mermaid
 classDiagram
-    GPT2Tokenizer <|-- PreTrainedTokenizer 
-    PreTrainedTokenizer <|-- PreTrainedTokenizerBase 
-    PreTrainedTokenizerBase <|-- SpecialTokensMixin
-    PreTrainedTokenizerBase <|-- PushToHubMixin
+    PreTrainedTokenizer <|-- GPT2Tokenizer
+    PreTrainedTokenizerBase <|-- PreTrainedTokenizer
+    SpecialTokensMixin  <|-- PreTrainedTokenizerBase
+    PushToHubMixin <|-- PreTrainedTokenizerBase
 
-    GPT2TokenizerFast <|-- PreTrainedTokenizerFast
-    PreTrainedTokenizerFast <|-- PreTrainedTokenizerBase
+    PreTrainedTokenizerFast <|-- GPT2TokenizerFast
+    PreTrainedTokenizerBase  <|-- PreTrainedTokenizerFast
+
 
 ``` 
 
