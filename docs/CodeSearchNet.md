@@ -2,6 +2,7 @@
 ---
 title : Model
 ---
+```mermaid
 classDiagram
     class Model{
         +get_default_hyperparameters() // abstract
@@ -54,6 +55,7 @@ classDiagram
 ---
 title : Encoder
 ---
+```mermaid
 classDiagram
     class Encoder{
             +get_default_hyperparameters() // abstract
