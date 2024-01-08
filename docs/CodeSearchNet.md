@@ -52,71 +52,75 @@ classDiagram
 
     Model <|-- SelfAttentionModel : inherits
     Model <|-- NeuralBoWModel : inherits
+```
+
 ---
 title : Encoder
 ---
 ```mermaid
 classDiagram
     class Encoder{
-            +get_default_hyperparameters() // abstract
-            +__init__()
-            +label()
-            +hyperparameters()
-            +metadata()
-            +placeholders()
-            +output_representation_size() // abstract
-            +get_hyper()
-            +_make_placeholders()
-            +make_model() // abstract
-            +init_metadata() // abstract
-            +load_metadata_from_sample() // abstract
-            +finalise_metadata() // abstract
-            +load_data_from_sample() // abstract
-            +init_minibatch() // abstract
-            +extend_minibatch_by_sample() // abstract
-            +minibatch_to_feed_dict() // abstract
-            +get_token_embeddings() // abstract
-        }
+        +get_default_hyperparameters() // abstract
+        +__init__()
+        +label()
+        +hyperparameters()
+        +metadata()
+        +placeholders()
+        +output_representation_size() // abstract
+        +get_hyper()
+        +_make_placeholders()
+        +make_model() // abstract
+        +init_metadata() // abstract
+        +load_metadata_from_sample() // abstract
+        +finalise_metadata() // abstract
+        +load_data_from_sample() // abstract
+        +init_minibatch() // abstract
+        +extend_minibatch_by_sample() // abstract
+        +minibatch_to_feed_dict() // abstract
+        +get_token_embeddings() // abstract
+    }
 
-        class MaskedSeqEncoder{
-            +get_default_hyperparameters()
-            +__init__()
-            +_make_placeholders()
-            +init_minibatch()
-            +minibatch_to_feed_dict()
-        }
+    class MaskedSeqEncoder{
+        +get_default_hyperparameters()
+        +__init__()
+        +_make_placeholders()
+        +init_minibatch()
+        +minibatch_to_feed_dict()
+    }
 
-        class SeqEncoder{
-            +get_default_hyperparameters()
-            +__init__()
-            +_make_placeholders()
-            +embedding_layer()
-            +init_metadata()
-            +_to_subtoken_stream()
-            +load_metadata_from_sample()
-            +finalise_metadata()
-            +load_data_from_sample()
-            +extend_minibatch_by_sample()
-            +get_token_embeddings()
-        }
+    class SeqEncoder{
+        +get_default_hyperparameters()
+        +__init__()
+        +_make_placeholders()
+        +embedding_layer()
+        +init_metadata()
+        +_to_subtoken_stream()
+        +load_metadata_from_sample()
+        +finalise_metadata()
+        +load_data_from_sample()
+        +extend_minibatch_by_sample()
+        +get_token_embeddings()
+    }
 
-        class NBoWEncoder{
-            +get_default_hyperparameters()
-            +__init__()
-            +output_representation_size()
-            +make_model()
-        }
+    class NBoWEncoder{
+        +get_default_hyperparameters()
+        +__init__()
+        +output_representation_size()
+        +make_model()
+    }
 
-        class SelfAttentionEncoder{
-            +get_default_hyperparameters()
-            +__init__()
-            +output_representation_size()
-            +make_model()
-        }
-        Encoder <|-- SeqEncoder : inherits
-        SeqEncoder <|-- MaskedSeqEncoder
-        MaskedSeqEncoder <|-- NBoWEncoder : inherit
-        MaskedSeqEncoder <|--  SelfAttentionEncoder : inherits
+    class SelfAttentionEncoder{
+        +get_default_hyperparameters()
+        +__init__()
+        +output_representation_size()
+        +make_model()
+    }
+    Encoder <|-- SeqEncoder : inherits
+    SeqEncoder <|-- MaskedSeqEncoder
+    MaskedSeqEncoder <|-- NBoWEncoder : inherit
+    MaskedSeqEncoder <|--  SelfAttentionEncoder : inherits
+```
+
 ---
 title : NeuralBoWModel
 ---
