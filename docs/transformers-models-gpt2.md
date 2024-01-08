@@ -1,39 +1,84 @@
 ## Transformer Class Diagram - GPT2
+### Model
 ```mermaid
 classDiagram
-    GPT2Config --o GPT2PreTrainedModel 
-    GPT2Model --o GPT2DoubleHeadsModel
-    GPT2Model --o GPT2ForQuestionAnswering 
-    GPT2Model --o GPT2ForSequenceClassification 
-    GPT2Model --o GPT2ForTokenClassification 
-    GPT2Model --o GPT2LMHeadModel 
-    GPT2Model --o GPT2PreTrainedModel 
-    GPT2LMHeadModel --o GPT2PreTrainedModel 
+    nnModule <|-- GPT2Attention
+    nnModule <|-- GPT2MLP
+    nnModule <|-- GPT2Block
+    nnModule <|-- PreTrainedModel
+    PreTrainedModel <|-- GPT2PreTrainedModel
+    GPT2PreTrainedModel <|-- GPT2Model
+    GPT2PreTrainedModel <|-- GPT2LMHeadModel
+    GPT2PreTrainedModel <|-- GPT2DoubleHeadsModel
+    GPT2PreTrainedModel <|-- GPT2ForSequenceClassification
+    GPT2PreTrainedModel <|-- GPT2ForTokenClassification
+    GPT2PreTrainedModel <|--  GPT2ForQuestionAnswering
 
-    GPT2DoubleHeadsModel --o GPT2PreTrainedModel
-    GPT2ForQuestionAnswering --o GPT2PreTrainedModel
-    GPT2ForSequenceClassification --o GPT2PreTrainedModel 
-    GPT2ForTokenClassification --o GPT2PreTrainedModel 
-    GPT2PreTrainedModel --o PreTrainedModel
+    class GPT2MLP{
+        forward()
+    }
 
-    GPT2Tokenizer --o PreTrainedTokenizer 
-    PreTrainedTokenizer --o PreTrainedTokenizerBase 
-    PreTrainedTokenizerBase --o SpecialTokensMixin
-    PreTrainedTokenizerBase --o PushToHubMixin
+    class GPT2Block{
+        forward()
+    }
 
-    GPT2TokenizerFast --o PreTrainedTokenizerFast
-    PreTrainedTokenizerFast --o PreTrainedTokenizerBase
-    PreTrainedTokenizerBase --o SpecialTokensMixin
-    PreTrainedTokenizerBase --o PushToHubMixin
+    class GPT2Attention{
+        prune_heads()
+        forward()
+    }
 
-    GPT2Attention --o GPT2Block
-    GPT2MLP --o GPT2Block 
-    GPT2Block --o nnModule 
+    class GPT2PreTrainedModel{
+    }
+    class GPT2Model{
+ 
+        parallelize()
+        deparallelize()
+        get_input_embeddings()
+        set_input_embeddings()
+        forward()
+    }
 
-    PreTrainedModel --o nnModule 
-    GPT2Attention --o nnModule 
-    GPT2MLP --o nnModule 
+    class GPT2LMHeadModel{
+        parallelize()
+        deparallelize()
+        get_output_embeddings()
+        set_output_embeddings()
+        prepare_inputs_for_generation()
+        forward()
+    }
+
+    class GPT2DoubleHeadsModel{
+
+        parallelize()
+        deparallelize()
+        get_output_embeddings()
+        set_output_embeddings()
+        prepare_inputs_for_generation()
+        forward()
+    }
+    
+    class GPT2ForSequenceClassification{
+        forward()
+    }
+
+    class GPT2ForTokenClassification{
+        forward()
+    }
+    
+    class GPT2ForQuestionAnswering{
+        forward()
+    }
+``` 
+### Tokenizer 
+```mermaid
+classDiagram
+    GPT2Tokenizer <|-- PreTrainedTokenizer 
+    PreTrainedTokenizer <|-- PreTrainedTokenizerBase 
+    PreTrainedTokenizerBase <|-- SpecialTokensMixin
+    PreTrainedTokenizerBase <|-- PushToHubMixin
+
+    GPT2TokenizerFast <|-- PreTrainedTokenizerFast
+    PreTrainedTokenizerFast <|-- PreTrainedTokenizerBase
 
 ``` 
-
 
