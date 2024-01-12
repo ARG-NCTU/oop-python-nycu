@@ -11,27 +11,27 @@ classDiagram
     Datasets <|-- BuilderConfig
 
     class Datasets{
-        load_dataset(path: str, name: str = None, split: str = None): Dataset or DatasetDict
-        load_dataset_builder(path: str, name: str = None, split: str = None): DatasetBuilder
-        get_dataset_split_names(path: str, config_name: str = None): list
+        load_dataset()
+        load_dataset_builder()
+        get_dataset_split_names()
     }
 
     class Dataset{
-        num_columns(): int
-        num_rows(): int
-        column_names(): list
-        shape(): tuple
-        from_dict(mapping: dict): Dataset
-        cast_column(column: str, feature: FeatureType): Dataset
+        num_columns()
+        num_rows()
+        column_names()
+        shape()
+        from_dict()
+        cast_column()
     }
 
     class DatasetDict{
         dict[str, datasets.Dataset] DatasetDict
-        num_columns(): dict[str, int]
-        num_rows(): dict[str, int]
-        column_names(): dict[str, list]
-        shape(): dict[str, tuple]
-        map(function: typing.Optional[typing.Callable] = None, batched: bool = False): DatasetDict
+        num_columns()
+        num_rows()
+        column_names()
+        shape()
+        map()
     }
 
     class Audio{
@@ -41,8 +41,8 @@ classDiagram
     }
 
     class DatasetBuilder{
-        as_dataset(split: str = None): Dataset
-        download_and_prepare(): None
+        as_dataset()
+        download_and_prepare()
     }
 
     class BuilderConfig{
