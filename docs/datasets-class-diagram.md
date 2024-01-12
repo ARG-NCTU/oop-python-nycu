@@ -10,7 +10,7 @@ classDiagram
     Datasets <|-- GeneratorBasedBuilder
     Datasets <|-- BuilderConfig
 
-    class Datsets{
+    class Datasets{
         load_dataset(path: str, name: str = None, split: str = None): Dataset or DatasetDict
         load_dataset_builder(path: str, name: str = None, split: str = None): DatasetBuilder
         get_dataset_split_names(path: str, config_name: str = None): list
