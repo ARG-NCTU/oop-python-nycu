@@ -91,6 +91,9 @@ RUN pip3 install transformers
 RUN pip3 install datasets 
 RUN pip3 install evaluate
 
+##################################### Roma #####################################
+RUN pip3 install roma
+
 ##################################### setting ###################################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
