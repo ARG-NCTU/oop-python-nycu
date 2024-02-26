@@ -86,6 +86,11 @@ RUN pip3 install gymnasium[box2d]
 ################################# tkinter #####################################
 RUN pip3 install mypy
 
+##################################### HuggingFace #####################################
+RUN pip3 install transformers
+RUN pip3 install datasets 
+RUN pip3 install evaluate
+
 ##################################### setting ###################################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
