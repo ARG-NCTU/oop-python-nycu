@@ -2,6 +2,11 @@
 ## EXAMPLE: returning a tuple
 #########################
 def quotient_and_remainder(x, y):
+    """
+    Function that returns the quotient and remainder of two numbers
+    x: int, y: int returns: tuple (quotient, remainder)
+
+    """
     q = x // y
     r = x % y
     return (q, r)
