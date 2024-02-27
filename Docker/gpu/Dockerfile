@@ -93,7 +93,7 @@ RUN pip3 install evaluate
 
 ##################################### Roma #####################################
 RUN pip3 install roma
-
+RUN pip3 install jupyter 
 ##################################### setting ###################################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
