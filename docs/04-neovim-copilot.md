@@ -187,10 +187,8 @@ nvim
 :InstallPlugin
 ```
 
-## More Plugins
+Try it out:
+* Ctrl + n -> 左邊出現檔案管理
+* F8 -> 出現function list
+* :Rg -> 全文檢索搜尋，例如 class XXX, def YYY, 在專案裡都可以找
 
-## Set up init.vim for neovim like .vimrc for vim
-
-Check the sample init.vim
-
-https://github.com/ARG-NCTU/vim-python-ide/blob/master/nvim/init.vim
