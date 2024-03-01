@@ -184,7 +184,15 @@ autocmd vimEnter *.cpp map <F9> :w <CR> :!clear ; g++ --std=c++17 %; if [ -f a.o
 In neovim, call InstallPlugin to install
 ```
 nvim
-:InstallPlugin
+:PlugInstall
+```
+
+# Install NeoVim Tagbar Plugins
+```
+sudo apt install libncurses5-dev \
+libgtk2.0-dev libatk1.0-dev \
+libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+python3-dev git ctags ripgrep
 ```
 
 Try it out:
