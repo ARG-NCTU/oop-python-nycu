@@ -14,15 +14,15 @@ See https://unixcop.com/how-to-install-neovim-on-ubuntu-20-04-22-04-lts/
 See https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
 install with option 3 — Installing Node Using the Node Version Manager 
 
-We need 16
+We need newest version of nvm
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source ~/.bashrc
 nvm list-remote
-nvm install v16.10.0
+nvm install v18.19.1
 ```
-
+Substitute the nvm version if newer version is released
 
 ## Copilot
 
