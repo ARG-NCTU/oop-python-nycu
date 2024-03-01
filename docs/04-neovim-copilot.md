@@ -1,5 +1,53 @@
 # Install Copilot for Neovim
 
+## Get Github student benefits
+
+1. Enable 2FA
+   
+   Go to https://github.com/settings/security
+   ![Github 2FA](img/04-01-github-2fa.png)
+
+2. Fill out Billing information
+   
+   Go to https://github.com/settings/billing/payment_information
+
+   Only need to fill out the payment information, credit card is not required.
+
+   ![Github Payment info](img/04-02-github-pay.png)
+
+3. Fill out the Benefits Application
+   
+   Go to https://education.github.com/discount_requests/application
+
+   If your default email is not your school email, you need to add your school email to your github account.
+
+   ![Benefits Application](img/04-03-benefits-application.png)
+
+4. Download The Certificate of Enrollment (在學證明單) and upload it.
+   
+   Log in Portal (單一入口) and enter Grading System (學籍成績管理系統) and Download.
+
+   The file format should be jpg.
+
+   Use `choose file` to upload it.
+
+   Finally, click `Process my application` to continue.
+
+5. Verify your application
+   
+   Go back to https://education.github.com/discount_requests/application
+
+   You will see the status of your application.
+
+   ![Benefits approved](img/04-04-benefits-approved.png)
+
+6. Verify your Github Copilot subscription.
+
+   Go to https://github.com/settings/copilot
+
+   You will see the status of your subscription.
+
+   ![Github copilot sub](img/04-05-github-copilot-sub.png)
 
 ## Install Neovim
 
