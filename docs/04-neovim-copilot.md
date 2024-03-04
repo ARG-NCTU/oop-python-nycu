@@ -188,6 +188,9 @@ nvim
 ```
 
 # Install NeoVim Tagbar Plugins
+
+Ubuntu 20.04 run the following command to install the required packages
+
 ```
 sudo apt install libncurses5-dev \
 libgtk2.0-dev libatk1.0-dev \
@@ -195,8 +198,16 @@ libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
 python3-dev git ctags ripgrep
 ```
 
+Ubuntu 22.04 run the following command to install the required packages
+
+```
+sudo apt install libncurses5-dev \
+libgtk2.0-dev libatk1.0-dev \
+libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev-is-python3 \
+python3-dev git universal-ctags ripgrep
+```
+
 Try it out:
 * Ctrl + n -> 左邊出現檔案管理
 * F8 -> 出現function list
 * :Rg -> 全文檢索搜尋，例如 class XXX, def YYY, 在專案裡都可以找
-
