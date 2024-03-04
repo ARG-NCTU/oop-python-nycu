@@ -12,17 +12,17 @@ def test_quotient_and_remainder():
 
 
 def test_sum_elem_method1():
-    assert sum_elem_method1([1, 2, 3, 4]) == 10
-    assert sum_elem_method1([-1, -2, -3, -4]) == -10
-    assert sum_elem_method1([13, 34, 0, 88, 88, 0, 9]) == 232
-    assert sum_elem_method1([5]) == 5
-    assert sum_elem_method1([]) == 0
+    assert lec5.sum_elem_method1([1, 2, 3, 4]) == 10
+    assert lec5.sum_elem_method1([-1, -2, -3, -4]) == -10
+    assert lec5.sum_elem_method1([13, 34, 0, 88, 88, 0, 9]) == 232
+    assert lec5.sum_elem_method1([5]) == 5
+    assert lec5.sum_elem_method1([]) == 0
 
 
 def test_sum_elem_method2():
-    assert sum_elem_method2([1, 2, 3, 4]) == 10
-    assert sum_elem_method2([-1, -2, -3, -4]) == -10
-    assert sum_elem_method2([13, 34, 0, 88, 88, 0, 9]) == 232
-    assert sum_elem_method2([5]) == 5
-    assert sum_elem_method2([]) == 0
+    assert lec5.sum_elem_method2([1, 2, 3, 4]) == 10
+    assert lec5.sum_elem_method2([-1, -2, -3, -4]) == -10
+    assert lec5.sum_elem_method2([13, 34, 0, 88, 88, 0, 9]) == 232
+    assert lec5.sum_elem_method2([5]) == 5
+    assert lec5.sum_elem_method2([]) == 0
 
