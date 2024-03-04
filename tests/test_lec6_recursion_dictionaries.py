@@ -23,3 +23,6 @@ def test_is_palindrome():
     assert lec6.is_palindrome('eve') == True
     assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
     assert lec6.is_palindrome('Is this a palindrome') == False
+
+def test_most_common_words():
+    assert lec6.most_common_words(beatles) == ('yeah', 28)
