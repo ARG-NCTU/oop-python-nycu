@@ -18,7 +18,7 @@ def test_fib():
     assert lec6.fib(10) == 89
     assert lec6.fib(11) == 144
     assert lec6.fib(12) == 235
-
+    assert lec6.fib(13) == 379
 # please write a test for is_palindrome function
 def test_is_palindrome():
     assert lec6.is_palindrome('eve') == True
