@@ -9,6 +9,6 @@ def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(20, 8) == (2, 4)
     assert lec5.quotient_and_remainder(20, 9) == (2, 2)
     assert lec5.quotient_and_remainder(20, 10) == (2, 0)
-
+    assert lec5.quotient_and_remainder(20, 11) == (1, 9)
 
 
