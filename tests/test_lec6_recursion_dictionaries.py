@@ -23,7 +23,9 @@ def test_is_palindrome():
     assert lec6.is_palindrome('eve') == True
     assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
     assert lec6.is_palindrome('Is this a palindrome') == False
-    assert lec6.is_palindrome('Is this a palindrome') == True
+    assert lec6.is_palindrome('eillie') == True
+    assert lec6.is_palindrome('cookieliileikooc') == True
+
 
 def test_most_common_words():
     she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
