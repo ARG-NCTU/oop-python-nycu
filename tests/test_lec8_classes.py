@@ -1,6 +1,6 @@
 import add_path
 import mit_ocw_exercises.lec8_classes as lc
-
+    
 def test_coordinate():
    c = lc.Coordinate(3, 4)
    origin = lc.Coordinate(0,0)
@@ -117,4 +117,3 @@ def test_9_intset():
     s.remove(8)
     assert not s.member(8)
     assert s.member(7)
-
