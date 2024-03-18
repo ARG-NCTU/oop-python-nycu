@@ -26,4 +26,3 @@ def test_is_palindrome():
     assert lec6.is_palindrome('eillie') == True
     assert lec6.is_palindrome('cookieliileikooc') == True
 
-
