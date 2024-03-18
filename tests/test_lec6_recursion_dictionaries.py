@@ -26,4 +26,13 @@ def test_is_palindrome():
     assert lec6.is_palindrome('eillie') == True
     assert lec6.is_palindrome('cookieliileikooc') == True
 
-
+fuchengguo = ['wuo','due','ni','i','i','i','bu','wan']
+beatles = lec6.lyrics_to_frequencies(fuchengguo)
+def test_lyrics_to_frequencies():
+    assert lec6.lyrics_to_frequencies(fuchengguo) == {'wuo': 1, 'due': 1, 'ni': 1, 'i': 3, 'bu': 1, 'wan': 1}
+def test_most_common_words():
+    assert lec6.most_common_words(beatles) == (['i'], 3)
+def test_words_often():
+    assert lec6.words_often(beatles, 3) == [(['i'], 3)]
+    assert lec6.words_often(beatles, 2) == []
+        
