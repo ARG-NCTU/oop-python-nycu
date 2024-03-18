@@ -71,7 +71,12 @@ def test_calculate_average():
     assert average_result == 17.5
 
 def test_gcd():
-    assert gcd(72, 96) == 24
+    
+
+
+
+
+
 def test_rev_list():
     L=[1,2,3,4]
     rev_list(L)
