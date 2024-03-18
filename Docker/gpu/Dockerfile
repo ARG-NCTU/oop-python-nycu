@@ -90,7 +90,8 @@ RUN pip3 install mypy
 RUN pip3 install transformers \
     datasets \
     evaluate \
-    transformers[sentencepiece]
+    transformers[sentencepiece] \
+    accelerate
 ##################################### Roma #####################################
 RUN pip3 install roma
 RUN pip3 install jupyter 
