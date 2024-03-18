@@ -9,6 +9,17 @@ def test_coordinate():
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5
 
+def test_intset():
+    s = lc.intSet()
+    s.insert(3)
+    s.insert(4)
+    assert s.member(3)
+    assert s.member(4)
+    assert not s.member(5)
+    s.remove(3)
+    assert not s.member(3)
+    assert s.member(4)
+
 def test_13_coordinate():
     c = lc.Coordinate(14, 48)
     origin = lc.Coordinate(0,0)
@@ -23,15 +34,3 @@ def test_13_coordinate():
     assert c.y == 11
     assert c.distance(origin) == 11.40175425099138
     assert origin.distance(c) == 11.40175425099138
-
-def test_intset():
-    s = lc.intSet()
-    s.insert(3)
-    s.insert(4)
-    assert s.member(3)
-    assert s.member(4)
-    assert not s.member(5)
-    s.remove(3)
-    assert not s.member(3)
-    assert s.member(4)
-
