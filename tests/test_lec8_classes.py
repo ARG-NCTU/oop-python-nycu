@@ -127,3 +127,8 @@ def test_9_intset():
     assert not s.member(8)
     assert s.member(7)
 
+    b = lc.Fraction(3,4)    
+    assert a+b == lc.Fraction(5,4)
+    assert a-b == lc.Fraction(-1,4)
+    assert a*b == lc.Fraction(3,8)
+    assert a/b == lc.Fraction(2,3)
