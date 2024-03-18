@@ -19,8 +19,6 @@ def test_12_coordinate():
     # Test __str__
     assert str(c) == "<3,4>"
 
-# Test fraction
-
 def test_intset():
     s = lc.intSet()
     s.insert(3)
