@@ -9,7 +9,6 @@ def test_coordinate():
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5 
 
-
 def test_intset():
     s = lc.intSet()
     s.insert(3)
