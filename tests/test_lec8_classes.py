@@ -21,8 +21,6 @@ def test_intset():
     assert s.member(4)
     
 
-
-
 def test_1_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
