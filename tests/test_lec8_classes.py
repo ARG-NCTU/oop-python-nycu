@@ -20,3 +20,24 @@ def test_intset():
     assert not s.member(3)
     assert s.member(4)
 
+def test_8_coordinate():
+    c = lc.Coordinate(6,8)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 6
+    assert c.y == 8
+    assert c.distance(origin) == 10
+    assert origin.distance(c) == 10
+    
+    assert not c.x == 7; assert not c.y == 9
+
+
+def test_8_intset():
+    myset = lc.intSet() # create a new intSet
+    myset.insert(100)
+    myset.insert(200)
+    myset.insert(300)
+    assert myset.member(100) # returns True
+    assert not myset.member(400) # returns False
+    myset.remove(100)
+    assert not myset.member(100) # returns False
+    myset.__str__() # returns a string representation of the set
