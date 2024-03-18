@@ -62,3 +62,10 @@ def test_6_coordinate():
     assert c.y == 12
     assert c.distance(origin) == 13
     assert origin.distance(c) == 13
+def test_14_coordinate():
+    s = lc.Coordinate(8, 15)
+    origin = lc.Coordinate(0,0)
+    assert s.x == 8
+    assert s.y == 15
+    assert s.distance(origin) == 17
+    assert origin.distance(s) == 17
