@@ -87,13 +87,15 @@ RUN pip3 install gymnasium[box2d]
 RUN pip3 install mypy
 
 ##################################### HuggingFace #####################################
-RUN pip3 install transformers
-RUN pip3 install datasets 
-RUN pip3 install evaluate
-
+RUN pip3 install transformers \
+    datasets \
+    evaluate \
+    transformers[sentencepiece] \
+    accelerate
 ##################################### Roma #####################################
 RUN pip3 install roma
-
+RUN pip3 install jupyter 
+RUN pip3 install ipytest
 ##################################### setting ###################################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
