@@ -1,7 +1,7 @@
 import add_path
 import mit_ocw_exercises.lec8_classes as lc
 
-def test_coordinate():
+def test_17_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
     assert c.x == 3
