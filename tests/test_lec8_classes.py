@@ -1,3 +1,4 @@
+
 import add_path
 import mit_ocw_exercises.lec8_classes as lc
 
@@ -20,3 +21,8 @@ def test_intset():
     assert not s.member(3)
     assert s.member(4)
 
+def test_Fraction_group6():
+    a = lc.Fraction(1, 4)
+    b = lc.Fraction(3, 4)
+    c = a + b
+    assert float(c) == 1.0
