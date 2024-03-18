@@ -20,7 +20,7 @@ def test_intset():
     assert not s.member(3)
     assert s.member(4)
 
-def test_group14_Coordinate():
+def test_14_coordinate():
     s = lc.Coordinate(8, 15)
     origin = lc.Coordinate(0,0)
     assert s.x == 8
