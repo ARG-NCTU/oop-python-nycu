@@ -21,7 +21,7 @@ def test_intset():
     assert not s.member(3)
     assert s.member(4)
 
-def test_Fraction_group6():
+def test_6_fraction():
     a = lc.Fraction(1, 4)
     b = lc.Fraction(3, 4)
     c = a + b
