@@ -20,3 +20,10 @@ def test_intset():
     assert not s.member(3)
     assert s.member(4)
 
+def test_5_Fraction():
+    a = lc.Fraction(1,2)
+    assert a.__float__() == 0.5
+    assert a.__str__() == '1/2'
+    
+    
+    
