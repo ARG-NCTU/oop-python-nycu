@@ -1,3 +1,6 @@
+import pytest
+import add_path
+
 #################
 ## EXAMPLE: simple Coordinate class
 #################
@@ -15,16 +18,6 @@ class Coordinate(object):
         x_diff_sq = (self.x-other.x)**2
         y_diff_sq = (self.y-other.y)**2
         return (x_diff_sq + y_diff_sq)**0.5
-
-
-
-c = Coordinate(3,4)
-origin = Coordinate(0,0)
-print(c.x, origin.x)
-print(c.distance(origin))
-print(Coordinate.distance(c, origin))
-print(origin.distance(c))
-print(c)
 
 
 #################
@@ -60,14 +53,6 @@ class Fraction(object):
     def inverse(self):
         """ Returns a new fraction representing 1/self """
         return Fraction(self.denom, self.num)
-
-a = Fraction(1,4)
-b = Fraction(3,4)
-c = a + b # c is a Fraction object
-print(c)
-print(float(c))
-print(Fraction.__float__(c))
-print(float(b.inverse()))
 ##c = Fraction(3.14, 2.7) # assertion error
 ##print a*b # error, did not define how to multiply two Fraction objects
 
@@ -108,17 +93,36 @@ class intSet(object):
         self.vals.sort()
         return '{' + ','.join([str(e) for e in self.vals]) + '}'
 
+def test_9_coordinate():
+    c = Coordinate(3,4)
+    origin = Coordinate(0,0)
+    print(c.x, origin.x)
+    print(c.distance(origin))
+    print(Coordinate.distance(c, origin))
+    print(origin.distance(c))
+    print(c)
 
-s = intSet()
-print(s)
-s.insert(3)
-s.insert(4)
-s.insert(3)
-print(s)
-s.member(3)
-s.member(5)
-s.insert(6)
-print(s)
-#s.remove(3)  # leads to an error
-print(s)
-s.remove(3)
+def test_9_intset():
+    s = intSet()
+    print(s)
+    s.insert(3)
+    s.insert(4)
+    s.insert(3)
+    print(s)
+    s.member(3)
+    s.member(5)
+    s.insert(6)
+    print(s)
+    #s.remove(3)  # leads to an error
+    print(s)
+    s.remove(3)
+def test_9_Fraction():
+    a = Fraction(1,4)
+    b = Fraction(3,4)
+    c = a + b # c is a Fraction object
+    print(c)
+    print(float(c))
+    print(Fraction.__float__(c))
+    print(float(b.inverse()))
+##c = Fraction(3.14, 2.7) # assertion error
+##print a*b # error, did not define how to multiply two Fraction objects
