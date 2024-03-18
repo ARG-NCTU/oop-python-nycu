@@ -40,3 +40,11 @@ def test_17_intset():
     assert s.member(4)
     
 
+def test_6_coordinate():
+    c = lc.Coordinate(5, 12)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 5
+    assert c.y == 12
+    assert c.distance(origin) == 13
+    assert origin.distance(c) == 13
+
