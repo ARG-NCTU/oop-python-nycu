@@ -77,6 +77,6 @@ def test_most_common_words():
     'yeah', 'yeah', 'yeah', 'yeah'
     ]
 
-    beatles = lyrics_to_frequencies(she_loves_you)
+    beatles = lec6.lyrics_to_frequencies(she_loves_you)
     
     assert lec6.most_common_words(beatles) == ('yeah', 28)
