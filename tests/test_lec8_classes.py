@@ -8,6 +8,11 @@ def test_coordinate():
     assert c.y == 4
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5
+def test_1_coordinate():
+    a = lc.Coordinate(5, 12)
+    assert a.distance(origin) == 13
+    assert a.x == 5
+    assert a.y == 12
 
 def test_intset():
     s = lc.intSet()
@@ -20,3 +25,13 @@ def test_intset():
     assert not s.member(3)
     assert s.member(4)
 
+def test_1_intset():
+    b = lc.intSet()
+    b.insert(10)
+    b.insert(11)
+    assert b.member(10)
+    assert b.member(11)
+    assert not b.member(12)
+    b.remove(11)
+    assert not b.member(11)
+    assert b.member(10)
