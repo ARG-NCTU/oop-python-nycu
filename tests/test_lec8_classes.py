@@ -20,3 +20,22 @@ def test_intset():
     assert not s.member(3)
     assert s.member(4)
 
+def test_7_coordinate():
+    c = lc.Coordinate(6, 8)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 6
+    assert c.y == 8
+    assert c.distance(origin) == 10
+    assert origin.distance(c) == 10
+
+
+def test_7_intset():
+    s = lc.intSet()
+    s.insert(7)
+    s.insert(9)
+    assert s.member(7)
+    assert s.member(9)
+    assert not s.member(10)
+    s.remove(7)
+    assert not s.member(7)
+    assert s.member(9)
