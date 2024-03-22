@@ -33,7 +33,6 @@ RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
     unzip \
     make \
     git \
-    git-lfs \
     vim \
     gedit \
     wget \
