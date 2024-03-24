@@ -10,3 +10,12 @@ def test_animal():
     print(a)
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
+
+def test_animal1():
+    b = inh.Animal(1)
+    print(b)
+    print(b.get_name())
+    b.set_age(5)
+    print(b)
+    assert b.get_name() is None
+    assert b.get_age() == 5
