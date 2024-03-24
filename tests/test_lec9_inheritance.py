@@ -19,3 +19,23 @@ def test_animal1():
     print(b)
     assert b.get_name() is None
     assert b.get_age() == 5
+
+def test_Student1():
+    s1 = inh.Student("Ella",22, "Nano")
+    print (s1)
+    s1.change_major("ECE")
+    print(s1)
+    s1.set_name("Johnson")
+    print(s1)
+    assert s1.get_name() == "Johnson"
+
+    s2 = inh.Student("Sana", 25, "Twice")
+    print(s2.get_name,"says, ")
+    s2.speak()
+    s2.add_friend("Momo")
+    print(s2.get_friends())
+    s2.add_friend("Mina")
+    print(s2.get_friends())
+    assert s2.get_friends() == ["Momo", "Mina"]
+
+
