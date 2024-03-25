@@ -2,7 +2,7 @@ import add_path
 import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
 
-def test_animal():
+def group11_test_animal():
     a = inh.Animal(4)
     print(a)
     print(a.get_age())
