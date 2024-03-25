@@ -64,8 +64,8 @@ def test_13_animal():
     a.set_name("Yuyu")
     print(a)
     assert a.get_name() == "Yuyu"
-<<<<<<< HEAD
     assert a.get_age() == 19
+    
 def test_person():
     a = inh.Animal(19)
     print(a)
@@ -73,7 +73,5 @@ def test_person():
     a.set_name("PPPP")
     print(a)
     assert a.get_name() == "PPPP"
-=======
->>>>>>> 181e11de6d98b129591b194bce39889b805cc285
     assert a.get_age() == 19
 
