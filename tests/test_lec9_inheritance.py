@@ -19,6 +19,22 @@ def test_animal_5A():
     print(a)
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
+
+def test_7_animal():
+    a = inh.Animal(6)
+    a.set_name("juicy")
+    print(a)
+    assert a.get_name() == "juicy"
+    assert a.get_age() == 6
+    a.set_age(5)
+    print(a)
+    assert a.get_age() == 5
+    a.set_age(7)
+    print(a)
+    assert a.get_age() == 7
+    a.set_name("bouncy")
+    print(a)
+    assert a.get_name() == "bouncy"
     a.set_name('outgoing')
     assert a.get_name() == 'outgoing'
     a.set_age(5)
