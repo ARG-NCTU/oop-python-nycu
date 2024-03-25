@@ -1,4 +1,45 @@
-# add mermaid class diagram for object XYObject
+
+## Overview
+```mermaid
+classDiagram
+    class XYObject {
+    }
+
+    class XYPoint {
+    }
+
+    class XYSegList {
+    }
+
+    class XYPolygon {
+    }
+
+    class XYHexagon {
+    }
+
+    XYObject <|-- XYPoint
+    XYObject <|-- XYSegList
+    XYSegList <|-- XYPolygon
+    XYPolygon <|-- XYHexagon
+```
+
+## Has-A Relationship
+```mermaid
+classDiagram
+    class XYPatternBlock {
+    }
+
+    class XYPoint {
+    }
+
+    class XYSegList {
+    }
+
+    XYPatternBlock "1" -- "many" XYPoint : has
+    XYPatternBlock "1" -- "many" XYSegList : has
+```
+
+## Detail
 ```mermaid
 classDiagram
     class XYObject {
