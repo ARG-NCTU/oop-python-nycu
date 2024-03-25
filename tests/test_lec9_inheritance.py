@@ -48,8 +48,6 @@ def test_5_Rabbit():
     print ("p3:" ,p3)
 
     r1 = p1 + p2
-    print(r1)
     r2 = p1 + p3
-    print(r2)
     assert r1 != r2
 
