@@ -1,7 +1,7 @@
 import add_path
 import mit_ocw_exercises.lec8_classes as lc
 
-def test_coordinate():
+def test_4_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
     assert c.x == 3
@@ -9,7 +9,7 @@ def test_coordinate():
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5
 
-def test_intset():
+def test_4_intset():
     s = lc.intSet()
     s.insert(3)
     s.insert(4)
