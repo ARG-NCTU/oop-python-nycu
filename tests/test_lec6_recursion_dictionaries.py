@@ -80,3 +80,4 @@ def test_most_common_words():
     ]
 
     assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
+    assert lec6.is_palindrome('cookieliileikooc') == True
