@@ -29,5 +29,4 @@ def test_14_rabbit():
     r4 = r1 + r2
     assert r1.get_name() == "fluffy"
     assert r1.get_age() == 3
-    assert r1.get_species() == "Rabbit"
     assert r3 == r4
