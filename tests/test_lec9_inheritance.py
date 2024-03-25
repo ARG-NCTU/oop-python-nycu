@@ -1,4 +1,4 @@
-import add_path
+iimport add_path
 import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
 
@@ -11,7 +11,7 @@ def test_animal():
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
  
-def test_03_cat
+def test_03_cat():
     class Cat(Animal):
     def speak(self):
         print("meow")
