@@ -166,3 +166,13 @@ def test_14_rabbit():
     assert r1.get_name() == "fluffy"
     assert r1.get_age() == 3
     assert r3 == r4
+
+def test_dog():
+    a = inh.Animal(3)
+    print(a)
+    print(a.get_age())
+    a.set_name("gg")
+    print(a)
+    assert a.get_name() == "gg"
+    assert a.get_age() == 3
+
