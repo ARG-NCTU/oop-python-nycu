@@ -155,3 +155,14 @@ def test_person():
     print(a)
     assert a.get_name() == "PPPP"
     assert a.get_age() == 19
+
+def test_6_person():
+    p = inh.Person("John", 25)
+    print(p)
+    assert p.get_name() == "John"
+    assert p.get_age() == 25
+    p.set_age(26)
+    assert p.get_age() == 26
+    p.set_name("Jane")
+    assert p.get_name() == "Jane"
+    print(p)
