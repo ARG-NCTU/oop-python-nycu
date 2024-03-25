@@ -13,7 +13,7 @@ def test_animal_5A():
     a.set_name('outgoing')
     assert a.get_name() == 'outgoing'
     a.set_age(5)
-    assert a.get_age() == 5
+    assert a.get_age() ==  5
     assert a.__str__() == "animal:outgoing:5"
 
 
