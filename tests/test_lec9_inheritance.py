@@ -15,9 +15,9 @@ def test_animal_5A():
     a = inh.Animal(4)
     print(a)
     print(a.get_age())
-    a.set_name("ninja")
+    a.set_name("fluffy")
     print(a)
-    assert a.get_name() == "ninja"
+    assert a.get_name() == "fluffy"
     assert a.get_age() == 4
     a.set_name('outgoing')
     assert a.get_name() == 'outgoing'
