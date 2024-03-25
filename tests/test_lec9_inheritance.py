@@ -1,4 +1,4 @@
-iimport add_path
+import add_path
 import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
 
@@ -13,10 +13,10 @@ def test_animal():
  
 def test_03_cat():
     class Cat(Animal):
-    def speak(self):
-        print("meow")
-    def __str__(self):
-        return "cat:"+str(self.name)+":"+str(self.age)
+        def speak(self):
+            print("meow")
+        def __str__(self):
+            return "cat:"+str(self.name)+":"+str(self.age)
     
     print("\n---- cat tests ----")
     c = Cat(5)
