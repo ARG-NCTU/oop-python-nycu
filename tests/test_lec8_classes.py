@@ -38,6 +38,13 @@ def test_8_coordinate():
     assert origin.distance(c) == 10
     
     assert not c.x == 7; assert not c.y == 9
+def test_16_coordinate():
+    a=lc.Coordinate(5,12)
+    o=lc.Coordinate(0,0)
+    assert a.x==5
+    assert a.y==12
+    assert a.distance(o)==13
+    assert o.distance(a)==13
 
 def test_8_intset():
     myset = lc.intSet() # create a new intSet
