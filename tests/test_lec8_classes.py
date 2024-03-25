@@ -166,6 +166,16 @@ def test_9_coordinate():
     assert c.distance(origin) == 10
     assert origin.distance(c) == 10
 
+
+
+def test_5_Fraction():
+    a = lc.Fraction(1,2)
+    assert a.__float__() == 0.5
+    assert a.__str__() == '1/2'
+    
+    
+    
+
 def test_7_intset():
     s = lc.intSet()
     s.insert(7)
@@ -177,6 +187,7 @@ def test_7_intset():
     assert not s.member(7)
     assert s.member(9)
 
+
 def test_9_intset():
     s = lc.intSet()
     s.insert(8)
@@ -186,6 +197,13 @@ def test_9_intset():
     s.remove(8)
     assert not s.member(8)
     assert s.member(7)
+
+
+    b = lc.Fraction(3,4)    
+    assert a+b == lc.Fraction(5,4)
+    assert a-b == lc.Fraction(-1,4)
+    assert a*b == lc.Fraction(3,8)
+    assert a/b == lc.Fraction(2,3)
 
 
 def test_2_Fraction():
@@ -210,3 +228,4 @@ if __name__ == "__main__":  #Updated by group2
     test_2_Fraction()
     print("test_2_Fraction passed")
     print("All tests passed")
+
