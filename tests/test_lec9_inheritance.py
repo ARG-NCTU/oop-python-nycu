@@ -11,6 +11,7 @@ def test_animal():
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
 
+
 def test_animal1():
     b = inh.Animal(1)
     print(b)
@@ -49,4 +50,13 @@ def test_5_Rabbit():
     r1 = p1 + p2
     r2 = p1 + p3
     assert r1 != r2
+
+def test_13_animal():
+    a = inh.Animal(19)
+    print(a)
+    print(a.get_age())
+    a.set_name("Yuyu")
+    print(a)
+    assert a.get_name() == "Yuyu"
+    assert a.get_age() == 19
 
