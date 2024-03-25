@@ -38,4 +38,18 @@ def test_Student1():
     print(s2.get_friends())
     assert s2.get_friends() == ["Momo", "Mina"]
 
+def test_5_Rabbit():
+    p1 = inh.Rabbit(2)
+    p2 = inh.Rabbit(3)
+    p3 = inh.Rabbit(5)
+
+    print ("p1:",p1)
+    print ("p2:",p2)
+    print ("p3:" ,p3)
+
+    r1 = p1 + p2
+    print(r1)
+    r2 = p1 + p3
+    print(r2)
+    assert r1 != r2
 
