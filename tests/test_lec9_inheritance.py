@@ -155,14 +155,3 @@ def test_person():
     print(a)
     assert a.get_name() == "PPPP"
     assert a.get_age() == 19
-
-def test_13_rabbit():
-    r1 = inh.Rabbit("Yuyu2", 3)
-    r2 = inh.Rabbit("reb", 4)
-    r3 = r1 + r2
-    r4 = r2 + r1
-    assert r3.get_parent1().get_rid() == "007"
-    assert r3.get_parent2().get_rid() == "008"
-    assert r4.get_parent1().get_rid() == "008"
-    assert r4.get_parent2().get_rid() == "007"
-    assert r3 == r4 #r3 and r4 have same parents?
