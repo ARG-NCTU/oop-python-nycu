@@ -125,8 +125,24 @@ classDiagram
         -m_convex_state: bool
     }
 
+    class XYHexagon {
+        +XYHexagon()
+        +~XYHexagon()
+        +initialize(x: double, y: double, dist: double): bool
+        +initialize(config: std::string): bool
+        +get_cx(): double
+        +get_cy(): double
+        +get_cz(): double
+        +get_dist(): double
+        +addNeighbor(index: int): XYHexagon
+        -m_cx: double
+        -m_cy: double
+        -m_cz: double
+        -m_dist: double
+    }
+
     XYObject <|-- XYPoint
     XYObject <|-- XYSegList
     XYSegList <|-- XYPolygon
-
+    XYPolygon <|-- XYHexagon
 ```
