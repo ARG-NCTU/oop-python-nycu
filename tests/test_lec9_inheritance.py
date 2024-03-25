@@ -166,3 +166,15 @@ def test_6_person():
     p.set_name("Jane")
     assert p.get_name() == "Jane"
     print(p)
+
+def test_14_rabbit():
+    r1 = inh.Rabbit(3)
+    r1.set_name("fluffy")
+    r2 = inh.Rabbit(4)
+    r2.set_name("peter")
+    r3 = r1 + r2
+    r4 = r1 + r2
+    assert r1.get_name() == "fluffy"
+    assert r1.get_age() == 3
+    assert r3 == r4
+
