@@ -30,4 +30,3 @@ def test_13_rabbit():
     assert r4.get_parent1().get_rid() == "008"
     assert r4.get_parent2().get_rid() == "007"
     assert r3 == r4 #r3 and r4 have same parents?
-test_13_rabbit()
