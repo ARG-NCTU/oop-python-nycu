@@ -180,3 +180,4 @@ def test_9_intset():
     assert s.member(7)
     s.remove(8)
     assert not s.member(8)
+    assert not s.member(7)
