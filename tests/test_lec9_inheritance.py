@@ -11,9 +11,6 @@ def test_animal():
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
 
-
-
-
 def test_1_animal():
     a = inh.Animal(4)
     print(a)
@@ -39,17 +36,11 @@ def test_1_animal():
     e.set_name("giraffe")
     assert e.get_name() == "giraffe"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def test_13_animal():
+    a = inh.Animal(19)
+    print(a)
+    print(a.get_age())
+    a.set_name("Yuyu")
+    print(a)
+    assert a.get_name() == "Yuyu"
+    assert a.get_age() == 19
