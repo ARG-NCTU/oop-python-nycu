@@ -125,7 +125,7 @@ classDiagram
         -m_convex_state: bool
     }
 
-    class XYHexagon {
+class XYHexagon {
         +XYHexagon()
         +~XYHexagon()
         +initialize(x: double, y: double, dist: double): bool
@@ -135,6 +135,10 @@ classDiagram
         +get_cz(): double
         +get_dist(): double
         +addNeighbor(index: int): XYHexagon
+        +add_vertex(x: double, y: double): bool
+        +alter_vertex(x: double, y: double): bool
+        +delete_vertex(x: double, y: double): bool
+        +insert_vertex(x: double, y: double): bool
         -m_cx: double
         -m_cy: double
         -m_cz: double
