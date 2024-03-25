@@ -166,7 +166,7 @@ def test_9_intset():
     assert s.member(7)
 
 
-def test_3_Fraction():
+def test_2_Fraction():
     p = lc.Fraction(2, 5)
     assert p.num == 2
     assert p.denom == 5
@@ -180,11 +180,11 @@ def test_3_Fraction():
     assert lc.Fraction.__float__(p) == 0.4
     assert str(p.inverse()) == "5/2"
 
-if __name__ == "__main__":  #Updated by group3
+if __name__ == "__main__":  #Updated by group2
     test_coordinate()
     print("test_coordinate passed")
     test_intset()
     print("test_intset passed")
-    test_3_Fraction()
-    print("test_3_Fraction passed")
+    test_2_Fraction()
+    print("test_2_Fraction passed")
     print("All tests passed")
