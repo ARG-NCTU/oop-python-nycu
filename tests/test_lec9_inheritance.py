@@ -2,7 +2,7 @@ import add_path
 import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
 
-def test_animal():
+def test_animal_5A():
     a = inh.Animal(4)
     print(a)
     print(a.get_age())
@@ -10,6 +10,27 @@ def test_animal():
     print(a)
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
+
+def test_7_animal():
+    a = inh.Animal(6)
+    a.set_name("juicy")
+    print(a)
+    assert a.get_name() == "juicy"
+    assert a.get_age() == 6
+    a.set_age(5)
+    print(a)
+    assert a.get_age() == 5
+    a.set_age(7)
+    print(a)
+    assert a.get_age() == 7
+    a.set_name("bouncy")
+    print(a)
+    assert a.get_name() == "bouncy"
+    a.set_name('outgoing')
+    assert a.get_name() == 'outgoing'
+    a.set_age(5)
+    assert a.get_age() ==  5
+    assert a.__str__() == "animal:outgoing:5"
 
 def test_cat():
     c = inh.Cat(5)
@@ -151,14 +172,22 @@ def test_person():
     assert a.get_name() == "PPPP"
     assert a.get_age() == 19
 
+def test_2_animal():
+    a = inh.Animal(5)
+    print(a)
+    print(a.get_age())
+    a.set_name("fluff")
+    print(a)
+    assert a.get_name() == "fluff"
+    assert a.get_age() == 5
 
-def test_13_rabbit():
-    r1 = inh.Rabbit("Yuyu2", 3)
-    r2 = inh.Rabbit("reb", 4)
+def test_14_rabbit():
+    r1 = inh.Rabbit(3)
+    r1.set_name("fluffy")
+    r2 = inh.Rabbit(4)
+    r2.set_name("peter")
     r3 = r1 + r2
-    r4 = r2 + r1
-    assert r3.get_parent1().get_rid() == "007"
-    assert r3.get_parent2().get_rid() == "008"
-    assert r4.get_parent1().get_rid() == "008"
-    assert r4.get_parent2().get_rid() == "007"
-    assert r3 == r4 #r3 and r4 have same parents?
+    r4 = r1 + r2
+    assert r1.get_name() == "fluffy"
+    assert r1.get_age() == 3
+    assert r3 == r4
