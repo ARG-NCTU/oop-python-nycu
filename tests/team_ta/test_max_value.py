@@ -23,6 +23,7 @@ def test_max_value():
         for item in taken:
             print('   ', item)
 
+@pytest.mark.slow
 def test_max_val_large_menu():
 
     menu = Menu()
