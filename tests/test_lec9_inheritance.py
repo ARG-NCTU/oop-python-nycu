@@ -1,5 +1,3 @@
-
-
 import add_path
 import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
@@ -23,7 +21,7 @@ def test_16_animal():
     assert b.get_name() == "Mona"
     assert b.get_age() == 5
     
-def test_16_cat():
+def test_cat():
     c = inh.Cat(5)
     print(c)
     print(c.get_age())
@@ -31,39 +29,42 @@ def test_16_cat():
     print(c)
     assert c.get_name() == "Mona"
     assert c.get_age() == 5
-    
-def test_16_person(): 
-    p1 = inh.Person("jack", 30)
+
+def test_16_person():
+    p1 = inh.Person("John", 30)
     p2 = inh.Person("jill", 25)
-    assert p1.get_name() == "jack"
+    assert p1.get_name() == "John"
     assert p1.get_age() == 30
-    assert p2.get_name() == "jill" 
+    assert p2.get_name() == "jill"
     assert p2.get_age() == 25
 
 def test_16_student():
-    s1 = inh.Student('alice', 20, "CS")
-    s2 = inh.Student('beth', 18)
+    s1 = inh.Student("alice", 20, "CS")
+    s2 = inh.Student("beth", 18)
     assert s1.get_name() == "alice"
-    assert s2.get_name() == "beth"
     assert s1.get_age() == 20
+    assert s2.get_name() == "beth"
     assert s2.get_age() == 18
 
 def test_16_rabbit():
     r1 = inh.Rabbit(3)
     r2 = inh.Rabbit(4)
     r3 = inh.Rabbit(5)
-    r4 = r1+r2
+    r4 = r1 + r2
     r5 = r3+r4
     r6 = r4+r3
+    assert r1.get_age() == 3
+    assert r2.get_age() == 4
+    assert r3.get_age() == 5
     assert r1.get_rid() == '007'
     assert r2.get_rid() == '008'
     assert r3.get_rid() == '009'
     assert r4.get_rid() == '010'
     assert r5.get_rid() == '011'
     assert r6.get_rid() == '012'
-    assert r1.get_age() == 3
-    assert r2.get_age() == 4
-    assert r3.get_age() == 5
+    assert r1.get_parent1() == None
+    assert r1.get_parent2() == None
+    
+    
 
-
-
+    
