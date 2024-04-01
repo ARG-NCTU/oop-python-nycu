@@ -1,5 +1,7 @@
+import add_path
+import mit_ocw_data_science.fib_9 as lc
+import pytest
+
 def test_fib():
-    assert fib(1) == 1
-    assert fib(2) == 1
-    assert fib(7) == 13
-    assert fib(10) == 55
+    a=lc.Fibo()
+    assert a.cal(10) == 55
