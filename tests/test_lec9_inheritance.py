@@ -21,6 +21,36 @@ def test_group7_animal():
     assert a.get_name() == "cookie"
     assert a.get_age() == 69
 
+def test_10_animal():
+    a = inh.Animal(5)
+    assert a.get_age() == 5
+
+def test_100_animal():
+    a = inh.Animal(8)
+    a.set_name("daniel") 
+    assert a.get_name() == "daniel"
+    assert a.get_age() == 8 
+    
+def test12_animal():
+    a = inh.Animal(4)
+    print(a)
+    print(a.get_age())
+    a.set_name("fluffy")
+    print(a)
+    assert a.get_name() == "fluffy"
+    assert a.get_age() == 4
+    
+def test12_cat():
+    c = inh.Cat(5)
+    print(c)
+    print(c.get_age())
+    c.set_name("fluffy")
+    print(c)
+    assert c.get_name() == "fluffy"
+    assert c.get_age() == 5
+    c.set_age(6)
+    assert c.get_age() == 6
+
 def test_7_animal():
     a = inh.Animal(6)
     a.set_name("juicy")
@@ -121,7 +151,7 @@ def test_9_animal():
 def test_1_animal():
     a = inh.Animal(4)
     print(a)
-    print(a.get_age())  
+    print(a.get_age())
     a.set_name("fluffy")
     print(a)
     assert a.get_name() == "fluffy"
@@ -181,6 +211,17 @@ def test_person():
     print(a)
     assert a.get_name() == "PPPP"
     assert a.get_age() == 19
+
+def test_6_person():
+    p = inh.Person("John", 25)
+    print(p)
+    assert p.get_name() == "John"
+    assert p.get_age() == 25
+    p.set_age(26)
+    assert p.get_age() == 26
+    p.set_name("Jane")
+    assert p.get_name() == "Jane"
+    print(p)
 
 def test_2_animal():
     a = inh.Animal(5)
