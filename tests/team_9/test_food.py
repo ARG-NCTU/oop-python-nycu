@@ -15,4 +15,4 @@ def test_density(food):
     assert food.density() == 0.4
 
 def test_str(food):
-    assert str(food) == "apple: <20, 50>"  
+    assert str(food) == "Banana: <20, 50>"  
