@@ -3,12 +3,12 @@ import mit_ocw_exercises.lec8_classes as lc
 import pytest
 
 def test_coordinate():
-   c = lc.Coordinate(3, 4)
-   origin = lc.Coordinate(0,0)
-   assert c.x == 3
-   assert c.y == 4
-   assert c.distance(origin) == 5
-   assert origin.distance(c) == 5
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
 
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
@@ -17,6 +17,8 @@ def test_11_coordinate():
     assert c.y == 4
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5
+    # Test __str__
+    assert str(c) == "<3,4>"
 
 def test_intset():
     s = lc.intSet()
@@ -28,6 +30,14 @@ def test_intset():
     s.remove(3)
     assert not s.member(3)
     assert s.member(4)
+    
+def test_12_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
     
 def test_5_frac():
     quarter = lc.Fraction(1, 4)
@@ -198,6 +208,24 @@ def test_9_intset():
     assert not s.member(8)
     assert s.member(7)
 
+def test_4_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
+  
+def test_4_intset():
+    s = lc.intSet()
+    s.insert(3)
+    s.insert(4)
+    assert s.member(3)
+    assert s.member(4)
+    assert not s.member(5)
+    s.remove(3)
+    assert not s.member(3)
+    assert s.member(4)
 
     b = lc.Fraction(3,4)    
     assert a+b == lc.Fraction(5,4)
@@ -220,6 +248,25 @@ def test_2_Fraction():
     assert lc.Fraction.__float__(p) == 0.4
     assert str(p.inverse()) == "5/2"
 
+def test_7_coordinate():
+    c = lc.Coordinate(3,4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
+
+def test_7_intset():
+    s = lc.intSet()
+    s.insert(3)
+    s.insert(4)
+    assert s.member(3)
+    assert s.member(4)
+    assert not s.member(5)
+    s.remove(3)
+    assert not s.member(3)
+    assert s.member(4)
+
 if __name__ == "__main__":  #Updated by group2
     test_coordinate()
     print("test_coordinate passed")
@@ -228,4 +275,31 @@ if __name__ == "__main__":  #Updated by group2
     test_2_Fraction()
     print("test_2_Fraction passed")
     print("All tests passed")
+
+
+def test_11_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
+
+def test_11_intset():
+    s = lc.intSet()
+    s.insert(3)
+    s.insert(4)
+    assert s.member(3)
+    assert s.member(4)
+    assert not s.member(5)
+    s.remove(3)
+    assert not s.member(3)
+    
+def test_17_coordinate():
+    c = lc.Coordinate(5, 12)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 5
+    assert c.y == 12
+    assert c.distance(origin) == 13
+    assert origin.distance(c) == 13
 
