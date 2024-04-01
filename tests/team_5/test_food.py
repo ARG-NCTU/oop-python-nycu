@@ -18,3 +18,18 @@ def test_density(food):
 def test_str(food):
     assert str(food) == "orange: <20, 40>"
 
+def food():
+    return Food("banana", 10, 50)
+
+def test_get_value(food):
+    assert food.get_value() == 10
+
+def test_get_cost(food):
+    assert food.get_cost() == 50
+
+def test_density(food):
+    assert food.density() == 0.2
+
+def test_str(food):
+    assert str(food) == "banana: <10, 50>"
+
