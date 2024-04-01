@@ -5,8 +5,8 @@ from mit_ocw_data_science.lec2.menu import *
 
 def test_greedy():
     items = [
-        Food("apple", 10, 50),
-        Food("banana", 20, 100),
+        Food("apple", 20, 100),
+        Food("banana", 10, 50),
         Food("orange", 30, 150),
     ]
     items1 = [
@@ -30,7 +30,7 @@ def test_greedy():
     assert val1 == 10
     assert Menu.get_foods_str(taken1) == "apple: <10, 50>; "
     assert val == 10
-    assert Menu.get_foods_str(taken) == "apple: <10, 50>; "
+    assert Menu.get_foods_str(taken) == "banana: <10, 50>; "
 
 def test_greedys():
 
