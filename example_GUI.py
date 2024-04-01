@@ -5,29 +5,26 @@ import time
 class ArduinoGUI:
     def __init__(self, master):
         self.master = master
-        master.title("Arduino LED Control")
+        master.title("Arduino LED PWM Control")
 
         # Connect to Arduino
         # Adjust your Arduino connection port accordingly
-        self.board = Arduino('/dev/ttyUSB0')  
+        # self.board = Arduino('/dev/ttyUSB0') 
         # self.board = Arduino('/dev/ttyUSB1')
-        # self.board = Arduino('/dev/ttyACM0')
+        self.board = Arduino('/dev/ttyACM0')
         # self.board = Arduino('/dev/ttyACM1')
 
-        self.led_pin = self.board.get_pin('d:13:o')  # d for digital, 13 for pin, o for output
+        self.led_pin = self.board.get_pin('d:11:p')  # d for digital, 11 for pin, p for PWM
 
-        # Create a GUI button for toggling the LED
-        self.led_state = False
-        self.toggle_button = tk.Button(master, text="Turn LED on", command=self.toggle_led)
-        self.toggle_button.pack()
+        # Create a GUI slider for controlling LED brightness
+        self.brightness_scale = tk.Scale(master, from_=0, to=1, resolution=0.01, orient=tk.HORIZONTAL, label="Brightness", command=self.update_brightness)
+        self.brightness_scale.pack()
 
-    def toggle_led(self):
-        self.led_state = not self.led_state
-        self.led_pin.write(self.led_state)
-        if self.led_state:
-            self.toggle_button.config(text="Turn LED off")
-        else:
-            self.toggle_button.config(text="Turn LED on")
+        # Initialize LED brightness
+        self.update_brightness(0)
+
+    def update_brightness(self, brightness):
+        self.led_pin.write(float(brightness))
 
     def close(self):
         self.board.exit()
