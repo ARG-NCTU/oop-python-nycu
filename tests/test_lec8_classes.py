@@ -171,3 +171,11 @@ def test_9_intset():
     s.remove(8)
     assert not s.member(8)
     assert s.member(7)
+
+def test_6_fraction():
+ 25     a = lc.Fraction(1, 4)
+ 26     b = lc.Fraction(3, 4)
+ 27     c = a + b
+ 28     print(c)
+ 29     assert float(c) == 0.8
+
