@@ -1,5 +1,6 @@
 import pytest
-from menu import Food
+from mit_ocw_data_science.lec2.menu import Food
+
 @pytest.fixture
 def food():
     return Food("Banana", 20, 50) 
@@ -13,5 +14,5 @@ def test_get_cost(food):
 def test_density(food):
     assert food.density() == 0.4
 
-def test_str(food)
+def test_str(food):
     assert str(food) == "apple: <20, 50>"  
