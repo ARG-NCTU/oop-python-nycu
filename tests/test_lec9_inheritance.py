@@ -2,6 +2,7 @@ import add_path
 import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
 
+
 def test_animal_5A():
     a = inh.Animal(4)
     print(a)
@@ -11,6 +12,15 @@ def test_animal_5A():
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
     
+def test_group7_animal():
+    a = inh.Animal(69)
+    print(a)
+    print(a.get_age())
+    a.set_name("cookie")
+    print(a)
+    assert a.get_name() == "cookie"
+    assert a.get_age() == 69
+
 def test_10_animal():
     a = inh.Animal(5)
     assert a.get_age() == 5
@@ -232,4 +242,3 @@ def test_14_rabbit():
     assert r1.get_name() == "fluffy"
     assert r1.get_age() == 3
     assert r3 == r4
-
