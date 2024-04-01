@@ -176,6 +176,16 @@ def test_9_coordinate():
     assert c.distance(origin) == 10
     assert origin.distance(c) == 10
 
+
+
+def test_5_Fraction():
+    a = lc.Fraction(1,2)
+    assert a.__float__() == 0.5
+    assert a.__str__() == '1/2'
+    
+    
+    
+
 def test_7_intset():
     s = lc.intSet()
     s.insert(7)
@@ -186,6 +196,7 @@ def test_7_intset():
     s.remove(7)
     assert not s.member(7)
     assert s.member(9)
+
 
 def test_9_intset():
     s = lc.intSet()
@@ -215,6 +226,7 @@ def test_4_intset():
     s.remove(3)
     assert not s.member(3)
     assert s.member(4)
+
 
 def test_2_Fraction():
     p = lc.Fraction(2, 5)
@@ -275,3 +287,12 @@ def test_11_intset():
     assert not s.member(5)
     s.remove(3)
     assert not s.member(3)
+    
+def test_17_coordinate():
+    c = lc.Coordinate(5, 12)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 5
+    assert c.y == 12
+    assert c.distance(origin) == 13
+    assert origin.distance(c) == 13
+
