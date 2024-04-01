@@ -276,7 +276,6 @@ if __name__ == "__main__":  #Updated by group2
     print("test_2_Fraction passed")
     print("All tests passed")
 
-
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
