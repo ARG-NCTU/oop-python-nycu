@@ -227,12 +227,6 @@ def test_4_intset():
     assert not s.member(3)
     assert s.member(4)
 
-    b = lc.Fraction(3,4)    
-    assert a+b == lc.Fraction(5,4)
-    assert a-b == lc.Fraction(-1,4)
-    assert a*b == lc.Fraction(3,8)
-    assert a/b == lc.Fraction(2,3)
-
 
 def test_2_Fraction():
     p = lc.Fraction(2, 5)
