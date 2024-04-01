@@ -199,9 +199,9 @@ def test_9_intset():
 
 
 def test_6_fraction():
- 25     a = lc.Fraction(1, 4)
- 26     b = lc.Fraction(3, 4)
- 27     c = a + b
- 28     print(c)
- 29     assert float(c) == 0.8
+      a = lc.Fraction(1, 4)
+      b = lc.Fraction(3, 4)
+      c = a + b
+      print(c)
+      assert float(c) == 0.8
 
