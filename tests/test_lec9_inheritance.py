@@ -113,6 +113,7 @@ def test_7_animal():
     assert a.get_age() ==  5
     assert a.__str__() == "animal:outgoing:5"
 
+
 def test_cat():
     c = inh.Cat(5)
     print(c)
@@ -288,7 +289,6 @@ def test_14_rabbit():
     assert r1.get_age() == 3
     assert r3 == r4
 
-<<<<<<< HEAD
 def test_17_animal():
     a = inh.Animal(19)
     print(a)
@@ -297,6 +297,4 @@ def test_17_animal():
     print(a)
     assert a.get_name() == "PulsarGlory"
     assert a.get_age() == 19
-
-=======
->>>>>>> group5_54
+    
