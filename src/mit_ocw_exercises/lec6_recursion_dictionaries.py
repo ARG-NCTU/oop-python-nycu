@@ -38,9 +38,9 @@ def fib(x):
 # EXAMPLE:  testing for palindromes
 #####################################
         
-def isPalindrome(s):
+def is_palindrome(s):
 
-    def toChars(s):
+    def to_chars(s):
         s = s.lower()
         ans = ''
         for c in s:
@@ -48,19 +48,19 @@ def isPalindrome(s):
                 ans = ans + c
         return ans
 
-    def isPal(s):
+    def is_pal(s):
         if len(s) <= 1:
             return True
         else:
-            return s[0] == s[-1] and isPal(s[1:-1])
+            return s[0] == s[-1] and is_pal(s[1:-1])
 
-    return isPal(toChars(s))
+    return is_pal(to_chars(s))
 
-#print(isPalindrome('eve'))
+#print(is_palindrome('eve'))
 #
-#print(isPalindrome('Able was I, ere I saw Elba'))
+#print(is_palindrome('Able was I, ere I saw Elba'))
 #
-#print(isPalindrome('Is this a palindrome'))
+#print(is_palindrome('Is this a palindrome'))
 
 #####################################
 # EXAMPLE: using dictionaries
@@ -160,13 +160,13 @@ def words_often(freqs, minTimes):
 #####################################
 
 
-def fib(n):
+def fib_mem(n):
     if n == 1:
         return 1
     elif n == 2:
         return 2
     else:
-        return fib(n-1) + fib(n-2)
+        return fib1(n-1) + fib1(n-2)
 
 
 def fib_efficient(n, d):
