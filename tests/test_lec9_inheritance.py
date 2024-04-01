@@ -233,3 +233,12 @@ def test_14_rabbit():
     assert r1.get_age() == 3
     assert r3 == r4
 
+def test_17_animal():
+    a = inh.Animal(19)
+    print(a)
+    print(a.get_age())
+    a.set_name("PulsarGlory")
+    print(a)
+    assert a.get_name() == "PulsarGlory"
+    assert a.get_age() == 19
+
