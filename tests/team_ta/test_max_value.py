@@ -1,6 +1,7 @@
 import random
 import pytest
-from menu import *
+import add_path
+from mit_ocw_data_science.lec2.menu import *
 
 def test_max_value():
 
@@ -22,6 +23,7 @@ def test_max_value():
         for item in taken:
             print('   ', item)
 
+@pytest.mark.slow
 def test_max_val_large_menu():
 
     menu = Menu()
