@@ -132,6 +132,7 @@ def test_16_coordinate():
     assert m.y == 24
     assert m.distance(n) == 25
     assert n.distance(m) == 25
+    s = lc.intSet()
     s.insert(7)
     assert s.member(7)
     s.remove(7)
