@@ -91,7 +91,9 @@ RUN pip3 install transformers \
     datasets \
     evaluate \
     transformers[sentencepiece] \
-    accelerate
+    accelerate \
+    timm \
+    albumentations
 ##################################### Roma #####################################
 RUN pip3 install roma
 RUN pip3 install jupyter 
