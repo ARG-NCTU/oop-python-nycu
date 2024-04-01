@@ -10,4 +10,3 @@ def test_animal():
     print(a)
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
-
