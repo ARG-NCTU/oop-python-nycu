@@ -11,7 +11,7 @@ def test_animal():
     assert a.get_name() == "fluffy"
     assert a.get_age() == 4
 
-def test_animal;():
+def test_animal():
     a = inh.Animal(19)
     print(a)
     print(a.get_age())
