@@ -166,3 +166,13 @@ def test_14_rabbit():
     assert r1.get_name() == "fluffy"
     assert r1.get_age() == 3
     assert r3 == r4
+
+4 def test_6_cat():
+ 15     c = inh.Cat(5)
+ 16     print(c)
+ 17     print(c.get_age())
+ 18     c.set_name("fluffy")
+ 19     print(c)
+ 20     assert c.get_name() == "fluffy"
+ 21     assert c.get_age() == 5
+ 22 
