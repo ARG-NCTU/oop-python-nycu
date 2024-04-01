@@ -1,5 +1,6 @@
 import random
 import pytest
+import add_path
 from menu import *
 
 def test_max_value():
