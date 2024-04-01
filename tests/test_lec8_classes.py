@@ -256,3 +256,11 @@ def test_11_intset():
     assert not s.member(5)
     s.remove(3)
     assert not s.member(3)
+def test_17_coordinate():
+    c = lc.Coordinate(5, 12)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 5
+    assert c.y == 12
+    assert c.distance(origin) == 13
+    assert origin.distance(c) == 13
+
