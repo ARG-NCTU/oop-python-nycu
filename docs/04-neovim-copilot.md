@@ -211,3 +211,68 @@ Try it out:
 * Ctrl + n -> 左邊出現檔案管理
 * F8 -> 出現function list
 * :Rg -> 全文檢索搜尋，例如 class XXX, def YYY, 在專案裡都可以找
+
+# Install Copilot Chat
+
+## Update NeoVim to v0.10.0-dev
+```
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt-get install neovim
+```
+Note: you won't be able to go back to v0.7.x version
+
+## Use Vim-Plug to Install
+
+```
+nvim ~/.config/nvim/init.vim
+```
+
+Add the following to your init.vim
+```
+call plug#begin()
+Plug 'zbirenbaum/copilot.lua'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+call plug#end()
+
+lua << EOF
+require("CopilotChat").setup {
+  debug = true, -- Enable debugging
+  -- See Configuration section for rest
+  window = {
+    layout = 'float',
+  }
+}
+EOF
+```
+
+See [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
+
+Note: Add this is needed, as described in [Issue](https://github.com/CopilotC-Nvim/CopilotChat.nvim/issues/251)
+```
+  window = {
+    layout = 'float',
+  }
+```
+
+## Run the Installation
+
+Within Nvim, 
+```
+:PlugInstall
+```
+
+## Play with Copilot Chat
+
+1. Select contents with visual lines "V" in normal mode
+2. :CopilotChat
+
+* :CopilotChatExplain - Explain how it works
+* :CopilotChatTests - Briefly explain how selected code works then generate unit tests
+* :CopilotChatFix - There is a problem in this code. Rewrite the code to show it with the bug fixed.
+* :CopilotChatOptimize - Optimize the selected code to improve performance and readablilty.
+* :CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
+* :CopilotChatFixDiagnostic - Please assist with the following diagnostic issue in file
+* :CopilotChatCommit - Write commit message for the change with commitizen convention
+* :CopilotChatCommitStaged - Write commit message for the change with commitizen convention
