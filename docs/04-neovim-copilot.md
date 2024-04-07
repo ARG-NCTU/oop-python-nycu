@@ -271,14 +271,15 @@ Within Nvim,
 
 ## Play with Copilot Chat
 
-1. Select contents with visual lines "V" in normal mode
-2. :CopilotChat
+1. Select contents with visual lines "V" in normal mode; yank them by "y"
+2. Press <F7>, and the Copilot Chat will generate docs
+3. <Ctrl + y> to replace the code with the ones with docs
 
-* :CopilotChatExplain - Explain how it works
-* :CopilotChatTests - Briefly explain how selected code works then generate unit tests
-* :CopilotChatFix - There is a problem in this code. Rewrite the code to show it with the bug fixed.
-* :CopilotChatOptimize - Optimize the selected code to improve performance and readablilty.
-* :CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
-* :CopilotChatFixDiagnostic - Please assist with the following diagnostic issue in file
-* :CopilotChatCommit - Write commit message for the change with commitizen convention
-* :CopilotChatCommitStaged - Write commit message for the change with commitizen convention
+* <F5> :CopilotChatToggle
+* <F6> :CopilotChatExplain - Explain how it works
+* <F7> :CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
+
+See more prompts in [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
+
+You will see something like this:
+<img width="822" alt="Screen Shot 2024-04-07 at 11 29 02 AM" src="https://github.com/ARG-NCTU/oop-python-nycu/assets/16217256/6109c880-ffe1-44c2-a387-8a482051d17b">
