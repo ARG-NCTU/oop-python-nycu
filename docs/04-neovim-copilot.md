@@ -271,13 +271,13 @@ Within Nvim,
 
 ## Play with Copilot Chat
 
-1. Select contents with visual lines "V" in normal mode; yank them by "y"
-2. Press <F7>, and the Copilot Chat will generate docs
-3. <Ctrl + y> to replace the code with the ones with docs
+1. Select contents with visual lines <kbd>V</kbd> in normal mode; yank them by <kbd>y</kbd>
+2. Press <kbd>F7</kbd>, and the Copilot Chat will generate docs
+3. <kbd>Ctrl</kbd> + <kbd>y</kbd> to replace the code with the ones with docs
 
-* <F5> :CopilotChatToggle
-* <F6> :CopilotChatExplain - Explain how it works
-* <F7> :CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
+* <kbd>F5</kbd>: CopilotChatToggle
+* <kbd>F6</kbd>: CopilotChatExplain - Explain how it works
+* <kbd>F7</kbd>: CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
 
 See more prompts in [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
 
