@@ -245,6 +245,11 @@ require("CopilotChat").setup {
   }
 }
 EOF
+
+
+ nmap <F5> :CopilotChatToggle<CR>
+ 57 nmap <F6> :CopilotChatExplain<CR>
+ 58 nmap <F7> :CopilotChatDocs<CR>
 ```
 
 See [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
@@ -255,6 +260,7 @@ Note: Add this is needed, as described in [Issue](https://github.com/CopilotC-Nv
     layout = 'float',
   }
 ```
+We also add hotkeys for Explain and Docs!
 
 ## Run the Installation
 
