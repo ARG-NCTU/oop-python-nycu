@@ -1,13 +1,14 @@
 import add_path
 import mit_ocw_exercises.lec8_classes as lc
-    
+import pytest
+
 def test_coordinate():
-   c = lc.Coordinate(3, 4)
-   origin = lc.Coordinate(0,0)
-   assert c.x == 3
-   assert c.y == 4
-   assert c.distance(origin) == 5
-   assert origin.distance(c) == 5
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
 
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
@@ -16,6 +17,8 @@ def test_11_coordinate():
     assert c.y == 4
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5
+    # Test __str__
+    assert str(c) == "<3,4>"
 
 def test_intset():
     s = lc.intSet()
@@ -27,6 +30,14 @@ def test_intset():
     s.remove(3)
     assert not s.member(3)
     assert s.member(4)
+    
+def test_12_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
     
 def test_5_frac():
     quarter = lc.Fraction(1, 4)
@@ -99,6 +110,9 @@ def test_17_intset():
     assert not s.member(3)
     assert s.member(4)
 
+def test_7_coordinate():
+    c = lc.Coordinate(6, 8)
+
 def test_1_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
@@ -162,6 +176,28 @@ def test_9_coordinate():
     assert c.distance(origin) == 10
     assert origin.distance(c) == 10
 
+
+
+def test_5_Fraction():
+    a = lc.Fraction(1,2)
+    assert a.__float__() == 0.5
+    assert a.__str__() == '1/2'
+    
+    
+    
+
+def test_7_intset():
+    s = lc.intSet()
+    s.insert(7)
+    s.insert(9)
+    assert s.member(7)
+    assert s.member(9)
+    assert not s.member(10)
+    s.remove(7)
+    assert not s.member(7)
+    assert s.member(9)
+
+
 def test_9_intset():
     s = lc.intSet()
     s.insert(8)
@@ -171,3 +207,91 @@ def test_9_intset():
     s.remove(8)
     assert not s.member(8)
     assert s.member(7)
+
+def test_4_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
+  
+def test_4_intset():
+    s = lc.intSet()
+    s.insert(3)
+    s.insert(4)
+    assert s.member(3)
+    assert s.member(4)
+    assert not s.member(5)
+    s.remove(3)
+    assert not s.member(3)
+    assert s.member(4)
+
+
+def test_2_Fraction():
+    p = lc.Fraction(2, 5)
+    assert p.num == 2
+    assert p.denom == 5
+    q = lc.Fraction(1, 5)
+    assert q.num == 1
+    assert q.denom == 5
+    a1 = p + q
+    assert str(a1) == "15/25"
+    a2 = p - q
+    assert str(a2) == "5/25"
+    assert lc.Fraction.__float__(p) == 0.4
+    assert str(p.inverse()) == "5/2"
+
+def test_7_coordinate():
+    c = lc.Coordinate(3,4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
+
+def test_7_intset():
+    s = lc.intSet()
+    s.insert(3)
+    s.insert(4)
+    assert s.member(3)
+    assert s.member(4)
+    assert not s.member(5)
+    s.remove(3)
+    assert not s.member(3)
+    assert s.member(4)
+
+if __name__ == "__main__":  #Updated by group2
+    test_coordinate()
+    print("test_coordinate passed")
+    test_intset()
+    print("test_intset passed")
+    test_2_Fraction()
+    print("test_2_Fraction passed")
+    print("All tests passed")
+
+def test_11_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
+
+def test_11_intset():
+    s = lc.intSet()
+    s.insert(3)
+    s.insert(4)
+    assert s.member(3)
+    assert s.member(4)
+    assert not s.member(5)
+    s.remove(3)
+    assert not s.member(3)
+    
+def test_17_coordinate():
+    c = lc.Coordinate(5, 12)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 5
+    assert c.y == 12
+    assert c.distance(origin) == 13
+    assert origin.distance(c) == 13
