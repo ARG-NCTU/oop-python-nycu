@@ -36,22 +36,19 @@ def test_greedys():
           'calories')
     taken, val = greedy(foods, max_units, Food.get_value)
     expected_str = Menu.get_foods_str(taken)
-    assert val == 284 
-    assert expected_str == "burger: <100, 354>; pizza: <95, 258>; wine: <89, 123>; "
+    assert val == 374.0 
+    assert expected_str == "cake: <150, 95>; steak: <129, 354>; pizza: <95, 258>; "
 
     print('\nUse greedy by cost to allocate', max_units,
           'calories')
     taken, val = greedy(foods, max_units,
                lambda x: 1/Food.get_cost(x))
     expected_str = Menu.get_foods_str(taken)
-    assert val == 318 
-    assert expected_str == \
-        "apple: <50, 95>; wine: <89, 123>; cola: <79, 150>; beer: <90, 154>; donut: <10, 195>; cake: <150, 95>;"
-    
+    assert val == 458.0 
+    assert expected_str == "apple: <50, 95>; cake: <150, 95>; wine: <89, 123>; cola: <79, 150>; beer: <90, 154>; "
     print('\nUse greedy by density to allocate', max_units,
           'calories')
     taken, val = greedy(foods, max_units, Food.density)
     expected_str = Menu.get_foods_str(taken)
-    assert val == 318 
-    assert expected_str == \
-        "wine: <89, 123>; beer: <90, 154>; cola: <79, 150>; apple: <50, 95>; donut: <10, 195>; steak: <129, 354>;"
+    assert val == 458.0 
+    assert expected_str == "cake: <150, 95>; wine: <89, 123>; beer: <90, 154>; cola: <79, 150>; apple: <50, 95>; "

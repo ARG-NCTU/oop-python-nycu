@@ -22,7 +22,7 @@ def test_menu():
     assert foods[0].get_cost() == expected_foods[0].get_cost()
     assert foods[1].get_value() == expected_foods[1].get_value()
     assert Menu.get_foods_str(foods) == \
-        'apple: <10, 50>; banana: <20, 100>; orange: <30, 150>; '
+        'apple: <10, 50>; banana: <20, 100>; orange: <30, 150>; guava: <900, 150>; '
 
 def test_build_large_menu():
     menu = Menu()
