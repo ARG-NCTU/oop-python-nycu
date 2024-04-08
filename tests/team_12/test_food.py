@@ -12,3 +12,6 @@ def test_density(food):
 	assert food.density()==0.5
 def test_str(food):
 	assert str(food) == "papaya: <50, 100>"
+
+def test_neq(food):
+    assert food != Food("apple",50,100)
