@@ -23,3 +23,8 @@ def test_str(food):
 
 def test_str(food2):
     assert str(food2)=="banana: <100, 5000>"
+
+
+
+
+
