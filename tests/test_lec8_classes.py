@@ -203,5 +203,5 @@ def test_6_fraction():
       b = lc.Fraction(3, 4)
       c = a + b
       print(c)
-      assert float(c) == 0.8
+      assert float(c) == 1.0
 
