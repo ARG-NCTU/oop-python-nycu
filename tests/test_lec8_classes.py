@@ -227,12 +227,6 @@ def test_4_intset():
     assert not s.member(3)
     assert s.member(4)
 
-    b = lc.Fraction(3,4)    
-    assert a+b == lc.Fraction(5,4)
-    assert a-b == lc.Fraction(-1,4)
-    assert a*b == lc.Fraction(3,8)
-    assert a/b == lc.Fraction(2,3)
-
 
 def test_2_Fraction():
     p = lc.Fraction(2, 5)
@@ -276,7 +270,6 @@ if __name__ == "__main__":  #Updated by group2
     print("test_2_Fraction passed")
     print("All tests passed")
 
-<<<<<<< HEAD
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
@@ -303,5 +296,3 @@ def test_17_coordinate():
     assert c.distance(origin) == 13
     assert origin.distance(c) == 13
 
-=======
->>>>>>> group5_54
