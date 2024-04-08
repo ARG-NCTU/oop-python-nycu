@@ -10,6 +10,14 @@ def test_coordinate():
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5
 
+def test_team_7_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 5
+    assert c.y == 12
+    assert c.distance(origin) == 13
+    assert origin.distance(c) == 13
+
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
