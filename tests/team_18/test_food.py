@@ -4,7 +4,6 @@ from mit_ocw_data_science.lec2.menu import Food
 @pytest.fixture
 
 
-
 def food():
 	return Food("papaya",50 ,100)
 	
