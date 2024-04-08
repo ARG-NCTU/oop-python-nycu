@@ -7,7 +7,6 @@ def test_greedy():
     items = [
         
         
-        
         Food("banana", 20, 100),
         Food("orange", 30, 150),
         Food("apple", 10, 50),
