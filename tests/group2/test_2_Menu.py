@@ -1,16 +1,15 @@
-import random
-import pytest
+import add_path
 from menu import *
-
+import pytest
 
 def test_menu():
-    names = ["apple", "banana", "orange"]
+    names = ["tea", "coco", "milk"]
     values = [10, 20, 30]
-    calories = [50, 100, 150]
+    calories = [1, 20, 120]
     expected_foods = [
-        Food("apple", 10, 50),
-        Food("banana", 20, 100),
-        Food("orange", 30, 150),
+        Food("tea", 10, 1),
+        Food("coco", 20, 20),
+        Food("milk", 30, 120),
     ]
     menu = Menu(names, values, calories)
     foods = menu.get_foods()
@@ -19,8 +18,8 @@ def test_menu():
 
     assert foods[0].get_cost() == expected_foods[0].get_cost()
     assert foods[1].get_value() == expected_foods[1].get_value()
-    assert Menu.get_foods_str(foods) == \
-        'apple: <10, 50>; banana: <20, 100>; orange: <30, 150>; '
+    assert foods[2].get_cost() == expected_foods[2].get_cost()
+    assert Menu.get_foods_str(foods) == 'tea: <10, 1>; coco: <20, 20>; milk: <30, 120>; '
 
 def test_build_large_menu():
     menu = Menu()
@@ -35,4 +34,3 @@ def test_build_large_menu():
     if num_items > 0:
         assert foods[0].get_value() <= max_val
         assert foods[0].get_cost() <= max_cost
-
