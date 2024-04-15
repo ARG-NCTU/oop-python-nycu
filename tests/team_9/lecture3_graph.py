@@ -1,6 +1,5 @@
 class Node:
-    """
-    Represents a node in a graph.
+    """    Represents a node in a graph.
     Each node has a name which is assumed to be a string.
     """
     def __init__(self, name):
@@ -137,6 +136,30 @@ class Digraph:
 class CityPlanner:
     
     def __init__(self):
-        Digraph a
-        self.g = a
+        self.g = Digraph()
+    def get_shortest_path(self, start, end):
+        # Check if start and end cities are in the graph
+        if not (self.g.has_node(start) and self.g.has_node(end)):
+            return None
         
+        # Initialize a queue for BFS
+        queue = deque([(start, [start])])
+        visited = set()
+
+        while queue:
+            current_city, path = queue.popleft()
+
+            # If we reach the end city, return the path
+            if current_city == end:
+                return path
+
+            # Add current city to visited set
+            visited.add(current_city)
+
+            # Explore neighbors of the current city
+            for neighbor in self.g.children_of(self.g.get_node(current_city)):
+                if neighbor.get_name() not in visited:
+                    queue.append((neighbor.get_name(), path + [neighbor.get_name()]))
+
+        # If no path found
+        return None 
