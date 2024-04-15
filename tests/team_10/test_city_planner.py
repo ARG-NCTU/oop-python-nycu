@@ -21,10 +21,13 @@ def test_city_planner():
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('Phoenix')))
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('New York')))
     g.add_edge(Edge(g.get_node('Los Angeles'), g.get_node('Boston')))
+    
+    g.add_edge(Edge(g.get_node('Los Angeles'), g.get_node('Chicago')))
+    g.add_edge(Edge(g.get_node('Los Angeles'), g.get_node('Denver')))
+    g.add_edge(Edge(g.get_node('Los Angeles'), g.get_node('Phoenix')))
 
     cp.g = g
 
     assert cp.g.get_node('Boston').get_name() == 'Boston'
 
     cp.get_shortest_path('Chicago', 'Boston')
-
