@@ -61,3 +61,23 @@ def test_density(food):
 
 def test_str(food):
     assert str(food) == "grape: <15, 90>"
+
+
+@pytest.fixture
+def food():
+    return Food("sherry", 15, 90)
+
+def test_get_value(food):
+    assert food.get_value() == 15
+
+def test_get_cost(food):
+    assert food.get_cost() == 90
+
+def test_density(food):
+    assert food.density() == 1/6
+
+def test_str(food):
+    assert str(food) == "sherry: <15, 90>"
+
+
+
