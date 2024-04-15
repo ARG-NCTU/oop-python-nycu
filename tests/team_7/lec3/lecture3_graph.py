@@ -271,13 +271,49 @@ class Graph(Digraph):
         Digraph.add_edge(self, rev)
 
 class CityPlanner():
+    """
+    A class used to represent a City Planner
+
+    ...
+
+    Attributes
+    ----------
+    print_queue : bool
+        a flag used to control the printing of the queue
+    g : list
+        a list to store the graph nodes
+
+    Methods
+    -------
+    print_path(path)
+        Prints the path from start to end node.
+    DFS(graph, start, end, path, shortest, to_print=False)
+        Performs Depth First Search on the graph.
+    BFS(graph, start, end, to_print=False)
+        Performs Breadth First Search on the graph.
+    shortest_path_bfs(graph, start, end, toPrint = False)
+        Finds the shortest path from start to end node using BFS.
+    """
 
     def __init__(self):
+        """
+        Constructs all the necessary attributes for the city planner object.
+
+        """
         self.print_queue = True
         self.g = []
 
     def print_path(self, path):
-        """Assumes path is a list of nodes"""
+        """
+        Assumes path is a list of nodes
+        Prints the path from start to end node.
+
+        Parameters:
+            path (list): The path to be printed.
+
+        Returns:
+            result (str): The string representation of the path.
+        """
         result = ''
         for i in range(len(path)):
             result += str(path[i])
@@ -286,9 +322,22 @@ class CityPlanner():
         return result
 
     def DFS(self, graph, start, end, path, shortest, to_print=False):
-        """Assumes graph is a Digraph; start and end are nodes;
-           path and shortest are lists of nodes
-           Returns a shortest path from start to end in graph"""
+        """
+        Assumes graph is a Digraph; start and end are nodes;
+        path and shortest are lists of nodes
+        Performs Depth First Search on the graph.
+
+        Parameters:
+            graph (Digraph): The graph to be searched.
+            start (Node): The start node.
+            end (Node): The end node.
+            path (list): The current path.
+            shortest (list): The shortest path found so far.
+            to_print (bool, optional): Flag to control printing. Defaults to False.
+
+        Returns:
+            shortest (list): The shortest path from start to end in graph.
+        """
         path = path + [start]
         if to_print:
             print('Current DFS path:', self.print_path(path))
@@ -306,8 +355,19 @@ class CityPlanner():
         return shortest
 
     def BFS(self, graph, start, end, to_print=False):
-        """Assumes graph is a Digraph; start and end are nodes
-           Returns a shortest path from start to end in graph"""
+        """
+        Assumes graph is a Digraph; start and end are nodes
+        Performs Breadth First Search on the graph.
+
+        Parameters:
+            graph (Digraph): The graph to be searched.
+            start (Node): The start node.
+            end (Node): The end node.
+            to_print (bool, optional): Flag to control printing. Defaults to False.
+
+        Returns:
+            tmp_path (list): The shortest path from start to end in graph.
+        """
         init_path = [start]
         path_queue = [init_path]
         while len(path_queue) != 0:
@@ -330,25 +390,58 @@ class CityPlanner():
         return None
 
     def shortest_path_bfs(self, graph, start, end, toPrint = False):
-        """Assumes graph is a Digraph; start and end are nodes
-           Returns a shortest path from start to end in graph"""
+        """
+        Assumes graph is a Digraph; start and end are nodes
+        Finds the shortest path from start to end node using BFS.
+
+        Parameters:
+            graph (Digraph): The graph to be searched.
+            start (Node): The start node.
+            end (Node): The end node.
+            toPrint (bool, optional): Flag to control printing. Defaults to False.
+
+        Returns:
+            BFS (list): The shortest path from start to end in graph.
+        """
         return self.BFS(graph, start, end, toPrint)
 
 
     def shortest_path_dfs(self, graph, start, end, toPrint = False):
-        """Assumes graph is a Digraph; start and end are nodes
-           Returns a shortest path from start to end in graph"""
+        """
+        Assumes graph is a Digraph; start and end are nodes
+        Returns a shortest path from start to end in graph
+
+        Parameters:
+            graph (Digraph): The graph to be searched.
+            start (Node): The start node.
+            end (Node): The end node.
+            toPrint (bool, optional): Flag to control printing. Defaults to False.
+
+        Returns:
+            DFS (list): The shortest path from start to end in graph.
+        """
         return self.DFS(graph, start, end, [], None, toPrint)
 
 
     def get_shortest_path(self, source, destination, method='dfs'):
+        """
+        Finds the shortest path from source to destination using the specified method.
+
+        Parameters:
+            source (str): The source node.
+            destination (str): The destination node.
+            method (str, optional): The method to be used for finding the shortest path. Defaults to 'dfs'.
+
+        Prints:
+            The shortest path from source to destination if it exists, else prints that there is no path.
+        """
         sp = self.shortest_path_dfs(self.g,
-                           self.g.get_node(source),
-                           self.g.get_node(destination),
-                           True)
+                            self.g.get_node(source),
+                            self.g.get_node(destination),
+                            True)
         if sp is not None:
             print('Shortest path from', source, 'to',
-                  destination, 'is', self.print_path(sp))
+                destination, 'is', self.print_path(sp))
         else:
             print('There is no path from', source, 'to', destination)
 
