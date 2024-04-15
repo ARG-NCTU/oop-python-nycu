@@ -13,7 +13,7 @@ class Node:
         Args:
             name (str): The name of the node.
         """
-        self.name = name
+self.name = name
 
     def get_name(self):
         """
@@ -83,6 +83,7 @@ class Edge:
 
 
 class Digraph:
+    """Represents a directed graph of Node and Edge objects."""
     """Edges is a dict mapping each node to a list of its children."""
     def __init__(self):
         self.edges = {}
