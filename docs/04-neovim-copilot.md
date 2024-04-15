@@ -211,3 +211,75 @@ Try it out:
 * Ctrl + n -> 左邊出現檔案管理
 * F8 -> 出現function list
 * :Rg -> 全文檢索搜尋，例如 class XXX, def YYY, 在專案裡都可以找
+
+# Install Copilot Chat
+
+## Update NeoVim to v0.10.0-dev
+```
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt-get install neovim
+```
+Note: you won't be able to go back to v0.7.x version
+
+## Use Vim-Plug to Install
+
+```
+nvim ~/.config/nvim/init.vim
+```
+
+Add the following to your init.vim
+```
+call plug#begin()
+Plug 'zbirenbaum/copilot.lua'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+call plug#end()
+
+lua << EOF
+require("CopilotChat").setup {
+  debug = true, -- Enable debugging
+  -- See Configuration section for rest
+  window = {
+    layout = 'float',
+  }
+}
+EOF
+
+
+nmap <F5> :CopilotChatToggle<CR>
+nmap <F6> :CopilotChatExplain<CR>
+nmap <F7> :CopilotChatDocs<CR>
+```
+
+See [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
+
+Note: Add this is needed, as described in [Issue](https://github.com/CopilotC-Nvim/CopilotChat.nvim/issues/251)
+```
+  window = {
+    layout = 'float',
+  }
+```
+We also add hotkeys for Explain and Docs!
+
+## Run the Installation
+
+Within Nvim, 
+```
+:PlugInstall
+```
+
+## Play with Copilot Chat
+
+1. Select contents with visual lines <kbd>V</kbd> in normal mode; yank them by <kbd>y</kbd>
+2. Press <kbd>F7</kbd>, and the Copilot Chat will generate docs
+3. <kbd>Ctrl</kbd> + <kbd>y</kbd> to replace the code with the ones with docs
+
+* <kbd>F5</kbd>: CopilotChatToggle
+* <kbd>F6</kbd>: CopilotChatExplain - Explain how it works
+* <kbd>F7</kbd>: CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
+
+See more prompts in [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
+
+You will see something like this:
+<img width="822" alt="Screen Shot 2024-04-07 at 11 29 02 AM" src="https://github.com/ARG-NCTU/oop-python-nycu/assets/16217256/6109c880-ffe1-44c2-a387-8a482051d17b">
