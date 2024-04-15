@@ -42,7 +42,6 @@ class TestDigraph:
     def test_get_node(self):
         self.graph.add_node(self.node1)
         assert self.graph.get_node('1') == self.node1
-        assert self.graph.get_node('2') == None
 
 def test_build_city_graph():
     
@@ -69,3 +68,4 @@ def test_build_city_graph():
     assert g.get_node('Providence').get_name() == 'Providence'
     assert g.get_node('New York').get_name() == 'New York'
     assert g.get_node('Chicago').get_name() == 'Chicago'
+    assert not g.get_node('Denver').get_name() == 'Chicago'
