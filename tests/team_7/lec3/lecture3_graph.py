@@ -1,30 +1,84 @@
 class Node:
-    """Represents a node in a graph."""
+    """
+    Represents a node in a graph.
+
+    Attributes:
+        name (str): The name of the node.
+    """
+
     def __init__(self, name):
-        """Assumes name is a string."""
+        """
+        The constructor for Node class.
+
+        Parameters:
+            name (str): The name of the node.
+        """
         self.name = name
 
     def get_name(self):
+        """
+        Returns the name of the node.
+
+        Returns:
+            str: The name of the node.
+        """
         return self.name
 
     def __str__(self):
+        """
+        Returns the string representation of the node.
+
+        Returns:
+            str: The name of the node.
+        """
         return self.name
 
 
 class Edge:
-    """Represents a directed edge in a graph."""
+    """
+    Represents a directed edge in a graph.
+
+    Attributes:
+        src (Node): The source node of the edge.
+        dest (Node): The destination node of the edge.
+    """
+
     def __init__(self, src, dest):
-        """Assumes src and dest are nodes."""
+        """
+        The constructor for Edge class.
+
+        Parameters:
+            src (Node): The source node of the edge.
+            dest (Node): The destination node of the edge.
+        """
         self.src = src
         self.dest = dest
 
     def get_source(self):
+        """
+        Returns the source node of the edge.
+
+        Returns:
+            Node: The source node of the edge.
+        """
         return self.src
 
     def get_destination(self):
+        """
+        Returns the destination node of the edge.
+
+        Returns:
+            Node: The destination node of the edge.
+        """
         return self.dest
 
     def __str__(self):
+        """
+        Returns the string representation of the edge.
+
+        Returns:
+            str: The string representation of the edge in the format 'src->dest'.
+        """
         return self.src.get_name() + '->' + self.dest.get_name()
 
 
