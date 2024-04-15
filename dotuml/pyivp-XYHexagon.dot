@@ -1,0 +1,132 @@
+ClassDiagram {
+
+class XYHexagon {
+  public XYHexagon()
+  public initialize(x: double, y: double, dist: double): bool
+  public initialize(spec: string): bool
+  public get_cx(): double
+  public get_cy(): double
+  public get_cz(): double
+  public get_dist(): double
+  public addNeighbor(index: int): XYHexagon
+  
+  private m_cx: double
+  private m_cy: double
+  private m_cz: double
+  private m_dist: double
+  private add_vertex(x: double, y: double): bool
+  private alter_vertex(x: double, y: double): bool
+  private delete_vertex(x: double, y: double): bool
+  private insert_vertex(x: double, y: double): bool
+}
+
+class XYSegList {
+  public XYSegList()
+  public add_vertex(pt: XYPoint, s: string ): void
+  public add_vertex(x: double, y: double, z: double, s: string ): void
+  public mod_vertex(i: uint, x: double, y: double, z: double, s: string): void
+  public alter_vertex(x: double, y: double, z: double, s: string): void
+  public delete_vertex(x: double, y: double): void
+  public delete_vertex(i: uint): void
+  public insert_vertex(x: double, y: double, z: double, s: string): void
+  public set_edge_tags(v: EdgeTagSet): void
+  public pop_last_vertex(): void
+  public clear(): void
+  public shift_horz(val: double): void
+  public shift_vert(val: double): void
+  public grow_by_pct(pct: double): void
+  public grow_by_amt(amt: double): void
+  public apply_snap(snapval: double): void
+  public rotate(degrees: double): void
+  public rotate(degrees: double, cx: double, cy: double): void
+  public reverse(): void
+  public new_center(x: double, y: double): void
+  public new_centroid(x: double, y: double): void
+  public is_clockwise(): bool
+  public valid(): bool
+  public size(): unsigned int
+  public get_vx(i: uint): double
+  public get_vy(i: uint): double
+  public get_vz(i: uint): double
+  public get_vprop(i: uint): string
+  public get_center_x(): double
+  public get_center_y(): double
+  public get_centroid_x(): double
+  public get_centroid_y(): double
+  public get_min_x(): double
+  public get_max_x(): double
+  public get_min_y(): double
+  public get_max_y(): double
+  public get_avg_x(): double
+  public get_avg_y(): double
+  public dist_to_point(x: double, y: double): double
+  public dist_to_ctr(x: double, y: double): double
+  public max_dist_to_ctr(): double
+  public segs_cross(loop: bool): bool
+  public length(): double
+  public get_spec(vertex_prec: uint): string
+  public get_spec(param: string): string
+  public get_spec(vertex_prec: uint, param: string): string
+  public get_spec_pts(vertex_prec: uint): string
+  public get_spec_pts_label(vertex_prec: uint): string
+  public get_spec_inactive(): string
+  public closest_vertex(x: double, y: double): uint
+  public closest_segment(x: double, y: double, implseg: bool): uint
+  public get_edge_tags(): EdgeTagSet
+  
+  private m_vx: vec_double
+  private m_vy: vec_double
+  private m_vz: vec_double
+  private m_vprop: vec_string
+  private m_edge_tags: EdgeTagSet
+  private m_transparency: double
+
+}
+
+class XYPolygon {
+    private m_side_xy : vec_int
+    private m_convex_state : bool
+    public XYPolygon()
+    public add_vertex(double, double, bool) : bool
+    public add_vertex_delta(double, double, double, bool) : bool
+    public add_vertex(double, double, double, bool) : bool
+    public add_vertex(double, double, double, string, bool) : bool
+    public alter_vertex(double, double, double) : bool
+    public delete_vertex(double, double) : bool
+    public delete_vertex(uint) : bool
+    public grow_by_pct(double)
+    public grow_by_amt(double)
+    public insert_vertex(double, double, double) : bool
+    public clear()
+    public apply_snap(double) : bool
+    public reverse()
+    public rotate(double, double, double)
+    public rotate(double)
+    public contains(double, double) const : bool
+    public contains(XYPolygon_r) const : bool
+    public intersects(XYPolygon_r) const : bool
+    public intersects(XYSquare_r) const : bool
+    public dist_to_poly(XYPolygon_r) const : double
+    public dist_to_poly(double, double) const : double
+    public dist_to_poly(double, double, double, double) const : double
+    public dist_to_poly(double, double, double) const : double
+    public seg_intercepts(double, double, double, double) const : bool
+    public line_intersects(double, double, double, double, double, double, double, double) const : bool
+    public vertex_is_viewable(uint, double, double) const : bool
+    public is_convex() const : bool
+    public determine_convexity()
+    public area() const : double
+    public simplify(double) : bool
+    public max_radius() const : double
+    public closest_point_on_poly(double, double, double, double) const : bool
+    public exportSegList(double, double) : XYSegList
+    public crossProductSettle() const : XYPolygon
+    public min_xproduct(bool) const : unsigned int
+    private side(double, double, double, double, double, double) const : int
+    private set_side(int)
+}
+
+  XYPolygon -g-> XYSegList
+  XYHexagon -g-> XYPolygon
+
+}
