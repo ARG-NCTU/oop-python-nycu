@@ -3,13 +3,15 @@ import pytest
 import add_path
 from mit_ocw_data_science.lec2.menu import *
 
-def test_7_greedy():
+def test_greedy():
     items = [
-        Food("beer", 20, 100),
-        Food("vodka", 300, 400),
-        Food("whisky", 60, 240),
+        
+        
+        Food("banana", 20, 100),
+        Food("orange", 30, 150),
+        Food("apple", 10, 50),
     ]
-    constraint = 100
+    constraint = 50
     key_function = lambda x: 1 / Food.get_cost(x)
 
     taken, val = greedy(items, constraint, key_function)
@@ -17,10 +19,12 @@ def test_7_greedy():
     print('Total value of items taken =', val)
     print(Menu.get_foods_str(taken))
 
-    assert val == 20
-    assert Menu.get_foods_str(taken) == "beer: <20, 100>; "
+    assert val == 10
+    
+    
+    assert Menu.get_foods_str(taken) == "apple: <10, 50>; "
 
-def test_7_greedys():
+def test_greedys():
 
     names = ['wine', 'beer', 'pizza', 'burger', 'fries',
              'cola', 'apple', 'donut', 'cake']
