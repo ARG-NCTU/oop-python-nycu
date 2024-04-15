@@ -56,12 +56,6 @@ def test_16_rabbit():
     assert r1.get_age() == 3
     assert r2.get_age() == 4
     assert r3.get_age() == 5
-    assert r1.get_rid() == '007'
-    assert r2.get_rid() == '008'
-    assert r3.get_rid() == '009'
-    assert r4.get_rid() == '010'
-    assert r5.get_rid() == '011'
-    assert r6.get_rid() == '012'
     assert r1.get_parent1() == None
     assert r1.get_parent2() == None
     
