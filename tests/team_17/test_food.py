@@ -28,16 +28,42 @@ def test_density(food):
 def test_str(food):
     assert str(food) == "group: <20, 15>"
 
+# This is a test suite for the Food class in Python. It uses pytest for testing.
+
 @pytest.fixture
 def food():
+    """
+    This is a pytest fixture that sets up a Food object for testing.
+    It creates a Food object with name "watermelon", value 50, and cost 100.
+    """
     return Food("watermelon", 50, 100)
+
 def test_get_value(food):
+    """
+    This test checks the get_value method of the Food class.
+    It asserts that the value of the food object is 50.
+    """
     assert food.get_value() == 50
+
 def test_get_cost(food):
+    """
+    This test checks the get_cost method of the Food class.
+    It asserts that the cost of the food object is 100.
+    """
     assert food.get_cost() == 100
+
 def test_density(food):
+    """
+    This test checks the density method of the Food class.
+    It asserts that the density of the food object is 0.5.
+    """
     assert food.density() == 0.5
+
 def test_str(food):
+    """
+    This test checks the __str__ method of the Food class.
+    It asserts that the string representation of the food object is "watermelon: <50, 100>".
+    """
     assert str(food) == "watermelon: <50, 100>"
 
 @pytest.fixture
