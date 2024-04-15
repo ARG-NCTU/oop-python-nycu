@@ -22,7 +22,7 @@ def test_str(food):
     assert str(food) == "apple: <10, 50>"
 
 def test_str(food2):
-    assert str(food2)=="banana: <100, 5000>"
+    assert str(food2)=="banana: <100, 500>"
 
 
 
