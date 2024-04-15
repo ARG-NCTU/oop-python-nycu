@@ -4,26 +4,36 @@ Created on Tue Jul 12 15:04:56 2016
 
 @author: guttag, revised egrimson
 """
-
-class Node(object):
-    def __init__(self, name):
-        """Assumes name is a string"""
-        self.name = name
-    def getName(self):
-        return self.name
-    def __str__(self):
-        return self.name
-
 class Edge(object):
+    """
+    The Edge class represents an edge in a graph. 
+    An edge is defined by two nodes: a source node and a destination node.
+    """
+
     def __init__(self, src, dest):
-        """Assumes src and dest are nodes"""
+        """
+        Initializes an Edge with a source node and a destination node.
+        Assumes src and dest are nodes.
+        """
         self.src = src
         self.dest = dest
+
     def getSource(self):
+        """
+        Returns the source node of the edge.
+        """
         return self.src
+
     def getDestination(self):
+        """
+        Returns the destination node of the edge.
+        """
         return self.dest
+
     def __str__(self):
+        """
+        Returns a string representation of the edge as 'source->destination'.
+        """
         return self.src.getName() + '->' + self.dest.getName()
                
 class Digraph(object):
