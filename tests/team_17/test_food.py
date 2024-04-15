@@ -66,22 +66,31 @@ def test_str(food):
     """
     assert str(food) == "watermelon: <50, 100>"
 
+# This is a test suite for the Food class in Python.
+
+# The pytest.fixture decorator is used to create a fixture. A fixture is a function that returns a specific object that you want to test.
+# In this case, the fixture is a Food object with name "banana", value 30, and cost 100.
 @pytest.fixture
 def food():
     return Food("banana", 30, 100)
 
+# This test checks if the get_value method of the Food class returns the correct value.
 def test_get_value(food):
     assert food.get_value() == 30
 
+# This test checks if the get_cost method of the Food class returns the correct cost.
 def test_get_cost(food):
     assert food.get_cost() == 100
 
+# This test checks if the density method of the Food class returns the correct density.
+# The density is calculated as value/cost.
 def test_density(food):
     assert food.density() == 0.3
 
+# This test checks if the __str__ method of the Food class returns the correct string representation.
+# The string representation should be in the format "name: <value, cost>".
 def test_str(food):
     assert str(food) == "banana: <30, 100>"
-
 @pytest.fixture
 def food():
     return Food("grape", 15, 90)
