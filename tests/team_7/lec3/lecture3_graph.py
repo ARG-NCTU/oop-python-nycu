@@ -83,17 +83,80 @@ class Edge:
 
 
 class Digraph:
-    """Edges is a dict mapping each node to a list of its children."""
+    """
+    A class to represent a directed graph.
+
+    ...
+
+    Attributes
+    ----------
+    edges : dict
+        a dictionary mapping each node to a list of its children
+
+    Methods
+    -------
+    add_node(node):
+        Adds a node to the graph.
+    add_edge(edge):
+        Adds an edge to the graph.
+    children_of(node):
+        Returns the children of a node.
+    has_node(node):
+        Checks if a node is in the graph.
+    get_node(name):
+        Returns a node with the given name.
+    """
+
     def __init__(self):
+        """
+        Constructs all the necessary attributes for the digraph object.
+
+        ...
+
+        Attributes
+        ----------
+        edges : dict
+            an empty dictionary to store the nodes and their children
+        """
         self.edges = {}
 
     def add_node(self, node):
+        """
+        Adds a node to the graph.
+
+        ...
+
+        Parameters
+        ----------
+        node : Node
+            a node to be added to the graph
+
+        Raises
+        ------
+        ValueError
+            if the node is already in the graph
+        """
         if node in self.edges:
             raise ValueError('Duplicate node')
         else:
             self.edges[node] = []
 
     def add_edge(self, edge):
+        """
+        Adds an edge to the graph.
+
+        ...
+
+        Parameters
+        ----------
+        edge : Edge
+            an edge to be added to the graph
+
+        Raises
+        ------
+        ValueError
+            if the source or destination node is not in the graph
+        """
         src = edge.get_source()
         dest = edge.get_destination()
         if not (src in self.edges and dest in self.edges):
@@ -101,18 +164,78 @@ class Digraph:
         self.edges[src].append(dest)
 
     def children_of(self, node):
+        """
+        Returns the children of a node.
+
+        ...
+
+        Parameters
+        ----------
+        node : Node
+            a node in the graph
+
+        Returns
+        -------
+        list
+            a list of the node's children
+        """
         return self.edges[node]
 
     def has_node(self, node):
+        """
+        Checks if a node is in the graph.
+
+        ...
+
+        Parameters
+        ----------
+        node : Node
+            a node to check
+
+        Returns
+        -------
+        bool
+            True if the node is in the graph, False otherwise
+        """
         return node in self.edges
 
     def get_node(self, name):
+        """
+        Returns a node with the given name.
+
+        ...
+
+        Parameters
+        ----------
+        name : str
+            a name to search for
+
+        Returns
+        -------
+        Node
+            a node with the given name
+
+        Raises
+        ------
+        NameError
+            if a node with the given name does not exist
+        """
         for n in self.edges:
             if n.get_name() == name:
                 return n
         raise NameError(name)
 
     def __str__(self):
+        """
+        Returns a string representation of the graph.
+
+        ...
+
+        Returns
+        -------
+        str
+            a string representation of the graph
+        """
         result = ''
         for src in self.edges:
             for dest in self.edges[src]:
@@ -121,8 +244,28 @@ class Digraph:
 
 
 class Graph(Digraph):
-    """Represents a graph as a dictionary of nodes mapping"""
+    """
+    A class to represent a graph. Inherits from the Digraph class.
+
+    ...
+
+    Methods
+    -------
+    add_edge(edge):
+        Adds an edge to the graph in both directions.
+    """
+
     def add_edge(self, edge):
+        """
+        Adds an edge to the graph in both directions.
+
+        ...
+
+        Parameters
+        ----------
+        edge : Edge
+            an edge to be added to the graph
+        """
         Digraph.add_edge(self, edge)
         rev = Edge(edge.get_destination(), edge.get_source())
         Digraph.add_edge(self, rev)
