@@ -28,6 +28,7 @@ def test_density(food):
 def test_str(food):
     assert str(food) == "group: <20, 15>"
 
+<<<<<<< HEAD
 # This is a test suite for the Food class in Python. It uses pytest for testing.
 
 @pytest.fixture
@@ -65,6 +66,43 @@ def test_str(food):
     It asserts that the string representation of the food object is "watermelon: <50, 100>".
     """
     assert str(food) == "watermelon: <50, 100>"
+=======
+31: @pytest.fixture
+32: def food():
+33:     """
+    This is a pytest fixture that sets up a Food object for testing.
+    The Food object is initialized with the name "watermelon", a value of 50, and a cost of 100.
+    """
+34:     return Food("watermelon", 50, 100)
+35: 
+36: def test_get_value(food):
+37:     """
+    This test checks the get_value method of the Food class.
+    It asserts that the value of the food object created in the fixture is 50.
+    """
+38:     assert food.get_value() == 50
+39: 
+40: def test_get_cost(food):
+41:     """
+    This test checks the get_cost method of the Food class.
+    It asserts that the cost of the food object created in the fixture is 100.
+    """
+42:     assert food.get_cost() == 100
+43: 
+44: def test_density(food):
+45:     """
+    This test checks the density method of the Food class.
+    It asserts that the density of the food object created in the fixture is 0.5.
+    """
+46:     assert food.density() == 0.5
+47: 
+48: def test_str(food):
+49:     """
+    This test checks the __str__ method of the Food class.
+    It asserts that the string representation of the food object created in the fixture is "watermelon: <50, 100>".
+    """
+50:     assert str(food) == "watermelon: <50, 100>"
+>>>>>>> c7f6697a930141922778e6915d3541fb1b5a1b9c
 
 # This is a test suite for the Food class in Python.
 
