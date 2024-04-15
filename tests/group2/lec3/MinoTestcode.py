@@ -31,7 +31,8 @@ def test():
     g.add_edge(e3)
     g.add_edge(e4)
     g.add_edge(e5)
-    g.add_edge(e6)
+# This line of code adds an edge to the graph 'g'. The edge is represented by the variable 'e6'.
+g.add_edge(e6)
     g.add_edge(e7)
     
     # Test shortest path
