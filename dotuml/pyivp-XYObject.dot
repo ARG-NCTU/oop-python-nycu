@@ -1,0 +1,183 @@
+ClassDiagram {
+class XYObject {
+  private m_label: string
+  private m_type: string
+  private m_source: string
+  private m_msg: string
+  private m_active: bool
+  private m_time: double
+  private m_duration: double
+  private m_duration_set: bool
+  private m_vertex_size: double
+  private m_edge_size: double
+  private m_transparency: double
+  public XYObject()
+  public clear(): void
+  public valid(): bool
+  public set_label(str: string): void
+  public set_source(str: string): void
+  public set_type(str: string): void
+  public set_msg(str: string): void
+  public set_active(val: bool): void
+  public set_time(val: double): void
+  public set_vertex_size(val: double): void
+  public set_edge_size(val: double): void
+  public set_transparency(val: double): void
+  public set_duration(val: double): void
+  public set_type(): void
+  public set_source(): void
+  public active(): bool
+  public get_time(): double
+  public get_vertex_size(): double
+  public get_edge_size(): double
+  public get_duration(): double
+  public get_label(): string
+  public get_msg(): string
+  public get_type(): string
+  public get_source(): string
+  public get_spec(s: string): string
+  public expired(curr_time: double): bool
+}
+
+class XYPoint {
+  private m_x: double
+  private m_y: double
+  private m_z: double
+  private m_valid: bool
+  private m_sdigits: int
+  public XYPoint()
+  public XYPoint(x: double, y: double)
+  public clear(): void
+  public set_vertex(x: double, y: double, z: double): void
+  public set_vx(v: double): void
+  public set_vy(v: double): void
+  public set_vz(v: double): void
+  public set_spec_digits(v: uint): void
+  public shift_x(val: double): void
+  public shift_y(val: double): void
+  public shift_z(val: double): void
+  public apply_snap(snapval: double): void
+  public get_vx(): double
+  public get_vy(): double
+  public get_vz(): double
+  public x(): double
+  public y(): double
+  public z(): double
+  public valid(): bool
+  public projectPt(pt: XYPoint, ang: double, dist: double): void
+  public get_spec(s: string): string
+}
+
+class XYSegList {
+  public XYSegList()
+  public add_vertex(pt: XYPoint, s: string ): void
+  public add_vertex(x: double, y: double, z: double, s: string ): void
+  public mod_vertex(i: uint, x: double, y: double, z: double, s: string): void
+  public alter_vertex(x: double, y: double, z: double, s: string): void
+  public delete_vertex(x: double, y: double): void
+  public delete_vertex(i: uint): void
+  public insert_vertex(x: double, y: double, z: double, s: string): void
+  public set_edge_tags(v: EdgeTagSet): void
+  public pop_last_vertex(): void
+  public clear(): void
+  public shift_horz(val: double): void
+  public shift_vert(val: double): void
+  public grow_by_pct(pct: double): void
+  public grow_by_amt(amt: double): void
+  public apply_snap(snapval: double): void
+  public rotate(degrees: double): void
+  public rotate(degrees: double, cx: double, cy: double): void
+  public reverse(): void
+  public new_center(x: double, y: double): void
+  public new_centroid(x: double, y: double): void
+  public is_clockwise(): bool
+  public valid(): bool
+  public size(): unsigned int
+  public get_vx(i: uint): double
+  public get_vy(i: uint): double
+  public get_vz(i: uint): double
+  public get_vprop(i: uint): string
+  public get_center_x(): double
+  public get_center_y(): double
+  public get_centroid_x(): double
+  public get_centroid_y(): double
+  public get_min_x(): double
+  public get_max_x(): double
+  public get_min_y(): double
+  public get_max_y(): double
+  public get_avg_x(): double
+  public get_avg_y(): double
+  public dist_to_point(x: double, y: double): double
+  public dist_to_ctr(x: double, y: double): double
+  public max_dist_to_ctr(): double
+  public segs_cross(loop: bool): bool
+  public length(): double
+  public get_spec(vertex_prec: uint): string
+  public get_spec(param: string): string
+  public get_spec(vertex_prec: uint, param: string): string
+  public get_spec_pts(vertex_prec: uint): string
+  public get_spec_pts_label(vertex_prec: uint): string
+  public get_spec_inactive(): string
+  public closest_vertex(x: double, y: double): uint
+  public closest_segment(x: double, y: double, implseg: bool): uint
+  public get_edge_tags(): EdgeTagSet
+  
+  private m_vx: vec_double
+  private m_vy: vec_double
+  private m_vz: vec_double
+  private m_vprop: vec_string
+  private m_edge_tags: EdgeTagSet
+  private m_transparency: double
+
+}
+
+class XYPolygon {
+  public XYPolygon()
+  public add_vertex(x: double, y: double, b: bool): bool
+  public add_vertex_delta(x: double, y: double, delta: double, b: bool): bool
+  public add_vertex(x: double, y: double, z: double, b: bool): bool
+  public add_vertex(x: double, y: double, z: double, prop: string, b: bool): bool
+  public alter_vertex(x: double, y: double, z: double): bool
+  public delete_vertex(x: double, y: double): bool
+  public delete_vertex(i: uint): bool
+  public grow_by_pct(pct: double): void
+  public grow_by_amt(amt: double): void
+  public insert_vertex(x: double, y: double, z: double): bool
+  public clear(): void
+  public apply_snap(snapval: double): bool
+  public reverse(): void
+  public rotate(degrees: double, x: double, y: double): void
+  public rotate(degrees: double): void
+  public contains(x: double, y: double): bool
+  public contains(poly: XYPolygon): bool
+  public intersects(poly: XYPolygon): bool
+  public intersects(sq: XYSquare): bool
+  public dist_to_poly(poly: XYPolygon): double
+  public dist_to_poly(px: double, py: double): double
+  public dist_to_poly(x1: double, y1: double, x2: double, y2: double): double
+  public dist_to_poly(px: double, py: double, angle: double): double
+  public seg_intercepts(x1: double, y1: double, x2: double, y2: double): bool
+  public line_intersects(x1: double, y1: double, x2: double, y2: double, ix1_r: double, iy1_r: double, ix2_r: double, iy2_r: double): bool
+  public vertex_is_viewable(i: uint, x: double, y: double): bool
+  public is_convex(): bool
+  public determine_convexity(): void
+  public area(): double
+  public simplify(range_thresh: double): bool
+  public max_radius(): double
+  public closest_point_on_poly(sx: double, sy: double, rx_r: double, ry_r: double): bool
+  public exportSegList(x: double, y: double): XYSegList
+  public crossProductSettle(): XYPolygon
+  public min_xproduct(b_r: bool): unsigned int
+  
+  public side(x1: double, y1: double, x2: double, y2: double, x3: double, y3: double): int
+  public set_side(i: int): void
+  
+  private m_side_xy: vec_int
+  private m_convex_state: bool
+}
+
+  XYPoint -g-> XYObject
+  XYSegList -g-> XYObject
+  XYPolygon -g-> XYSegList
+
+}
