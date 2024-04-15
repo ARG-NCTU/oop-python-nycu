@@ -42,11 +42,9 @@ class Edge:
         src (Node): The source node of the edge.
         dest (Node): The destination node of the edge.
     """
-
     def __init__(self, src, dest):
         """
-        Initializes an Edge with a source node and a destination node.
-
+        Initializes a new instance of the Edge class.
         Args:
             src (Node): The source node of the edge.
             dest (Node): The destination node of the edge.
@@ -77,23 +75,49 @@ class Edge:
         Returns a string representation of the edge.
 
         Returns:
-            str: A string representation of the edge in the format 'source->destination'.
+            str: A string representation of the edge in the format 'src->dest'.
         """
         return self.src.get_name() + '->' + self.dest.get_name()
 
 
 class Digraph:
-    """Edges is a dict mapping each node to a list of its children."""
+    """
+    Represents a directed graph.
+
+    Attributes:
+        edges (dict): A dictionary mapping each node to a list of its children.
+    """
     def __init__(self):
+        """
+        Initializes a new instance of the Digraph class.
+        """
         self.edges = {}
 
     def add_node(self, node):
+        """
+        Adds a node to the graph.
+
+        Args:
+            node (Node): The node to add.
+
+        Raises:
+            ValueError: If the node already exists in the graph.
+        """
         if node in self.edges:
             raise ValueError('Duplicate node')
         else:
             self.edges[node] = []
 
     def add_edge(self, edge):
+        """
+        Adds an edge to the graph.
+
+        Args:
+            edge (Edge): The edge to add.
+
+        Raises:
+            ValueError: If the source or destination node of the edge is not in the graph.
+        """
         src = edge.get_source()
         dest = edge.get_destination()
         if not (src in self.edges and dest in self.edges):
@@ -101,18 +125,54 @@ class Digraph:
         self.edges[src].append(dest)
 
     def children_of(self, node):
+        """
+        Returns the children of a node.
+
+        Args:
+            node (Node): The node to get the children of.
+
+        Returns:
+            list: The children of the node.
+        """
         return self.edges[node]
 
     def has_node(self, node):
+        """
+        Checks if a node is in the graph.
+
+        Args:
+            node (Node): The node to check.
+
+        Returns:
+            bool: True if the node is in the graph, False otherwise.
+        """
         return node in self.edges
 
     def get_node(self, name):
+        """
+        Returns a node with a specific name.
+
+        Args:
+            name (str): The name of the node.
+
+        Returns:
+            Node: The node with the specified name.
+
+        Raises:
+            NameError: If no node with the specified name exists in the graph.
+        """
         for n in self.edges:
             if n.get_name() == name:
                 return n
         raise NameError(name)
 
     def __str__(self):
+        """
+        Returns a string representation of the graph.
+
+        Returns:
+            str: A string representation of the graph in the format 'src->dest'.
+        """
         result = ''
         for src in self.edges:
             for dest in self.edges[src]:
@@ -122,105 +182,20 @@ class Digraph:
 
 class Graph(Digraph):
     """
-    The Graph class inherits from the Digraph class. It represents a graph data structure
-    where edges are bidirectional.
-    """
+    Represents a graph. Inherits from the Digraph class.
 
+    Overrides the add_edge method to make the graph undirected.
+    """
     def add_edge(self, edge):
         """
         Adds an edge to the graph.
 
-        This method overrides the add_edge method of the Digraph class. It adds an edge
-        from source to destination and also a reverse edge from destination to source,
-        making the edge bidirectional.
+        Overrides the add_edge method of the Digraph class to make the graph undirected.
+        Adds the edge in both directions.
 
         Args:
-            edge (Edge): The edge to be added to the graph.
-
+            edge (Edge): The edge to add.
         """
         Digraph.add_edge(self, edge)
         rev = Edge(edge.get_destination(), edge.get_source())
         Digraph.add_edge(self, rev)
-
-class CityPlanner():
-
-    def __init__(self):
-        self.print_queue = True
-        self.g = []
-
-    def print_path(self, path):
-        """Assumes path is a list of nodes"""
-        result = ''
-        for i in range(len(path)):
-            result += str(path[i])
-            if i != len(path) - 1:
-                result += '->'
-        return result
-
-    def DFS(self, graph, start, end, path, shortest, to_print=False):
-        """Assumes graph is a Digraph; start and end are nodes;
-           path and shortest are lists of nodes
-           Returns a shortest path from start to end in graph"""
-        path = path + [start]
-        if to_print:
-            print('Current DFS path:', self.print_path(path))
-        if start == end:
-            return path
-        for node in graph.children_of(start):
-            if node not in path:  # avoid cycles
-                if shortest is None or len(path) < len(shortest):
-                    new_path = self.DFS(graph, node, end, path, shortest,
-                                    to_print)
-                    if new_path is not None:
-                        shortest = new_path
-            elif to_print:
-                print('Already visited', node)
-        return shortest
-
-    def BFS(self, graph, start, end, to_print=False):
-        """Assumes graph is a Digraph; start and end are nodes
-           Returns a shortest path from start to end in graph"""
-        init_path = [start]
-        path_queue = [init_path]
-        while len(path_queue) != 0:
-            # Get and remove oldest element in path_queue
-            if to_print:
-                print('Queue:', len(path_queue))
-                for p in path_queue:
-                    print(print_path(p))
-            tmp_path = path_queue.pop(0)
-            if to_print:
-                print('Current BFS path:', self.print_path(tmp_path))
-                print()
-            last_node = tmp_path[-1]
-            if last_node == end:
-                return tmp_path
-            for next_node in graph.children_of(last_node):
-                if next_node not in tmp_path:
-                    new_path = tmp_path + [next_node]
-                    path_queue.append(new_path)
-        return None
-
-    def shortest_path_bfs(self, graph, start, end, toPrint = False):
-        """Assumes graph is a Digraph; start and end are nodes
-           Returns a shortest path from start to end in graph"""
-        return self.BFS(graph, start, end, toPrint)
-
-
-    def shortest_path_dfs(self, graph, start, end, toPrint = False):
-        """Assumes graph is a Digraph; start and end are nodes
-           Returns a shortest path from start to end in graph"""
-        return self.DFS(graph, start, end, [], None, toPrint)
-
-
-    def get_shortest_path(self, source, destination, method='dfs'):
-        sp = self.shortest_path_dfs(self.g,
-                           self.g.get_node(source),
-                           self.g.get_node(destination),
-                           True)
-        if sp is not None:
-            print('Shortest path from', source, 'to',
-                  destination, 'is', self.print_path(sp))
-        else:
-            print('There is no path from', source, 'to', destination)
-
