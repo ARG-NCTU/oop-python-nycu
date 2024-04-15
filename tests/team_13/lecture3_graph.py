@@ -1,13 +1,36 @@
 class Node:
-    """Represents a node in a graph."""
+    """
+    Represents a node in a graph.
+
+    Attributes:
+        name (str): The name of the node.
+    """
+
     def __init__(self, name):
-        """Assumes name is a string."""
+        """
+        Initializes a new instance of the Node class.
+
+        Args:
+            name (str): The name of the node.
+        """
         self.name = name
 
     def get_name(self):
+        """
+        Returns the name of the node.
+
+        Returns:
+            str: The name of the node.
+        """
         return self.name
 
     def __str__(self):
+        """
+        Returns a string representation of the node.
+
+        Returns:
+            str: The name of the node.
+        """
         return self.name
 
 
