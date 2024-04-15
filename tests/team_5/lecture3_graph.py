@@ -121,8 +121,23 @@ class Digraph:
 
 
 class Graph(Digraph):
-    """Represents a graph as a dictionary of nodes mapping"""
+    """
+    The Graph class inherits from the Digraph class. It represents a graph data structure
+    where edges are bidirectional.
+    """
+
     def add_edge(self, edge):
+        """
+        Adds an edge to the graph.
+
+        This method overrides the add_edge method of the Digraph class. It adds an edge
+        from source to destination and also a reverse edge from destination to source,
+        making the edge bidirectional.
+
+        Args:
+            edge (Edge): The edge to be added to the graph.
+
+        """
         Digraph.add_edge(self, edge)
         rev = Edge(edge.get_destination(), edge.get_source())
         Digraph.add_edge(self, rev)
