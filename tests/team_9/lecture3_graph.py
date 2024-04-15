@@ -133,3 +133,10 @@ class Digraph:
             for dest in self.edges[src]:
                 result += src.get_name() + '->' + dest.get_name() + '\n'
         return result[:-1]  # Omit final newline
+
+class CityPlanner:
+    
+    def __init__(self):
+        Digraph a
+        self.g = a
+        
