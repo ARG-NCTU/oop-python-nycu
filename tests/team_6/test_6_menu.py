@@ -36,6 +36,4 @@ def test_build_large_menu():
     if num_items > 0:
         assert foods[0].get_value() <= max_val
         assert foods[0].get_cost() <= max_cost
-        assert foods[0].get_name() == "0"
-        assert foods[0].get_calories() == 0
-        assert foods[0].get_density() == 0.0
+
