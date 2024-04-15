@@ -35,19 +35,50 @@ class Node:
 
 
 class Edge:
-    """Represents a directed edge in a graph."""
+    """
+    Represents a directed edge in a graph.
+
+    Attributes:
+        src (Node): The source node of the edge.
+        dest (Node): The destination node of the edge.
+    """
+
     def __init__(self, src, dest):
-        """Assumes src and dest are nodes."""
+        """
+        Initializes an Edge instance.
+
+        Args:
+            src (Node): The source node of the edge.
+            dest (Node): The destination node of the edge.
+        """
         self.src = src
         self.dest = dest
 
     def get_source(self):
+        """
+        Returns the source node of the edge.
+
+        Returns:
+            Node: The source node of the edge.
+        """
         return self.src
 
     def get_destination(self):
+        """
+        Returns the destination node of the edge.
+
+        Returns:
+            Node: The destination node of the edge.
+        """
         return self.dest
 
     def __str__(self):
+        """
+        Returns a string representation of the edge.
+
+        Returns:
+            str: A string representation of the edge in the format 'src->dest'.
+        """
         return self.src.get_name() + '->' + self.dest.get_name()
 
 
