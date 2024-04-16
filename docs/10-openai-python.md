@@ -77,16 +77,17 @@ After setting up the billing information, you will see the credit balance. And y
 
 ![](img/10-07-openai-api-billing-result.png)
 
-
-### 10. Check openai version
+## 2. Test the OpenAI API key
+### 1. Check openai version
 
 ```bash
 pip3 list | grep openai
 ```
 
-### 11. Test the API key
+### 2. Test the OpenAI API key in Python
 
-#### openai==1.19.0
+Tested on 
+`openai==1.19.0 or 1.5.0`
 
 You can use this Python code to test the API key.
 
@@ -104,7 +105,8 @@ completion = client.chat.completions.create(
 print(completion.choices[0].message)
 ```
 
-#### openai==0.28.1
+Tested on
+`openai==0.28.1`
 
 You can use this Python code to test the API key.
 
