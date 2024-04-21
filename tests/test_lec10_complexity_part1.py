@@ -431,4 +431,9 @@ def test_2_intersect():
     assert lec10.intersect([1, 2, 3, 2, 3], [2, 3, 4]) == [2, 3]
     assert lec10.intersect([1, 2, 3], [4, 5, 6]) == []
     assert lec10.intersect([], [4, 5, 6]) == []
-    
+
+
+def test_5_intersect_in():
+    assert 2 in [1, 2, 3]
+    assert 4 not in [1, 2, 3]   
+
