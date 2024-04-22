@@ -10,6 +10,7 @@ def test_roll_die():
         result = roll_die()
         assert isinstance(result, int)
         assert result >= 1 and result <= 6
+        assert not result < 1 
 
 def test_roll():
     n = 10
@@ -33,6 +34,7 @@ def test_same_date():
     result = same_date(num_people, num_same)
     assert isinstance(result, bool)
     assert result == True
+    assert not result == False
 
 def test_birthday_prob():
     # Test with known values for numPeople, numSame, and numTrials
@@ -43,6 +45,7 @@ def test_birthday_prob():
     result = birthday_prob(num_people, num_same, num_trials)
     assert isinstance(result, float)
     assert result == pytest.approx(0.507, abs=0.05)
+    assert not result == pytest.approx(0.7, abs=0.01)
 
 def test_birthday_prob_more():
     random.seed(0)
