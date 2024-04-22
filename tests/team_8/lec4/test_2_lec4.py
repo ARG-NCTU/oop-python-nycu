@@ -21,10 +21,10 @@ def test_roll():
 def test_run_sim():
     # Test with a known goal and numTrials
     random.seed(0)
-    goal = '11111'
-    num_trials = 1000
-    run_sim(goal, num_trials, '11111')
-
+    num_trials = 10000
+    goal = "12345"
+    run_sim(goal, num_trials,"12345")
+   
 def test_same_date():
     # Test with known values for numPeople and numSame
     random.seed(0)
@@ -54,3 +54,14 @@ def test_birthday_prob_more():
         denom = (366 ** num_people) * math.factorial(366 - num_people)
         print('Actual prob. for N = 100 =',
               1 - numerator / denom)
+
+def test_birthday_prob_more2():
+    # Test with known values for numPeople, numSame, and numTrials
+    random.seed(0)
+    num_people = 23
+    num_same = 2
+    num_trials = 10000
+    result = birthday_prob(num_people, num_same, num_trials)
+    assert isinstance(result, float)
+    assert result == pytest.approx(0.507, abs=0.05)
+
