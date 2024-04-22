@@ -13,7 +13,7 @@ class Node:
         Args:
             name (str): The name of the node.
         """
-self.name = name
+        self.name = name
 
     def get_name(self):
         """
