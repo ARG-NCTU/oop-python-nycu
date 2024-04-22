@@ -37,6 +37,6 @@ def test_city_planner():
     #assert g.get_node('Boston').get_edges() == [g.get_node('Providence'), g.get_node('New York')], "Boston should be connected to Providence and New York."
     #assert cp.g == g, "The graph should be correctly assigned to the CityPlanner instance."
     assert cp.g.get_node('Boston').get_name() == 'Boston'
-
+    assert cp.g.get_node('Chicago').get_name() == 'Chicago'
     cp.get_shortest_path('Chicago', 'Boston')
 
