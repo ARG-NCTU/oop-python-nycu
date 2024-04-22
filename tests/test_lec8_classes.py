@@ -312,4 +312,3 @@ def test_17_coordinate():
     assert c.y == 12
     assert c.distance(origin) == 13
     assert origin.distance(c) == 13
-
