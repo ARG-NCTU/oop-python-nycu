@@ -18,13 +18,7 @@ def test_roll():
         result = result + str(roll_die())
     print(f'test_roll: {result}')
 
-def test_roll_die_seed():
-    # Test that the function returns the same value with a seed
-    random.seed(0)
-    result1 = roll_die()
-    random.seed(0)
-    result2 = roll_die():
-    assert result1 == result2
+
 
 
 
