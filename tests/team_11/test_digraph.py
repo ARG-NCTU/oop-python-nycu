@@ -37,12 +37,13 @@ class TestDigraph:
         self.graph.add_node(self.node1)
         assert self.graph.has_node(self.node1)
         assert not self.graph.has_node(Node('4'))
+        
 
     def test_get_node(self):
         self.graph.add_node(self.node1)
         assert self.graph.get_node('1') == self.node1
 
-def test_build_city_graph():
+def test_6_build_city_graph():
     
     g = Digraph()
 
@@ -64,3 +65,4 @@ def test_build_city_graph():
     print(g)
     assert len(g.edges) == 7 
     assert g.get_node('Boston').get_name() == 'Boston'
+    assert g.get_node('Boston') in g.children_of(g.get_node('Providence'))
