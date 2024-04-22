@@ -18,3 +18,19 @@ def test_density(food):
 def test_str(food):
     assert str(food) == "orange: <20, 40>"
 
+@pytest.fixture
+def food1():
+    return Food("banana", 10, 50)
+
+def test_get_value1(food1):
+    assert food1.get_value() == 10
+
+def test_get_cost1(food1):
+    assert food1.get_cost() == 50
+
+def test_density1(food1):
+    assert food1.density() == 0.2
+
+def test_str1(food1):
+    assert str(food1) == "banana: <10, 50>"
+
