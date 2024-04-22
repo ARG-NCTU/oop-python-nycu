@@ -1,24 +1,21 @@
-import pytest
-from lecture3_graph import *
+from lecture3_graph import CityPlanner
+from lecture3_graph import Digraph
 
 def test_city_planner():
     """
-    This function tests the functionality of the CityPlanner class. It creates a directed graph (Digraph) 
-    representing a network of cities and the connections between them. It then uses the CityPlanner's 
-    get_shortest_path method to find the shortest path between two cities and checks if the result is as expected.
+    This function tests the functionality of the CityPlanner class.
+    It creates an instance of CityPlanner and a directed graph (Digraph).
+    It then adds several nodes, each representing a city, to the graph.
     """
+    cp = CityPlanner()  # Create an instance of CityPlanner
+    g = Digraph()  # Create an instance of Digraph
 
-    # Create an instance of CityPlanner
-    cp = CityPlanner()
-
-    # Create an instance of Digraph
-    g = Digraph()
-
-    # Add nodes to the graph representing cities
+    # Add nodes to the graph
+    # Each node represents a city
     for name in ('Boston', 'Providence', 'New York', 'Chicago',
-                 'Denver', 'Phoenix', 'Los Angeles'):  # Create 7 nodes
-        g.add_node(Node(name))
-
+                 'Denver', 'Phoenix', 'Los Angeles'):
+        g.add_node(Node(name))  # Add a node with the city name to the graph
+    # Add edges to the graph
     g.add_edge(Edge(g.get_node('Boston'), g.get_node('Providence')))
     g.add_edge(Edge(g.get_node('Boston'), g.get_node('New York')))
     g.add_edge(Edge(g.get_node('Providence'), g.get_node('Boston')))
@@ -32,8 +29,11 @@ def test_city_planner():
 
     cp.g = g
 
+    # Test the name retrieval of a node
     assert cp.g.get_node('Boston').get_name() == 'Boston'
 
-
-    cp.get_shortest_path('Chicago', 'Boston')
+    # Test the shortest path functionality
+    shortest_path = cp.get_shortest_path('Chicago', 'Boston')
+    expected_path = ['Chicago', 'New York', 'Boston']
+    assert shortest_path == expected_path
 
