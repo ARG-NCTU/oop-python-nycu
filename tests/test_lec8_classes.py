@@ -154,6 +154,15 @@ def test_1_intset():
     s.remove(3)
     assert not s.member(3)
     assert s.member(4)
+    
+def test_16_coordinate():
+    m = lc.Coordinate(7, 24)
+    n = lc.Coordinate(0,0)
+    assert m.x == 7
+    assert m.y == 24
+    assert m.distance(n) == 25
+    assert n.distance(m) == 25
+    s = lc.intSet()
     s.insert(7)
     assert s.member(7)
     s.remove(7)
