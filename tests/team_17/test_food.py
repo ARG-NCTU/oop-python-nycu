@@ -143,5 +143,23 @@ def test_density(food):
 def test_str(food):
     assert str(food) == "sherry: <15, 90>"
 
+@pytest.fixture
+def food_ytlin():
+    
+    return Food("ytlin", 200, 400)
+
+def test_get_value(food_ytlin):
+    assert food_ytlin.get_value() == 200
+
+def test_get_cost(food_ytlin):
+    assert food_ytlin.get_cost() == 400
+
+def test_density(food_ytlin):
+     assert food_ytlin.density() == 0.5
+ 
+def test_str(food_ytlin):
+
+     assert str(food_ytlin) == "ytlin: <200, 400>"
+
 
 
