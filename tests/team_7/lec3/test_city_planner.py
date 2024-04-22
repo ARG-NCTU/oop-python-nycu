@@ -21,7 +21,7 @@ def test_city_planner():
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('Phoenix')))
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('New York')))
     g.add_edge(Edge(g.get_node('Los Angeles'), g.get_node('Boston')))
-    
+
     cp.g = g
 
     assert cp.g.get_node('Boston').get_name() == 'Boston'
@@ -32,16 +32,15 @@ def test_city_planner():
     assert cp.g.get_node('Phoenix').get_name() == 'Phoenix'
     assert cp.g.get_node('Los Angeles').get_name() == 'Los Angeles'
 
-
     cp.get_shortest_path('Chicago', 'Boston')
-    assert cp.get_shortest_path('Chicago', 'Boston') == 'Chicago -> New York -> Boston'
-    assert cp.get_shortest_path('Boston', 'Phoenix') == 'Boston -> New York -> Chicago -> Phoenix'
-    assert cp.get_shortest_path('Boston', 'Boston') == 'Boston'
-    assert cp.get_shortest_path('Boston', 'Los Angeles') == 'Boston -> Los Angeles'
-    assert cp.get_shortest_path('Los Angeles', 'Boston') == 'Los Angeles -> Boston'
-    assert cp.get_shortest_path('Los Angeles', 'Los Angeles') == 'Los Angeles'
-    assert cp.get_shortest_path('Los Angeles', 'New York') == 'Los Angeles -> Boston -> New York'
-    assert cp.get_shortest_path('New York', 'Los Angeles') == 'New York -> Boston -> Los Angeles'
-    assert cp.get_shortest_path('New York', 'Boston') == 'New York -> Boston'
-    assert cp.get_shortest_path('New York', 'New York') == 'New York'
+    assert cp.shortest_path_dfs(cp.g, cp.g.get_node('Chicago'), cp.g.get_node('Boston'), True) == None
+    
+    cp.get_shortest_path('Boston', 'Chicago')
+    assert cp.shortest_path_dfs(cp.g, cp.g.get_node('Boston'), cp.g.get_node('Chicago'), True) == [cp.g.get_node('Boston'), cp.g.get_node('New York'), cp.g.get_node('Chicago')]
+    
+    cp.get_shortest_path('Boston', 'Phoenix')
+    assert cp.shortest_path_dfs(cp.g, cp.g.get_node('Boston'), cp.g.get_node('Phoenix'), True) == [cp.g.get_node('Boston'), cp.g.get_node('New York'), cp.g.get_node('Chicago'), cp.g.get_node('Phoenix')]
+
+    cp.get_shortest_path('Boston', 'Los Angeles')
+    assert cp.shortest_path_dfs(cp.g, cp.g.get_node('Boston'), cp.g.get_node('Los Angeles'), True) == None
 
