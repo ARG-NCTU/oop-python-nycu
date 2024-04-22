@@ -12,6 +12,7 @@ def test_roll_die():
         assert result >= 1 and result <= 6
 
 def test_roll():
+    #test the roll for n times
     n = 10
     result = ''
     for i in range(n):
