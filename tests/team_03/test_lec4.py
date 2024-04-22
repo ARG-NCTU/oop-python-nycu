@@ -54,3 +54,13 @@ def test_birthday_prob_more():
         denom = (366 ** num_people) * math.factorial(366 - num_people)
         print('Actual prob. for N = 100 =',
               1 - numerator / denom)
+def test_birthday_prob_all():
+    # Test with known values for numPeople, numSame, and numTrials
+    random.seed(0)
+    num_people = 367
+    num_same = 2
+    num_trials = 1000
+    result = birthday_prob(num_people, num_same, num_trials)
+    assert isinstance(result, float)
+    assert result == 1.0
+
