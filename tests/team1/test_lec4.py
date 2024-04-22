@@ -102,4 +102,5 @@ def test_1_birthday_prob():
               1 - numerator / denom)
 
 def testcode():
-    assert roll_die() in [1, 2, 3, 4, 5, 6] 
+    assert roll_die() in [1, 2, 3, 4, 5, 6]
+    assert None == roll_die()
