@@ -411,3 +411,24 @@ def test_7_in_operator_int_dict_factory(int_dict_factory, num_elements):
     end = time.time()
     # print the result using exponential notation
     print(f'Time taken for \'dict\' container with {num_elements: 10d} elements: {end-start:.2e}')
+
+
+
+def test_2_linear_search():
+    assert lec10.linear_search([3, 1, 4, 1, 5, 9, 2, 6], 3) == True 
+    assert lec10.linear_search([3, 1, 4, 1, 5, 9, 2, 6], 7) == False
+    assert lec10.linear_search([], 3) == False
+
+def test_2_search():
+    assert lec10.search([1,3,4,5,9,18,27], 27) == True
+    assert lec10.search([1,3,4,5,9,18,27], 6) == False
+
+def test_2_isSubset():
+    assert lec10.isSubset([2,3,4], [1,2,3,4,5]) == True
+    assert lec10.isSubset([2,3,4], [1,5]) == False
+
+def test_2_intersect():
+    assert lec10.intersect([1, 2, 3, 2, 3], [2, 3, 4]) == [2, 3]
+    assert lec10.intersect([1, 2, 3], [4, 5, 6]) == []
+    assert lec10.intersect([], [4, 5, 6]) == []
+    
