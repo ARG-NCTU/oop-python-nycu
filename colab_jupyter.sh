@@ -3,7 +3,7 @@ jupyter notebook \
     --NotebookApp.token='assistive' \
     --NotebookApp.port_retries=0 \
     --notebook-dir /home/arg/oop-python-nycu \
-    --port=8888 \
+    --port=8887 \
     --allow-root \
     --no-browser \
     --ip=0.0.0.0
