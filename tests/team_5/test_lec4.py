@@ -37,7 +37,7 @@ def test_run_sim2():
     random.seed(0)
     goal = '55432'
     num_trials = 1000
-    run_sim(goal, num_trials, '11111')
+    run_sim(goal, num_trials, '55432')
 def test_same_date():
     # Test with known values for numPeople and numSame
     random.seed(0)
