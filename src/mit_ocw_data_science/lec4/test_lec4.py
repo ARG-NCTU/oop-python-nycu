@@ -22,7 +22,7 @@ def test_run_sim():
     # Test with a known goal and numTrials
     random.seed(0)
     goal = '11111'
-    num_trials = 1000
+    num_trials = 10000
     run_sim(goal, num_trials, '11111')
 
 def test_same_date():
