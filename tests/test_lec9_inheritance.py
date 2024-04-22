@@ -57,7 +57,6 @@ def test12_cat():
     c.set_age(6)
     assert c.get_age() == 6
 
-
 def test_animal1():
     b = inh.Animal(1)
     print(b)
@@ -67,6 +66,9 @@ def test_animal1():
     assert b.get_name() is None
     assert b.get_age() == 5
 
+def test_Student1():
+    s1 = inh.Student("Ella",22, "Nano")
+    print (s1)
 
 def test_Student1():
     s1 = inh.Student("Ella", 22, "Nano")
@@ -78,6 +80,7 @@ def test_Student1():
     assert s1.get_name() == "Johnson"
 
     s2 = inh.Student("Sana", 25, "Twice")
+    print(s2.get_name,"says, ")
     print(s2.get_name, "says, ")
     s2.speak()
     s2.add_friend("Momo")
@@ -86,15 +89,20 @@ def test_Student1():
     print(s2.get_friends())
     assert s2.get_friends() == ["Momo", "Mina"]
 
-
 def test_5_Rabbit():
     p1 = inh.Rabbit(2)
     p2 = inh.Rabbit(3)
     p3 = inh.Rabbit(5)
 
+
+    print ("p1:",p1)
+    print ("p2:",p2)
+    print ("p3:" ,p3)
+
     print("p1:", p1)
     print("p2:", p2)
     print("p3:", p3)
+
     r1 = p1 + p2
     r2 = p1 + p3
     assert r1 != r2
@@ -264,6 +272,7 @@ def test_13_animal():
     assert a.get_age() == 19
 
 
+
 def test_person():
     a = inh.Animal(19)
     print(a)
@@ -316,6 +325,18 @@ def test_17_animal():
     print(a)
     assert a.get_name() == "PulsarGlory"
     assert a.get_age() == 19
+      
+def test_6_cat():
+    c = inh.Cat(5)
+    print(c)
+    print(c.get_age())
+    c.set_name("fluffy")
+    print(c)
+    assert c.get_name() == "fluffy"
+    assert c.get_age() == 5
+
+
+
 
 
 def test_16_animal():
@@ -368,3 +389,12 @@ def test_16_rabbit():
     assert r3.get_age() == 5
     assert r1.get_parent1() == None
     assert r1.get_parent2() == None
+
+def test_animal2():
+    a = inh.Animal(10)
+    print(a)
+    print(a.get_age())
+    a.set_name("furry")
+    print(a)
+    assert a.get_name() == "furry"
+    assert a.get_age() == 10
