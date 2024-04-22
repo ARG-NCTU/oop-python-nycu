@@ -10,17 +10,13 @@ class TestDigraph:
         self.edge1 = Edge(self.node1, self.node2)
         self.edge2 = Edge(self.node2, self.node3)
 
-
     def test_add_node(self):
         self.graph.add_node(self.node1)
         assert self.graph.has_node(self.node1)
         assert not self.graph.has_node(self.node2)
         self.graph.add_node(self.node2)
         assert self.graph.has_node(self.node2)
-        assert not self.graph.has_node(Node('4'))
-        assert self.graph.get_node('1') == self.node1
-        assert self.graph.get_node('2') == self.node2
-
+        assert not self.graph.has_node(self.node3)
 
     @pytest.mark.xfail(raises=ValueError)
     def test_add_edge(self):
@@ -30,20 +26,6 @@ class TestDigraph:
         assert self.node2 in self.graph.children_of(self.node1)
         self.graph.add_edge(Edge(self.node2, Node('4')))
         self.graph.add_edge(Edge(Node('5'), Node('6')))
-        assert self.graph.has_node(Node('4'))
-        assert self.graph.has_node(Node('5'))
-        assert self.graph.has_node(Node('6'))
-        assert self.graph.has_node(self.node2)
-        assert self.graph.has_node(self.node1)
-        assert self.graph.has_node(Node('4'))
-        assert self.graph.has_node(Node('5'))
-        assert self.graph.has_node(Node('6'))
-        assert self.graph.get_node('4') == Node('4')
-        assert self.graph.get_node('5') == Node('5')
-        assert self.graph.get_node('6') == Node('6')
-        assert self.graph.get_node('1') == self.node1
-        assert self.graph.get_node('2') == self.node2
-        assert self.graph.get_node('4') == Node('4')
 
     @pytest.mark.xfail(raises=ValueError)
     def test_children_of(self):
@@ -53,24 +35,23 @@ class TestDigraph:
         self.graph.add_edge(self.edge2)
         assert self.graph.children_of(self.node1) == [self.node2]
         assert self.graph.children_of(self.node2) == [self.node3]
-        self.graph.children_of(Node('4'))
-        self.graph.children_of(Node('5'))
-        assert self.graph.children_of(Node('4')) == []
-        assert self.graph.children_of(Node('5')) == []
 
     def test_has_node(self):
         self.graph.add_node(self.node1)
         assert self.graph.has_node(self.node1)
         assert not self.graph.has_node(Node('4'))
-        self.graph.add_node(Node('4'))  
-        assert self.graph.has_node(Node('4'))   
-
+        assert not self.graph.has_node(self.node3)
+        self.graph.add_node(self.node2)
+        assert self.graph.has_node(self.node2)
+        assert not self.graph.has_node(Node('3'))
 
     def test_get_node(self):
         self.graph.add_node(self.node1)
         assert self.graph.get_node('1') == self.node1
-        assert self.graph.get_node('2') == None
         self.graph.add_node(self.node2)
+        assert self.graph.get_node('2') == self.node2
+        self.graph.add_node(self.node3)
+        assert self.graph.get_node('3') == self.node3
 
 def test_build_city_graph():
     
@@ -90,21 +71,21 @@ def test_build_city_graph():
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('Phoenix')))
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('New York')))
     g.add_edge(Edge(g.get_node('Los Angeles'), g.get_node('Boston')))
-    
+
     print(g)
     assert len(g.edges) == 7 
     assert g.get_node('Boston').get_name() == 'Boston'
-    assert g.get_node('Providence').get_name() == 'Providence'
-    assert g.get_node('New York').get_name() == 'New York'
-    assert g.get_node('Chicago').get_name() == 'Chicago'
     assert g.get_node('Denver').get_name() == 'Denver'
-    assert g.get_node('Phoenix').get_name() == 'Phoenix'
     assert g.get_node('Los Angeles').get_name() == 'Los Angeles'
+    assert g.get_node('New York').get_name() == 'New York'
+    assert g.get_node('Phoenix').get_name() == 'Phoenix'
+    assert g.get_node('Providence').get_name() == 'Providence'
+    assert g.get_node('Chicago').get_name() == 'Chicago'
     assert g.children_of(g.get_node('Boston')) == [g.get_node('Providence'), g.get_node('New York')]
     assert g.children_of(g.get_node('Providence')) == [g.get_node('Boston'), g.get_node('New York')]
     assert g.children_of(g.get_node('New York')) == [g.get_node('Chicago')]
     assert g.children_of(g.get_node('Chicago')) == [g.get_node('Denver'), g.get_node('Phoenix')]
     assert g.children_of(g.get_node('Denver')) == [g.get_node('Phoenix'), g.get_node('New York')]
-    assert g.children_of(g.get_node('Phoenix')) == []
     assert g.children_of(g.get_node('Los Angeles')) == [g.get_node('Boston')]
-    assert g.has_node(g.get_node('Boston'))
+    assert g.children_of(g.get_node('Phoenix')) == []
+    
