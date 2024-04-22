@@ -54,3 +54,14 @@ def test_birthday_prob_more():
         denom = (366 ** num_people) * math.factorial(366 - num_people)
         print('Actual prob. for N = 100 =',
               1 - numerator / denom)
+
+def test_birthday_prob_more2():
+    random.seed(5)
+    for num_people in [10, 20, 40, 100]:
+        print('For', num_people,
+              'est. prob. of a shared birthday is',
+              birthday_prob(num_people, 5, 100000))
+        numerator = math.factorial(366)
+        denom = (366 ** num_people) * math.factorial(366 - num_people)
+        print('Actual prob. for N = 100 =',
+              1 - numerator / denom)
