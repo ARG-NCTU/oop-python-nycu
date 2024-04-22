@@ -389,3 +389,12 @@ def test_16_rabbit():
     assert r3.get_age() == 5
     assert r1.get_parent1() == None
     assert r1.get_parent2() == None
+
+def test_animal2():
+    a = inh.Animal(10)
+    print(a)
+    print(a.get_age())
+    a.set_name("furry")
+    print(a)
+    assert a.get_name() == "furry"
+    assert a.get_age() == 10
