@@ -46,6 +46,7 @@ def test_birthday_prob():
     assert isinstance(result, float)
     assert result == pytest.approx(0.507, abs=0.05)
     assert not result == pytest.approx(0.7, abs=0.01)
+    assert not result == pytest.approx(0.8, abs=0.04)
 
 def test_birthday_prob_more():
     random.seed(0)
