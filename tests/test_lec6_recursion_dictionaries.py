@@ -1,4 +1,3 @@
-
 import add_path
 import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
 import pytest
@@ -17,7 +16,6 @@ def test_fib():
     assert lec6.fib(9) == 55
     assert lec6.fib(10) == 89
 
-
 # please write a test for is_palindrome function
 def test_is_palindrome():
     assert lec6.is_palindrome('eve') == True
@@ -25,8 +23,7 @@ def test_is_palindrome():
     assert lec6.is_palindrome('Is this a palindrome') == False
     assert lec6.is_palindrome('eillie') == True
     assert lec6.is_palindrome('cookieliileikooc') == True
-
-def test_7_fib():
+def test_18_fib():
     assert lec6.fib(0) == 1
     assert lec6.fib(1) == 1
     assert lec6.fib(2) == 2
@@ -39,13 +36,12 @@ def test_7_fib():
     assert lec6.fib(9) == 55
     assert lec6.fib(10) == 89
 
-def test_7_is_palindrome():
+def test_18_is_palindrome():
     assert lec6.is_palidrome('eve') == True
     assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
     assert lec6.is_palindrome('Is this a palindrome') == False
     assert lec6.is_palindrome('eillie') == True
     assert lec6.is_palindrome('cookieliileikooc') == True
-
 
 def test_most_common_words():
     she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
@@ -220,7 +216,7 @@ def test_is_palindrome():
     assert lec6.is_palindrome('eillie') == True
     assert lec6.is_palindrome('cookieliileikooc') == True
 
-def test_7_fib():
+def test_18_fib():
     assert lec6.fib(0) == 1
     assert lec6.fib(1) == 1
     assert lec6.fib(2) == 2
@@ -233,8 +229,8 @@ def test_7_fib():
     assert lec6.fib(9) == 55
     assert lec6.fib(10) == 89
 
-def test_7_is_palindrome():
-    assert lec6.is_palidrome('eve') == True
+def test_18_is_palindrome():
+    assert lec6.is_palindrome('eve') == True
     assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
     assert lec6.is_palindrome('Is this a palindrome') == False
     assert lec6.is_palindrome('eillie') == True
@@ -295,4 +291,3 @@ def test_most_common_words():
 
     assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
     assert lec6.is_palindrome('cookieliileikooc') == True
-

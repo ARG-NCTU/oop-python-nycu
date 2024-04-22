@@ -10,6 +10,7 @@ def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(20, 8) == (2, 4)
     assert lec5.quotient_and_remainder(20, 9) == (2, 2)
     assert lec5.quotient_and_remainder(20, 10) == (2, 0)
+    assert lec5.quotient_and_remainder(20, 11) == (1, 9)
 
     try:
         lec5.quotient_and_remainder(20, 0)
@@ -33,4 +34,15 @@ def test_sum_elem_method2():
     assert lec5.sum_elem_method2([5]) == 5
     assert lec5.sum_elem_method2([]) == 0
 
+def new_test_quotient_and_remainder():
+    assert lec5.quotient_and_remainder(24, 6) == (4, 0)
+    assert lec5.quotient_and_remainder(25, 7) == (3, 4)
+    assert lec5.quotient_and_remainder(12, 8) == (1, 4)
+    assert lec5.quotient_and_remainder(30, 9) == (3, 3)
+    assert lec5.quotient_and_remainder(19, 10) == (1, 9)
 
+    try:
+        lec5.quotient_and_remainder(11, 0)
+    except ZeroDivisionError:
+         print("ZeroDivisionError")
+    assert lec5.quotient_and_remainder(23, 13) == (1, 10)
