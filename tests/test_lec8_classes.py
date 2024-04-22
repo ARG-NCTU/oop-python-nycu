@@ -10,6 +10,14 @@ def test_coordinate():
     assert c.distance(origin) == 5
     assert origin.distance(c) == 5
 
+def test_team_7_coordinate():
+    c = lc.Coordinate(3, 4)
+    origin = lc.Coordinate(0,0)
+    assert c.x == 5
+    assert c.y == 12
+    assert c.distance(origin) == 13
+    assert origin.distance(c) == 13
+
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
@@ -146,6 +154,15 @@ def test_1_intset():
     s.remove(3)
     assert not s.member(3)
     assert s.member(4)
+    
+def test_16_coordinate():
+    m = lc.Coordinate(7, 24)
+    n = lc.Coordinate(0,0)
+    assert m.x == 7
+    assert m.y == 24
+    assert m.distance(n) == 25
+    assert n.distance(m) == 25
+    s = lc.intSet()
     s.insert(7)
     assert s.member(7)
     s.remove(7)
@@ -295,4 +312,3 @@ def test_17_coordinate():
     assert c.y == 12
     assert c.distance(origin) == 13
     assert origin.distance(c) == 13
-
