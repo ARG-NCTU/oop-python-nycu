@@ -54,3 +54,6 @@ def test_birthday_prob_more():
         denom = (366 ** num_people) * math.factorial(366 - num_people)
         print('Actual prob. for N = 100 =',
               1 - numerator / denom)
+
+def testcode():
+    assert roll_die() in [1, 2, 3, 4, 5, 6] 
