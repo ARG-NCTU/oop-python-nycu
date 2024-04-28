@@ -18,6 +18,16 @@ def test_roll():
         result = result + str(roll_die())
     print(f'test_roll: {result}')
 
+def test_6_roll():
+    n = 10
+    result = ''
+    for i in range(n):
+        result = result + str(roll_die())
+    print(f'test_roll: {result}')
+    assert len(result) == n
+    assert result.isdigit()
+    assert int(result) >= 1111111111 and int(result) <= 6666666666
+
 def test_run_sim():
     # Test with a known goal and numTrials
     random.seed(0)
