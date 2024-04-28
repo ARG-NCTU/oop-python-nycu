@@ -12,7 +12,7 @@ class TestDigraph:
 
     def test_add_node(self):
 # This line of code adds a node to the graph
-self.graph.add_node(self.node1)
+        self.graph.add_node(self.node1)
         assert self.graph.has_node(self.node1)
         assert not self.graph.has_node(self.node2)
 
