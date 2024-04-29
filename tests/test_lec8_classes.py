@@ -2,6 +2,7 @@ import add_path
 import mit_ocw_exercises.lec8_classes as lc
 import pytest
 
+
 def test_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
@@ -13,10 +14,10 @@ def test_coordinate():
 def test_team_7_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
-    assert c.x == 5
-    assert c.y == 12
-    assert c.distance(origin) == 13
-    assert origin.distance(c) == 13
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
 
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
@@ -312,4 +313,10 @@ def test_17_coordinate():
     assert c.y == 12
     assert c.distance(origin) == 13
     assert origin.distance(c) == 13
-
+def test_16_coordinate():
+    a=lc.Coordinate(5,12)
+    o=lc.Coordinate(0,0)
+    assert a.x==5
+    assert a.y==12
+    assert a.distance(o) == 13
+    assert o.distance(a) == 13
