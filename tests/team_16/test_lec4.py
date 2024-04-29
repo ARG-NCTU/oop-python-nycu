@@ -3,6 +3,10 @@ import pytest
 import math
 from lec4_module import roll_die, run_sim, same_date, birthday_prob
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8f98e466692ee5608fecff958baf8afab16b3052
 def test_roll_die():
     # Test that the function returns an int between 1 and 6
     for i in range(100):
@@ -53,6 +57,7 @@ def test_birthday_prob_more():
         denom = (366 ** num_people) * math.factorial(366 - num_people)
         print('Actual prob. for N = 100 =',
               1 - numerator / denom)
+<<<<<<< HEAD
         
 def test_code():
     random.seed(0)
@@ -72,3 +77,13 @@ def test_code_2():
     assert isinstance(result, float)
     assert result == pytest.approx(0.003, abs=0.05)
 
+=======
+
+def test_16_same_date():
+    random.seed(0)
+    num_people = 40
+    num_same = 5
+    result = same_date(num_people, num_same)
+    assert isinstance(result, bool)
+    assert result == False
+>>>>>>> 8f98e466692ee5608fecff958baf8afab16b3052
