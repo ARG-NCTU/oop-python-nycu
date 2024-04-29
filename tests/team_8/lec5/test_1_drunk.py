@@ -9,6 +9,7 @@ def test_usual_drunk():
         assert step in [(0, 1), (0, -1), (1, 0), (-1, 0)]
         assert isinstance(step, tuple)
         assert len(step) == 2
+        assert isinstance(step[0], int)
 
 def test_masochist_drunk():
     # Test taking a step
