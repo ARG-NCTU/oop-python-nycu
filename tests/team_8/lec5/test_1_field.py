@@ -8,17 +8,22 @@ def test_field():
     loc = Location(0, 0)
     f.add_drunk(d, loc)
     assert f.get_loc(d) == loc
+    assert f.get_drunk(loc) == d
+    assert f.get_drunk_list() == [d]
 
     # Test moving a drunk
     d.take_step = lambda: (1, 0)
     f.move_drunk(d)
     assert f.get_loc(d).get_x() == 1
+    assert f.get_loc(d).get_y() == 0
+    assert f.get_drunk(Location(1, 0)) == d
 
     # Test adding a duplicate drunk
     try:
         f.add_drunk(d, loc)
     except ValueError as e:
         assert str(e) == "Duplicate drunk"
+        assert f.get_drunk_list() == [d]
 
     # Test moving a drunk not in the field
     d2 = Drunk("Alice")
@@ -26,3 +31,4 @@ def test_field():
         f.move_drunk(d2)
     except ValueError as e:
         assert str(e) == "Drunk not in field"
+        assert f.get_drunk_list() == [d]
