@@ -1,6 +1,6 @@
+import matplotlib.pyplot as plt
 import random
 import pylab
-import matplotlib.pyplot as plt ##import plt
 
 # set line width
 pylab.rcParams['lines.linewidth'] = 4
@@ -134,23 +134,15 @@ def sim_drunk(num_trials, d_class, walk_lengths):
         mean = sum(trials) / len(trials)
         mean_distances.append(mean)
     return mean_distances
-
-##added
-def plot_mean_distances(walk_lengths, mean_distances, style, title, xlabel, ylabel):
-    plt.plot(walk_lengths, mean_distances, style)
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+def sim_drunk_and_plot(num_trials, d_class, walk_lengths):
+    mean_distances = sim_drunk(num_trials, d_class, walk_lengths)
+    plt.figure()
+    for mean_distance in mean_distances:
+        plt.plot(walk_lengths, mean_distance, marker='o', label=d_class.__name__)
+    plt.title('Mean Distance from Origin')
+    plt.xlabel('Number of Steps')
+    plt.ylabel('Distance from Origin')
+    plt.legend(loc='best')
+    plt.grid(True)
     plt.show()
 
-def plot_simulation(num_trials, d_class, walk_lengths):
-    styles = ['b-', 'r-.', 'g:']
-    style_iterator = StyleIterator(styles)
-    for num_steps in walk_lengths:
-        mean_distances = sim_drunk(num_trials, d_class, walk_lengths)
-        style = style_iterator.next_style()
-        plot_mean_distances(walk_lengths, mean_distances, style, 'Mean Distance from Origin', 'Number of Steps', 'Distance from Origin')
-
-num_trials = 100
-walk_lengths = [10, 100, 1000, 10000, 100000]
-plot_simulation(num_trials, UsualDrunk, walk_lengths)
