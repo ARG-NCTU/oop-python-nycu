@@ -22,7 +22,16 @@ def test_location():
     assert loc1.dist_from(loc2) == pytest.approx(1.41421356237, rel=1e-9)
     assert loc1.dist_from(loc3) == pytest.approx(3.60555127546, rel=1e-9)
     assert loc2.dist_from(loc3) == pytest.approx(2.23606797749, rel=1e-9)
+    
+    # Test move method
+    loc1 = loc1.move(1, 1)
+    assert loc1.get_x() == 1
+    assert loc1.get_y() == 1
+    loc1 = loc1.move(-1, -1)
+    assert loc1.get_x() == 0
+    assert loc1.get_y() == 0
 
+    # Test the __str__ method
     assert str(loc1) == '<0, 0>'
     assert str(loc2) == '<1, 1>'
     assert str(loc3) == '<2, 3>'
