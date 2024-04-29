@@ -1,4 +1,17 @@
+import unittest
 import matplotlib.pyplot as plt
+import numpy as np
+
+class TestPlot(unittest.TestCase):
+    def test_plot(self):
+        x = np.linspace(0, 10, 100)
+        y = np.sin(x)
+        fig, ax = plt.subplots()
+        ax.plot(x, y)
+        self.assertTrue(isinstance(ax, plt.Axes))
+
+if __name__ == '__main__':
+    unittest.main()
 
 x_vals = [1, 2, 3, 4]
 y_vals_1 = [1, 2, 3, 4]
