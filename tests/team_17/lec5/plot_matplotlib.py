@@ -7,6 +7,6 @@ y_vals_2 = [1, 7, 3, 5, 6, 2]
 plt.plot(x_vals_1, y_vals_2, 'r--', label='second')
 x_vals_2 = [1, 10, 9, 7, 3, 5]
 plt.plot(x_vals_2, y_vals_2, 'g-.', label='third')
-plt.plot(x_vals_1, y_vals_2, 'y:', label='fourth')
+plt.plot(x_vals_2, y_vals_1, 'y:', label='fourth')
 plt.legend()
 plt.show()
