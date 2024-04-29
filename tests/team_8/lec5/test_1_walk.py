@@ -29,6 +29,8 @@ def test_walk(usual_drunk, field):
     assert walk(field, usual_drunk, 1) == 1.0  # test 1 step
     assert walk(field, usual_drunk, 10) == pytest.approx(1.41, abs=0.01)  # test 10 steps
     assert walk(field, usual_drunk, 100) == pytest.approx(11.31, abs=0.1)  # test 100 steps
+    assert walk(field, usual_drunk, 1000) == pytest.approx(31.62, abs=0.1)  # test 1000 steps
+    assert walk(field, usual_drunk, 10000) == pytest.approx(100.0, abs=0.1)  # test 10000 steps
 
 
 def test_sim_walks(usual_drunk, masochist_drunk, field):
@@ -44,8 +46,14 @@ def test_sim_walks(usual_drunk, masochist_drunk, field):
     assert all(d >= 0 for d in usual_distances)  # test non-negative distances
     assert all(d >= 0 for d in masochist_distances)  # test non-negative distances
     assert usual_distances != masochist_distances  # test that the two types of drunks give different results
+    assert usual_distances != [0] * 10  # test that the distances are not all 0
+    assert masochist_distances != [0] * 10  # test that the distances are not all 0
+    assert usual_distances != [10] * 10  # test that the distances are not all 10
+    assert masochist_distances != [10] * 10  # test that the distances are not all 10
+    assert usual_distances != [5] * 10  # test that the distances are not all 5
 
 def test_sim_walks_num_steps(num_steps):
     for n in num_steps:
         distances = sim_walks(n, 10, UsualDrunk)
         assert len(distances) == 10
+        assert isinstance(distances[0], float)
