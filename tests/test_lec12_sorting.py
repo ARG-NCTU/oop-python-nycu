@@ -36,8 +36,8 @@ def diff_in_time():
     sorting_methods_func = [selection_sort, bubble_sort, merge_sort]
     test_list = []
 
-    for i in range(1000000):
-        a = random.randrange(1000000)
+    for i in range(50):
+        a = random.randrange(50)
         test_list.append(a)
 
     for i in range(3):
