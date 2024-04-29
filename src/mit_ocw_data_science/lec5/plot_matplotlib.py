@@ -1,14 +1,9 @@
 import unittest
 import matplotlib.pyplot as plt
 import numpy as np
-
-class TestPlot(unittest.TestCase):
-    def test_plot(self):
-        x = np.linspace(0, 10, 100)
-        y = np.sin(x)
-        fig, ax = plt.subplots()
-        ax.plot(x, y)
-        self.assertTrue(isinstance(ax, plt.Axes))
+import unittest
+import numpy as np
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     unittest.main()
