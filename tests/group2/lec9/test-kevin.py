@@ -7,7 +7,7 @@ def food():
     return Food("apple", 10, 50)
 
 def test_get_value(food):
-    assert food.get_value() == 1
+    assert food.get_value() == 10
 
 def test_get_cost(food):
     assert food.get_cost() == 50
