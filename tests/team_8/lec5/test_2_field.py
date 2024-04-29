@@ -13,6 +13,12 @@ def test_field():
     d.take_step = lambda: (1, 0)
     f.move_drunk(d)
     assert f.get_loc(d).get_x() == 1
+    assert f.get_loc(d).get_y() == 0
+
+    d.take_step = lambda: (0, 1)
+    f.move_drunk(d)
+    assert f.get_loc(d).get_x() == 1
+    assert f.get_loc(d).get_y() == 1
 
     # Test adding a duplicate drunk
     try:
