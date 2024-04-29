@@ -12,26 +12,27 @@ class TestDigraph:
 
     def test_add_node(self):
         self.graph.add_node(self.node1)
-        assert self.graph.has_node(self.node1)
         assert not self.graph.has_node(self.node2)
+        assert self.graph.get_node('1') == self.node1
 
-#    @pytest.mark.xfail(raises=ValueError)
-#    def test_add_edge(self):
-#        self.graph.add_node(self.node1)
-#        self.graph.add_node(self.node2)
-#        self.graph.add_edge(self.edge1)
-#        assert self.node2 in self.graph.children_of(self.node1)
-#        self.graph.add_edge(Edge(self.node2, Node('4')))
-#        self.graph.add_edge(Edge(Node('5'), Node('6')))
+    @pytest.mark.xfail(raises=ValueError)
+    def test_add_edge(self):
+        self.graph.add_node(self.node1)
+        self.graph.add_node(self.node2)
+        self.graph.add_edge(self.edge1)
+        assert self.node2 in self.graph.children_of(self.node1)
+        assert self.node1 not in self.graph.children_of(self.node2)
+        self.graph.add_edge(Edge(self.node2, Node('4')))
+        self.graph.add_edge(Edge(Node('5'), Node('6')))
 
-#    @pytest.mark.xfail(raises=ValueError)
-#    def test_children_of(self):
-#        self.graph.add_node(self.node1)
-#        self.graph.add_node(self.node2)
-#        self.graph.add_edge(self.edge1)
-#        self.graph.add_edge(self.edge2)
-#        assert self.graph.children_of(self.node1) == [self.node2]
-#        assert self.graph.children_of(self.node2) == [self.node3]
+    @pytest.mark.xfail(raises=ValueError)
+    def test_children_of(self):
+        self.graph.add_node(self.node1)
+        self.graph.add_node(self.node2)
+        self.graph.add_edge(self.edge1)
+        self.graph.add_edge(self.edge2)
+        assert self.graph.children_of(self.node1) == [self.node2]
+        assert self.graph.children_of(self.node2) == [self.node3]
 
     def test_has_node(self):
         self.graph.add_node(self.node1)
@@ -64,3 +65,7 @@ def test_build_city_graph():
     print(g)
     assert len(g.edges) == 7 
     assert g.get_node('Boston').get_name() == 'Boston'
+    assert g.get_node('Providence').get_name() == 'Providence'
+    assert g.get_node('New York').get_name() == 'New York'
+    assert g.get_node('Chicago').get_name() == 'Chicago'
+    assert not g.get_node('Denver').get_name() == 'Chicago'
