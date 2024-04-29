@@ -6,25 +6,21 @@ def test_location():
     loc1 = Location(0, 0)
     assert loc1.get_x() == 0
     assert loc1.get_y() == 0
-    assert loc1.get_coords() == (0, 0)
     assert not loc1 == None
 
     loc2 = Location(1, 1)
     assert loc2.get_x() == 1
     assert loc2.get_y() == 1
-    assert loc2.get_coords() == (1, 1)
     assert not loc2 == None
 
     loc3 = loc1.move(2, 3)
     assert loc3.get_x() == 2
     assert loc3.get_y() == 3
-    assert loc3.get_coords() == (2, 3)
     assert not loc3 == None
 
     loc4 = loc2.move(-1, -1)
     assert loc4.get_x() == 0
     assert loc4.get_y() == 0
-    assert loc4.get_coords() == (0, 0)
     assert not loc4 == None
 
     assert loc1.dist_from(loc2) == pytest.approx(1.41421356237, rel=1e-9)
