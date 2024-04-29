@@ -5,20 +5,32 @@ from mit_ocw_data_science.lec2.menu import *
 
 def test_greedy():
     items = [
-        Food("sherry", 10, 50),
-        Food("vermouth", 20, 100),
-        Food("gin", 30, 150),
+        Food("apple", 20, 100),
+        Food("banana", 10, 50),
+        Food("orange", 30, 150),
     ]
+    items1 = [
+
+       Food("apple", 10, 50),
+           Food("banana", 20, 100),
+    Food("orange", 30, 150),
+            ]     
+
     constraint = 50
     key_function = lambda x: 1 / Food.get_cost(x)
 
-    taken, val = greedy(items, constraint, key_function)
     
+    taken, val = greedy(items, constraint, key_function)
+    taken1, val1 = greedy(items1, constraint, key_function)
+
+
     print('Total value of items taken =', val)
     print(Menu.get_foods_str(taken))
 
+    assert val1 == 10
+    assert Menu.get_foods_str(taken1) == "apple: <10, 50>; "
     assert val == 10
-    assert Menu.get_foods_str(taken) == "sherry: <10, 50>; "
+    assert Menu.get_foods_str(taken) == "banana: <10, 50>; "
 
 def test_greedys():
 
@@ -54,3 +66,5 @@ def test_greedys():
     assert val == 318 
     assert expected_str == \
         "wine: <89, 123>; beer: <90, 154>; cola: <79, 150>; apple: <50, 95>; donut: <10, 195>; "
+    assert Menu.get_foods_str(taken) == expected_str
+    assert val == 318

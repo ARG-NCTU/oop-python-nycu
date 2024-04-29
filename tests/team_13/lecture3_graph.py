@@ -45,7 +45,7 @@ class Edge:
 
     def __init__(self, src, dest):
         """
-        Initializes an Edge with a source node and a destination node.
+        Initializes an Edge instance.
 
         Args:
             src (Node): The source node of the edge.
@@ -77,13 +77,12 @@ class Edge:
         Returns a string representation of the edge.
 
         Returns:
-            str: A string representation of the edge in the format 'source->destination'.
+            str: A string representation of the edge in the format 'src->dest'.
         """
         return self.src.get_name() + '->' + self.dest.get_name()
 
 
 class Digraph:
-    """Represents a directed graph of Node and Edge objects."""
     """Edges is a dict mapping each node to a list of its children."""
     def __init__(self):
         self.edges = {}
@@ -122,23 +121,8 @@ class Digraph:
 
 
 class Graph(Digraph):
-    """
-    The Graph class inherits from the Digraph class. It represents a graph data structure
-    where edges are bidirectional.
-    """
-
+    """Represents a graph as a dictionary of nodes mapping"""
     def add_edge(self, edge):
-        """
-        Adds an edge to the graph.
-
-        This method overrides the add_edge method of the Digraph class. It adds an edge
-        from source to destination and also a reverse edge from destination to source,
-        making the edge bidirectional.
-
-        Args:
-            edge (Edge): The edge to be added to the graph.
-
-        """
         Digraph.add_edge(self, edge)
         rev = Edge(edge.get_destination(), edge.get_source())
         Digraph.add_edge(self, rev)
