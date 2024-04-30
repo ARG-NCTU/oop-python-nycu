@@ -7,7 +7,7 @@ def test_greedy():
     items = [
         Food("sherry", 10, 50),
         Food("vermouth", 20, 100),
-        Food("bourbon", 30, 150),
+        Food("gin", 30, 150),
     ]
     constraint = 50
     key_function = lambda x: 1 / Food.get_cost(x)
