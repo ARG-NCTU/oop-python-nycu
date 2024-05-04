@@ -320,3 +320,25 @@ def test_16_coordinate():
     assert a.y==12
     assert a.distance(o) == 13
     assert o.distance(a) == 13
+
+def test_ella_practices():
+    ella = lc.Coordinate(5,12)
+    origin = lc.Coordinate(0,0)
+    assert ella.distance(origin) ==13
+    a = lc.Fraction(3,4)
+    assert a.__str__() == '3/4'
+    assert a.__float__() == 0.75
+    assert a.inverse().__str__() == '4/3'
+    b = lc.Fraction(2,5)
+    assert b.__str__() == '2/5'
+    assert b.__float__() == 0.4
+    c = a+b
+    assert c.__str__() == '23/20'
+    assert c.__float__() == 1.15
+    pra_set = lc.intSet()
+    pra_set.insert(3)
+    pra_set.insert(4)
+    assert pra_set.member(3) == True
+    assert pra_set.member(4) == True
+    pra_set.remove(3)
+    assert pra_set.member(3) == False
