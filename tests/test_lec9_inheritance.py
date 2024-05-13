@@ -398,3 +398,24 @@ def test_animal2():
     print(a)
     assert a.get_name() == "furry"
     assert a.get_age() == 10
+
+def test_ella_rabbit():
+    r1 = inh.Rabbit(5)
+    r2 = inh.Rabbit(6)
+    r3 = inh.Rabbit(7)
+    r4 = r1 + r2
+    r5 = r3 + r4
+    r6 = r4 + r3
+    assert r1.get_age() == 5
+    assert r2.get_age() == 6
+    assert r3.get_age() == 7
+    assert r1.get_parent1() == None
+    assert r1.get_parent2() == None
+    assert r1.get_rid() == "027"
+    assert r2.get_rid() == "028"
+    assert r3.get_rid() == "029"
+    assert r4.get_rid() == "030"
+    assert r5.get_rid() == "031"
+    assert r6.get_rid() == "032"
+    assert r5.__eq__(r6) == True
+    
