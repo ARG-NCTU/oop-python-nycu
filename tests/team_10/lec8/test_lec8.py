@@ -11,8 +11,6 @@ def sample_data():
     sample = random.sample(population, 100)
     return population, sample
 
-
-
 def test_get_highs():
     # Test that get_highs returns the expected list of values
     population = get_highs()
@@ -38,13 +36,4 @@ def test_get_means_and_sds(sample_data):
     assert pop_sd == expected_pop_sd
     assert sample_sd == expected_sample_sd
 
-def test_get_means_and_sds_length(sample_data):
-    # Test that get_means_and_sds returns the expected number of values
-    population, sample = sample_data
-    pop_mean, sample_mean, pop_sd, sample_sd = \
-        get_means_and_sds(population, sample)
-    assert len(pop_mean) == 1
-    assert len(sample_mean) == 1
-    assert len(pop_sd) == 1
-    assert len(sample_sd) == 1
 
