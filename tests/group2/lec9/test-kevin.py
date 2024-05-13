@@ -1,6 +1,6 @@
 import pytest
 import add_path
-from mit_ocw_data_science.lec2.menu import Food
+from menu import *
 
 @pytest.fixture
 def food():
