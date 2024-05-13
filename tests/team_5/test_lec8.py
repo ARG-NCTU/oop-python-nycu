@@ -16,7 +16,11 @@ def test_get_highs():
     population = get_highs()
     expected = [3.1, 0.55, 0.0] 
     assert population[0:3] == expected
-
+    
+    assert len(population) == 421848
+    assert np.mean(population) == 16.298769461986303
+    
+    
 def test_get_means_and_sds(sample_data):
     # Test that get_means_and_sds returns the expected values
     population, sample = sample_data
