@@ -30,4 +30,11 @@ def test_get_means_and_sds(sample_data):
     assert sample_mean == expected_sample_mean
     assert pop_sd == expected_pop_sd
     assert sample_sd == expected_sample_sd
-
+def test_expectedclose(sample_data):
+    population, sample = sample_data
+    pop_mean, sample_mean, pop_sd, sample_sd = \
+        get_means_and_sds(population, sample)
+    assert np.allclose(pop_mean, np.mean(population))
+    assert np.allclose(sample_mean, np.mean(sample))
+    assert np.allclose(pop_sd, np.std(population))
+    assert np.allclose(sample_sd, np.std(sample))
