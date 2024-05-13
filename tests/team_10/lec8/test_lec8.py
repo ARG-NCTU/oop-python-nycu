@@ -22,7 +22,6 @@ def test_get_highs_length():
     population = get_highs()
     assert len(population) == 365
 
-
 def test_get_means_and_sds(sample_data):
     # Test that get_means_and_sds returns the expected values
     population, sample = sample_data
