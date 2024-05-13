@@ -5,9 +5,11 @@ from mit_ocw_data_science.lec2.menu import *
 
 def test_greedy():
     items = [
-        Food("sherry", 10, 50),
-        Food("vermouth", 20, 100),
-        Food("gin", 30, 150),
+        
+        
+        Food("banana", 20, 100),
+        Food("orange", 30, 150),
+        Food("apple", 10, 50),
     ]
     constraint = 50
     key_function = lambda x: 1 / Food.get_cost(x)
@@ -18,7 +20,9 @@ def test_greedy():
     print(Menu.get_foods_str(taken))
 
     assert val == 10
-    assert Menu.get_foods_str(taken) == "sherry: <10, 50>; "
+    
+    
+    assert Menu.get_foods_str(taken) == "apple: <10, 50>; "
 
 def test_greedys():
 
