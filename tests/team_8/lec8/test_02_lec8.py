@@ -16,6 +16,7 @@ def test_get_highs():
     population = get_highs()
     expected = [3.1, 0.55, 0.0] 
     assert population[0:3] == expected
+    
 
 def test_get_means_and_sds(sample_data):
     # Test that get_means_and_sds returns the expected values
@@ -30,4 +31,5 @@ def test_get_means_and_sds(sample_data):
     assert sample_mean == expected_sample_mean
     assert pop_sd == expected_pop_sd
     assert sample_sd == expected_sample_sd
-
+    assert pop_mean != sample_mean
+    assert pop_sd != sample_sd
