@@ -17,7 +17,6 @@ def test_get_highs():
     expected = [3.1, 0.55, 0.0] 
     assert population[0:3] == expected
     
-
 def test_get_highs_length():
     # Test that get_highs returns a list of the expected length
     population = get_highs()
