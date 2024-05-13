@@ -18,6 +18,7 @@ def test_get_highs():
     assert population[0:3] == expected
     assert not len(population) == 365
     assert population[0] == 3.1
+    assert population[1] == 0.55
 
 def test_get_means_and_sds(sample_data):
     # Test that get_means_and_sds returns the expected values
