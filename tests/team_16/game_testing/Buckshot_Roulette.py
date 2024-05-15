@@ -1,5 +1,19 @@
 import random
 import time
+'''未來想法:
+1.增加一些皇后效果
+2.增加國王系列道具，只有莊家可以直接獲得
+3.大廳，讓玩家選擇放棄之後獲得金錢，金錢可以在大廳用來購買物品
+4.增加一些額外賭注讓玩家在每局開始前選擇，例如莊家先手獎金2.5倍，無法獲得皇后/莊家可獲得國王獎金2倍，限定道具使用次數/無道具獎金1.5倍等
+5.商店可賣人工心臟，每次死亡可以使用人工心臟復活，但是價格很高且使用會消耗95%的金錢
+6.劇情線和結局
+7.教學模式
+8.改成用滑鼠操作的GUI
+9.朦朧國王:免疫每局第一次傷害
+10.狂暴國王:接下來5次傷害翻倍
+11.狡詐國王:知道前三發子彈是什麼
+12.貪婪國王:常駐效果，玩家物品數量大於莊家物品數量時互換物品欄
+'''
 
 class participant:
     def __init__(self, controlable, hp, item):
@@ -82,7 +96,8 @@ class game:
                 
             else:
                 print('物品欄已滿')
-
+        #照著['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']的順序排序玩家和電腦的物品欄
+        participant.item.sort(key = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
     def give_item(self,number):
         for i in range(number):
             if len(self.player.item) < self.player.max_item:
@@ -136,7 +151,8 @@ class game:
                     self.computer.item.append(item)
                 else:
                     self.computer.item.append(self.item_list[random.randint(0,len(self.item_list)-1)])
-                
+        self.player.item.sort(key = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+        self.computer.item.sort(key = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
     def computer_bonus(self,bonus_number):
         self.computer.item.append(self.item_list[random.randint(0,len(self.item_list)-1)])
         if (bonus_number+1) % 2 == 0:
@@ -189,6 +205,7 @@ class game:
             print('剩餘',live_bullet,'發實彈',blank,'發空包彈')
             print('請選擇要做的事')
             print('1.射向莊家, 2.射向自己, 3.使用物品, 4.顯示莊家物品欄')
+            
             if self.player.blood_queen > 0 and (handsaw==False):
                 print('腥紅皇后使你獲得手鋸效果')
                 time.sleep(1)
@@ -634,6 +651,7 @@ class game:
                     continue
             elif action==4:
                 print('莊家的物品欄:',self.computer.item)
+                time.sleep(4)
                 continue
             if self.computer.hp <= 0:
                 time.sleep(2)
