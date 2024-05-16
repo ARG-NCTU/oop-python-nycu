@@ -29,6 +29,7 @@ class player_in_lobby(NPC):
         #保存下來的物品欄(最多2個除非商店升級)
         self.item = []
         self.max_item = 2
+        self.extra_hp = 0
         #商店物品
         self.unlockable_item = []
     def earn_money(self,amount):
@@ -38,7 +39,6 @@ class player_in_lobby(NPC):
     def buy_item(self,item,price):
         self.money -= price
         self.unlockable_item.append(item)
-        print('你購買了',item)
     def save_item(self,input_item):
         for i in range(self.max_item):
             if len(input_item) == 0:
@@ -48,7 +48,7 @@ class player_in_lobby(NPC):
     def show_item(self):
         print('你的物品欄:',self.item)
     def show_unlockable_item(self):
-        print('以解鎖的商店物品:',self.unlockable_item)
+        print('已解鎖的商店物品:',self.unlockable_item)
     def revive(self):
         self.money -= int(self.money*0.95)
     def die(self):
@@ -1422,7 +1422,7 @@ class game:
 
 #主程式
 main_player = player_in_lobby(input('請輸入角色名字:'),0)
-print('下著雨的夜晚，你來到了那間賭場')
+'''print('下著雨的夜晚，你來到了那間賭場')
 time.sleep(3)
 print('以極其血腥的惡魔輪盤為特色的賭場"BuckShot"')
 time.sleep(3)
@@ -1433,22 +1433,35 @@ time.sleep(3)
 print('你走進了賭場，一切都準備好了')
 time.sleep(3)
 print('專屬於你的惡魔輪盤遊戲即將開始')
-time.sleep(3)
+time.sleep(3)'''
 while True:
     risk = 1
     money = 0
-    action = input('歡迎來到 BuckShot,輸入1進入設定,輸入2造訪商店,或按下Enter開始賭局')
+    print('=====================================    BuckShot    =====================================')
+    print('你的名字是',main_player.name,'你的金錢是',main_player.money,'你的道具欄位是',main_player.max_item,'你的額外血量是',main_player.extra_hp)
+    if len(main_player.unlockable_item) > 0:
+        print('你擁有以下解鎖道具:', i in main_player.unlockable_item)
+    if len(main_player.item) > 0:    
+        print('你擁有以下物品:', i in main_player.item)
+    print('==========================================================================================')
+    action = input('你站在吵雜的賭場中，輸入1進入設定,輸入2造訪商店,按下Enter前往賭桌  ')
     if action == '1':
-        money = (int(input('請設定你的初始金錢:')))
+        money = (int(input('請設定你的開賭籌碼:')))
     elif action == '2':
         print('詭異的商品靜靜的陳列著:')
         print('1.人工心臟: 5000000元')
         print('2.道具欄位: 1000000元')
-        print('3.隨機皇后: 4444444元')
-        action = input('你有',main_player.money,'元，購買商品? 1.人工心臟 2.道具欄位 3.隨機皇后 4.離開商店')
+        print('3.永久隨機皇后: 4000000元')
+        print('4.永久額外血量: 1000000元')  
+        print('5.永久未知藍圖: 1000000元')
+        print('6.解鎖琉璃皇后: 444444444元')
+        print('7.解鎖最終試煉: 9999999999元') 
+        print('8.離開商店')
+        action = input(f'你有 {main_player.money} 元，購買商品?')
         if action == '1':
             if main_player.money >= 5000000:
                 main_player.buy_item('人工心臟',5000000)
+                print('你購買了人工心臟，你現在有',main_player.unlockable_item.count('人工心臟'),'次復活機會')
             else:
                 print('你的錢不夠')
         elif action == '2':
@@ -1459,31 +1472,52 @@ while True:
             else:
                 print('你的錢不夠')
         elif action == '3':
-            if (main_player.money >= 4444444) & (len(main_player.item) < main_player.max_item): 
-                main_player.money -= 4444444    
-                chance = random.randint(1,4)
-                queen=['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后']
-                print('你獲得了',queen[chance-1])
-                main_player.item.append(queen[chance-1])
+            if main_player.money >= 4444444 : 
+                print('你解鎖了永久隨機皇后') 
+                main_player.buy_item('隨機皇后',4444444)
             else:
                 print('你的錢不夠')
-        
+        elif action == '4':
+            if main_player.money >= 1000000:
+                main_player.extra_hp += 1
+                main_player.money -= 1000000    
+                print('你的血量增加了，現在有',main_player.extra_hp,'點額外血量')
+            else:
+                print('你的錢不夠')
+        elif action == '5':
+            if main_player.money >= 1000000:
+                main_player.buy_item('永久藍圖',1000000)   
+                print('你解鎖了永久未知藍圖')
+            else:
+                print('你的錢不夠')
+        elif action == '6':
+            if main_player.money >= 444444444:
+                main_player.buy_item('琉璃皇后',444444444)
+                print('你解鎖了琉璃皇后')
+            else:
+                print('你的錢不夠')
+        elif action == '7':
+            if main_player.money >= 9999999999:
+                main_player.buy_item('最終試煉',9999999999)
+                print('你解鎖了最終試煉')
+            else:
+                print('你的錢不夠')
         continue
     #下注階段
     #risk預設為1，判斷用質數乘法
-    #risk % 2 == 0 高風險模式，倍率1.3倍
+    #risk % 2 == 0 高風險模式，倍率5倍
     print('高風險模式下，特殊道具可以直接出現，玩家獲得皇后和莊家獲得藍圖的機率翻倍')
-    print('每回合有50%機率雙方血量大幅提升，獲勝時獎金1.3倍')
+    print('每回合有50%機率雙方血量大幅提升，獲勝時獎金5倍')
     risk_input = int(input('是否下注高風險模式? : 1.是 2.否'))
     if risk_input == 1:
         risk *= 2
-    #risk % 3 == 0 殺手國王模式，倍率2倍
-    print('殺手國王模式下，莊家有機會獲得獨特的"國王"道具，獲勝時獎金2倍') 
+    #risk % 3 == 0 殺手國王模式，倍率10倍
+    print('殺手國王模式下，莊家有機會獲得獨特的"國王"道具，獲勝時獎金10倍') 
     risk_input = int(input('是否下注殺手國王模式? : 1.是 2.否'))
     if risk_input == 1:
         risk *= 3
-    #risk % 5 == 0 幽閉皇后模式，倍率2倍
-    print('幽閉皇后模式下，玩家無法獲得"皇后"道具，獲勝時獎金2倍')
+    #risk % 5 == 0 幽閉皇后模式，倍率7倍
+    print('幽閉皇后模式下，玩家無法獲得"皇后"道具，獲勝時獎金7倍')
     risk_input = int(input('是否下注幽閉皇后模式? : 1.是 2.否'))
     if risk_input == 1:
         risk *= 5    
@@ -1566,15 +1600,15 @@ while True:
                     if risk % 2 == 0:
                         n *= 1.3
                         time.sleep(0.5)
-                        print('高風險模式下，獎金再x1.3倍')
+                        print('高風險模式下，獎金5倍')
                     if risk % 3 == 0:
                         n *= 2
                         time.sleep(0.5)
-                        print('殺手國王模式下，獎金再x2倍') 
+                        print('殺手國王模式下，獎金10倍') 
                     if risk % 5 == 0:
                         n *= 2
                         time.sleep(0.5)
-                        print('幽閉皇后模式下，獎金再x2倍')
+                        print('幽閉皇后模式下，獎金7倍')
                     time.sleep(0.5)
                     print('最終倍率為',n)
                     time.sleep(0.5)
