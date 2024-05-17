@@ -5,20 +5,56 @@ import math
 1.增加一些皇后效果
 2.增加國王系列道具，只有莊家可以直接獲得
 3.大廳，讓玩家選擇放棄之後獲得金錢，金錢可以在大廳用來購買物品
-4.增加一些額外賭注讓玩家在每局開始前選擇，例如莊家先手獎金2.5倍，無法獲得皇后/莊家可獲得國王獎金2倍，限定道具使用次數/無道具獎金1.5倍等
-5.商店可賣人工心臟，每次死亡可以使用人工心臟復活，但是價格很高且使用會消耗95%的金錢
 6.劇情線和結局
 7.教學模式
 8.改成用滑鼠操作的GUI
-9.朦朧國王:免疫每局第一次傷害
-10.狂暴國王:接下來5次傷害翻倍
-11.狡詐國王:知道前三發子彈是什麼
-12.貪婪國王:偷走玩家所有非皇后物品
+
 '''
 #大廳物件
 class NPC:
     def __init__(self,name):
         self.name = name
+        pass
+
+class shop_item:
+    def __init__(self,name,price,stock,description = ''):
+        self.name = name
+        self.price = price
+        self.stock = stock
+        self.description = description
+    def raise_price(self):
+        self.price = int(self.price*2.5)
+        self.stock -= 1
+        if self.stock == 0:
+            self.description = '已售完'
+    def show_item(self,index):
+        print(index,self.name,':',self.price,'元')
+        print('    ',self.description)
+        
+
+class shopkeeper(NPC):
+    def __init__(self):
+        NPC.__init__(self,'利維坦')
+        self.shop=[]
+        self.shop.append(shop_item('人工心臟',5000000,5,'死亡時可以使用人工心臟復活，手術需消耗50%財產'))
+        self.shop.append(shop_item('道具欄位',1000000,8,'增加離開賭桌後可保存的道具數量'))
+        self.shop.append(shop_item('永久隨機皇后',4000000,3,'開局時獲得隨機皇后道具'))
+        self.shop.append(shop_item('永久額外血量',1000000,4,'開局時獲得額外血量'))
+        self.shop.append(shop_item('永久未知藍圖',1000000,3,'開局時獲得未知藍圖道具'))
+        self.shop.append(shop_item('解鎖琉璃皇后',444444444,1,'象徵希望的靈魂將在賭局中出現'))
+        self.shop.append(shop_item('解鎖最終試煉',9999999999,1,'通往地獄的大門為你敞開'))
+    def player_buy_item(self,index):
+        self.shop[index].raise_price()
+        
+
+class host(NPC):
+    def __init__(self):
+        NPC.__init__(self,'薩邁爾')
+        pass
+         
+class collection_manager(NPC):
+    def __init__(self):
+        NPC.__init__(self,'莉莉斯')
         pass
 
 class player_in_lobby(NPC):
@@ -40,17 +76,19 @@ class player_in_lobby(NPC):
         self.money -= price
         self.unlockable_item.append(item)
     def save_item(self,input_item):
+        self.item = []
         for i in range(self.max_item):
             if len(input_item) == 0:
                 break 
             self.item.append(input_item.pop(0))
-        self.item.sort(key = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+        self.item.sort(key = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
     def show_item(self):
         print('你的物品欄:',self.item)
     def show_unlockable_item(self):
         print('已解鎖的商店物品:',self.unlockable_item)
     def revive(self):
-        self.money -= int(self.money*0.95)
+        self.money -= int(self.money*0.5)
+        self.item = []
     def die(self):
         self.die_state = True
 
@@ -104,6 +142,8 @@ class player(participant):
         self.money = money
         self.max_item = 8
         self.queen_used = []
+        self.blood_queen = 0
+        self.blessing = 0
     def dohandcuff(self):
         self.handcuff = True
     def unhandcuff(self):
@@ -118,7 +158,7 @@ class game:
         self.round = 1
         self.item_list = ['放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']
         self.special_item = ['未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包']
-        self.queen = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后'] 
+        self.queen = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','琉璃皇后'] 
         self.king = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王']
         if risk % 2 == 0:
             self.item_list = ['放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素','禁藥','大口徑子彈','榴彈砲','彈藥包']
@@ -142,8 +182,8 @@ class game:
                 
             else:
                 print('物品欄已滿')
-        #照著['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']的順序排序玩家和電腦的物品欄
-        participant.item.sort(key = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+        #照著['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']的順序排序玩家和電腦的物品欄
+        participant.item.sort(key = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
     def give_item(self,number):
         for i in range(number):
             if len(self.player.item) < self.player.max_item:
@@ -157,17 +197,13 @@ class game:
                         print('你獲得了',item)
                     self.player.item.append(item)
                 elif (chance > 95) and (risk % 5 != 0):   
-                    while True:
+                    if main_player.unlockable_item.count('琉璃皇后') == 0:
                         chance = random.randint(1,100)
                         if chance <= 20:
-                            if ('神聖皇后' in self.player.queen_used) & (bool(random.randint(0,1))):
-                                continue
                             item='神聖皇后'
                             print('***你獲得了 神聖皇后 ***')
                             self.player.item.append(item)    
-                        elif chance <= 45:
-                            if ('蔚藍皇后' in self.player.queen_used) & (bool(random.randint(0,1))):
-                                continue
+                        elif chance <= 40:
                             item='蔚藍皇后'
                             print('***你獲得了 蔚藍皇后 ***')
                             self.player.item.append(item)
@@ -179,7 +215,28 @@ class game:
                             item='漆黑皇后'
                             print('***你獲得了 漆黑皇后 ***')
                             self.player.item.append(item)
-                        break
+                    else:
+                        chance = random.randint(1,110)
+                        if chance <= 10:
+                            item='琉璃皇后'
+                            print('★★★你獲得了 琉璃皇后 ★★★')
+                            self.player.item.append(item)
+                        if chance <= 30:
+                            item='神聖皇后'
+                            print('***你獲得了 神聖皇后 ***')
+                            self.player.item.append(item)    
+                        elif chance <= 50:
+                            item='蔚藍皇后'
+                            print('***你獲得了 蔚藍皇后 ***')
+                            self.player.item.append(item)
+                        elif chance <= 80:
+                            item='腥紅皇后'
+                            print('***你獲得了 腥紅皇后 ***')
+                            self.player.item.append(item)
+                        else:
+                            item='漆黑皇后'
+                            print('***你獲得了 漆黑皇后 ***')
+                            self.player.item.append(item)
 
                 else:
                     item=self.item_list[random.randint(0,len(self.item_list)-1)]
@@ -209,8 +266,9 @@ class game:
                         break
                 else:
                     self.computer.item.append(self.item_list[random.randint(0,len(self.item_list)-1)])
-        self.player.item.sort(key = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+        self.player.item.sort(key = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
         self.computer.item.sort(key = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+    
     def computer_bonus(self,bonus_number):
         self.computer.item.append(self.item_list[random.randint(0,len(self.item_list)-1)])
         if (bonus_number+1) % 2 == 0:
@@ -219,7 +277,40 @@ class game:
         if (bonus_number+1) % 10 == 0:
             self.computer.item.pop(0)
             self.computer.item.append('未知藍圖')
+
+    def player_bonus(self):
+        for i in main_player.unlockable_item:
+            if i =='永久藍圖':
+                self.player.item.append('未知藍圖')
+            elif i == '隨機皇后':
+                if '琉璃皇后' in main_player.unlockable_item:
+                    self.player.item.append(self.queen[random.randint(0,4)])
+                else:
+                    self.player.item.append(self.queen[random.randint(0,3)])
+        for i in range(main_player.extra_hp):
+            self.player.hp += 1
             
+    def blessing(self,remain_bullet,turn,handsaw):
+        print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+        print('琉璃祝福治癒了你的傷口')
+        self.player.hp += self.player.blessing
+        if remain_bullet[0] & (turn == '玩家'):
+            print('你感覺到第一發子彈是實彈，這發子彈將造成兩倍傷害')
+            print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+            time.sleep(2)
+            return True
+        elif remain_bullet[0] & (turn == '莊家'):   
+            print('你感覺到第一發子彈是實彈，你將額外回復2點血量')
+            self.player.hp += 2
+        elif random.randint(0,1) and len(self.computer.item) > 0:
+            print('你感覺到第一發子彈是空包彈，莊家的',self.computer.item[0],'將被摧毀')
+            self.computer.item.pop(0)
+        else:
+            print('你感覺到第一發子彈是空包彈，你將額外獲得一個物品')
+            self.give_participant_item(1,self.player)
+        print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+        time.sleep(2)
+        return handsaw
 
     def one_round(self,live_bullet,blank,item_number):
         time.sleep(3)
@@ -253,6 +344,10 @@ class game:
                 self.computer.set_bullet_pattern(i,'live')
             else:
                 self.computer.set_bullet_pattern(i,'blank')
+        #琉璃祝福效果
+        if self.player.blessing > 0:
+            handsaw = self.blessing(remain_bullet,first_move,handsaw)
+
         time.sleep(2)
         while len(remain_bullet) > 0:
             skip = False
@@ -296,7 +391,7 @@ class game:
                     self.computer.fog -= 1
                     handsaw = False
                     killer_queen = False
-                elif remain_bullet[0]&handsaw&killer_queen:
+                elif remain_bullet[0] and handsaw and killer_queen:
                     self.computer.hp -= 10
                     print('你使用漆黑皇后射中了莊家,造成十點傷害')
                     if self.computer.blood_queen > 0:
@@ -334,6 +429,7 @@ class game:
                     blank -= 1
                     handsaw = False
                 remain_bullet.pop(0)
+                handsaw = False
             elif action==2:
                 if remain_bullet[0]&handsaw&killer_queen:
                     self.player.hp -= 10
@@ -372,13 +468,16 @@ class game:
                     print('你射中了自己,造成一點傷害')
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
+                    handsaw = False
                 else:
                     print('你的子彈打空了,額外獲得一回合')
                     remain_bullet.pop(0)
                     self.computer.pop_bullet_pattern()
                     blank -= 1
+                    handsaw = False
                     continue
                 remain_bullet.pop(0)
+                handsaw = False
             elif action==3:
                 print('請選擇要使用的物品')
                 for i in range(len(self.player.item)):
@@ -542,6 +641,7 @@ class game:
                     if self.computer.fog > 0:
                         if damage > self.computer.fog:
                             damage -= self.computer.fog
+                            self.computer.fog = 0
                             if handsaw:
                                 damage *= 2
                             self.computer.hp -= damage
@@ -569,6 +669,8 @@ class game:
                     random.shuffle(remain_bullet)
                     print('彈藥已重新裝填')
                     self.computer.reset_bullet_pattern(live_bullet+blank)
+                    if self.player.blessing > 0:
+                        handsaw = self.blessing(remain_bullet,'玩家',handsaw)
                 elif self.player.item[item-1] == '漆黑皇后':
                     #移除雙方所有道具，將彈夾裝填為一發空包彈一發實彈，這發實彈將造成5點傷害
                     print('你使用了漆黑皇后，彈藥裝填為一發空包彈一發5點傷害實彈，祈禱吧!')
@@ -582,6 +684,8 @@ class game:
                     killer_queen = True
                     not_blue_print = False
                     self.player.queen_used.append('漆黑皇后')
+                    if self.player.blessing > 0:
+                        handsaw = self.blessing(remain_bullet,'玩家',handsaw)
                 elif self.player.item[item-1] == '神聖皇后':
                     #回3點血量，背包上限+2，獲得3個隨機物品
                     print('你使用了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
@@ -599,7 +703,23 @@ class game:
                     #玩家的回合開始時，附加手鉅效果
                     print('你使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，可以觸發五次')
                     self.player.blood_queen += 5       
-                    self.player.queen_used.append('腥紅皇后')                             
+                    self.player.queen_used.append('腥紅皇后') 
+                elif self.player.item[item-1] == '琉璃皇后':
+                    #每次重新裝彈(回合開始、彈藥包、漆黑皇后)時通靈第一顆子彈，若為實彈則附加手鉅效果
+                    #若為空包彈則回復一點血量並消除莊家一個道具或獲得一個隨機道具
+                    #使用當下清空莊家的道具、清空彈夾並裝上一顆實彈
+                    print('你獲得了琉璃的祝福，莊家的道具被清空，彈夾重新裝填了')
+                    self.computer.item = [] 
+                    self.computer.reset_bullet_pattern(1)
+                    remain_bullet = [True]
+                    if not handsaw:
+                        handsaw = True
+                        print('你獲得了手鋸效果')
+                    time.sleep(1)
+                    live_bullet = 1
+                    blank = 0
+                    self.player.blessing += 1
+                    self.player.queen_used.append('琉璃皇后')                          
                 elif self.player.item[item-1] == '腎上腺素':
                     print('你使用了腎上腺素,可以偷取莊家的物品')
                     if len(self.computer.item) == 0:
@@ -718,12 +838,14 @@ class game:
                         else:
                             print('你使用了榴彈砲,但是子彈打空了')
                             blank -= 1
+                            handsaw = False
                         self.computer.pop_bullet_pattern()
                     elif self.computer.item[steal-1] == '彈藥包':
                         damage = live_bullet
                         if self.computer.fog > 0:
                             if damage > self.computer.fog:
                                 damage -= self.computer.fog
+                                self.computer.fog = 0
                                 if handsaw:
                                     damage *= 2
                                 self.computer.hp -= damage
@@ -750,12 +872,15 @@ class game:
                         random.shuffle(remain_bullet)
                         print('彈藥已重新裝填')
                         self.computer.reset_bullet_pattern(live_bullet+blank)
+                        if self.player.blessing > 0:
+                            handsaw = self.blessing(remain_bullet,'玩家',handsaw)
                         
                     elif self.computer.item[steal-1] == '腎上腺素':
                         print('你不能偷取腎上腺素')
                         continue
                     else:
                         print('你不能偷取國王道具')
+                        continue
                     self.computer.item.pop(steal-1)
 
                 if not_blue_print and not skip: 
@@ -950,6 +1075,7 @@ class game:
                         self.computer.pop_bullet_pattern()
                         handsaw = False
                     remain_bullet.pop(0)
+                    handsaw = False
                 elif action==2:
                     try_count = 0
                     if remain_bullet[0] and (self.computer.fog > 0):
@@ -1005,6 +1131,7 @@ class game:
                         handsaw = False
                         continue
                     remain_bullet.pop(0)
+                    handsaw = False
                 elif action==3:
                     item = random.randint(0,len(self.computer.item)-1)
                     if (self.computer.item[item] == '啤酒') & (self.computer.bullet_pattern[0]=='live'):
@@ -1191,10 +1318,15 @@ class game:
                         else:
                             print('莊家使用了榴彈砲,但是子彈打空了')
                             blank -= 1
+                            handsaw = False
+
                         self.computer.pop_bullet_pattern()
                         skip = True
                     elif self.computer.item[item] == '彈藥包':
                         damage = live_bullet
+                        if handsaw:
+                            damage *= 2
+                            handsaw = False 
                         self.player.hp -= damage
                         print('莊家使用了彈藥包,對你造成',damage,'點傷害')
                         remain_bullet = []
@@ -1209,6 +1341,8 @@ class game:
                                 blank += 1
                         random.shuffle(remain_bullet)
                         print('彈藥已重新裝填')
+                        if self.player.blessing > 0:
+                            handsaw = self.blessing(remain_bullet,'莊家',handsaw)
                         self.computer.reset_bullet_pattern(live_bullet+blank)
 
                     elif self.computer.item[item] == '腎上腺素':    
@@ -1293,6 +1427,8 @@ class game:
                             random.shuffle(remain_bullet)
                             killer_queen = True
                             not_blue_print = False
+                            if self.computer.blessing > 0:
+                                self.blessing(remain_bullet,'莊家',handsaw)
                         elif steal == '神聖皇后':
                             #效果和玩家使用神聖皇后相同
                             print('莊家偷走了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
@@ -1303,6 +1439,10 @@ class game:
                             #效果和玩家使用蔚藍皇后相同
                             print('莊家偷走了蔚藍皇后，你獲得回合時莊家將獲得隨機物品')
                             self.computer.item_queen += 1
+                        elif steal == '腥紅皇后':
+                            #效果和玩家使用腥紅皇后相同
+                            print('莊家偷走了腥紅皇后，你獲得回合時莊家將獲得手鋸效果')
+                            self.computer.blood_queen += 1
                             
                         elif steal == '未知藍圖':
                             temp = random.randint(1,5)
@@ -1363,10 +1503,14 @@ class game:
                             else:
                                 print('莊家偷走了榴彈砲,但是子彈打空了')
                                 blank -= 1
+                                handsaw = False
                             self.player.pop_bullet_pattern()
                             break
                         elif steal == '彈藥包':
                             damage = live_bullet
+                            if handsaw:
+                                self.player.hp -= 2*damage
+                                handsaw = False
                             self.player.hp -= damage
                             print('莊家偷走了彈藥包,對你造成',damage,'點傷害')
                             remain_bullet = []
@@ -1381,10 +1525,15 @@ class game:
                                     blank += 1
                             random.shuffle(remain_bullet)
                             print('彈藥已重新裝填')
+                            if self.player.blessing > 0:
+                                handsaw = self.blessing(remain_bullet,'莊家',handsaw)
                             self.player.reset_bullet_pattern(live_bullet+blank)
                         elif steal == '腎上腺素':
                             print('莊家試著偷取腎上腺素但失敗了')
                             self.player.item.append('腎上腺素')
+                        elif steal == '琉璃皇后':
+                            print('莊家試著偷取琉璃皇后但失敗了')
+                            self.player.item.append('琉璃皇后')
                     if skip:
                         break
                     if not_blue_print:
@@ -1422,6 +1571,11 @@ class game:
 
 #主程式
 main_player = player_in_lobby(input('請輸入角色名字:'),0)
+lobby_NPC = []
+lobby_NPC.append(shopkeeper())
+lobby_NPC.append(host())
+lobby_NPC.append(collection_manager())
+
 '''print('下著雨的夜晚，你來到了那間賭場')
 time.sleep(3)
 print('以極其血腥的惡魔輪盤為特色的賭場"BuckShot"')
@@ -1436,88 +1590,100 @@ print('專屬於你的惡魔輪盤遊戲即將開始')
 time.sleep(3)'''
 while True:
     risk = 1
+    first_move = '玩家'
     money = 0
+
     print('=====================================    BuckShot    =====================================')
     print('你的名字是',main_player.name,'你的金錢是',main_player.money,'你的道具欄位是',main_player.max_item,'你的額外血量是',main_player.extra_hp)
     if len(main_player.unlockable_item) > 0:
-        print('你擁有以下解鎖道具:', i in main_player.unlockable_item)
+        main_player.show_unlockable_item()
     if len(main_player.item) > 0:    
-        print('你擁有以下物品:', i in main_player.item)
+        main_player.show_item()
     print('==========================================================================================')
     action = input('你站在吵雜的賭場中，輸入1進入設定,輸入2造訪商店,按下Enter前往賭桌  ')
     if action == '1':
-        money = (int(input('請設定你的開賭籌碼:')))
+        pass
     elif action == '2':
         print('詭異的商品靜靜的陳列著:')
-        print('1.人工心臟: 5000000元')
-        print('2.道具欄位: 1000000元')
-        print('3.永久隨機皇后: 4000000元')
-        print('4.永久額外血量: 1000000元')  
-        print('5.永久未知藍圖: 1000000元')
-        print('6.解鎖琉璃皇后: 444444444元')
-        print('7.解鎖最終試煉: 9999999999元') 
-        print('8.離開商店')
+        for i in range(len(lobby_NPC[0].shop)):
+            lobby_NPC[0].shop[i].show_item(i+1)
+        print('8 離開商店')
         action = input(f'你有 {main_player.money} 元，購買商品?')
         if action == '1':
-            if main_player.money >= 5000000:
-                main_player.buy_item('人工心臟',5000000)
+            if main_player.money >= lobby_NPC[0].shop[0].price:
+                main_player.buy_item('人工心臟',lobby_NPC[0].shop[0].price)
+                lobby_NPC[0].player_buy_item(0)
                 print('你購買了人工心臟，你現在有',main_player.unlockable_item.count('人工心臟'),'次復活機會')
             else:
                 print('你的錢不夠')
         elif action == '2':
-            if main_player.money >= 1000000:
+            if main_player.money >= lobby_NPC[0].shop[1].price:
                 main_player.max_item += 1
-                main_player.money -= 1000000    
+                main_player.money -= lobby_NPC[0].shop[1].price  
+                lobby_NPC[0].player_buy_item(1) 
                 print('你的道具欄位增加了，現在可以保存',main_player.max_item,'個道具')
             else:
                 print('你的錢不夠')
         elif action == '3':
-            if main_player.money >= 4444444 : 
+            if main_player.money >= lobby_NPC[0].shop[2].price: 
                 print('你解鎖了永久隨機皇后') 
-                main_player.buy_item('隨機皇后',4444444)
+                main_player.buy_item('隨機皇后',lobby_NPC[0].shop[2].price)
+                lobby_NPC[0].player_buy_item(2)
             else:
                 print('你的錢不夠')
         elif action == '4':
-            if main_player.money >= 1000000:
+            if main_player.money >= lobby_NPC[0].shop[3].price:
                 main_player.extra_hp += 1
-                main_player.money -= 1000000    
+                main_player.money -= lobby_NPC[0].shop[3].price  
+                lobby_NPC[0].player_buy_item(3)
                 print('你的血量增加了，現在有',main_player.extra_hp,'點額外血量')
             else:
                 print('你的錢不夠')
         elif action == '5':
-            if main_player.money >= 1000000:
-                main_player.buy_item('永久藍圖',1000000)   
+            if main_player.money >= lobby_NPC[0].shop[4].price:
+                main_player.buy_item('永久藍圖',lobby_NPC[0].shop[4].price)  
+                lobby_NPC[0].player_buy_item(4) 
                 print('你解鎖了永久未知藍圖')
             else:
                 print('你的錢不夠')
         elif action == '6':
-            if main_player.money >= 444444444:
-                main_player.buy_item('琉璃皇后',444444444)
+            if main_player.money >= lobby_NPC[0].shop[5].price:
+                main_player.buy_item('琉璃皇后',lobby_NPC[0].shop[5].price)
+                lobby_NPC[0].player_buy_item(5)
                 print('你解鎖了琉璃皇后')
             else:
                 print('你的錢不夠')
         elif action == '7':
-            if main_player.money >= 9999999999:
-                main_player.buy_item('最終試煉',9999999999)
+            if main_player.money >= lobby_NPC[0].shop[6].price:
+                main_player.buy_item('最終試煉',lobby_NPC[0].shop[6].price)
+                lobby_NPC[0].player_buy_item(6)
                 print('你解鎖了最終試煉')
             else:
                 print('你的錢不夠')
+        time.sleep(2)
         continue
     #下注階段
+    money = (int(input('請輸入你的開賭籌碼:')))
+    if money > main_player.money:
+        print('你的錢不夠')
+        continue
+    else:
+        main_player.money -= money
+    #加注階段
     #risk預設為1，判斷用質數乘法
     #risk % 2 == 0 高風險模式，倍率5倍
     print('高風險模式下，特殊道具可以直接出現，玩家獲得皇后和莊家獲得藍圖的機率翻倍')
-    print('每回合有50%機率雙方血量大幅提升，獲勝時獎金5倍')
+    print('每回合有50%機率雙方血量大幅提升，獲勝時獎金5倍，須至少完成5局才有額外倍率')
     risk_input = int(input('是否下注高風險模式? : 1.是 2.否'))
     if risk_input == 1:
         risk *= 2
     #risk % 3 == 0 殺手國王模式，倍率10倍
-    print('殺手國王模式下，莊家有機會獲得獨特的"國王"道具，獲勝時獎金10倍') 
+    print('殺手國王模式下，莊家有機會獲得獨特的"國王"道具，獲勝時獎金10倍，須至少完成5局才有額外倍率') 
     risk_input = int(input('是否下注殺手國王模式? : 1.是 2.否'))
     if risk_input == 1:
         risk *= 3
     #risk % 5 == 0 幽閉皇后模式，倍率7倍
-    print('幽閉皇后模式下，玩家無法獲得"皇后"道具，獲勝時獎金7倍')
+    print('幽閉皇后模式下，玩家無法獲得"皇后"道具，獲勝時獎金7倍，須至少完成5局才有額外倍率')
     risk_input = int(input('是否下注幽閉皇后模式? : 1.是 2.否'))
     if risk_input == 1:
         risk *= 5    
@@ -1527,6 +1693,9 @@ while True:
     hp=random.randint(2,6)
     games={}
     games[round] = game(player1,computer1,hp,risk)
+    games[round].player_bonus()
+    #計算勝場數
+    win_count = 0
     while True:
         live_bullet = random.randint(1,4)
         blank = random.randint(1,4)
@@ -1538,7 +1707,7 @@ while True:
                 print('你的人工心臟啟動了，你獲得了一次復活機會')
                 main_player.unlockable_item.remove('人工心臟')
                 time.sleep(1)
-                print('代價則是你95%的財產')
+                print('手術花費你50%的財產')
                 main_player.revive()
                 time.sleep(1)
                 break
@@ -1547,6 +1716,7 @@ while True:
                 main_player.die()
                 break
         elif computer1.hp <= 0:
+            win_count += 1
             if player1.money == 0:
                 player1.money = random.randint(14000,52459)
                 print('你獲得了',player1.money,'元')
@@ -1583,30 +1753,28 @@ while True:
                         games[round].computer_bonus(i)
                     continue
                 else:
-                    for queen in ['蔚藍皇后','神聖皇后','漆黑皇后','腥紅皇后']:
-                        pass
                     print('你使用了',player1.queen_used.count('漆黑皇后'),'個漆黑皇后，每個獎金倍率為1.7')
                     time.sleep(0.5)
-                    print('你使用了',player1.queen_used.count('腥紅皇后'),'個腥紅皇后，每個獎金倍率為1.2')
+                    print('你使用了',player1.queen_used.count('腥紅皇后'),'個腥紅皇后，每個獎金倍率為1.5')
                     time.sleep(0.5)
                     print('你使用了',player1.queen_used.count('蔚藍皇后'),'個蔚藍皇后，每個獎金倍率為1.2')
                     time.sleep(0.5)
                     print('你使用了',player1.queen_used.count('神聖皇后'),'個神聖皇后，每個獎金倍率為1.1')
                     time.sleep(0.5)
                     print('原始獎金為',player1.money,'元')
-                    n = pow(1.7,player1.queen_used.count('漆黑皇后'))*pow(1.2,player1.queen_used.count('腥紅皇后'))*pow(1.2,player1.queen_used.count('蔚藍皇后'))*pow(1.1,player1.queen_used.count('神聖皇后'))
+                    n = pow(1.7,player1.queen_used.count('漆黑皇后'))*pow(1.5,player1.queen_used.count('腥紅皇后'))*pow(1.2,player1.queen_used.count('蔚藍皇后'))*pow(1.1,player1.queen_used.count('神聖皇后'))
                     time.sleep(0.5)
                     print('皇后獎金倍率為',n)
-                    if risk % 2 == 0:
-                        n *= 1.3
+                    if (risk % 2 == 0) and (win_count >= 5):
+                        n *= 5
                         time.sleep(0.5)
                         print('高風險模式下，獎金5倍')
-                    if risk % 3 == 0:
-                        n *= 2
+                    if (risk % 3 == 0) and (win_count >= 5):
+                        n *= 10
                         time.sleep(0.5)
                         print('殺手國王模式下，獎金10倍') 
-                    if risk % 5 == 0:
-                        n *= 2
+                    if (risk % 5 == 0) and (win_count >= 5):
+                        n *= 7
                         time.sleep(0.5)
                         print('幽閉皇后模式下，獎金7倍')
                     time.sleep(0.5)
