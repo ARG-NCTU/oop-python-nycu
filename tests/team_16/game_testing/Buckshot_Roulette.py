@@ -5,10 +5,15 @@ import math
 1.增加一些皇后效果
 2.增加國王系列道具，只有莊家可以直接獲得
 3.大廳，讓玩家選擇放棄之後獲得金錢，金錢可以在大廳用來購買物品
+4.增加一些額外賭注讓玩家在每局開始前選擇，例如莊家先手獎金2.5倍，無法獲得皇后/莊家可獲得國王獎金2倍，限定道具使用次數/無道具獎金1.5倍等
+5.商店可賣人工心臟，每次死亡可以使用人工心臟復活，但是價格很高且使用會消耗95%的金錢
 6.劇情線和結局
 7.教學模式
 8.改成用滑鼠操作的GUI
-
+9.朦朧國王:免疫每局第一次傷害
+10.狂暴國王:接下來5次傷害翻倍
+11.狡詐國王:知道前三發子彈是什麼
+12.貪婪國王:偷走玩家所有非皇后物品
 '''
 #大廳物件
 class NPC:
@@ -22,22 +27,58 @@ class shop_item:
         self.price = price
         self.stock = stock
         self.description = description
+        self.required_item = None
+        self.raise_count = 0
+        if self.stock == 3:
+            self.set_required_item('五連勝標記')
+        if self.stock == 1:
+            self.set_required_item('二十連勝標記')
     def raise_price(self):
+        self.raise_count += 1
         self.price = int(self.price*2.5)
         self.stock -= 1
         if self.stock == 0:
             self.description = '已售完'
+            self.price = math.inf
+        if self.raise_count/(self.raise_count+self.stock) == 0.2:
+            self.set_required_item('五連勝標記')
+        elif self.raise_count/(self.raise_count+self.stock) == 0.4:
+            self.set_required_item('十連勝標記')
+        elif self.raise_count/(self.raise_count+self.stock) == 0.6:
+            self.set_required_item('二十連勝標記')
+        elif self.raise_count/(self.raise_count+self.stock) == 0.8:
+            self.set_required_item('五十連勝標記')
+
+        if self.raise_count == 0 and self.stock == 3:
+            self.set_required_item('五連勝標記')
+        elif self.raise_count == 1 and self.stock == 2:
+            self.set_required_item('十連勝標記')
+        elif self.raise_count == 2 and self.stock == 1:
+            self.set_required_item('二十連勝標記') 
+
+        if self.raise_count == 0 and self.stock == 1:
+            self.set_required_item('二十連勝標記')
+
     def show_item(self,index):
         print(index,self.name,':',self.price,'元')
         print('    ',self.description)
-        
+        if self.required_item != None:
+            print('     需要',self.required_item,'才能購買')
+    def set_required_item(self,item):
+        self.required_item = item
+    def check_required_item(self,player):
+        if self.required_item == None:
+            return True
+        if self.required_item in player.unlockable_item:
+            return True
+        return False
 
 class shopkeeper(NPC):
     def __init__(self):
         NPC.__init__(self,'利維坦')
         self.shop=[]
         self.shop.append(shop_item('人工心臟',5000000,5,'死亡時可以使用人工心臟復活，手術需消耗50%財產'))
-        self.shop.append(shop_item('道具欄位',1000000,8,'增加離開賭桌後可保存的道具數量'))
+        self.shop.append(shop_item('道具欄位',1000000,10,'增加離開賭桌後可保存的道具數量'))
         self.shop.append(shop_item('永久隨機皇后',4000000,3,'開局時獲得隨機皇后道具'))
         self.shop.append(shop_item('永久額外血量',1000000,4,'開局時獲得額外血量'))
         self.shop.append(shop_item('永久未知藍圖',1000000,3,'開局時獲得未知藍圖道具'))
@@ -62,9 +103,9 @@ class player_in_lobby(NPC):
         NPC.__init__(self,name)
         self.die_state = False
         self.money = money
-        #保存下來的物品欄(最多2個除非商店升級)
+        #保存下來的物品欄(商店升級)
         self.item = []
-        self.max_item = 2
+        self.max_item = 0
         self.extra_hp = 0
         #商店物品
         self.unlockable_item = []
@@ -156,6 +197,7 @@ class game:
         self.player.hp = hp
         self.computer.hp = hp
         self.round = 1
+        self.first_move = '玩家'
         self.item_list = ['放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']
         self.special_item = ['未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包']
         self.queen = ['漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','琉璃皇后'] 
@@ -168,6 +210,9 @@ class game:
                 self.player.hp += health
                 self.computer.hp += health
         print('遊戲開始,每人有',self.player.hp,'點血量')
+
+    def set_first_move(self,first_move):
+        self.first_move = first_move
 
     def give_participant_item(self,number,participant):
         #神聖皇后和蔚藍皇后的給道具效果
@@ -346,9 +391,10 @@ class game:
                 self.computer.set_bullet_pattern(i,'blank')
         #琉璃祝福效果
         if self.player.blessing > 0:
-            handsaw = self.blessing(remain_bullet,first_move,handsaw)
+            handsaw = self.blessing(remain_bullet,self.first_move,handsaw)
 
-        time.sleep(2)
+        time.sleep(2)        
+
         while len(remain_bullet) > 0:
             skip = False
             try_count = 0
@@ -362,28 +408,34 @@ class game:
                 return
             
             time.sleep(1)
-            print('==========================================')
-            print('你的回合')
-            print('你的物品欄:',self.player.item)
-            print('玩家血量:',self.player.hp,'莊家血量:',self.computer.hp)  
-            print('剩餘',live_bullet,'發實彈',blank,'發空包彈')
-            print('請選擇要做的事')
-            print('1.射向莊家, 2.射向自己, 3.使用物品, 4.顯示莊家物品欄')
+            if self.first_move == '玩家':
+                print('==========================================')
+                print('你的回合')
+                print('你的物品欄:',self.player.item)
+                print('玩家血量:',self.player.hp,'莊家血量:',self.computer.hp)  
+                print('剩餘',live_bullet,'發實彈',blank,'發空包彈')
+                print('請選擇要做的事')
+                print('1.射向莊家, 2.射向自己, 3.使用物品, 4.顯示莊家物品欄')
+                if len(self.computer.bullet_pattern) != len(remain_bullet):
+                    raise Exception('子彈數量不符')
+                if self.player.blood_queen > 0 and (handsaw==False):
+                    print('腥紅皇后使你獲得手鋸效果')
+                    time.sleep(1)
+                    handsaw = True
+                    self.player.blood_queen -= 1
+                while True:
+                    action = int(input())
+                    if type(action) != int:
+                        print('請輸入正確的數字')
+                        continue
+                    if action < 1 or action > 4:
+                        print('請輸入正確的數字')
+                        continue
+                    break
+            else:
+                action = 0
+                self.first_move = '玩家'
             
-            if self.player.blood_queen > 0 and (handsaw==False):
-                print('腥紅皇后使你獲得手鋸效果')
-                time.sleep(1)
-                handsaw = True
-                self.player.blood_queen -= 1
-            while True:
-                action = int(input())
-                if type(action) != int:
-                    print('請輸入正確的數字')
-                    continue
-                if action < 1 or action > 4:
-                    print('請輸入正確的數字')
-                    continue
-                break
             if action==1:
                 if remain_bullet[0] and (self.computer.fog > 0):
                     print('朦朧國王使你射偏了')
@@ -966,6 +1018,8 @@ class game:
                     handsaw = True
                     self.computer.blood_queen -= 1
                 #莊家的行動判斷
+                if len(self.computer.bullet_pattern) != len(remain_bullet):
+                    raise Exception('子彈數量不符')
                 if len(self.computer.item) > 2 :
                     if try_count >= 3:
                         action = random.randint(1,2)
@@ -1504,7 +1558,7 @@ class game:
                                 print('莊家偷走了榴彈砲,但是子彈打空了')
                                 blank -= 1
                                 handsaw = False
-                            self.player.pop_bullet_pattern()
+                            self.computer.pop_bullet_pattern()
                             break
                         elif steal == '彈藥包':
                             damage = live_bullet
@@ -1610,56 +1664,56 @@ while True:
         print('8 離開商店')
         action = input(f'你有 {main_player.money} 元，購買商品?')
         if action == '1':
-            if main_player.money >= lobby_NPC[0].shop[0].price:
+            if main_player.money >= lobby_NPC[0].shop[0].price and lobby_NPC[0].shop[0].check_item(main_player):
                 main_player.buy_item('人工心臟',lobby_NPC[0].shop[0].price)
                 lobby_NPC[0].player_buy_item(0)
                 print('你購買了人工心臟，你現在有',main_player.unlockable_item.count('人工心臟'),'次復活機會')
             else:
-                print('你的錢不夠')
+                print('你的錢不夠或者連勝數不足')
         elif action == '2':
-            if main_player.money >= lobby_NPC[0].shop[1].price:
+            if main_player.money >= lobby_NPC[0].shop[1].price and lobby_NPC[0].shop[1].check_item(main_player):
                 main_player.max_item += 1
                 main_player.money -= lobby_NPC[0].shop[1].price  
                 lobby_NPC[0].player_buy_item(1) 
                 print('你的道具欄位增加了，現在可以保存',main_player.max_item,'個道具')
             else:
-                print('你的錢不夠')
+                print('你的錢不夠或者連勝數不足')
         elif action == '3':
-            if main_player.money >= lobby_NPC[0].shop[2].price: 
+            if main_player.money >= lobby_NPC[0].shop[2].price and lobby_NPC[0].shop[2].check_item(main_player): 
                 print('你解鎖了永久隨機皇后') 
                 main_player.buy_item('隨機皇后',lobby_NPC[0].shop[2].price)
                 lobby_NPC[0].player_buy_item(2)
             else:
-                print('你的錢不夠')
+                print('你的錢不夠或者連勝數不足')
         elif action == '4':
-            if main_player.money >= lobby_NPC[0].shop[3].price:
+            if main_player.money >= lobby_NPC[0].shop[3].price and lobby_NPC[0].shop[3].check_item(main_player):
                 main_player.extra_hp += 1
                 main_player.money -= lobby_NPC[0].shop[3].price  
                 lobby_NPC[0].player_buy_item(3)
                 print('你的血量增加了，現在有',main_player.extra_hp,'點額外血量')
             else:
-                print('你的錢不夠')
+                print('你的錢不夠或者連勝數不足')
         elif action == '5':
-            if main_player.money >= lobby_NPC[0].shop[4].price:
+            if main_player.money >= lobby_NPC[0].shop[4].price and lobby_NPC[0].shop[4].check_item(main_player):
                 main_player.buy_item('永久藍圖',lobby_NPC[0].shop[4].price)  
                 lobby_NPC[0].player_buy_item(4) 
                 print('你解鎖了永久未知藍圖')
             else:
-                print('你的錢不夠')
+                print('你的錢不夠或者連勝數不足')
         elif action == '6':
-            if main_player.money >= lobby_NPC[0].shop[5].price:
+            if main_player.money >= lobby_NPC[0].shop[5].price and lobby_NPC[0].shop[5].check_item(main_player):
                 main_player.buy_item('琉璃皇后',lobby_NPC[0].shop[5].price)
                 lobby_NPC[0].player_buy_item(5)
                 print('你解鎖了琉璃皇后')
             else:
-                print('你的錢不夠')
+                print('你的錢不夠或者連勝數不足')
         elif action == '7':
-            if main_player.money >= lobby_NPC[0].shop[6].price:
+            if main_player.money >= lobby_NPC[0].shop[6].price and lobby_NPC[0].shop[6].check_item(main_player):
                 main_player.buy_item('最終試煉',lobby_NPC[0].shop[6].price)
                 lobby_NPC[0].player_buy_item(6)
                 print('你解鎖了最終試煉')
             else:
-                print('你的錢不夠')
+                print('你的錢不夠或者連勝數不足')
         time.sleep(2)
         continue
     #下注階段
@@ -1687,6 +1741,12 @@ while True:
     risk_input = int(input('是否下注幽閉皇后模式? : 1.是 2.否'))
     if risk_input == 1:
         risk *= 5    
+    #risk % 7 == 0 莊家先手模式，倍率50倍
+    print('莊家先手模式下，莊家先行動，獲勝時獎金50倍，須至少完成5局才有額外倍率')
+    risk_input = int(input('是否下注莊家先手模式? : 1.是 2.否'))
+    if risk_input == 1:
+        risk *= 7
+        first_move = '莊家'
     round = 0
     player1 = player(5,main_player.item,money)
     computer1 = computer(5,[])
@@ -1700,6 +1760,7 @@ while True:
         live_bullet = random.randint(1,4)
         blank = random.randint(1,4)
         item_number = random.randint(2,5)
+        games[round].set_first_move(first_move)
         games[round].one_round(live_bullet,blank,item_number)
         games[round].round += 1
         if player1.hp <= 0:
@@ -1777,12 +1838,31 @@ while True:
                         n *= 7
                         time.sleep(0.5)
                         print('幽閉皇后模式下，獎金7倍')
+                    if (risk % 7 == 0) and (win_count >= 5):
+                        n *= 50
+                        time.sleep(0.5)
+                        print('莊家先手模式下，獎金50倍')
                     time.sleep(0.5)
                     print('最終倍率為',n)
                     time.sleep(0.5)
                     print('最終獎金為',int(player1.money*n),'元')
                     time.sleep(0.5)
                     print('你帶著',int(player1.money*n),'元離開了賭桌')
+                    if (win_count >= 5) and ('五連勝標記' not in main_player.unlockable_item):
+                        main_player.unlockable_item.append('五連勝標記')
+                        print('你獲得了五連勝標記')
+                    if (win_count >= 10) and ('十連勝標記' not in main_player.unlockable_item):
+                        main_player.unlockable_item.append('十連勝標記')
+                        print('你獲得了十連勝標記')
+                    if (win_count >= 20) and ('二十連勝標記' not in main_player.unlockable_item):
+                        main_player.unlockable_item.append('二十連勝標記')
+                        print('你獲得了二十連勝標記')
+                    if (win_count >= 50) and ('五十連勝標記' not in main_player.unlockable_item):
+                        main_player.unlockable_item.append('五十連勝標記')
+                        print('你獲得了五十連勝標記')
+                    if (win_count >= 5):
+                        print('你連勝了',win_count,'場')
+                    input('按下Enter離開')
                     main_player.earn_money(int(player1.money*n))
                     main_player.save_item(player1.item)
             break
