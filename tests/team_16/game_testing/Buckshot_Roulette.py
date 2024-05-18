@@ -1704,7 +1704,9 @@ class challenge_mode(game):
             if i =='永久藍圖':
                 self.player.item.append('未知藍圖')
             elif i == '隨機皇后':
-                if '琉璃皇后' in main_player.unlockable_item:
+                if ('琉璃皇后' in main_player.unlockable_item) and (main_player.unlockable_item.count('隨機皇后') == 3) and '琉璃皇后' not in self.player.item:
+                    self.player.item.append('琉璃皇后')
+                elif ('琉璃皇后' in main_player.unlockable_item) and '琉璃皇后' not in self.player.item:
                     self.player.item.append(self.queen[random.randint(0,4)])
                 else:
                     self.player.item.append(self.queen[random.randint(0,3)])
