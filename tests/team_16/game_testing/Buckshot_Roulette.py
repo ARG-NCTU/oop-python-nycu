@@ -104,9 +104,9 @@ class player_in_lobby(NPC):
         self.die_state = False
         self.money = money
         #保存下來的物品欄(商店升級)
-        self.item = []
+        self.item = ['琉璃皇后','蔚藍皇后']
         self.max_item = 0
-        self.extra_hp = 0
+        self.extra_hp = 2
         #商店物品
         self.unlockable_item = []
     def earn_money(self,amount):
@@ -228,7 +228,7 @@ class game:
             else:
                 print('物品欄已滿')
         #照著['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']的順序排序玩家和電腦的物品欄
-        participant.item.sort(key = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+        participant.item.sort(key = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王','琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
     def give_item(self,number):
         for i in range(number):
             if len(self.player.item) < self.player.max_item:
@@ -424,7 +424,11 @@ class game:
                     handsaw = True
                     self.player.blood_queen -= 1
                 while True:
-                    action = int(input())
+                    try:
+                        action = int(input())
+                    except ValueError:
+                        print('請輸入正確的數字')
+                        continue
                     if type(action) != int:
                         print('請輸入正確的數字')
                         continue
@@ -545,6 +549,9 @@ class game:
                     print('請輸入正確的數字')
                     continue
                 if self.player.item[item-1] == '手鋸':
+                    if handsaw:
+                        print('手鉅效果已經存在了')
+                        continue
                     handsaw = True
                     print('你使用了手鋸,下一發子彈造成兩倍傷害')
                 elif self.player.item[item-1] == '啤酒':
@@ -598,6 +605,9 @@ class game:
                     print('你使用了香菸,回復一點血量')
                     self.player.hp += 1
                 elif self.player.item[item-1] == '手銬':
+                    if self.computer.handcuff:
+                        print('莊家已經被銬住了')
+                        continue
                     print('你使用了手銬,莊家下回合無法行動')
                     self.computer.dohandcuff()
                 elif self.player.item[item-1] == '未知藍圖':
@@ -800,6 +810,9 @@ class game:
                         continue
                     #馬上使用選擇的物品 
                     if self.computer.item[steal-1] == '手鋸':
+                        if handsaw:
+                            print('手鉅效果已經存在了')
+                            continue
                         handsaw = True
                         print('你使用了手鋸,下一發子彈造成兩倍傷害')
                     elif self.computer.item[steal-1] == '啤酒':
@@ -853,6 +866,9 @@ class game:
                         print('你使用了香菸,回復一點血量')
                         self.player.hp += 1
                     elif self.computer.item[steal-1] == '手銬':
+                        if self.computer.handcuff:
+                            print('莊家已經被銬住了')
+                            continue
                         print('你使用了手銬,莊家下回合無法行動')
                         self.computer.dohandcuff()
                     elif self.computer.item[steal-1] == '未知藍圖':
@@ -994,15 +1010,6 @@ class game:
             time.sleep(1)
             try_count = 0
             not_blue_print = True
-            #莊家進行剩餘子彈分析
-            if (live_bullet-self.computer.known_live) <= 0:
-                for i in range(len(self.computer.bullet_pattern)):
-                    if self.computer.bullet_pattern[i] == 'unknown':
-                        self.computer.set_bullet_pattern(i,'blank')
-            elif (blank-self.computer.known_blank) <= 0:
-                for i in range(len(self.computer.bullet_pattern)):
-                    if self.computer.bullet_pattern[i] == 'unknown':
-                        self.computer.set_bullet_pattern(i,'live')
 
             if self.computer.handcuff:
                 print('莊家被手銬銬住了,無法行動')
@@ -1013,6 +1020,15 @@ class game:
             not_blue_print = True
 
             while True:
+                #莊家進行剩餘子彈分析
+                if (live_bullet-self.computer.known_live) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'blank')
+                elif (blank-self.computer.known_blank) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'live')
                 if self.player.hp <= 0:
                     time.sleep(2)
                     print('**************************************')
@@ -1025,7 +1041,7 @@ class game:
                     print('進入下一局')
                     return
                 if (self.computer.rage_king > 0) and (handsaw == False):
-                    print('狂怒國王給予莊家手鉅效果')
+                    print('狂暴國王給予莊家手鉅效果')
                     time.sleep(1)
                     handsaw = True
                     self.computer.rage_king -= 1
@@ -1641,6 +1657,1150 @@ class game:
                 for i in range(self.computer.item_queen):
                     self.give_participant_item(1,self.computer)
                 break
+
+#試煉模式
+class challenge_mode(game):
+    def __init__(self, player, computer, hp, risk, challenger):
+        if challenger == '薩邁爾':
+            hp = 6
+        if challenger == '利維坦':
+            hp = random.randint(4,6)
+        super().__init__(player, computer, hp, risk)
+        self.challenger = challenger
+        self.devil_princess_item_list = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王','琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']
+
+    def give_item(self,number):
+        if self.challenger != '惡魔公主':
+            super().give_item(number)
+        else:
+            for i in range(number):
+                if len(self.player.item) < self.player.max_item:
+                    item=self.item_list[random.randint(0,len(self.item_list)-1)]
+                    print('你獲得了',item)
+                    self.player.item.append(item)
+                else:
+                    print('你的物品欄已滿')
+                if len(self.computer.item) < self.computer.max_item:
+                    self.computer.item.append(self.devil_princess_item_list[random.randint(0,len(self.devil_princess_item_list)-1)])
+        
+            self.player.item.sort(key = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+            self.computer.item.sort(key = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王','琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+
+    def give_Leviathan_item(self,number,participant):
+        for i in range(number):
+            if len(participant.item) < participant.max_item:
+                time.sleep(1)
+                self.item_list.extend(['未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包'])
+                item=self.item_list[random.randint(0,len(self.item_list)-1)]
+                self.item_list.remove(i in ['未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包'])
+                print(' 利維坦獲得了',item)
+                participant.item.append(item)
+                
+            else:
+                print('物品欄已滿')
+
+    def player_bonus(self):
+        for i in main_player.unlockable_item:
+            if i =='永久藍圖':
+                self.player.item.append('未知藍圖')
+            elif i == '隨機皇后':
+                if '琉璃皇后' in main_player.unlockable_item:
+                    self.player.item.append(self.queen[random.randint(0,4)])
+                else:
+                    self.player.item.append(self.queen[random.randint(0,3)])
+        for i in range(main_player.extra_hp):
+            self.player.hp += 1
+            
+    def blessing(self,remain_bullet,turn,handsaw):
+        print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+        print('琉璃祝福治癒了你的傷口')
+        self.player.hp += self.player.blessing
+        if remain_bullet[0] & (turn == '玩家'):
+            print('你感覺到第一發子彈是實彈，這發子彈將造成兩倍傷害')
+            print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+            time.sleep(2)
+            return True
+        elif remain_bullet[0] & (turn == '莊家'):   
+            print('你感覺到第一發子彈是實彈，你將額外回復2點血量')
+            self.player.hp += 2
+        elif random.randint(0,1) and len(self.computer.item) > 0:
+            print('你感覺到第一發子彈是空包彈，莊家的',self.computer.item[0],'將被摧毀')
+            self.computer.item.pop(0)
+        else:
+            print('你感覺到第一發子彈是空包彈，你將額外獲得一個物品')
+            self.give_participant_item(1,self.player)
+        print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+        time.sleep(2)
+        return handsaw
+
+    def one_round_Leviathan(self,live_bullet,blank,item_number):
+        time.sleep(3)
+        print('第',self.round,'局開始')
+        #朦朧國王效果
+        self.computer.fog = self.computer.fog_king
+
+        if self.player.handcuff:
+            self.player.unhandcuff()
+            print('你的手銬解除,可以自由行動了')
+        if self.computer.handcuff:
+            self.computer.unhandcuff()
+            print('利維坦的手銬解除,可以自由行動了')
+        handsaw = False
+        skip = False
+        killer_queen = False
+        gun_lock = False
+        self.give_item(item_number)
+        remain_bullet = []
+        self.computer.reset_bullet_pattern(live_bullet+blank)
+        print('這局有',live_bullet,'發實彈',blank,'發空包彈')
+        for i in range(live_bullet):
+            remain_bullet.append(True)
+        for i in range(blank):
+            remain_bullet.append(False)
+        random.shuffle(remain_bullet)
+        #狡詐國王效果
+        for i in range(self.computer.trick_king):
+            if i > len(remain_bullet)-1:
+                break
+            elif remain_bullet[i]:
+                self.computer.set_bullet_pattern(i,'live')
+            else:
+                self.computer.set_bullet_pattern(i,'blank')
+        #琉璃祝福效果
+        if self.player.blessing > 0:
+            handsaw = self.blessing(remain_bullet,self.first_move,handsaw)
+
+        time.sleep(2)        
+
+        while len(remain_bullet) > 0:
+            skip = False
+            try_count = 0
+            not_blue_print = True
+
+            if self.player.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你死了')
+                time.sleep(2)
+                return
+            
+            time.sleep(1)
+            if self.first_move == '玩家':
+                print('==========================================')
+                print('你的回合')
+                print('你的物品欄:',self.player.item)
+                print('玩家血量:',self.player.hp,'利維坦血量:',self.computer.hp)  
+                print('剩餘',live_bullet,'發實彈',blank,'發空包彈')
+                print('請選擇要做的事')
+                print('1.射向利維坦, 2.射向自己, 3.使用物品, 4.顯示利維坦的物品欄')
+                if len(self.computer.bullet_pattern) != len(remain_bullet):
+                    raise Exception('子彈數量不符')
+                if self.player.blood_queen > 0 and (handsaw==False):
+                    print('腥紅皇后使你獲得手鋸效果')
+                    time.sleep(1)
+                    handsaw = True
+                    self.player.blood_queen -= 1
+                while True:
+                    try:
+                        action = int(input())
+                    except ValueError:
+                        print('請輸入正確的數字')
+                        continue
+                    if type(action) != int:
+                        print('請輸入正確的數字')
+                        continue
+                    if action < 1 or action > 4:
+                        print('請輸入正確的數字')
+                        continue
+                    break
+            else:
+                action = 0
+                self.first_move = '玩家'
+            
+            if action==1:
+                if remain_bullet[0] and (self.computer.fog > 0):
+                    print('朦朧國王使你射偏了')
+                    self.computer.pop_bullet_pattern()
+                    self.computer.fog -= 1
+                    handsaw = False
+                    killer_queen = False
+                    live_bullet -= 1
+                elif remain_bullet[0] and handsaw and killer_queen:
+                    self.computer.hp -= 10
+                    print('你使用漆黑皇后射中了利維坦,造成十點傷害')
+                    if self.computer.blood_queen > 0:
+                        print('腥紅皇后使利維坦免疫額外傷害')
+                        self.computer.hp += 5
+                        self.computer.blood_queen -= 1
+                    handsaw = False
+                    killer_queen = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]&killer_queen:
+                    self.computer.hp -= 5
+                    print('你使用漆黑皇后射中了利維坦,造成五點傷害')
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                    killer_queen = False
+                elif remain_bullet[0]&handsaw:
+                    self.computer.hp -= 2
+                    print('你射中了利維坦,造成兩點傷害')
+                    if self.computer.blood_queen > 0:
+                        print('腥紅皇后使利維坦免疫額外傷害')
+                        self.computer.hp += 1
+                        self.computer.blood_queen -= 1
+                    handsaw = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]:
+                    self.computer.hp -= 1
+                    print('你射中了利維坦,造成一點傷害')
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                else:
+                    print('你的子彈打空了')
+                    self.computer.pop_bullet_pattern()
+                    blank -= 1
+                    handsaw = False
+                remain_bullet.pop(0)
+                handsaw = False
+            elif action==2 and gun_lock :
+                print('槍經過改造，這局無法再射向自己了')
+                time.sleep(1)
+                continue
+            elif action==2:
+                if remain_bullet[0]&handsaw&killer_queen:
+                    self.player.hp -= 10
+                    print('你用漆黑皇后射中了自己,造成十點傷害')
+                    if self.player.blood_queen > 0:
+                        print('腥紅皇后使你免疫額外傷害')
+                        self.player.hp += 5
+                        self.player.blood_queen -= 1
+                    else:
+                        print('節哀順變')
+                    handsaw = False
+                    killer_queen = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]&killer_queen:
+                    self.player.hp -= 5
+                    print('你用漆黑皇后射中了自己,造成五點傷害')
+                    print('節哀順變')
+                    killer_queen = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]&handsaw:
+                    self.player.hp -= 2
+                    print('你射中了自己,造成兩點傷害')
+                    if self.player.blood_queen > 0:
+                        print('腥紅皇后使你免疫額外傷害')
+                        self.player.hp += 1
+                        self.player.blood_queen -= 1
+                    else:
+                        print('你是笨蛋嗎?')
+                    handsaw = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]:
+                    self.player.hp -= 1
+                    print('你射中了自己,造成一點傷害')
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                    handsaw = False
+                else:
+                    print('你的子彈打空了,額外獲得一回合')
+                    remain_bullet.pop(0)
+                    self.computer.pop_bullet_pattern()
+                    blank -= 1
+                    handsaw = False
+                    continue
+                remain_bullet.pop(0)
+                handsaw = False
+            elif action==3:
+                print('請選擇要使用的物品')
+                for i in range(len(self.player.item)):
+                    print(i+1,'.',self.player.item[i])
+                try:
+                    item = int(input())
+                except ValueError:
+                    print('請輸入正確的數字')
+                    continue
+
+                if item > len(self.player.item):    
+                    print('請輸入正確的數字')
+                    continue
+                if self.player.item[item-1] == '手鋸':
+                    if handsaw:
+                        print('手鉅效果已經存在了')
+                        continue
+                    handsaw = True
+                    print('你使用了手鋸,下一發子彈造成兩倍傷害')
+                elif self.player.item[item-1] == '啤酒':
+                    if remain_bullet.pop(0):
+                        print('你使用了啤酒,退掉一發實彈')
+                        live_bullet -= 1
+                    else:
+                        print('你使用了啤酒,退掉一發空包彈')
+                        blank -= 1
+                    self.computer.pop_bullet_pattern()
+                    if len(remain_bullet) == 0:
+                            print('子彈打完了')
+                            print('進入下一局')
+                            return
+                elif self.player.item[item-1] == '手機':
+                    print('你使用了手機')
+                    if len(remain_bullet) == 1:
+                        n = 0
+                    else:
+                        n=random.randint(1,len(remain_bullet)-1)
+                    if remain_bullet[n]:
+                        print('第',n+1,'發是實彈')
+                    else:
+                        print('第',n+1,'發是空包彈')
+                elif self.player.item[item-1] == '轉換器':
+                    print('你使用了轉換器,現在這發子彈將反轉')
+                    remain_bullet[0] = not remain_bullet[0]
+                    if remain_bullet[0]:
+                        live_bullet += 1
+                        blank -= 1
+                    else:
+                        live_bullet -= 1
+                        blank += 1
+                elif self.player.item[item-1] == '過期藥物':
+                    print('你使用了過期藥物')
+                    if random.randint(0,1):
+                        self.player.hp += 2
+                        print('你回復了兩點血量')
+                    else:
+                        self.player.hp -= 1
+                        print('你失去了一點血量')
+                        if self.player.hp <= 0:
+                            time.sleep(2)
+                            print('**************************************')
+                            print('你死了')
+                            time.sleep(2)
+                            return
+                elif self.player.item[item-1] == '放大鏡':
+                    print('你使用了放大鏡看到 ','實彈' if remain_bullet[0] else '空包彈')
+                elif self.player.item[item-1] == '香菸':
+                    print('你使用了香菸,回復一點血量')
+                    self.player.hp += 1
+                elif self.player.item[item-1] == '手銬':
+                    if self.computer.handcuff:
+                        print('利維坦已經被銬住了')
+                        continue
+                    print('你使用了手銬,利維坦下回合無法行動')
+                    self.computer.dohandcuff()
+                elif self.player.item[item-1] == '未知藍圖':
+                    if self.player.item.count('過期藥物') >= 3:
+                        print('你獲得了禁藥')
+                        self.player.item.append('禁藥')
+                        for i in range(3):
+                            self.player.item.remove('過期藥物')
+                        self.player.item.remove('未知藍圖')
+                    elif (self.player.item.count('手鋸') >= 2) and  (self.player.item.count('放大鏡') >= 1):
+                        print('你獲得了大口徑子彈')
+                        self.player.item.append('大口徑子彈')
+                        for i in range(2):
+                            self.player.item.remove('手鋸')
+                        self.player.item.remove('放大鏡')
+                        self.player.item.remove('未知藍圖')
+                    elif (self.player.item.count('大口徑子彈') >= 1) and (self.player.item.count('腎上腺素') >= 1) and (self.player.item.count('轉換器') >= 1):
+                        print('你獲得了榴彈砲')
+                        self.player.item.append('榴彈砲')
+                        self.player.item.remove('腎上腺素')
+                        self.player.item.remove('大口徑子彈')
+                        self.player.item.remove('轉換器')
+                        self.player.item.remove('未知藍圖')
+                    elif (self.player.item.count('啤酒') >= 2) and (self.player.item.count('香菸') >= 1) and ((live_bullet+blank) >= 3):
+                        print('你獲得了彈藥包')
+                        self.player.item.remove('啤酒')
+                        self.player.item.remove('啤酒')
+                        self.player.item.remove('香菸')
+                        self.player.item.append('彈藥包')
+                        self.player.item.remove('未知藍圖')
+                    elif len(self.player.item) == self.player.max_item:
+                        print('你獲得了擴增背包,物品欄增加2格')
+                        self.player.item = []
+                        self.player.max_item += 2
+                    else:
+                        print('你的物品不足以合成')
+                        continue
+                    not_blue_print = False
+                elif self.player.item[item-1] == '禁藥':
+                    #70%機率血量翻倍並+3，30%血量降低到1點，若血量為1則死亡
+                    print('你使用了禁藥')
+                    if random.randint(1,10) <= 7:
+                        self.player.hp *= 2
+                        self.player.hp += 3
+                        print('你的血量大幅提升,現在血量為',self.player.hp)
+                    else:
+                        if self.player.hp == 1:
+                            print('你死了')
+                            time.sleep(2)
+                            return
+                        self.player.hp = 1
+                        print('你中毒了，血量降為1')
+                elif self.player.item[item-1] == '大口徑子彈':
+                    #將目前這發直接子彈替換成大口徑子彈並直接發射，造成3點傷害，如果有使用手鋸則造成6點傷害
+                    if self.computer.fog > 0:
+                        print('朦朧國王使你射偏了')
+                        self.computer.fog -= 1
+                        handsaw = False
+                    elif handsaw:
+                        self.computer.hp -= 6
+                        print('你發射了大口徑子彈,造成6點傷害')
+                    else:
+                        self.computer.hp -= 3
+                        print('你發射了大口徑子彈,造成3點傷害')
+                    if remain_bullet.pop(0):
+                        live_bullet -= 1
+                    else:
+                        blank -= 1
+                    self.computer.pop_bullet_pattern()
+                    self.player.item.pop(item-1)
+                    skip = True
+                    handsaw = False
+                elif self.player.item[item-1] == '榴彈砲':
+                    #將自身血量降低至1點，並發射現在這發子彈，若為實彈則造成(降低的血量+1)點傷害，使用手鋸則造成兩倍傷害，若為空包彈則不造成傷害，使用後輪到利維坦的回合
+                    damage = self.player.hp
+                    self.player.hp = 1
+                    if remain_bullet.pop(0):
+                        if self.computer.fog > 0:
+                            print('朦朧國王使你射偏了')
+                            self.computer.fog -= 1
+                            handsaw = False
+                        elif handsaw:
+                            self.computer.hp -= 2*damage
+                            print('你發射了榴彈砲,造成',2*damage,'點傷害')
+                            handsaw = False
+                        else:
+                            self.computer.hp -= damage
+                            print('你發射了榴彈砲,造成',damage,'點傷害')
+                        live_bullet -= 1
+                    else:
+                        print('你發射了榴彈砲,但是子彈打空了')
+                        blank -= 1
+                    self.computer.pop_bullet_pattern()
+                    self.player.item.pop(item-1)
+                    skip = True
+                elif self.player.item[item-1] == '彈藥包':
+                    #對利維坦造成剩餘實彈數量的傷害，之後用實彈和空包彈隨機將彈藥填滿至8發
+                    damage = live_bullet
+                    if self.computer.fog > 0:
+                        if damage > self.computer.fog:
+                            damage -= self.computer.fog
+                            self.computer.fog = 0
+                            if handsaw:
+                                damage *= 2
+                            self.computer.hp -= damage
+                            print('你使用了彈藥包')
+                            print('朦朧國王使你射偏了部分子彈,對利維坦造成',damage,'點傷害')
+                        else:
+                            print('你使用了彈藥包，但是朦朧國王使你射偏了所有子彈') 
+                            self.computer.fog -= damage
+                    else:
+                        if handsaw:
+                            damage *= 2
+                        print('你使用了彈藥包,對利維坦造成',damage,'點傷害')
+                        self.computer.hp -= damage
+                    handsaw = False
+                    remain_bullet = []
+                    live_bullet = 0
+                    blank = 0
+                    for i in range(8-len(remain_bullet)):
+                        if random.randint(0,1):
+                            remain_bullet.append(True)
+                            live_bullet += 1
+                        else:
+                            remain_bullet.append(False)
+                            blank += 1
+                    random.shuffle(remain_bullet)
+                    print('彈藥已重新裝填')
+                    self.computer.reset_bullet_pattern(live_bullet+blank)
+                    if self.player.blessing > 0:
+                        handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                elif self.player.item[item-1] == '漆黑皇后':
+                    #移除雙方所有道具，將彈夾裝填為一發空包彈一發實彈，這發實彈將造成5點傷害
+                    print('你使用了漆黑皇后，彈藥裝填為一發空包彈一發5點傷害實彈，祈禱吧!')
+                    self.player.item = []
+                    self.computer.item = []
+                    remain_bullet = [True,False]
+                    live_bullet = 1
+                    blank = 1
+                    self.computer.reset_bullet_pattern(live_bullet+blank)
+                    random.shuffle(remain_bullet)
+                    killer_queen = True
+                    not_blue_print = False
+                    self.player.queen_used.append('漆黑皇后')
+                    if self.player.blessing > 0:
+                        handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                elif self.player.item[item-1] == '神聖皇后':
+                    #回3點血量，背包上限+2，獲得3個隨機物品
+                    print('你使用了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
+                    self.player.hp += 3
+                    self.player.max_item += 3
+                    self.give_participant_item(3,self.player)
+                    self.player.max_item -= 1
+                    self.player.queen_used.append('神聖皇后')
+                elif self.player.item[item-1] == '蔚藍皇后':
+                    #玩家的回合結束時，獲得一個隨機物品
+                    print('你使用了蔚藍皇后，輪到利維坦的回合時你將獲得一個隨機物品')
+                    self.player.item_queen += 1   
+                    self.player.queen_used.append('蔚藍皇后')
+                elif self.player.item[item-1] == '腥紅皇后':
+                    #玩家的回合開始時，附加手鉅效果
+                    print('你使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，可以觸發五次')
+                    self.player.blood_queen += 5       
+                    self.player.queen_used.append('腥紅皇后') 
+                elif self.player.item[item-1] == '琉璃皇后':
+                    #每次重新裝彈(回合開始、彈藥包、漆黑皇后)時通靈第一顆子彈，若為實彈則附加手鉅效果
+                    #若為空包彈則回復一點血量並消除利維坦一個道具或獲得一個隨機道具
+                    #使用當下清空利維坦的道具、清空彈夾並裝上一顆實彈
+                    print('你獲得了琉璃的祝福，利維坦的道具被清空，彈夾重新裝填了')
+                    self.computer.item = [] 
+                    self.computer.reset_bullet_pattern(1)
+                    remain_bullet = [True]
+                    if not handsaw:
+                        handsaw = True
+                        print('你獲得了手鋸效果')
+                    time.sleep(1)
+                    live_bullet = 1
+                    blank = 0
+                    self.player.blessing += 1
+                    self.player.queen_used.append('琉璃皇后')                          
+                elif self.player.item[item-1] == '腎上腺素':
+                    print('你使用了腎上腺素,可以偷取利維坦的物品')
+                    if len(self.computer.item) == 0:
+                        print('利維坦沒有物品可以偷取')
+                        continue
+                    print('請選擇要偷取的物品:')
+                    for i in range(len(self.computer.item)):
+                        print(i+1,'.',self.computer.item[i])
+                    try:
+                        steal = int(input())
+                    except ValueError:
+                        print('請輸入正確的數字')
+                        time.sleep(0.5)
+                        continue  
+                    if steal > len(self.computer.item):
+                        print('請輸入正確的數字')
+                        continue
+                    elif steal <= 0:
+                        print('請輸入正確的數字')
+                        continue
+                    #馬上使用選擇的物品 
+                    if self.computer.item[steal-1] == '手鋸':
+                        if handsaw:
+                            print('手鉅效果已經存在了')
+                            continue
+                        handsaw = True
+                        print('你使用了手鋸,下一發子彈造成兩倍傷害')
+                    elif self.computer.item[steal-1] == '啤酒':
+                        if remain_bullet.pop(0):
+                            print('你使用了啤酒,退掉一發實彈')
+                            live_bullet -= 1
+                        else:
+                            print('你使用了啤酒,退掉一發空包彈')
+                            blank -= 1
+                        self.computer.pop_bullet_pattern()
+                        if len(remain_bullet) == 0:
+                            print('子彈打完了')
+                            print('進入下一局')
+                            return
+                    elif self.computer.item[steal-1] == '手機':
+                        print('你使用了手機')
+                        if len(remain_bullet) == 1:
+                            n = 0
+                        else:
+                            n=random.randint(1,len(remain_bullet)-1)
+                        if remain_bullet[n]:
+                            print('第',n+1,'發是實彈')
+                        else:
+                            print('第',n+1,'發是空包彈')
+                    elif self.computer.item[steal-1] == '轉換器':
+                        print('你使用了轉換器,現在這發子彈將反轉')
+                        remain_bullet[0] = not remain_bullet[0]
+                        if remain_bullet[0]:
+                            live_bullet += 1
+                            blank -= 1
+                        else:
+                            live_bullet -= 1
+                            blank += 1
+                    elif self.computer.item[steal-1] == '過期藥物':
+                        print('你使用了過期藥物')
+                        if random.randint(0,1):
+                            self.player.hp += 2
+                            print('你回復了兩點血量')
+                        else:
+                            self.player.hp -= 1
+                            print('你失去了一點血量')
+                            if self.player.hp <= 0:
+                                time.sleep(2)
+                                print('**************************************')
+                                print('你死了')
+                                time.sleep(2)
+                                return
+                    elif self.computer.item[steal-1] == '放大鏡':
+                        print('你使用了放大鏡看到 ','實彈' if remain_bullet[0] else '空包彈')
+                    elif self.computer.item[steal-1] == '香菸':
+                        print('你使用了香菸,回復一點血量')
+                        self.player.hp += 1
+                    elif self.computer.item[steal-1] == '手銬':
+                        if self.computer.handcuff:
+                            print('利維坦已經被銬住了')
+                            continue
+                        print('你使用了手銬,利維坦下回合無法行動')
+                        self.computer.dohandcuff()
+                    elif self.computer.item[steal-1] == '未知藍圖':
+                        self.player.item.append('未知藍圖')
+                        print('你獲得了未知藍圖')
+                    elif self.computer.item[steal-1] == '禁藥':
+                        print('你使用了禁藥')
+                        if random.randint(1,10) <= 7:
+                            self.player.hp *= 2
+                            self.player.hp += 3
+                            print('你的血量大幅提升,現在血量為',self.player.hp)
+                        else:
+                            if self.player.hp == 1:
+                                print('你死了')
+                                time.sleep(2)
+                                return
+                            self.player.hp = 1
+                            print('你中毒了，血量降為1')
+                    elif self.computer.item[steal-1] == '大口徑子彈':
+                        if self.computer.fog > 0:
+                            print('朦朧國王使你射偏了')
+                            self.computer.fog -= 1
+                            handsaw = False
+                        elif handsaw:
+                            self.computer.hp -= 6
+                            print('你使用了大口徑子彈,造成6點傷害')
+                        else:
+                            self.computer.hp -= 3
+                            print('你使用了大口徑子彈,造成3點傷害')
+                        if remain_bullet.pop(0):
+                            live_bullet -= 1
+                        else:
+                            blank -= 1
+                        self.computer.pop_bullet_pattern()
+                        handsaw = False
+                    elif self.computer.item[steal-1] == '榴彈砲':
+                        damage = self.player.hp 
+                        self.player.hp = 1
+                        if remain_bullet.pop(0):
+                            if self.computer.fog > 0:
+                                print('朦朧國王使你射偏了')
+                                self.computer.fog -= 1
+                                handsaw = False
+                            elif handsaw:
+                                self.computer.hp -= 2*damage
+                                print('你使用了榴彈砲,造成',2*damage,'點傷害')
+                                handsaw = False
+                            else:
+                                self.computer.hp -= damage
+                                print('你使用了榴彈砲,造成',damage,'點傷害')
+                            live_bullet -= 1
+                        else:
+                            print('你使用了榴彈砲,但是子彈打空了')
+                            blank -= 1
+                            handsaw = False
+                        self.computer.pop_bullet_pattern()
+                    elif self.computer.item[steal-1] == '彈藥包':
+                        damage = live_bullet
+                        if self.computer.fog > 0:
+                            if damage > self.computer.fog:
+                                damage -= self.computer.fog
+                                self.computer.fog = 0
+                                if handsaw:
+                                    damage *= 2
+                                self.computer.hp -= damage
+                                print('你使用了彈藥包')
+                                print('朦朧國王使你射偏了部分子彈,對利維坦造成',damage,'點傷害')
+                            else:
+                                print('你使用了彈藥包，但是朦朧國王使你射偏了所有子彈') 
+                                self.computer.fog -= damage
+                        else:
+                            if handsaw:
+                                damage *= 2
+                            print('你使用了彈藥包,對利維坦造成',damage,'點傷害')
+                            self.computer.hp -= damage
+                        remain_bullet = []
+                        live_bullet = 0
+                        blank = 0
+                        for i in range(8-len(remain_bullet)):
+                            if random.randint(0,1):
+                                remain_bullet.append(True)
+                                live_bullet += 1
+                            else:
+                                remain_bullet.append(False)
+                                blank += 1
+                        random.shuffle(remain_bullet)
+                        print('彈藥已重新裝填')
+                        self.computer.reset_bullet_pattern(live_bullet+blank)
+                        if self.player.blessing > 0:
+                            handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                        
+                    elif self.computer.item[steal-1] == '腎上腺素':
+                        print('你不能偷取腎上腺素')
+                        continue
+                    else:
+                        print('你不能偷取國王道具')
+                        continue
+                    self.computer.item.pop(steal-1)
+
+                if not_blue_print and not skip: 
+                    self.player.item.pop(item-1)
+                time.sleep(2)
+                if self.computer.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你贏了')
+                    time.sleep(2)
+                    return
+                if not skip:
+                    continue
+            elif action==4:
+                print('利維坦的物品欄:',self.computer.item)
+                time.sleep(4)
+                continue
+            if self.computer.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你贏了')
+                time.sleep(2)
+                return
+            if self.player.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你死了')
+                time.sleep(2)
+                return
+            if len(remain_bullet) == 0:
+                print('子彈打完了')
+                print('進入下一局')
+                return
+            if self.player.item_queen > 0:
+                print('蔚藍皇后使你獲得隨機物品')
+                time.sleep(1)
+            for i in range(self.player.item_queen):
+                self.give_participant_item(1,self.player)
+            print('==========================================')
+            print('利維坦的回合')
+            print('==========================================')
+            time.sleep(1)
+            try_count = 0
+            not_blue_print = True
+            '''
+            利維坦道具說明:
+            國王和皇后效果不變
+            1.未知藍圖
+                讓利維坦獲得3個隨機物品
+            2.手鉅
+                直接對玩家造成1點傷害
+            3.香菸
+                將這發空包彈變成實彈，若是實彈則退彈
+            4.啤酒
+                回復一點血量
+            5.手機
+                改變剩餘所有子彈的順序，偷看兩發子彈
+            6.轉換器
+                轉換所有子彈
+            7.過期藥物
+                (用吸的(X
+                獲得一層朦朧國王效果
+            8.放大鏡
+                增加一格背包空間，裝填3發隨機子彈
+            9.腎上腺素
+                獲得手鉅效果
+            10.手銬
+                打完剩餘子彈前兩人皆無法再射向自己
+            11.禁藥
+                獲得額外回合(就是手銬效果)，獲得手鉅效果
+            12.大口徑子彈
+                把所有空包彈變成實彈
+            13.榴彈砲
+                造成剩餘子彈數量的傷害
+            14.彈藥包
+                退到剩下一發子彈，每退一發實彈回一點血，每退一發空包彈造成一點傷害
+
+            '''
+
+            if self.computer.handcuff:
+                print('利維坦被手銬銬住了,無法行動')
+                self.computer.unhandcuff()
+                continue
+
+            skip = False
+            not_blue_print = True
+
+            while True:
+                #利維坦進行剩餘子彈分析
+                if (live_bullet-self.computer.known_live) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'blank')
+                elif (blank-self.computer.known_blank) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'live')
+                if self.player.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你死了')
+                    time.sleep(2)
+                    return
+                time.sleep(2)
+                if len(remain_bullet) == 0:
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                if (self.computer.rage_king > 0) and (handsaw == False):
+                    print('狂暴國王給予利維坦手鉅效果')
+                    time.sleep(1)
+                    handsaw = True
+                    self.computer.rage_king -= 1
+                if self.computer.item.count('腥紅皇后') > 0 & (not handsaw):
+                    print('腥紅皇后使利維坦獲得手鋸效果')
+                    time.sleep(1)
+                    handsaw = True
+                    self.computer.blood_queen -= 1
+                #利維坦的行動判斷
+                if len(self.computer.bullet_pattern) != len(remain_bullet):
+                    raise Exception('子彈數量不符')
+                if len(self.computer.item) > 2 :
+                    if try_count >= 5:
+                        action = random.randint(1,2)
+                        if self.computer.bullet_pattern[0] == 'live':
+                            action = 1
+                        elif self.computer.bullet_pattern[0] == 'blank':
+                            action = 2
+                    else:
+                        action = 3
+                elif ('朦朧國王' in self.computer.item or '狂暴國王' in self.computer.item or '狡詐國王' in self.computer.item or '貪婪國王' in self.computer.item):
+                    action = 3
+                elif self.computer.bullet_pattern[0] == 'live':
+                    action = 1
+                elif self.computer.bullet_pattern[0] == 'blank':
+                    action = 2
+                elif len(self.computer.item) == 0:
+                    action = random.randint(1,2)
+                else:
+                    action = random.randint(1,3)
+                if (live_bullet > blank) & (action == 2):
+                    action = 1
+                if handsaw & (action == 2):
+                    action = 1
+                #利維坦手銬效果
+                if gun_lock and (action == 2):
+                    action = 1
+                
+                if (self.computer.bullet_pattern[0] == 'live') & ('腎上腺素' in self.computer.item) and not handsaw:  
+                    print('利維坦使用了腎上腺素，眼神變得狂暴')
+                    self.computer.item.remove('腎上腺素')
+                    handsaw = True
+                    continue
+                if '未知藍圖' in self.computer.item:
+                    #使用未知藍圖得到3個物品
+                    print('利維坦撕碎未知藍圖，接著憑空變出了三樣物品')
+                    self.give_Leviathan_item(3,self.computer)
+                    self.computer.item.remove('未知藍圖')
+                    continue
+                    
+                #利維坦的行動選項和玩家相同
+                if action==1:
+                    try_count = 0
+                    if remain_bullet[0]&handsaw&killer_queen:
+                        self.player.hp -= 10
+                        print('利維坦使用漆黑皇后射中了你,造成十點傷害')
+                        if self.player.blood_queen > 0:
+                            print('腥紅皇后使你免疫額外傷害')
+                            self.player.hp += 5
+                            self.player.blood_queen -= 1
+                        handsaw = False
+                        killer_queen = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]&killer_queen:
+                        self.player.hp -= 5
+                        print('利維坦使用漆黑皇后射中了你,造成五點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                        killer_queen = False
+                    elif remain_bullet[0]&handsaw:
+                        self.player.hp -= 2
+                        print('利維坦射中了你,造成兩點傷害')
+                        if self.player.blood_queen > 0:
+                            print('腥紅皇后使你免疫額外傷害')
+                            self.player.hp += 1
+                            self.player.blood_queen -= 1
+                        handsaw = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]:
+                        self.player.hp -= 1
+                        print('利維坦射中了你,造成一點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    else:
+                        print('利維坦的子彈打空了')
+                        blank -= 1
+                        self.computer.pop_bullet_pattern()
+                        handsaw = False
+                    remain_bullet.pop(0)
+                    handsaw = False
+                elif action==2:
+                    try_count = 0
+                    if remain_bullet[0] and (self.computer.fog > 0):
+                        print('朦朧國王使利維坦射偏了')
+                        self.computer.fog -= 1
+                        handsaw = False
+                        killer_queen = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]&handsaw&killer_queen:
+                        self.computer.hp -= 10
+                        print('利維坦使用漆黑皇后射中了自己,造成十點傷害')
+                        if self.computer.blood_queen > 0:
+                            print('腥紅皇后使你免疫額外傷害')
+                            self.computer.hp += 5
+                            self.computer.blood_queen -= 1
+                        else:
+                            print('你逃過了一截')
+                        handsaw = False
+                        killer_queen = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]&killer_queen:
+                        self.computer.hp -= 5
+                        print('利維坦使用漆黑皇后射中了自己,造成五點傷害')
+                        print('你逃過了一截')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                        killer_queen = False
+                    elif remain_bullet[0]&handsaw:
+                        self.computer.hp -= 2
+                        print('利維坦射中了自己,造成兩點傷害')
+                        if self.computer.blood_queen > 0:
+                            print('腥紅皇后使利維坦免疫額外傷害')
+                            self.computer.hp += 1
+                            self.computer.blood_queen -= 1
+                        else:
+                            print('利維坦是笨蛋嗎笑死')
+                        handsaw = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]:
+                        self.computer.hp -= 1
+                        print('利維坦射中了自己,造成一點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                        handsaw = False
+                    else:
+                        print('利維坦射向自己，子彈打空了,額外獲得一回合')
+                        remain_bullet.pop(0)
+                        self.computer.pop_bullet_pattern()
+                        blank -= 1
+                        handsaw = False
+                        continue
+                    remain_bullet.pop(0)
+                    handsaw = False
+                elif action==3:
+                    item = random.randint(0,len(self.computer.item)-1)
+                    if  ((not any(remain_bullet)) or all(remain_bullet)) and (self.computer.item[item] == '手機'):
+                        try_count +=1
+                        continue 
+                    if handsaw and (self.computer.item[item] == '腎上腺素'):
+                        try_count +=1
+                        continue
+                    if blank == 0 and (self.computer.item[item] == '大口徑子彈'):
+                        try_count +=1
+                        continue
+                    if (self.player.hp >= 5) and (len(remain_bullet) <= 2) and (self.computer.item[item] == '榴彈砲'):
+                        try_count +=1
+                        continue
+                    if (len(remain_bullet) == 1) and (self.computer.item[item] == '彈藥包'):
+                        try_count +=1
+                        continue
+                    if (self.computer.bullet_pattern[0] == 'live') and (self.computer.item[item] == '香菸'):
+                        try_count +=1
+                        continue
+                    if gun_lock and (self.computer.item[item] == '轉換器') and (self.computer.bullet_pattern[0] == 'live'):
+                        try_count +=1
+                        continue
+                    if (self.computer.bullet_pattern[0] == 'live') and (self.computer.item[item] == '香菸'):
+                        try_count +=1
+                        continue
+                    if gun_lock and (self.computer.item[item] == '手銬'):
+                        try_count +=1
+                        continue
+                    try_count = 0
+                    if self.computer.item[item] == '手鋸':
+                        print('利維坦拿手鋸砍向你,造成了一點傷害')
+                        time.sleep(0.5)
+                        self.player.hp -= 1
+                        print('利維坦:鋸子這種東西，拿來砍人不是挺好嗎?')
+                    elif self.computer.item[item] == '啤酒':
+                        self.computer.hp += 1
+                        print('利維坦使用了啤酒,回復了一點血量')
+                        time.sleep(0.5)
+                        if random.randint(0,1):
+                            print('利維坦: 嗝~')
+                        else:
+                            print('利維坦: 其實我不太喜歡喝酒就是了')
+                    elif self.computer.item[item] == '手機':
+                        print('利維坦使用了手機，改變了未來')
+                        random.shuffle(remain_bullet)
+                        self.computer.reset_bullet_pattern(live_bullet+blank)
+                        self.computer.set_bullet_pattern(0,'live' if remain_bullet[0] else 'blank')
+                        self.computer.set_bullet_pattern(1,'live' if remain_bullet[1] else 'blank')
+                    elif self.computer.item[item] == '轉換器':
+                        print('利維坦使用了轉換器,反轉了所有子彈')
+                        for i in range(len(remain_bullet)):
+                            remain_bullet[i] = not remain_bullet[i] 
+                            if remain_bullet[i]:
+                                live_bullet += 1
+                                blank -= 1
+                            else:
+                                live_bullet -= 1
+                                blank += 1
+                            if self.computer.bullet_pattern[i] == 'live':
+                                self.computer.set_bullet_pattern(i,'blank')
+                            elif self.computer.bullet_pattern[i] == 'blank':
+                                self.computer.set_bullet_pattern(i,'live')
+                    elif self.computer.item[item] == '過期藥物':
+                        print('利維坦吸了一些過期藥物，high了起來')
+                        self.computer.fog += 1
+                        time.sleep(0.5)
+                        print('利維坦:這才是這貨真正的用法')
+                    elif self.computer.item[item] == '放大鏡':
+                        print('利維坦使用了放大鏡,身前的空間被扭曲了')
+                        self.computer.max_item += 1
+                        for i in range(3):
+                            if random.randint(0,1):
+                                remain_bullet.append(True)
+                                live_bullet += 1
+                            else:
+                                remain_bullet.append(False)
+                                blank += 1
+                        self.computer.bullet_pattern.append('unknown')
+                        self.computer.bullet_pattern.append('unknown')
+                        self.computer.bullet_pattern.append('unknown')
+                    elif self.computer.item[item] == '香菸':
+                        if remain_bullet[0]:
+                            print('利維坦抽了根菸,退掉一發實彈')
+                            live_bullet -= 1
+                            remain_bullet.pop(0)
+                            self.computer.pop_bullet_pattern()
+                        else:
+                            print('利維坦把香菸塞進槍裡,空包彈被換成了實彈')
+                            remain_bullet[0] = True
+                            live_bullet += 1
+                            blank -= 1
+                        if len(remain_bullet) == 0:
+                            print('子彈打完了')
+                            print('進入下一局')
+                            return
+                    elif self.computer.item[item] == '手銬':
+                        print('利維坦用手銬改造了槍,這局無法再射向自己')
+                        gun_lock = True
+                    elif self.computer.item[item] == '朦朧國王':
+                        print('利維坦使用了***朦朧國王***，每回合額外免疫一次傷害')
+                        #fog_king為上限，fog為當前免疫次數
+                        self.computer.fog_king += 1
+                        self.computer.fog += 1
+                    elif self.computer.item[item] == '狂暴國王':
+                        print('利維坦使用了***狂暴國王***，下5發子彈造成兩倍傷害')
+                        self.computer.rage_king += 5
+                    elif self.computer.item[item] == '狡詐國王':
+                        print('利維坦使用了***狡詐國王***，能夠預知部分未來')
+                        self.computer.trick_king += 3
+                    elif self.computer.item[item] == '貪婪國王':
+                        print('利維坦使用了***貪婪國王***，偷走你的道具')
+                        #偷走玩家所有非皇后道具，留下皇后道具
+                        temp_item = []
+                        for i in range(len(self.player.item)):
+                            if self.player.item[i] != '漆黑皇后' and self.player.item[i] != '神聖皇后' and self.player.item[i] != '蔚藍皇后' and self.player.item[i] != '腥紅皇后':
+                                self.computer.item.append(self.player.item[i])
+                            else:
+                                temp_item.append(self.player.item[i])
+                        self.player.item = temp_item                         
+                        self.computer.item.remove('貪婪國王')
+                        continue
+                    elif self.computer.item[item] == '未知藍圖':
+                        print('利維坦撕碎未知藍圖，接著憑空變出了三樣物品')
+                        self.give_Leviathan_item(3,self.computer)
+                        
+                    elif self.computer.item[item] == '禁藥':
+                        print('利維坦嗑了禁藥，身影變得模糊')
+                        self.player.dohandcuff()
+                        handsaw = True
+                        
+                    elif self.computer.item[item] == '大口徑子彈':
+                        print('利維坦使用了大口徑子彈,所有空包彈被換成了實彈')
+                        for i in range(len(remain_bullet)):
+                            if remain_bullet[i] == False:
+                                remain_bullet[i] = True
+                                live_bullet += 1
+                                blank -= 1
+                    elif self.computer.item[item] == '榴彈砲':
+                        print('利維坦使用榴彈砲強制射出所有子彈,造成了',live_bullet+blank,'點傷害')
+                        self.player.hp -= live_bullet+blank
+                        time.sleep(0.5)
+                        print('利維坦:呼呼呼，管你實彈空包彈，射出去之後都是好子彈')
+                        time.sleep(1)
+                        print('子彈打完了')
+                        print('進入下一局')
+                        return
+                    elif self.computer.item[item] == '彈藥包':
+                        damage = 0
+                        for i in range(len(remain_bullet)-1):
+                            if remain_bullet.pop(i):
+                                live_bullet -= 1
+                                self.computer.hp += 1
+                                self.computer.pop_bullet_pattern()
+                            else:
+                                damage += 1
+                                self.computer.pop_bullet_pattern()
+                                blank -= 1
+                        if handsaw:
+                            damage *= 2
+                            handsaw = False 
+                        self.player.hp -= damage
+                        print('利維坦用彈藥包清空大部分子彈，回復',live_bullet,'點血量，並對你造成',damage,'點傷害')
+                        
+                    elif self.computer.item[item] == '腎上腺素':    
+                        print('利維坦使用了腎上腺素，眼神變得狂暴')
+                        handsaw = True
+                    self.computer.item.pop(item)
+                    continue
+                if self.player.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你死了')
+                    time.sleep(2)
+                    return
+                if self.computer.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你贏了')
+                    time.sleep(2)
+                    return
+                if self.player.handcuff:
+                    print('利維坦的速度太快了，你無法行動')
+                    self.player.unhandcuff()
+                    try_count = 0
+                    continue
+                if len(remain_bullet) == 0:
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                if self.computer.item_queen > 0:
+                    print('蔚藍皇后使利維坦獲得隨機物品')
+                    time.sleep(1)
+                for i in range(self.computer.item_queen):
+                    self.give_participant_item(1,self.computer)
+                break
             
             
 
@@ -1667,6 +2827,7 @@ while True:
     risk = 1
     first_move = '玩家'
     money = 0
+    in_challenge_mode = False
 
     print('=====================================    BuckShot    =====================================')
     print('你的名字是',main_player.name,'你的金錢是',main_player.money,'你的道具欄位是',main_player.max_item,'你的額外血量是',main_player.extra_hp)
@@ -1774,6 +2935,8 @@ while True:
     if risk_input == '1':
         risk *= 7
         first_move = '莊家'
+    #試煉模式(暫定)
+    in_challenge_mode = bool(int(input('是否進入試煉模式? : 1.是 0.否')))
     round = 0
     player1 = player(5,main_player.item,money)
     computer1 = computer(5,[])
@@ -1783,7 +2946,7 @@ while True:
     games[round].player_bonus()
     #計算勝場數
     win_count = 0
-    while True:
+    while in_challenge_mode == False:
         live_bullet = random.randint(1,4)
         blank = random.randint(1,4)
         item_number = random.randint(2,5)
@@ -1828,6 +2991,7 @@ while True:
                 player1.money *= 2
                 print('你獲得了',player1.money,'元')
                 time.sleep(2)
+                print('你連勝了',win_count,'場')
                 print('加倍或放棄?')
                 print('1.加倍 2.放棄')
                 action = input()
@@ -1837,6 +3001,7 @@ while True:
                     computer1 = computer(5,[])
                     hp=random.randint(2,6)
                     games[round] = game(player1,computer1,hp,risk)
+                    games[round].player_bonus()
                     for i in range(int(round/3)):
                         games[round].computer_bonus(i)
                     continue
@@ -1892,6 +3057,77 @@ while True:
                     input('按下Enter離開')
                     main_player.earn_money(int(player1.money*n))
                     main_player.save_item(player1.item)
+            break
+    if in_challenge_mode == True:
+        challenger = '利維坦'
+        round = 1
+        player1 = player(5,main_player.item,money)
+        computer1 = computer(5,[])
+        hp=random.randint(2,6)
+        challenge_games={}
+        challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger)
+        challenge_games[round].player_bonus()
+    while in_challenge_mode == True:
+        if challenger == '莉莉絲':
+            #幽閉皇后+高風險
+            risk = 10
+            max_round = 5
+            live_bullet = random.randint(1,4)
+            blank = random.randint(1,4)
+            item_number = random.randint(2,5)
+            challenge_games[round].set_first_move('玩家')
+            pass
+        elif challenger == '利維坦':
+            #莊家先手+殺手國王
+            risk = 21
+            max_round = 5
+            live_bullet = random.randint(1,4)
+            blank = random.randint(1,4)
+            item_number = random.randint(3,5)
+            challenge_games[round].set_first_move('莊家')
+            challenge_games[round].one_round_Leviathan(live_bullet,blank,item_number)
+        elif challenger == '薩邁爾':
+            risk = 1
+            max_round = 3
+            if round == 1:
+                live_bullet = 2
+                blank = 2
+            elif round == 2:
+                live_bullet = 4
+                blank = 4
+            else:
+                live_bullet = 1
+                blank = 1
+            item_number = 0
+            challenge_games[round].set_first_move('玩家')
+            pass
+        challenge_games[round].round += 1
+        if player1.hp <= 0:
+            if '人工心臟' in main_player.unlockable_item:
+                print('你的人工心臟啟動了，你獲得了一次復活機會')
+                main_player.unlockable_item.remove('人工心臟')
+                time.sleep(1)
+                print('手術花費你50%的財產')
+                main_player.revive()
+                time.sleep(1)
+                break
+            else:
+                print('你的靈魂被',challenger,'徵收了，未能帶走的',player1.money+main_player.money,'元被回收了')
+                main_player.die()
+                break
+        elif computer1.hp <= 0:
+            win_count += 1
+            if win_count < max_round:
+                print(challenger,': 這是你的第',win_count,'次勝利，可別讓我失望喔!')
+                round += 1
+                challenger_item_list = computer1.item
+                computer1 = computer(5,challenger_item_list)
+                hp=random.randint(2,6)
+                challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger)
+                challenge_games[round].player_bonus()
+                continue
+            else:
+                print(challenger,': 是我輸了，',main_player.name,'，我認可你的實力')
             break
     if main_player.die_state:
         print('遊戲結束')
