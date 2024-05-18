@@ -167,14 +167,14 @@ class computer(participant):
     def set_bullet_pattern(self,poition,value):
         self.bullet_pattern[poition] = value
         if value == 'live':
-            self.known_live += 1
+            self.known_live = self.bullet_pattern.count('live')
         else:
-            self.known_blank += 1
+            self.known_blank = self.bullet_pattern.count('blank')
     def pop_bullet_pattern(self):
         if self.bullet_pattern.pop(0) == 'live':
-            self.known_live -=1
+            self.known_live = self.bullet_pattern.count('live')
         else:
-            self.known_blank -=1
+            self.known_blank = self.bullet_pattern.count('blank')
 
 class player(participant):
     def __init__(self, hp, item, money = 0):
@@ -2804,6 +2804,199 @@ class challenge_mode(game):
                     self.give_participant_item(1,self.computer)
                 break
             
+    def one_round_Samael(self,live_bullet,blank,foresee):
+        self.player.blessing = 0
+        self.player.item = []
+        self.computer.item = []
+        time.sleep(3)
+        print('第',self.round,'局開始')
+        remain_bullet = []
+        self.computer.reset_bullet_pattern(live_bullet+blank)
+        print('這局有',live_bullet,'發實彈',blank,'發空包彈')
+        for i in range(live_bullet):
+            remain_bullet.append(True)
+        for i in range(blank):
+            remain_bullet.append(False)
+        random.shuffle(remain_bullet)
+        time.sleep(2)        
+        #薩邁爾預知效果
+        if foresee == 2:
+            self.computer.set_bullet_pattern(0,'live' if remain_bullet[0] else 'blank')
+            self.computer.set_bullet_pattern(1,'live' if remain_bullet[1] else 'blank')
+        elif foresee == 4:
+            while True:
+                rand = random.randint(0,7)
+                if self.computer.bullet_pattern[rand] == 'unknown':
+                    self.computer.set_bullet_pattern(rand,'live' if remain_bullet[rand] else 'blank')
+                    foresee -= 1
+                if foresee == 0:
+                    break
+        
+        while len(remain_bullet) > 0:
+            if self.player.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你死了')
+                time.sleep(2)
+                return
+            
+            time.sleep(1)
+            if self.first_move == '玩家':
+                print('==========================================')
+                print('你的回合')
+                print('玩家血量:',self.player.hp,'薩邁爾血量:',self.computer.hp)  
+                print('剩餘',live_bullet,'發實彈',blank,'發空包彈')
+                print('請選擇要做的事')
+                print('1.射向薩邁爾, 2.射向自己')
+                if len(self.computer.bullet_pattern) != len(remain_bullet):
+                    raise Exception('子彈數量不符')
+                while True:
+                    try:
+                        action = int(input())
+                    except ValueError:
+                        print('請輸入正確的數字')
+                        continue
+                    if type(action) != int:
+                        print('請輸入正確的數字')
+                        continue
+                    if action < 1 or action > 2:
+                        print('請輸入正確的數字')
+                        continue
+                    break
+            else:
+                action = 0
+                self.first_move = '玩家'
+            
+            if action==1:
+                if remain_bullet[0]:
+                    self.computer.hp -= 1
+                    print('你射中了薩邁爾,造成一點傷害')
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                else:
+                    print('你的子彈打空了')
+                    self.computer.pop_bullet_pattern()
+                    blank -= 1
+                remain_bullet.pop(0)
+            elif action==2:
+                if remain_bullet[0]:
+                    self.player.hp -= 1
+                    print('你射中了自己,造成一點傷害')
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                else:
+                    print('你的子彈打空了,額外獲得一回合')
+                    remain_bullet.pop(0)
+                    self.computer.pop_bullet_pattern()
+                    blank -= 1
+                    continue
+                remain_bullet.pop(0)
+                if self.computer.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你贏了')
+                    time.sleep(2)
+                    return
+            if self.computer.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你贏了')
+                time.sleep(2)
+                return
+            if self.player.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你死了')
+                time.sleep(2)
+                return
+            if len(remain_bullet) == 0:
+                print('子彈打完了')
+                print('進入下一局')
+                return
+            print('==========================================')
+            print('薩邁爾的回合')
+            print('==========================================')
+            time.sleep(1)
+            while True:
+                #薩邁爾進行剩餘子彈分析
+                if (live_bullet-self.computer.known_live) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'blank')
+                elif (blank-self.computer.known_blank) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'live')
+                if self.player.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你死了')
+                    time.sleep(2)
+                    return
+                time.sleep(2)
+                if len(remain_bullet) == 0:
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                #薩邁爾的行動判斷
+                if self.computer.bullet_pattern[0] == 'live':
+                    action = 1
+                elif self.computer.bullet_pattern[0] == 'blank':
+                    action = 2
+                else:
+                    print('薩邁爾的子彈狀態未知')
+                    remain_live = live_bullet - self.computer.known_live
+                    remain_blank = blank - self.computer.known_blank
+                    rand = random.randint(1,remain_live+remain_blank)
+                    if rand <= remain_live:
+                        action = 2
+                    else:
+                        action = 1
+                    
+                #薩邁爾的行動選項和玩家相同
+                if action==1:
+                    if remain_bullet[0]:
+                        self.player.hp -= 1
+                        print('薩邁爾射中了你,造成一點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    else:
+                        print('薩邁爾的子彈打空了')
+                        blank -= 1
+                        self.computer.pop_bullet_pattern()
+                    remain_bullet.pop(0)
+                elif action==2:
+                    if remain_bullet[0]:
+                        self.computer.hp -= 1
+                        print('薩邁爾射中了自己,造成一點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    else:
+                        print('薩邁爾射向自己，子彈打空了,額外獲得一回合')
+                        remain_bullet.pop(0)
+                        self.computer.pop_bullet_pattern()
+                        blank -= 1
+                        continue
+                    remain_bullet.pop(0)
+                
+                if self.player.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你死了')
+                    time.sleep(2)
+                    return
+                if self.computer.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你贏了')
+                    time.sleep(2)
+                    return
+                if len(remain_bullet) == 0:
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                break
+            
             
 
 #主程式
@@ -2943,9 +3136,10 @@ while True:
     player1 = player(5,main_player.item,money)
     computer1 = computer(5,[])
     hp=random.randint(2,6)
-    games={}
-    games[round] = game(player1,computer1,hp,risk)
-    games[round].player_bonus()
+    if not in_challenge_mode:
+        games={}
+        games[round] = game(player1,computer1,hp,risk)
+        games[round].player_bonus()
     #計算勝場數
     win_count = 0
     while in_challenge_mode == False:
@@ -3061,7 +3255,9 @@ while True:
                     main_player.save_item(player1.item)
             break
     if in_challenge_mode == True:
-        challenger = '利維坦'
+        action = input('試煉等級? 1.莉莉絲 2.利維坦 3.薩邁爾')
+        challeng_list = ['莉莉絲','利維坦','薩邁爾','惡魔公主']
+        challenger = challeng_list[int(action)-1]
         round = 1
         player1 = player(5,main_player.item,money)
         computer1 = computer(5,[])
@@ -3094,15 +3290,18 @@ while True:
             if round == 1:
                 live_bullet = 2
                 blank = 2
+                foresee = 2
             elif round == 2:
                 live_bullet = 4
                 blank = 4
+                foresee = 4
             else:
                 live_bullet = 1
                 blank = 1
+                foresee = 0
             item_number = 0
             challenge_games[round].set_first_move('玩家')
-            pass
+            challenge_games[round].one_round_Samael(live_bullet,blank,foresee)
         challenge_games[round].round += 1
         if player1.hp <= 0:
             if '人工心臟' in main_player.unlockable_item:
