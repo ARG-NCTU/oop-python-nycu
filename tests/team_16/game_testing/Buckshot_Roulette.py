@@ -443,6 +443,7 @@ class game:
                     self.computer.fog -= 1
                     handsaw = False
                     killer_queen = False
+                    live_bullet -= 1
                 elif remain_bullet[0] and handsaw and killer_queen:
                     self.computer.hp -= 10
                     print('你使用漆黑皇后射中了莊家,造成十點傷害')
@@ -534,7 +535,12 @@ class game:
                 print('請選擇要使用的物品')
                 for i in range(len(self.player.item)):
                     print(i+1,'.',self.player.item[i])
-                item = int(input())
+                try:
+                    item = int(input())
+                except ValueError:
+                    print('請輸入正確的數字')
+                    continue
+
                 if item > len(self.player.item):    
                     print('請輸入正確的數字')
                     continue
@@ -780,7 +786,18 @@ class game:
                     print('請選擇要偷取的物品:')
                     for i in range(len(self.computer.item)):
                         print(i+1,'.',self.computer.item[i])
-                    steal = int(input())
+                    try:
+                        steal = int(input())
+                    except ValueError:
+                        print('請輸入正確的數字')
+                        time.sleep(0.5)
+                        continue  
+                    if steal > len(self.computer.item):
+                        print('請輸入正確的數字')
+                        continue
+                    elif steal <= 0:
+                        print('請輸入正確的數字')
+                        continue
                     #馬上使用選擇的物品 
                     if self.computer.item[steal-1] == '手鋸':
                         handsaw = True
@@ -1218,6 +1235,9 @@ class game:
                     if (self.computer.item[item] == '手機') & ('unknown' not in self.computer.bullet_pattern):
                         try_count +=1
                         continue
+                    if (self.computer.item[item] == '腎上腺素') & (len(self.player.item) == 0):
+                        try_count +=1
+                        continue     
                     try_count = 0
                     if self.computer.item[item] == '手鋸':
                         handsaw = True
@@ -1337,6 +1357,7 @@ class game:
                         else:
                             if self.computer.hp == 1:
                                 print('莊家中毒身亡，你贏了')
+                                self.computer.hp = 0
                                 time.sleep(2)
                                 return
                             self.computer.hp = 1
@@ -1656,7 +1677,7 @@ while True:
     print('==========================================================================================')
     action = input('你站在吵雜的賭場中，輸入1進入設定,輸入2造訪商店,按下Enter前往賭桌  ')
     if action == '1':
-        pass
+        main_player.money += int(input('請輸入你的金錢:'))
     elif action == '2':
         print('詭異的商品靜靜的陳列著:')
         for i in range(len(lobby_NPC[0].shop)):
@@ -1664,14 +1685,14 @@ while True:
         print('8 離開商店')
         action = input(f'你有 {main_player.money} 元，購買商品?')
         if action == '1':
-            if main_player.money >= lobby_NPC[0].shop[0].price and lobby_NPC[0].shop[0].check_item(main_player):
+            if main_player.money >= lobby_NPC[0].shop[0].price and lobby_NPC[0].shop[0].check_required_item(main_player):
                 main_player.buy_item('人工心臟',lobby_NPC[0].shop[0].price)
                 lobby_NPC[0].player_buy_item(0)
                 print('你購買了人工心臟，你現在有',main_player.unlockable_item.count('人工心臟'),'次復活機會')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '2':
-            if main_player.money >= lobby_NPC[0].shop[1].price and lobby_NPC[0].shop[1].check_item(main_player):
+            if main_player.money >= lobby_NPC[0].shop[1].price and lobby_NPC[0].shop[1].check_required_item(main_player):
                 main_player.max_item += 1
                 main_player.money -= lobby_NPC[0].shop[1].price  
                 lobby_NPC[0].player_buy_item(1) 
@@ -1679,14 +1700,14 @@ while True:
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '3':
-            if main_player.money >= lobby_NPC[0].shop[2].price and lobby_NPC[0].shop[2].check_item(main_player): 
+            if main_player.money >= lobby_NPC[0].shop[2].price and lobby_NPC[0].shop[2].check_required_item(main_player): 
                 print('你解鎖了永久隨機皇后') 
                 main_player.buy_item('隨機皇后',lobby_NPC[0].shop[2].price)
                 lobby_NPC[0].player_buy_item(2)
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '4':
-            if main_player.money >= lobby_NPC[0].shop[3].price and lobby_NPC[0].shop[3].check_item(main_player):
+            if main_player.money >= lobby_NPC[0].shop[3].price and lobby_NPC[0].shop[3].check_required_item(main_player):
                 main_player.extra_hp += 1
                 main_player.money -= lobby_NPC[0].shop[3].price  
                 lobby_NPC[0].player_buy_item(3)
@@ -1694,21 +1715,21 @@ while True:
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '5':
-            if main_player.money >= lobby_NPC[0].shop[4].price and lobby_NPC[0].shop[4].check_item(main_player):
+            if main_player.money >= lobby_NPC[0].shop[4].price and lobby_NPC[0].shop[4].check_required_item(main_player):
                 main_player.buy_item('永久藍圖',lobby_NPC[0].shop[4].price)  
                 lobby_NPC[0].player_buy_item(4) 
                 print('你解鎖了永久未知藍圖')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '6':
-            if main_player.money >= lobby_NPC[0].shop[5].price and lobby_NPC[0].shop[5].check_item(main_player):
+            if main_player.money >= lobby_NPC[0].shop[5].price and lobby_NPC[0].shop[5].check_required_item(main_player):
                 main_player.buy_item('琉璃皇后',lobby_NPC[0].shop[5].price)
                 lobby_NPC[0].player_buy_item(5)
                 print('你解鎖了琉璃皇后')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '7':
-            if main_player.money >= lobby_NPC[0].shop[6].price and lobby_NPC[0].shop[6].check_item(main_player):
+            if main_player.money >= lobby_NPC[0].shop[6].price and lobby_NPC[0].shop[6].check_required_item(main_player):
                 main_player.buy_item('最終試煉',lobby_NPC[0].shop[6].price)
                 lobby_NPC[0].player_buy_item(6)
                 print('你解鎖了最終試煉')
@@ -1717,7 +1738,13 @@ while True:
         time.sleep(2)
         continue
     #下注階段
-    money = (int(input('請輸入你的開賭籌碼:')))
+    while True:
+        try:
+            money = (int(input('請輸入你的下注金額:')))
+            break
+        except ValueError:
+            print('請輸入正確的數字:')
+        
     if money > main_player.money:
         print('你的錢不夠')
         continue
@@ -1728,23 +1755,23 @@ while True:
     #risk % 2 == 0 高風險模式，倍率5倍
     print('高風險模式下，特殊道具可以直接出現，玩家獲得皇后和莊家獲得藍圖的機率翻倍')
     print('每回合有50%機率雙方血量大幅提升，獲勝時獎金5倍，須至少完成5局才有額外倍率')
-    risk_input = int(input('是否下注高風險模式? : 1.是 2.否'))
-    if risk_input == 1:
+    risk_input = input('是否下注高風險模式? : 1.是 2.否')
+    if risk_input == '1':
         risk *= 2
     #risk % 3 == 0 殺手國王模式，倍率10倍
     print('殺手國王模式下，莊家有機會獲得獨特的"國王"道具，獲勝時獎金10倍，須至少完成5局才有額外倍率') 
-    risk_input = int(input('是否下注殺手國王模式? : 1.是 2.否'))
-    if risk_input == 1:
+    risk_input = input('是否下注殺手國王模式? : 1.是 2.否')
+    if risk_input == '1':
         risk *= 3
     #risk % 5 == 0 幽閉皇后模式，倍率7倍
     print('幽閉皇后模式下，玩家無法獲得"皇后"道具，獲勝時獎金7倍，須至少完成5局才有額外倍率')
-    risk_input = int(input('是否下注幽閉皇后模式? : 1.是 2.否'))
-    if risk_input == 1:
+    risk_input = input('是否下注幽閉皇后模式? : 1.是 2.否')
+    if risk_input == '1':
         risk *= 5    
     #risk % 7 == 0 莊家先手模式，倍率50倍
     print('莊家先手模式下，莊家先行動，獲勝時獎金50倍，須至少完成5局才有額外倍率')
-    risk_input = int(input('是否下注莊家先手模式? : 1.是 2.否'))
-    if risk_input == 1:
+    risk_input = input('是否下注莊家先手模式? : 1.是 2.否')
+    if risk_input == '1':
         risk *= 7
         first_move = '莊家'
     round = 0
@@ -1784,8 +1811,8 @@ while True:
                 time.sleep(2)
                 print('加倍或放棄?')
                 print('1.加倍 2.放棄')
-                action = int(input())
-                if action == 1:
+                action = input()
+                if action == '1':
                     round += 1
                     print('你帶著',player1.money,'元繼續遊戲')
                     computer1 = computer(5,[])
@@ -1803,8 +1830,8 @@ while True:
                 time.sleep(2)
                 print('加倍或放棄?')
                 print('1.加倍 2.放棄')
-                action = int(input())
-                if action == 1:
+                action = input()
+                if action == '1':
                     round += 1
                     print('你帶著',player1.money,'元繼續遊戲')
                     computer1 = computer(5,[])
