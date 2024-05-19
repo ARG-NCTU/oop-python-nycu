@@ -20,6 +20,12 @@ class NPC:
     def __init__(self,name):
         self.name = name
         pass
+    def challenge_mode_dialogue(self,win_count):
+        #每場結束時說的話
+        pass
+    def challenge_mode_reward(self,player_lobby):
+        #試煉獎勵
+        pass
 
 class shop_item:
     def __init__(self,name,price,stock,description = ''):
@@ -86,7 +92,31 @@ class shopkeeper(NPC):
         self.shop.append(shop_item('解鎖最終試煉',9999999999,1,'通往地獄的大門為你敞開'))
     def player_buy_item(self,index):
         self.shop[index].raise_price()
-        
+    def challenge_mode_dialogue(self,win_count):
+        #每場結束時說的話
+        if win_count == 5:
+            print('利維坦: 好傢伙，是我輸了，你的實力我認可了')
+    def challenge_mode_reward(self,player_lobby):
+        if '扭曲印記' not in player_lobby.unlockable_item:
+            player_lobby.unlockable_item.append('扭曲印記')
+            time.sleep(2)
+            print('利維坦抓住你的手，你感覺皮膚開始灼燒')
+            time.sleep(2)
+            print('你的前臂被烙上了一隻纏繞的蛇')
+            time.sleep(2)
+            print('利維坦: 根據契約，現在你也能使用我的一部分能力了')
+            time.sleep(2)
+            print('利維坦: 不會用的話就去問莉莉斯，她會很樂意教你的')
+            time.sleep(2)
+            print('說完，利維坦點了根菸，起身走回了她的店內')
+            time.sleep(2)
+            print('你獲得了扭曲印記')
+            time.sleep(12
+            player_lobby.max_item += 2
+            print('你的物品持有上限增加2個')
+            time.sleep(1)
+
+
 
 class host(NPC):
     def __init__(self):
@@ -104,9 +134,9 @@ class player_in_lobby(NPC):
         self.die_state = False
         self.money = money
         #保存下來的物品欄(商店升級)
-        self.item = ['琉璃皇后','蔚藍皇后']
+        self.item = ['琉璃皇后']
         self.max_item = 0
-        self.extra_hp = 2
+        self.extra_hp = 0
         #商店物品
         self.unlockable_item = []
     def earn_money(self,amount):
@@ -185,10 +215,29 @@ class player(participant):
         self.queen_used = []
         self.blood_queen = 0
         self.blessing = 0
+        self.snake_mark_activate = False
+        self.have_snake_mark = False
+        self.have_blood_mark = False
+        self.have_death_mark = False
     def dohandcuff(self):
         self.handcuff = True
     def unhandcuff(self):
         self.handcuff = False
+    def enable_mark(self,blood,snake,death):
+        self.have_blood_mark = blood
+        self.have_snake_mark = snake
+        self.have_death_mark = death
+    def use_snake_mark(self):
+        self.have_snake_mark = False
+        self.snake_mark_activate = True
+        print('你使用了扭曲印記，本局道具的用途被改變了')
+        time.sleep(1)
+    def end_snake_mark(self):
+        if self.snake_mark_activate:
+            print('扭曲印記效果結束')
+            self.snake_mark_activate = False
+            self.have_snake_mark = True
+        
 
 class game:
     def __init__(self, player, computer, hp, risk):
@@ -399,6 +448,7 @@ class game:
             skip = False
             try_count = 0
             not_blue_print = True
+            gun_lock = False
 
             if self.player.hp <= 0:
                 time.sleep(2)
@@ -415,7 +465,10 @@ class game:
                 print('玩家血量:',self.player.hp,'莊家血量:',self.computer.hp)  
                 print('剩餘',live_bullet,'發實彈',blank,'發空包彈')
                 print('請選擇要做的事')
-                print('1.射向莊家, 2.射向自己, 3.使用物品, 4.顯示莊家物品欄')
+                if self.player.have_snake_mark:
+                    print('1.射向莊家, 2.射向自己, 3.使用物品, 4.顯示莊家物品欄, 5.使用扭曲印記')
+                else:
+                    print('1.射向莊家, 2.射向自己, 3.使用物品, 4.顯示莊家物品欄')
                 if len(self.computer.bullet_pattern) != len(remain_bullet):
                     raise Exception('子彈數量不符')
                 if self.player.blood_queen > 0 and (handsaw==False):
@@ -432,10 +485,16 @@ class game:
                     if type(action) != int:
                         print('請輸入正確的數字')
                         continue
-                    if action < 1 or action > 4:
+                    if action == 5 and self.player.have_snake_mark:
+                        self.player.use_snake_mark()
+                        temp_break == True
+                    elif action < 1 or action > 4:
                         print('請輸入正確的數字')
                         continue
                     break
+            if temp_break:
+                temp_break = False
+                continue
             else:
                 action = 0
                 self.first_move = '玩家'
@@ -487,6 +546,10 @@ class game:
                     handsaw = False
                 remain_bullet.pop(0)
                 handsaw = False
+            elif action==2 and gun_lock :
+                print('槍經過改造，這局無法再射向自己了')
+                time.sleep(1)
+                continue
             elif action==2:
                 if remain_bullet[0]&handsaw&killer_queen:
                     self.player.hp -= 10
@@ -535,6 +598,126 @@ class game:
                     continue
                 remain_bullet.pop(0)
                 handsaw = False
+
+            elif action==3 and self.player.snake_mark_activate: 
+                print('請選擇要使用的物品')
+                for i in range(len(self.player.item)):
+                    print(i+1,'.',self.player.item[i])
+                try:
+                    item = int(input())
+                except ValueError:
+                    print('請輸入正確的數字')
+                    continue
+                if item > len(self.player.item):    
+                    print('請輸入正確的數字')
+                    continue
+
+                if self.player.item[item-1] == '手鋸':
+                    print('你拿手鋸砍向莊家,造成了一點傷害')
+                    time.sleep(0.5)
+                    self.computer.hp -= 1
+                elif self.player.item[item-1] == '啤酒':
+                    self.player.hp += 1
+                    print('你使用了啤酒,回復了一點血量')
+                elif self.player.item[item-1] == '手機':
+                    print('你使用了手機，改變了未來')
+                    random.shuffle(remain_bullet)
+                    self.computer.reset_bullet_pattern(live_bullet+blank)
+                    print('第一發是', '實彈' if remain_bullet[0] else '空包彈')
+                    print('第二發是', '實彈' if remain_bullet[1] else '空包彈')
+                elif self.player.item[item-1] == '轉換器':
+                    print('你使用了轉換器,反轉了所有子彈')
+                    for i in range(len(remain_bullet)):
+                        remain_bullet[i] = not remain_bullet[i] 
+                        if remain_bullet[i]:
+                            live_bullet += 1
+                            blank -= 1
+                        else:
+                            live_bullet -= 1
+                            blank += 1
+                elif self.player.item[item-1] == '過期藥物':
+                    print('你吸了一些過期藥物，high了起來')
+                    self.computer.fog == 0
+                    print('你看破了莊家的朦朧國王效果')
+                elif self.player.item[item-1] == '放大鏡':
+                    print('你使用了放大鏡,身前的空間被扭曲了')
+                    self.player.max_item += 1
+                    for i in range(3):
+                        if random.randint(0,1):
+                            remain_bullet.append(True)
+                            live_bullet += 1
+                        else:
+                            remain_bullet.append(False)
+                            blank += 1
+                    self.computer.bullet_pattern.append('unknown')
+                    self.computer.bullet_pattern.append('unknown')
+                    self.computer.bullet_pattern.append('unknown')
+                elif self.player.item[item-1] == '香菸':
+                    if remain_bullet[0]:
+                        print('你抽了根菸,退掉一發實彈')
+                        live_bullet -= 1
+                        remain_bullet.pop(0)
+                        self.computer.pop_bullet_pattern()
+                    else:
+                        print('你把香菸塞進槍裡,空包彈被換成了實彈')
+                        remain_bullet[0] = True
+                        live_bullet += 1
+                        blank -= 1
+                    if len(remain_bullet) == 0:
+                        print('子彈打完了')
+                        print('進入下一局')
+                        return
+                elif self.player.item[item-1] == '手銬':
+                    if gun_lock:
+                        print('槍已經被改造過了')
+                        continue
+                    print('你用手銬改造了槍,這局無法再射向自己')
+                    gun_lock = True
+                elif self.player.item[item-1] == '未知藍圖':
+                    print('你撕碎未知藍圖，憑空變出了三樣物品')
+                    self.give_participant_item(3,self.player)
+                    
+                elif self.player.item[item-1] == '禁藥':
+                    print('你嗑了禁藥，身手變的快速，摸頭還要哭!')
+                    self.computer.dohandcuff()
+                    handsaw = True
+                    
+                elif self.player.item[item-1] == '大口徑子彈':
+                    print('你使用了大口徑子彈,所有空包彈被換成了實彈')
+                    for i in range(len(remain_bullet)):
+                        if remain_bullet[i] == False:
+                            remain_bullet[i] = True
+                            live_bullet += 1
+                            blank -= 1
+                elif self.player.item[item-1] == '榴彈砲':
+                    print('你使用榴彈砲強制射出所有子彈,造成了',live_bullet+blank,'點傷害')
+                    self.computer.hp -= live_bullet+blank
+                    time.sleep(1)
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                elif self.player.item[item-1] == '彈藥包':
+                    damage = 0
+                    for i in range(len(remain_bullet)-1):
+                        if remain_bullet.pop(0):
+                            live_bullet -= 1
+                            self.player.hp += 1
+                            self.computer.pop_bullet_pattern()
+                        else:
+                            damage += 1
+                            self.computer.pop_bullet_pattern()
+                            blank -= 1
+                    if handsaw:
+                        damage *= 2
+                        handsaw = False 
+                    self.computer.hp -= damage
+                    print('你用彈藥包清空大部分子彈，回復',live_bullet,'點血量，並對你造成',damage,'點傷害')
+                    
+                elif self.player.item[item-1] == '腎上腺素':    
+                    print('你使用了腎上腺素，眼神變得狂暴')
+                    handsaw = True
+                self.player.item.pop(item-1)
+                continue
             elif action==3:
                 print('請選擇要使用的物品')
                 for i in range(len(self.player.item)):
@@ -1120,7 +1303,8 @@ class game:
                     self.computer.item.remove('未知藍圖')
                     time.sleep(2)
                     continue
-                    
+                if gun_lock and action == 2:
+                    action = 1
                 #莊家的行動選項和玩家相同
                 if action==1:
                     try_count = 0
@@ -1690,9 +1874,10 @@ class challenge_mode(game):
         for i in range(number):
             if len(participant.item) < participant.max_item:
                 time.sleep(1)
-                self.item_list.extend(['未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包'])
+                self.item_list.extend(['禁藥','大口徑子彈','榴彈砲','彈藥包'])
                 item=self.item_list[random.randint(0,len(self.item_list)-1)]
-                self.item_list.remove(i in ['未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包'])
+                for i in ['禁藥','大口徑子彈','榴彈砲','彈藥包']:
+                    self.item_list.remove(i)
                 print(' 利維坦獲得了',item)
                 participant.item.append(item)
                 
@@ -2470,7 +2655,7 @@ class challenge_mode(game):
                 #利維坦的行動判斷
                 if len(self.computer.bullet_pattern) != len(remain_bullet):
                     raise Exception('子彈數量不符')
-                if len(self.computer.item) > 2 :
+                if len(self.computer.item) > 3 :
                     if try_count >= 5:
                         action = random.randint(1,2)
                         if self.computer.bullet_pattern[0] == 'live':
@@ -2757,7 +2942,7 @@ class challenge_mode(game):
                     elif self.computer.item[item] == '彈藥包':
                         damage = 0
                         for i in range(len(remain_bullet)-1):
-                            if remain_bullet.pop(i):
+                            if remain_bullet.pop(0):
                                 live_bullet -= 1
                                 self.computer.hp += 1
                                 self.computer.pop_bullet_pattern()
@@ -3002,9 +3187,10 @@ class challenge_mode(game):
 #主程式
 main_player = player_in_lobby(input('請輸入角色名字:'),0)
 lobby_NPC = []
+lobby_NPC.append(collection_manager())
 lobby_NPC.append(shopkeeper())
 lobby_NPC.append(host())
-lobby_NPC.append(collection_manager())
+
 
 '''print('下著雨的夜晚，你來到了那間賭場')
 time.sleep(3)
@@ -3134,6 +3320,7 @@ while True:
     in_challenge_mode = bool(int(input('是否進入試煉模式? : 1.是 0.否')))
     round = 0
     player1 = player(5,main_player.item,money)
+    player1.enable_mark('嗜血印記' in main_player.unlockable_item, '扭曲印記' in main_player.unlockable_item, '墮天使印記' in main_player.unlockable_item)
     computer1 = computer(5,[])
     hp=random.randint(2,6)
     if not in_challenge_mode:
@@ -3163,6 +3350,7 @@ while True:
                 main_player.die()
                 break
         elif computer1.hp <= 0:
+            player1.end_snake_mark()
             win_count += 1
             if player1.money == 0:
                 player1.money = random.randint(14000,52459)
@@ -3256,17 +3444,17 @@ while True:
             break
     if in_challenge_mode == True:
         action = input('試煉等級? 1.莉莉絲 2.利維坦 3.薩邁爾')
-        challeng_list = ['莉莉絲','利維坦','薩邁爾','惡魔公主']
-        challenger = challeng_list[int(action)-1]
-        round = 1
+        challenger = lobby_NPC[int(action)-1]
+        round = 0
+        win_count = 0
         player1 = player(5,main_player.item,money)
         computer1 = computer(5,[])
         hp=random.randint(2,6)
         challenge_games={}
-        challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger)
+        challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger.name)
         challenge_games[round].player_bonus()
     while in_challenge_mode == True:
-        if challenger == '莉莉絲':
+        if challenger.name == '莉莉絲':
             #幽閉皇后+高風險
             risk = 10
             max_round = 5
@@ -3275,7 +3463,7 @@ while True:
             item_number = random.randint(2,5)
             challenge_games[round].set_first_move('玩家')
             pass
-        elif challenger == '利維坦':
+        elif challenger.name == '利維坦':
             #莊家先手+殺手國王
             risk = 21
             max_round = 5
@@ -3284,7 +3472,7 @@ while True:
             item_number = random.randint(3,5)
             challenge_games[round].set_first_move('莊家')
             challenge_games[round].one_round_Leviathan(live_bullet,blank,item_number)
-        elif challenger == '薩邁爾':
+        elif challenger.name == '薩邁爾':
             risk = 1
             max_round = 3
             if round == 1:
@@ -3313,22 +3501,27 @@ while True:
                 time.sleep(1)
                 break
             else:
-                print('你的靈魂被',challenger,'徵收了，未能帶走的',player1.money+main_player.money,'元被回收了')
+                print('你的靈魂被',challenger.name,'徵收了，未能帶走的',player1.money+main_player.money,'元被回收了')
                 main_player.die()
                 break
         elif computer1.hp <= 0:
             win_count += 1
+            player1.end_snake_mark()
             if win_count < max_round:
-                print(challenger,': 這是你的第',win_count,'次勝利，可別讓我失望喔!')
+                challenger.challenge_mode_dialogue(win_count)
                 round += 1
                 challenger_item_list = computer1.item
                 computer1 = computer(5,challenger_item_list)
                 hp=random.randint(2,6)
-                challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger)
+                challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger.name)
                 challenge_games[round].player_bonus()
                 continue
             else:
-                print(challenger,': 是我輸了，',main_player.name,'，我認可你的實力')
+                challenger.challenge_mode_dialogue(win_count)
+                time.sleep(1)
+                print('你戰勝了',challenger.name,'通過了試煉')
+                challenger.challenge_mode_reward(main_player)
+                input('按下Enter離開')
             break
     if main_player.die_state:
         print('遊戲結束')
