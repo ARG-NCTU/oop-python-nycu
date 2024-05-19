@@ -30,6 +30,21 @@ class NPC:
         #正常時說的話
         pass
 
+class all_item:
+    def __init__(self,name,description):
+        self.name_hide = name
+        self.name = '你尚未解鎖這個道具'
+        self.description_hide = description
+        self.description = '???'
+        self.unlock = False
+    def unlock_item(self):
+        if self.unlock == False:
+            self.unlock = True
+            self.name = self.name_hide
+            self.description = self.description_hide
+            print('圖鑑解鎖了',self.name_hide)
+            time.sleep(0.7)
+
 class shop_item:
     def __init__(self,name,price,stock,raise_multiply,description = ''):
         self.name = name
@@ -146,7 +161,154 @@ class host(NPC):
 class collection_manager(NPC):
     def __init__(self):
         NPC.__init__(self,'莉莉斯')
-        pass
+        self.normal_item=[]
+        self.special_item=[]
+        self.queen_king_item=[]
+        self.mark_item=[]
+        self.snake_item=[]
+        
+        self.normal_item.append(all_item('放大鏡','你可以查看現在這發子彈是實彈或空包彈'))
+        self.normal_item.append(all_item('香菸','緩解壓力，回復一點血量'))
+        self.normal_item.append(all_item('手鋸','鋸下散彈槍前端，下一發子彈傷害加倍'))
+        self.normal_item.append(all_item('啤酒','退出並查看當前這發子彈'))
+        self.normal_item.append(all_item('手銬','把莊家銬起來，下一回合莊家無法行動'))
+        self.normal_item.append(all_item('手機','預知未來某一發子彈是實彈或空包彈'))
+        self.normal_item.append(all_item('轉換器','將實彈轉換成空包彈，空包彈轉換成實彈'))
+        self.normal_item.append(all_item('過期藥物','50%機率回復2點血量，50%機率損失1點血量'))
+        self.normal_item.append(all_item('腎上腺素','竊取莊家一個道具，注意某些道具是無法竊取的'))
+        self.special_item.append(all_item('未知藍圖','你可以用來合成一個特殊道具'))
+        self.special_item.append(all_item('禁藥','70%機率血量大幅提升，30%機率中毒\n    由3個過期藥物合成'))
+        self.special_item.append(all_item('大口徑子彈','當前子彈換成大口徑子彈並直接射出，造成3點傷害，注意這會結束你的回合\n    由2個手鉅和1個放大鏡合成'))  
+        self.special_item.append(all_item('榴彈砲','使用榴彈砲攻擊，若為實彈則造成自身當前血量的傷害，注意這會結束你的回合並使你剩下1點血量\n    由1個大口徑子彈、1個腎上腺素和1個轉換器合成'))
+        self.special_item.append(all_item('彈藥包','直接射出所有子彈並重新裝填八顆子彈\n    由2個啤酒和1個香菸合成'))
+        self.special_item.append(all_item('擴增背包','背包空間+2\n    由滿背包任意的物品合成'))
+        self.queen_king_item.append(all_item('琉璃皇后','獲得琉璃的祝福，退出所有子彈並重新裝填一發實彈\n接下來每次換彈都會回復1點血量，並且根據第一發子彈獲得不同增益效果'))
+        self.queen_king_item.append(all_item('漆黑皇后','將子彈重新裝填為1發5點傷害的實彈和1發空包彈，同時清空雙方物品欄'))
+        self.queen_king_item.append(all_item('神聖皇后','回復2點血量，獲得3個隨機物品，增加2格背包空間'))
+        self.queen_king_item.append(all_item('蔚藍皇后','每次輪到莊家的回合時，獲得1個隨機物品'))
+        self.queen_king_item.append(all_item('腥紅皇后','每回合獲得手鉅效果並免疫莊家的手鉅雙倍傷害效果，最多觸發5次'))
+        self.queen_king_item.append(all_item('朦朧國王','免疫每局第一次傷害'))
+        self.queen_king_item.append(all_item('狂暴國王','接下來5次傷害翻倍'))
+        self.queen_king_item.append(all_item('狡詐國王','預知前三發子彈'))
+        self.queen_king_item.append(all_item('貪婪國王','偷走玩家所有非皇后物品'))
+        self.mark_item.append(all_item('嗜血印記','開槍造成1點傷害時，額外吸收莊家的1點血量'))
+        self.mark_item.append(all_item('扭曲印記','每局可使用一次，使用後改變道具的本質(詳見下一頁)，直到本局結束'))
+        self.mark_item.append(all_item('墮天使印記','未知'))
+        self.snake_item.append(all_item('放大鏡','獲得1格背包空間，額外裝填3發子彈'))
+        self.snake_item.append(all_item('香菸','使當前空包彈變為實彈，若為實彈退彈'))
+        self.snake_item.append(all_item('手鋸','用手鉅攻擊莊家，造成1點傷害，無視朦朧國王效果'))
+        self.snake_item.append(all_item('啤酒','回復1點血量'))
+        self.snake_item.append(all_item('手銬','改造散彈槍，本局雙方都無法再射向自己'))
+        self.snake_item.append(all_item('手機','改變所有剩餘子彈的順序，預知前兩發子彈'))
+        self.snake_item.append(all_item('轉換器','將所有實彈轉換成空包彈，所有空包彈轉換成實彈'))
+        self.snake_item.append(all_item('過期藥物','看破本局莊家的朦朧國王效果'))
+        self.snake_item.append(all_item('腎上腺素','下一次攻擊傷害2倍'))
+        self.snake_item.append(all_item('未知藍圖','獲得3個隨機道具'))
+        self.snake_item.append(all_item('禁藥','吸到high起來，額外獲得一回合'))
+        self.snake_item.append(all_item('大口徑子彈','當所有空包彈換成實彈'))  
+        self.snake_item.append(all_item('榴彈砲','把所有子彈當成實彈射出'))
+        self.snake_item.append(all_item('彈藥包','退到剩一發子彈，每退1發實彈回復1點血量，每退1發空包彈造成1點傷害'))
+    
+        self.item_list = []
+        self.item_list.append(self.normal_item)
+        self.item_list.append(self.special_item)
+        self.item_list.append(self.queen_king_item)
+        self.item_list.append(self.mark_item)
+        self.item_list.append(self.snake_item)
+
+    def unlock_normal_item(self):
+        for item in self.normal_item:
+            item.unlock_item()
+    def unlock_special_item(self):
+        for item in self.special_item:
+            item.unlock_item()
+    def unlock_queen_king_item(self,target):
+        for item in self.queen_king_item:
+            if item.name_hide == target:
+                item.unlock_item()
+    def unlock_mark_item(self,target):
+        for item in self.mark_item:
+            if item.name_hide == target:
+                item.unlock_item()
+    def unlock_snake_item(self):
+        for item in self.snake_item:
+            item.unlock_item()
+    def show_normal_item(self):
+        print('普通道具:')
+        #顯示物品名稱和敘述
+        for i in range(len(self.normal_item)):
+            print(i+1,self.normal_item[i].name)
+            print('    ',self.normal_item[i].description)
+        input('按下Enter回到上一頁')
+    def show_special_item(self):
+        print('特殊道具:')
+        #顯示物品名稱和敘述
+        for i in range(len(self.special_item)):
+            print(i+1,self.special_item[i].name)
+            print('    ',self.special_item[i].description)
+        input('按下Enter回到上一頁')
+    def show_queen_king_item(self):
+        print('皇后&國王道具:')
+        #顯示物品名稱和敘述
+        for i in range(len(self.queen_king_item)):
+            print(i+1,self.queen_king_item[i].name)
+            print('    ',self.queen_king_item[i].description)
+        input('按下Enter回到上一頁')
+    def show_mark_item(self):
+        print('惡魔印記:')
+        #顯示物品名稱和敘述
+        for i in range(len(self.mark_item)):
+            print(i+1,self.mark_item[i].name)
+            print('    ',self.mark_item[i].description)
+        input('按下Enter回到上一頁')
+    def show_snake_item(self):
+        print('扭曲印記啟用時的道具:')
+        #顯示物品名稱和敘述
+        for i in range(len(self.snake_item)):
+            print(i+1,self.snake_item[i].name)
+            print('    ',self.snake_item[i].description)
+        input('按下Enter回到上一頁')
+    def show_list(self):
+        print ('=================================================================')
+        print('道具列表:')
+        print('1.普通道具')
+        print('2.特殊道具')
+        print('3.皇后&國王道具')
+        print('4.惡魔印記')
+        if '扭曲印記' in main_player.unlockable_item:
+            print('5.扭曲印記啟用時的道具')
+        print('按下Enter離開')
+        while True:
+            try:
+                choice = input('請選擇:')
+            except ValueError:
+                print('請重新輸入')
+                continue
+            break
+        if choice == '1':
+            self.show_normal_item()
+            self.show_list()
+        elif choice == '2':
+            self.show_special_item()
+            self.show_list()
+        elif choice == '3':
+            self.show_queen_king_item()
+            self.show_list()
+        elif choice == '4':
+            self.show_mark_item()
+            self.show_list()
+        elif choice == '5' and '扭曲印記' in main_player.unlockable_item:
+            self.show_snake_item()
+            self.show_list()
+        else:
+            return
+    
+
+    
+    def say_normal_dialogue(self):
+        print('莉莉斯: 初次見面，我是莉莉斯，這裡是收藏室，你可以在這裡查看以解鎖的道具')
+
+
     def challenge_mode_dialogue(self,win_count):
         #每場結束時說的話
         if win_count == 5:
@@ -1555,18 +1717,22 @@ class game:
                         print('莊家使用了手銬,你下回合無法行動')
                         self.player.dohandcuff()
                     elif self.computer.item[item] == '朦朧國王':
+                        self.player.queen_used.append('朦朧國王')
                         print('莊家使用了***朦朧國王***，每回合額外免疫一次傷害')
                         #fog_king為上限，fog為當前免疫次數
                         self.computer.fog_king += 1
                         self.computer.fog += 1
                     elif self.computer.item[item] == '狂暴國王':
+                        self.player.queen_used.append('狂暴國王')   
                         print('莊家使用了***狂暴國王***，下5發子彈造成兩倍傷害')
                         self.computer.rage_king += 5
                     elif self.computer.item[item] == '狡詐國王':
+                        self.player.queen_used.append('狡詐國王')
                         print('莊家使用了***狡詐國王***，能夠預知部分未來')
                         self.computer.trick_king += 3
                     elif self.computer.item[item] == '貪婪國王':
                         print('莊家使用了***貪婪國王***，偷走你的道具')
+                        self.player.queen_used.append('貪婪國王')
                         #偷走玩家所有非皇后道具，留下皇后道具
                         temp_item = []
                         for i in range(len(self.player.item)):
@@ -2979,17 +3145,21 @@ class challenge_mode(game):
                         gun_lock = True
                     elif self.computer.item[item] == '朦朧國王':
                         print('利維坦使用了***朦朧國王***，每回合額外免疫一次傷害')
+                        self.player.queen_used.append('朦朧國王')
                         #fog_king為上限，fog為當前免疫次數
                         self.computer.fog_king += 1
                         self.computer.fog += 1
                     elif self.computer.item[item] == '狂暴國王':
                         print('利維坦使用了***狂暴國王***，下5發子彈造成兩倍傷害')
+                        self.player.queen_used.append('狂暴國王')   
                         self.computer.rage_king += 5
                     elif self.computer.item[item] == '狡詐國王':
                         print('利維坦使用了***狡詐國王***，能夠預知部分未來')
+                        self.player.queen_used.append('狡詐國王')
                         self.computer.trick_king += 3
                     elif self.computer.item[item] == '貪婪國王':
                         print('利維坦使用了***貪婪國王***，偷走你的道具')
+                        self.player.queen_used.append('貪婪國王')
                         #偷走玩家所有非皇后道具，留下皇后道具
                         temp_item = []
                         for i in range(len(self.player.item)):
@@ -4235,17 +4405,21 @@ class challenge_mode(game):
                         self.player.dohandcuff()
                     elif self.computer.item[item] == '朦朧國王':
                         print('莉莉斯使用了***朦朧國王***，每回合額外免疫一次傷害')
+                        self.player.queen_used.append('朦朧國王')
                         #fog_king為上限，fog為當前免疫次數
                         self.computer.fog_king += 1
                         self.computer.fog += 1
                     elif self.computer.item[item] == '狂暴國王':
                         print('莉莉斯使用了***狂暴國王***，下5發子彈造成兩倍傷害')
+                        self.player_queen_used.append('狂暴國王')   
                         self.computer.rage_king += 5
                     elif self.computer.item[item] == '狡詐國王':
                         print('莉莉斯使用了***狡詐國王***，能夠預知部分未來')
+                        self.player.queen_used.append('狡詐國王')
                         self.computer.trick_king += 3
                     elif self.computer.item[item] == '貪婪國王':
                         print('莉莉斯使用了***貪婪國王***，偷走你的道具')
+                        self.player.queen_used.append('貪婪國王')
                         #偷走玩家所有非皇后道具，留下皇后道具
                         temp_item = []
                         for i in range(len(self.player.item)):
@@ -4607,9 +4781,10 @@ while True:
     if len(main_player.item) > 0:    
         main_player.show_item()
     print('==========================================================================================')
-    action = input('你站在吵雜的賭場中，輸入1進入設定,輸入2造訪商店,按下Enter前往賭桌  ')
+    action = input('你站在吵雜的賭場中，輸入1進入設定,輸入2造訪商店,輸入3前往圖鑑,按下Enter前往賭桌  ')
     if action == '1':
         main_player.money += int(input('請輸入你的金錢:'))
+        continue
     elif action == '2':
         print('你走進了陰暗的店內')
         time.sleep(1)
@@ -4672,6 +4847,15 @@ while True:
                 print('你的錢不夠或者連勝數不足')
         time.sleep(2)
         continue
+    elif action == '3':
+        print('你走向擺滿各種道具的展示櫃，一本圖鑑被放在最顯眼的位置')
+        time.sleep(1)
+        lobby_NPC[0].say_normal_dialogue()
+        time.sleep(1.5)
+        lobby_NPC[0].show_list()
+        time.sleep(1)
+        continue
+        
     #下注階段
     while True:
         try:
@@ -4764,6 +4948,12 @@ while True:
                     print('你帶著',player1.money,'元離開了賭桌')
                     main_player.earn_money(player1.money)
                     main_player.save_item(player1.item)
+                    input('按下Enter離開')
+                    for item in player1.queen_used:
+                        lobby_NPC[0].unlock_queen_king_item(item)
+                    lobby_NPC[0].unlock_normal_item()
+                    lobby_NPC[0].unlock_special_item()
+                    time.sleep(2)
                     break
             else:
                 player1.money *= 2
@@ -4833,6 +5023,11 @@ while True:
                     if (win_count >= 5):
                         print('你連勝了',win_count,'場')
                     input('按下Enter離開')
+                    for item in player1.queen_used:
+                        lobby_NPC[0].unlock_queen_king_item(item)
+                    lobby_NPC[0].unlock_normal_item()
+                    lobby_NPC[0].unlock_special_item()
+                    time.sleep(2)
                     main_player.earn_money(int(player1.money*n))
                     main_player.save_item(player1.item)
             break
@@ -4931,6 +5126,11 @@ while True:
                 print('你戰勝了',challenger.name,'通過了試煉')
                 challenger.challenge_mode_reward(main_player)
                 input('按下Enter離開')
+                for item in player1.queen_used:
+                    lobby_NPC[0].unlock_queen_king_item(item)
+                lobby_NPC[0].unlock_normal_item()
+                lobby_NPC[0].unlock_special_item()
+                time.sleep(2)
             break
     if main_player.die_state:
         print('遊戲結束')
