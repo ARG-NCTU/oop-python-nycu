@@ -26,6 +26,9 @@ class NPC:
     def challenge_mode_reward(self,player_lobby):
         #試煉獎勵
         pass
+    def say_normal_dialogue(self):
+        #正常時說的話
+        pass
 
 class shop_item:
     def __init__(self,name,price,stock,raise_multiply,description = ''):
@@ -89,14 +92,30 @@ class shopkeeper(NPC):
         self.shop.append(shop_item('永久隨機皇后',4000000,3,5,'開局時獲得隨機皇后道具'))
         self.shop.append(shop_item('永久額外血量',1000000,4,3,'開局時獲得額外血量'))
         self.shop.append(shop_item('永久未知藍圖',1000000,3,4.5,'開局時獲得未知藍圖道具'))
-        self.shop.append(shop_item('解鎖琉璃皇后',444444444,1,1,'象徵希望的靈魂將在賭局中出現'))
-        self.shop.append(shop_item('解鎖最終試煉',9999999999,1,1,'通往地獄的大門為你敞開'))
+        self.shop.append(shop_item('解鎖琉璃皇后',4444444444,1,1,'象徵希望的靈魂將在賭局中出現'))
+        self.shop.append(shop_item('解鎖惡魔試煉',99999999999,1,1,'通往地獄的大門為你敞開'))
+        self.normal_dialogue = ['利維坦: 小老弟買顆心臟吧，你死了可就沒人陪我聊天了',\
+                                '利維坦叼了根菸，悠閒地滑著手機',\
+                                '利維坦不在，店裡空無一人，商品靜靜的陳列著',\
+                                '利維坦把玩著手銬和槍械零件，似乎沒注意到你',\
+                                '另一名賭客和你擦身而過，口中念念有詞',\
+                                '利維坦: 你看起來有點疲憊，要不要來點刺激的? 說著，她晃了晃手中的神祕藥包',\
+                                '利維坦: 賭局中道具就是真理，沒有道具欄位怎麼贏，你說對吧?',\
+                                '利維坦: 這位客官，既然都來了，何不買張藍圖試試手氣?',\
+                                '利維坦: 你問琉璃皇后是什麼? 買下來不就知道了嗎?',\
+                                '利維坦: 如果你嫌命太長，要不要試試惡魔試煉? 前提是你要有錢就是了(笑']
+    
     def player_buy_item(self,index):
         self.shop[index].raise_price()
+
+    def say_normal_dialogue(self):
+        print(self.normal_dialogue[random.randint(0,len(self.normal_dialogue)-1)])
+
     def challenge_mode_dialogue(self,win_count):
         #每場結束時說的話
         if win_count == 5:
             print('利維坦: 好傢伙，是我輸了，你的實力我認可了')
+    
     def challenge_mode_reward(self,player_lobby):
         if '扭曲印記' not in player_lobby.unlockable_item:
             player_lobby.unlockable_item.append('扭曲印記')
@@ -160,7 +179,7 @@ class player_in_lobby(NPC):
         self.max_item = 0
         self.extra_hp = 0
         #商店物品
-        self.unlockable_item = ['五連勝標記','十連勝標記']
+        self.unlockable_item = ['五連勝標記','十連勝標記','嗜血印記']
     def earn_money(self,amount):
         self.money += amount
     def show_money(self):
@@ -561,6 +580,12 @@ class game:
                 elif remain_bullet[0]:
                     self.computer.hp -= 1
                     print('你射中了莊家,造成一點傷害')
+                    if self.player.have_blood_mark:
+                        time.sleep(1)
+                        print('嗜血印記使你吸收一點血量')
+                        self.player.hp += 1
+                        self.computer.hp -= 1
+                        time.sleep(1)
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
                 else:
@@ -4586,7 +4611,10 @@ while True:
     if action == '1':
         main_player.money += int(input('請輸入你的金錢:'))
     elif action == '2':
-        print('詭異的商品靜靜的陳列著:')
+        print('你走進了陰暗的店內')
+        time.sleep(1)
+        lobby_NPC[1].say_normal_dialogue()
+        time.sleep(1.5)
         for i in range(len(lobby_NPC[1].shop)):
             lobby_NPC[1].shop[i].show_item(i+1)
         print('8 離開商店')
