@@ -28,20 +28,21 @@ class NPC:
         pass
 
 class shop_item:
-    def __init__(self,name,price,stock,description = ''):
+    def __init__(self,name,price,stock,raise_multiply,description = ''):
         self.name = name
         self.price = price
         self.stock = stock
         self.description = description
         self.required_item = None
         self.raise_count = 0
+        self.raise_multiply = raise_multiply
         if self.stock == 3:
             self.set_required_item('五連勝標記')
         if self.stock == 1:
             self.set_required_item('二十連勝標記')
     def raise_price(self):
         self.raise_count += 1
-        self.price = int(self.price*2.5)
+        self.price = int(self.price*self.raise_multiply)
         self.stock -= 1
         if self.stock == 0:
             self.description = '已售完'
@@ -83,13 +84,13 @@ class shopkeeper(NPC):
     def __init__(self):
         NPC.__init__(self,'利維坦')
         self.shop=[]
-        self.shop.append(shop_item('人工心臟',5000000,5,'死亡時可以使用人工心臟復活，手術需消耗50%財產'))
-        self.shop.append(shop_item('道具欄位',1000000,10,'增加離開賭桌後可保存的道具數量'))
-        self.shop.append(shop_item('永久隨機皇后',4000000,3,'開局時獲得隨機皇后道具'))
-        self.shop.append(shop_item('永久額外血量',1000000,4,'開局時獲得額外血量'))
-        self.shop.append(shop_item('永久未知藍圖',1000000,3,'開局時獲得未知藍圖道具'))
-        self.shop.append(shop_item('解鎖琉璃皇后',444444444,1,'象徵希望的靈魂將在賭局中出現'))
-        self.shop.append(shop_item('解鎖最終試煉',9999999999,1,'通往地獄的大門為你敞開'))
+        self.shop.append(shop_item('人工心臟',5000000,10,2,'死亡時可以使用人工心臟復活，手術需消耗50%財產'))
+        self.shop.append(shop_item('道具欄位',1000000,10,2.5,'增加離開賭桌後可保存的道具數量'))
+        self.shop.append(shop_item('永久隨機皇后',4000000,3,5,'開局時獲得隨機皇后道具'))
+        self.shop.append(shop_item('永久額外血量',1000000,4,3,'開局時獲得額外血量'))
+        self.shop.append(shop_item('永久未知藍圖',1000000,3,4.5,'開局時獲得未知藍圖道具'))
+        self.shop.append(shop_item('解鎖琉璃皇后',444444444,1,1,'象徵希望的靈魂將在賭局中出現'))
+        self.shop.append(shop_item('解鎖最終試煉',9999999999,1,1,'通往地獄的大門為你敞開'))
     def player_buy_item(self,index):
         self.shop[index].raise_price()
     def challenge_mode_dialogue(self,win_count):
@@ -111,7 +112,7 @@ class shopkeeper(NPC):
             print('說完，利維坦點了根菸，起身走回了她的店內')
             time.sleep(2)
             print('你獲得了扭曲印記')
-            time.sleep(12
+            time.sleep(2)
             player_lobby.max_item += 2
             print('你的物品持有上限增加2個')
             time.sleep(1)
@@ -134,11 +135,11 @@ class player_in_lobby(NPC):
         self.die_state = False
         self.money = money
         #保存下來的物品欄(商店升級)
-        self.item = ['琉璃皇后']
+        self.item = []
         self.max_item = 0
         self.extra_hp = 0
         #商店物品
-        self.unlockable_item = []
+        self.unlockable_item = ['五連勝標記','十連勝標記']
     def earn_money(self,amount):
         self.money += amount
     def show_money(self):
@@ -372,15 +373,16 @@ class game:
             self.computer.item.pop(0)
             self.computer.item.append('未知藍圖')
 
-    def player_bonus(self):
-        for i in main_player.unlockable_item:
-            if i =='永久藍圖':
-                self.player.item.append('未知藍圖')
-            elif i == '隨機皇后':
-                if '琉璃皇后' in main_player.unlockable_item:
-                    self.player.item.append(self.queen[random.randint(0,4)])
-                else:
-                    self.player.item.append(self.queen[random.randint(0,3)])
+    def player_bonus(self,win_count):
+        if win_count ==0:
+            for i in main_player.unlockable_item:
+                if i =='永久藍圖':
+                    self.player.item.append('未知藍圖')
+                elif i == '隨機皇后':
+                    if '琉璃皇后' in main_player.unlockable_item:
+                        self.player.item.append(self.queen[random.randint(0,4)])
+                    else:
+                        self.player.item.append(self.queen[random.randint(0,3)])
         for i in range(main_player.extra_hp):
             self.player.hp += 1
             
@@ -449,6 +451,7 @@ class game:
             try_count = 0
             not_blue_print = True
             gun_lock = False
+            temp_break = False
 
             if self.player.hp <= 0:
                 time.sleep(2)
@@ -492,9 +495,9 @@ class game:
                         print('請輸入正確的數字')
                         continue
                     break
-            if temp_break:
-                temp_break = False
-                continue
+                if temp_break:
+                    temp_break = False
+                    continue
             else:
                 action = 0
                 self.first_move = '玩家'
@@ -1259,6 +1262,10 @@ class game:
                     action = random.randint(1,3)
                 if (live_bullet > blank) & (action == 2):
                     action = 1
+                if (self.computer.bullet_pattern[0] == 'live') and (action == 2):
+                    action = 1
+                elif (self.computer.bullet_pattern[0] == 'blank') and (action == 1):
+                    action = 2
                 
                 if (self.computer.bullet_pattern[0] == 'blank') & ('轉換器' in self.computer.item):
                     print('莊家使用了轉換器,現在這發子彈將反轉')
@@ -1802,7 +1809,7 @@ class game:
                             print('彈藥已重新裝填')
                             if self.player.blessing > 0:
                                 handsaw = self.blessing(remain_bullet,'莊家',handsaw)
-                            self.player.reset_bullet_pattern(live_bullet+blank)
+                            self.computer.reset_bullet_pattern(live_bullet+blank)
                         elif steal == '腎上腺素':
                             print('莊家試著偷取腎上腺素但失敗了')
                             self.player.item.append('腎上腺素')
@@ -1884,17 +1891,18 @@ class challenge_mode(game):
             else:
                 print('物品欄已滿')
 
-    def player_bonus(self):
-        for i in main_player.unlockable_item:
-            if i =='永久藍圖':
-                self.player.item.append('未知藍圖')
-            elif i == '隨機皇后':
-                if ('琉璃皇后' in main_player.unlockable_item) and (main_player.unlockable_item.count('隨機皇后') == 3) and '琉璃皇后' not in self.player.item:
-                    self.player.item.append('琉璃皇后')
-                elif ('琉璃皇后' in main_player.unlockable_item) and '琉璃皇后' not in self.player.item:
-                    self.player.item.append(self.queen[random.randint(0,4)])
-                else:
-                    self.player.item.append(self.queen[random.randint(0,3)])
+    def player_bonus(self,win_count):
+        if win_count == 0:
+            for i in main_player.unlockable_item:
+                if i =='永久藍圖':
+                    self.player.item.append('未知藍圖')
+                elif i == '隨機皇后':
+                    if ('琉璃皇后' in main_player.unlockable_item) and (main_player.unlockable_item.count('隨機皇后') == 3) and '琉璃皇后' not in self.player.item:
+                        self.player.item.append('琉璃皇后')
+                    elif ('琉璃皇后' in main_player.unlockable_item) and '琉璃皇后' not in self.player.item:
+                        self.player.item.append(self.queen[random.randint(0,4)])
+                    else:
+                        self.player.item.append(self.queen[random.randint(0,3)])
         for i in range(main_player.extra_hp):
             self.player.hp += 1
             
@@ -2674,6 +2682,10 @@ class challenge_mode(game):
                     action = random.randint(1,2)
                 else:
                     action = random.randint(1,3)
+                if (self.computer.bullet_pattern[0] == 'live') and (action == 2):
+                    action = 1
+                elif (self.computer.bullet_pattern[0] == 'blank') and (action == 1):
+                    action = 2
                 if (live_bullet > blank) & (action == 2):
                     action = 1
                 if handsaw & (action == 2):
@@ -3222,58 +3234,58 @@ while True:
         main_player.money += int(input('請輸入你的金錢:'))
     elif action == '2':
         print('詭異的商品靜靜的陳列著:')
-        for i in range(len(lobby_NPC[0].shop)):
-            lobby_NPC[0].shop[i].show_item(i+1)
+        for i in range(len(lobby_NPC[1].shop)):
+            lobby_NPC[1].shop[i].show_item(i+1)
         print('8 離開商店')
         action = input(f'你有 {main_player.money} 元，購買商品?')
         if action == '1':
-            if main_player.money >= lobby_NPC[0].shop[0].price and lobby_NPC[0].shop[0].check_required_item(main_player):
-                main_player.buy_item('人工心臟',lobby_NPC[0].shop[0].price)
-                lobby_NPC[0].player_buy_item(0)
+            if main_player.money >= lobby_NPC[1].shop[0].price and lobby_NPC[1].shop[0].check_required_item(main_player):
+                main_player.buy_item('人工心臟',lobby_NPC[1].shop[0].price)
+                lobby_NPC[1].player_buy_item(0)
                 print('你購買了人工心臟，你現在有',main_player.unlockable_item.count('人工心臟'),'次復活機會')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '2':
-            if main_player.money >= lobby_NPC[0].shop[1].price and lobby_NPC[0].shop[1].check_required_item(main_player):
+            if main_player.money >= lobby_NPC[1].shop[1].price and lobby_NPC[1].shop[1].check_required_item(main_player):
                 main_player.max_item += 1
-                main_player.money -= lobby_NPC[0].shop[1].price  
-                lobby_NPC[0].player_buy_item(1) 
+                main_player.money -= lobby_NPC[1].shop[1].price  
+                lobby_NPC[1].player_buy_item(1) 
                 print('你的道具欄位增加了，現在可以保存',main_player.max_item,'個道具')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '3':
-            if main_player.money >= lobby_NPC[0].shop[2].price and lobby_NPC[0].shop[2].check_required_item(main_player): 
+            if main_player.money >= lobby_NPC[1].shop[2].price and lobby_NPC[1].shop[2].check_required_item(main_player): 
                 print('你解鎖了永久隨機皇后') 
-                main_player.buy_item('隨機皇后',lobby_NPC[0].shop[2].price)
-                lobby_NPC[0].player_buy_item(2)
+                main_player.buy_item('隨機皇后',lobby_NPC[1].shop[2].price)
+                lobby_NPC[1].player_buy_item(2)
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '4':
-            if main_player.money >= lobby_NPC[0].shop[3].price and lobby_NPC[0].shop[3].check_required_item(main_player):
+            if main_player.money >= lobby_NPC[1].shop[3].price and lobby_NPC[1].shop[3].check_required_item(main_player):
                 main_player.extra_hp += 1
-                main_player.money -= lobby_NPC[0].shop[3].price  
-                lobby_NPC[0].player_buy_item(3)
+                main_player.money -= lobby_NPC[1].shop[3].price  
+                lobby_NPC[1].player_buy_item(3)
                 print('你的血量增加了，現在有',main_player.extra_hp,'點額外血量')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '5':
-            if main_player.money >= lobby_NPC[0].shop[4].price and lobby_NPC[0].shop[4].check_required_item(main_player):
-                main_player.buy_item('永久藍圖',lobby_NPC[0].shop[4].price)  
-                lobby_NPC[0].player_buy_item(4) 
+            if main_player.money >= lobby_NPC[1].shop[4].price and lobby_NPC[1].shop[4].check_required_item(main_player):
+                main_player.buy_item('永久藍圖',lobby_NPC[1].shop[4].price)  
+                lobby_NPC[1].player_buy_item(4) 
                 print('你解鎖了永久未知藍圖')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '6':
-            if main_player.money >= lobby_NPC[0].shop[5].price and lobby_NPC[0].shop[5].check_required_item(main_player):
-                main_player.buy_item('琉璃皇后',lobby_NPC[0].shop[5].price)
-                lobby_NPC[0].player_buy_item(5)
+            if main_player.money >= lobby_NPC[1].shop[5].price and lobby_NPC[1].shop[5].check_required_item(main_player):
+                main_player.buy_item('琉璃皇后',lobby_NPC[1].shop[5].price)
+                lobby_NPC[1].player_buy_item(5)
                 print('你解鎖了琉璃皇后')
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '7':
-            if main_player.money >= lobby_NPC[0].shop[6].price and lobby_NPC[0].shop[6].check_required_item(main_player):
-                main_player.buy_item('最終試煉',lobby_NPC[0].shop[6].price)
-                lobby_NPC[0].player_buy_item(6)
+            if main_player.money >= lobby_NPC[1].shop[6].price and lobby_NPC[1].shop[6].check_required_item(main_player):
+                main_player.buy_item('最終試煉',lobby_NPC[1].shop[6].price)
+                lobby_NPC[1].player_buy_item(6)
                 print('你解鎖了最終試煉')
             else:
                 print('你的錢不夠或者連勝數不足')
@@ -3323,12 +3335,12 @@ while True:
     player1.enable_mark('嗜血印記' in main_player.unlockable_item, '扭曲印記' in main_player.unlockable_item, '墮天使印記' in main_player.unlockable_item)
     computer1 = computer(5,[])
     hp=random.randint(2,6)
+    win_count = 0
     if not in_challenge_mode:
         games={}
         games[round] = game(player1,computer1,hp,risk)
-        games[round].player_bonus()
+        games[round].player_bonus(win_count)
     #計算勝場數
-    win_count = 0
     while in_challenge_mode == False:
         live_bullet = random.randint(1,4)
         blank = random.randint(1,4)
@@ -3385,7 +3397,7 @@ while True:
                     computer1 = computer(5,[])
                     hp=random.randint(2,6)
                     games[round] = game(player1,computer1,hp,risk)
-                    games[round].player_bonus()
+                    games[round].player_bonus(win_count)
                     for i in range(int(round/3)):
                         games[round].computer_bonus(i)
                     continue
@@ -3445,14 +3457,14 @@ while True:
     if in_challenge_mode == True:
         action = input('試煉等級? 1.莉莉絲 2.利維坦 3.薩邁爾')
         challenger = lobby_NPC[int(action)-1]
-        round = 0
+        round = 1
         win_count = 0
         player1 = player(5,main_player.item,money)
         computer1 = computer(5,[])
         hp=random.randint(2,6)
         challenge_games={}
         challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger.name)
-        challenge_games[round].player_bonus()
+        challenge_games[round].player_bonus(win_count)
     while in_challenge_mode == True:
         if challenger.name == '莉莉絲':
             #幽閉皇后+高風險
@@ -3483,7 +3495,7 @@ while True:
                 live_bullet = 4
                 blank = 4
                 foresee = 4
-            else:
+            elif round == 3:
                 live_bullet = 1
                 blank = 1
                 foresee = 0
@@ -3514,7 +3526,7 @@ while True:
                 computer1 = computer(5,challenger_item_list)
                 hp=random.randint(2,6)
                 challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger.name)
-                challenge_games[round].player_bonus()
+                challenge_games[round].player_bonus(win_count)
                 continue
             else:
                 challenger.challenge_mode_dialogue(win_count)
