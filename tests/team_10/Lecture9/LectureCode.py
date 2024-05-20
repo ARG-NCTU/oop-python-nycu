@@ -28,6 +28,9 @@ pylab.rcParams['lines.markersize'] = 10
 #set number of examples shown in legends
 pylab.rcParams['legend.numpoints'] = 1
 
+
+#Lecture 1
+
 def getData(fileName):
     dataFile = open(fileName, 'r')
     distances = []
@@ -39,11 +42,14 @@ def getData(fileName):
         masses.append(float(m))
     dataFile.close()
     return (masses, distances)
+
     
 def labelPlot():
     pylab.title('Measured Displacement of Spring')
     pylab.xlabel('|Force| (Newtons)')
     pylab.ylabel('Distance (meters)')
+
+
 
 def plotData(fileName):
     xVals, yVals = getData(fileName)
