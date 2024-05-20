@@ -29,7 +29,7 @@ def test_walk(usual_drunk, field):
     assert walk(field, usual_drunk, 1) == 1.0  # test 1 step
     assert walk(field, usual_drunk, 10) == pytest.approx(1.41, abs=0.01)  # test 10 steps
     assert walk(field, usual_drunk, 100) == pytest.approx(11.31, abs=0.1)  # test 100 steps
-
+    assert walk(field, usual_drunk, 1000) == pytest.approx(31.62, abs=0.1)  # test 1000 steps
 
 def test_sim_walks(usual_drunk, masochist_drunk, field):
     seed(0)  # set random seed for reproducibility
