@@ -340,7 +340,7 @@ class player_in_lobby(NPC):
         self.max_item = 0
         self.extra_hp = 0
         #商店物品
-        self.unlockable_item = ['五連勝標記','十連勝標記','嗜血印記','扭曲印記']
+        self.unlockable_item = []
     def earn_money(self,amount):
         self.money += amount
     def show_money(self):
