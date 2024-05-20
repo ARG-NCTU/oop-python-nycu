@@ -145,18 +145,20 @@ def testFits(models, degrees, xVals, yVals, title):
                    + ', R2 = ' + str(round(error, 5)))
     pylab.legend(loc = 'best')
     pylab.title(title)
+    #Add code to plot data and fits
+    pylab.show()
 
 #code for testing goodness of fit to parabolic data
 
 xVals, yVals = getData('mysteryData.txt')
-#degrees = (1, 2)
-#models = genFits(xVals, yVals, degrees)
-#testFits(models, degrees, xVals, yVals, 'Mystery Data')
+degrees = (1, 2)
+models = genFits(xVals, yVals, degrees)
+testFits(models, degrees, xVals, yVals, 'Mystery Data')
 
 ##Compare higher-order fits
-#degrees = (2, 4, 8, 16)
-#models = genFits(xVals, yVals, degrees)
-#testFits(models, degrees, xVals, yVals, 'Mystery Data')
+degrees = (2, 4, 8, 16)
+models = genFits(xVals, yVals, degrees)
+testFits(models, degrees, xVals, yVals, 'Mystery Data')
 
 def genNoisyParabolicData(a, b, c, xVals, fName):
     yVals = []
