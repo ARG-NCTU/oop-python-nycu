@@ -33,9 +33,11 @@ class NPC:
 class all_item:
     def __init__(self,name,description):
         self.name_hide = name
-        self.name = '你尚未解鎖這個道具'
+        #self.name = '你尚未解鎖這個道具'
+        self.name = name
         self.description_hide = description
-        self.description = '???'
+        #self.description = '???'
+        self.description = description
         self.unlock = False
     def unlock_item(self):
         if self.unlock == False:
@@ -340,7 +342,7 @@ class player_in_lobby(NPC):
         self.max_item = 0
         self.extra_hp = 0
         #商店物品
-        self.unlockable_item = []
+        self.unlockable_item = ['扭曲印記']
     def earn_money(self,amount):
         self.money += amount
     def show_money(self):
@@ -1980,7 +1982,13 @@ class game:
                                 blank -= 1
                             handsaw = False
                             self.computer.pop_bullet_pattern()
-                            break
+                            if self.player.handcuff:
+                                print('你被手銬銬住了,無法行動')
+                                self.player.unhandcuff()
+                                try_count = 0
+                                continue
+                            else:
+                                break
                         elif steal == '榴彈砲':
                             damage = self.computer.hp 
                             self.computer.hp = 1
@@ -1998,7 +2006,13 @@ class game:
                                 blank -= 1
                                 handsaw = False
                             self.computer.pop_bullet_pattern()
-                            break
+                            if self.player.handcuff:
+                                print('你被手銬銬住了,無法行動')
+                                self.player.unhandcuff()
+                                try_count = 0
+                                continue
+                            else:
+                                break
                         elif steal == '彈藥包':
                             damage = live_bullet
                             if handsaw:
@@ -2027,8 +2041,13 @@ class game:
                         elif steal == '琉璃皇后':
                             print('莊家試著偷取琉璃皇后但失敗了')
                             self.player.item.append('琉璃皇后')
-                    if skip:
+                    if skip and not self.player.handcuff:
                         break
+                    elif skip and self.player.handcuff:
+                        print('你被手銬銬住了,無法行動')
+                        self.player.unhandcuff()
+                        try_count = 0
+                        continue
                     if not_blue_print:
                         self.computer.item.pop(item)
                     continue
@@ -3384,7 +3403,6 @@ class challenge_mode(game):
                 elif self.computer.bullet_pattern[0] == 'blank':
                     action = 2
                 else:
-                    print('薩邁爾的子彈狀態未知')
                     remain_live = live_bullet - self.computer.known_live
                     remain_blank = blank - self.computer.known_blank
                     rand = random.randint(1,remain_live+remain_blank)
@@ -4667,7 +4685,13 @@ class challenge_mode(game):
                                 blank -= 1
                             handsaw = False
                             self.computer.pop_bullet_pattern()
-                            break
+                            if self.player.handcuff:
+                                print('你被手銬銬住了,無法行動')
+                                self.player.unhandcuff()
+                                try_count = 0
+                                continue
+                            else:
+                                break
                         elif steal == '榴彈砲':
                             damage = self.computer.hp 
                             self.computer.hp = 1
@@ -4685,7 +4709,13 @@ class challenge_mode(game):
                                 blank -= 1
                                 handsaw = False
                             self.computer.pop_bullet_pattern()
-                            break
+                            if self.player.handcuff:
+                                print('你被手銬銬住了,無法行動')
+                                self.player.unhandcuff()
+                                try_count = 0
+                                continue
+                            else:
+                                break
                         elif steal == '彈藥包':
                             damage = live_bullet
                             if handsaw:
@@ -4714,8 +4744,13 @@ class challenge_mode(game):
                         elif steal == '琉璃皇后':
                             print('莉莉斯試著偷取琉璃皇后但失敗了')
                             self.player.item.append('琉璃皇后')
-                    if skip:
+                    if skip and not self.player.handcuff:
                         break
+                    elif skip and self.player.handcuff:
+                        print('你被手銬銬住了,無法行動')
+                        self.player.unhandcuff()
+                        try_count = 0
+                        continue
                     if not_blue_print:
                         self.computer.item.pop(item)
                     continue
@@ -4753,7 +4788,6 @@ lobby_NPC = []
 lobby_NPC.append(collection_manager())
 lobby_NPC.append(shopkeeper())
 lobby_NPC.append(host())
-
 while True:
     risk = 1
     first_move = '玩家'
