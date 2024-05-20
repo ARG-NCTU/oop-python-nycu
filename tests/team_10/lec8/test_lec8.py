@@ -22,7 +22,7 @@ def test_get_highs_length():
     population = get_highs()
     assert len(population) == 365
 
-5def test_get_highs_length():    
+def test_get_highs_length():    
     # Test that get_highs returns the expected number of values
     population = get_highs()
     assert len(population) == 421848
