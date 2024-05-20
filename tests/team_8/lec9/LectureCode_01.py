@@ -27,6 +27,8 @@ pylab.rcParams['ytick.major.size'] = 7
 pylab.rcParams['lines.markersize'] = 10
 #set number of examples shown in legends
 pylab.rcParams['legend.numpoints'] = 1
+pylab.show()
+
 
 def getData(fileName):
     dataFile = open(fileName, 'r')
@@ -70,7 +72,9 @@ def fitData(fileName):
                + str(round(1/a, 5)))
     pylab.legend(loc = 'best')
     
-#fitData('springData.txt')
+fitData('springData.txt')
+pylab.show()
+
 
    
 def fitData1(fileName):
@@ -88,24 +92,28 @@ def fitData1(fileName):
                + str(round(1/model[0], 5)))
     pylab.legend(loc = 'best')
 
-#fitData1('springData.txt')
+fitData1('springData.txt')
+pylab.show()
+
 
 #Demonstration using mystery data
 
-#xVals, yVals = getData('mysteryData.txt')
-#pylab.plot(xVals, yVals, 'o', label = 'Data Points')
-#pylab.title('Mystery Data')
-#
-##Try linear model
-#model1 = pylab.polyfit(xVals, yVals, 1)
-#pylab.plot(xVals, pylab.polyval(model1, xVals),
-#           label = 'Linear Model')
-#
-##Try a quadratic model
-#model2 = pylab.polyfit(xVals, yVals, 2)
-#pylab.plot(xVals, pylab.polyval(model2, xVals),
-#           'r--', label = 'Quadratic Model')
-#pylab.legend()
+xVals, yVals = getData('mysteryData.txt')
+pylab.plot(xVals, yVals, 'o', label = 'Data Points')
+pylab.title('Mystery Data')
+
+#Try linear model
+model1 = pylab.polyfit(xVals, yVals, 1)
+pylab.plot(xVals, pylab.polyval(model1, xVals),
+           label = 'Linear Model')
+
+#Try a quadratic model
+model2 = pylab.polyfit(xVals, yVals, 2)
+pylab.plot(xVals, pylab.polyval(model2, xVals),
+           'r--', label = 'Quadratic Model')
+pylab.legend()
+pylab.show()
+
 
 ##Compare models
 def aveMeanSquareError(data, predicted):
@@ -115,12 +123,12 @@ def aveMeanSquareError(data, predicted):
     return error/len(data)
 
 #code to compare fits for mystery data
-#estYVals = pylab.polyval(model1, xVals)  
-#print('Ave. mean square error for linear model =',
-#      aveMeanSquareError(yVals, estYVals))
-#estYVals = pylab.polyval(model2, xVals)
-#print('Ave. mean square error for quadratic model =',
-#      aveMeanSquareError(yVals, estYVals))
+estYVals = pylab.polyval(model1, xVals)  
+print('Ave. mean square error for linear model =',
+      aveMeanSquareError(yVals, estYVals))
+estYVals = pylab.polyval(model2, xVals)
+print('Ave. mean square error for quadratic model =',
+      aveMeanSquareError(yVals, estYVals))
 
 def rSquared(observed, predicted):
     error = ((predicted - observed)**2).sum()
@@ -149,14 +157,17 @@ def testFits(models, degrees, xVals, yVals, title):
 #code for testing goodness of fit to parabolic data
 
 xVals, yVals = getData('mysteryData.txt')
-#degrees = (1, 2)
-#models = genFits(xVals, yVals, degrees)
-#testFits(models, degrees, xVals, yVals, 'Mystery Data')
+degrees = (1, 2)
+models = genFits(xVals, yVals, degrees)
+testFits(models, degrees, xVals, yVals, 'Mystery Data')
 
-##Compare higher-order fits
-#degrees = (2, 4, 8, 16)
-#models = genFits(xVals, yVals, degrees)
-#testFits(models, degrees, xVals, yVals, 'Mystery Data')
+#Compare higher-order fits
+degrees = (2, 4, 8, 16)
+models = genFits(xVals, yVals, degrees)
+testFits(models, degrees, xVals, yVals, 'Mystery Data')
+pylab.show()
+
+
 
 def genNoisyParabolicData(a, b, c, xVals, fName):
     yVals = []
