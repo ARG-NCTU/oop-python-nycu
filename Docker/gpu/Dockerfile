@@ -98,6 +98,11 @@ RUN pip3 install transformers \
 RUN pip3 install roma
 RUN pip3 install jupyter 
 RUN pip3 install ipytest
+
+##################################### Sound effect #####################################
+RUN pip3 install soundfile librosa jiwer transformers[torch]
+
+
 ##################################### setting ###################################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/

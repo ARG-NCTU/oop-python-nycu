@@ -2,6 +2,7 @@ import add_path
 import mit_ocw_exercises.lec8_classes as lc
 import pytest
 
+
 def test_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
@@ -13,10 +14,10 @@ def test_coordinate():
 def test_team_7_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
-    assert c.x == 5
-    assert c.y == 12
-    assert c.distance(origin) == 13
-    assert origin.distance(c) == 13
+    assert c.x == 3
+    assert c.y == 4
+    assert c.distance(origin) == 5
+    assert origin.distance(c) == 5
 
 def test_11_coordinate():
     c = lc.Coordinate(3, 4)
@@ -154,6 +155,15 @@ def test_1_intset():
     s.remove(3)
     assert not s.member(3)
     assert s.member(4)
+    
+def test_16_coordinate():
+    m = lc.Coordinate(7, 24)
+    n = lc.Coordinate(0,0)
+    assert m.x == 7
+    assert m.y == 24
+    assert m.distance(n) == 25
+    assert n.distance(m) == 25
+    s = lc.intSet()
     s.insert(7)
     assert s.member(7)
     s.remove(7)
@@ -303,4 +313,32 @@ def test_17_coordinate():
     assert c.y == 12
     assert c.distance(origin) == 13
     assert origin.distance(c) == 13
+def test_16_coordinate():
+    a=lc.Coordinate(5,12)
+    o=lc.Coordinate(0,0)
+    assert a.x==5
+    assert a.y==12
+    assert a.distance(o) == 13
+    assert o.distance(a) == 13
 
+def test_ella_practices():
+    ella = lc.Coordinate(5,12)
+    origin = lc.Coordinate(0,0)
+    assert ella.distance(origin) ==13
+    a = lc.Fraction(3,4)
+    assert a.__str__() == '3/4'
+    assert a.__float__() == 0.75
+    assert a.inverse().__str__() == '4/3'
+    b = lc.Fraction(2,5)
+    assert b.__str__() == '2/5'
+    assert b.__float__() == 0.4
+    c = a+b
+    assert c.__str__() == '23/20'
+    assert c.__float__() == 1.15
+    pra_set = lc.intSet()
+    pra_set.insert(3)
+    pra_set.insert(4)
+    assert pra_set.member(3) == True
+    assert pra_set.member(4) == True
+    pra_set.remove(3)
+    assert pra_set.member(3) == False
