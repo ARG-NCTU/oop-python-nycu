@@ -194,20 +194,20 @@ class collection_manager(NPC):
         self.mark_item.append(all_item('嗜血印記','開槍造成1點傷害時，額外吸收莊家的1點血量'))
         self.mark_item.append(all_item('扭曲印記','每局可使用一次，使用後改變道具的本質(詳見下一頁)，直到本局結束'))
         self.mark_item.append(all_item('墮天使印記','未知'))
-        self.snake_item.append(all_item('放大鏡','獲得1格背包空間，額外裝填3發子彈'))
-        self.snake_item.append(all_item('香菸','使當前空包彈變為實彈，若為實彈退彈'))
-        self.snake_item.append(all_item('手鋸','用手鉅攻擊莊家，造成1點傷害，無視朦朧國王效果'))
-        self.snake_item.append(all_item('啤酒','回復1點血量'))
-        self.snake_item.append(all_item('手銬','改造散彈槍，本局雙方都無法再射向自己'))
-        self.snake_item.append(all_item('手機','改變所有剩餘子彈的順序，預知前兩發子彈'))
-        self.snake_item.append(all_item('轉換器','將所有實彈轉換成空包彈，所有空包彈轉換成實彈'))
-        self.snake_item.append(all_item('過期藥物','看破本局莊家的朦朧國王效果'))
-        self.snake_item.append(all_item('腎上腺素','下一次攻擊傷害2倍'))
-        self.snake_item.append(all_item('未知藍圖','獲得3個隨機道具'))
-        self.snake_item.append(all_item('禁藥','吸到high起來，額外獲得一回合'))
-        self.snake_item.append(all_item('大口徑子彈','當所有空包彈換成實彈'))  
-        self.snake_item.append(all_item('榴彈砲','把所有子彈當成實彈射出'))
-        self.snake_item.append(all_item('彈藥包','退到剩一發子彈，每退1發實彈回復1點血量，每退1發空包彈造成1點傷害'))
+        self.snake_item.append(all_item('*放大鏡','獲得1格背包空間，額外裝填3發子彈'))
+        self.snake_item.append(all_item('*香菸','使當前空包彈變為實彈，若為實彈退彈'))
+        self.snake_item.append(all_item('*手鋸','用手鉅攻擊莊家，造成1點傷害，無視朦朧國王效果'))
+        self.snake_item.append(all_item('*啤酒','回復1點血量'))
+        self.snake_item.append(all_item('*手銬','改造散彈槍，本局雙方都無法再射向自己'))
+        self.snake_item.append(all_item('*手機','改變所有剩餘子彈的順序，預知前兩發子彈'))
+        self.snake_item.append(all_item('*轉換器','將所有實彈轉換成空包彈，所有空包彈轉換成實彈'))
+        self.snake_item.append(all_item('*過期藥物','看破本局莊家的朦朧國王效果'))
+        self.snake_item.append(all_item('*腎上腺素','下一次攻擊傷害2倍'))
+        self.snake_item.append(all_item('*未知藍圖','獲得3個隨機道具'))
+        self.snake_item.append(all_item('*禁藥','吸到high起來，額外獲得一回合'))
+        self.snake_item.append(all_item('*大口徑子彈','當所有空包彈換成實彈'))  
+        self.snake_item.append(all_item('*榴彈砲','把所有子彈當成實彈射出'))
+        self.snake_item.append(all_item('*彈藥包','退到剩一發子彈，每退1發實彈回復1點血量，每退1發空包彈造成1點傷害'))
     
         self.item_list = []
         self.item_list.append(self.normal_item)
@@ -303,10 +303,9 @@ class collection_manager(NPC):
         else:
             return
     
-
     
     def say_normal_dialogue(self):
-        print('莉莉斯: 初次見面，我是莉莉斯，這裡是收藏室，你可以在這裡查看以解鎖的道具')
+        print('莉莉斯: 這裡是收藏室，你可以在這裡查看已解鎖的物品')
 
 
     def challenge_mode_dialogue(self,win_count):
@@ -341,7 +340,7 @@ class player_in_lobby(NPC):
         self.max_item = 0
         self.extra_hp = 0
         #商店物品
-        self.unlockable_item = ['五連勝標記','十連勝標記','嗜血印記']
+        self.unlockable_item = ['五連勝標記','十連勝標記','嗜血印記','扭曲印記']
     def earn_money(self,amount):
         self.money += amount
     def show_money(self):
@@ -4755,19 +4754,6 @@ lobby_NPC.append(collection_manager())
 lobby_NPC.append(shopkeeper())
 lobby_NPC.append(host())
 
-
-'''print('下著雨的夜晚，你來到了那間賭場')
-time.sleep(3)
-print('以極其血腥的惡魔輪盤為特色的賭場"BuckShot"')
-time.sleep(3)
-print('如果不這麼做，債主總有一天也會找上門，不是嗎?')
-time.sleep(3)
-print('也許你的運氣可以救你一命，也許你的計謀可以讓你獲得更多，也許你的勇氣可以讓你活下去')
-time.sleep(3)
-print('你走進了賭場，一切都準備好了')
-time.sleep(3)
-print('專屬於你的惡魔輪盤遊戲即將開始')
-time.sleep(3)'''
 while True:
     risk = 1
     first_move = '玩家'
@@ -4850,6 +4836,13 @@ while True:
     elif action == '3':
         print('你走向擺滿各種道具的展示櫃，一本圖鑑被放在最顯眼的位置')
         time.sleep(1)
+        if '嗜血印記' in main_player.unlockable_item:
+            lobby_NPC[0].unlock_mark_item('嗜血印記')
+        if '扭曲印記' in main_player.unlockable_item:
+            lobby_NPC[0].unlock_mark_item('扭曲印記')
+            lobby_NPC[0].unlock_snake_item()
+        if '墮天使印記' in main_player.unlockable_item:
+            lobby_NPC[0].unlock_mark_item('墮天使印記')
         lobby_NPC[0].say_normal_dialogue()
         time.sleep(1.5)
         lobby_NPC[0].show_list()
