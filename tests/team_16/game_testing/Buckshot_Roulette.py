@@ -14,6 +14,10 @@ import math
 10.狂暴國王:接下來5次傷害翻倍
 11.狡詐國王:知道前三發子彈是什麼
 12.貪婪國王:偷走玩家所有非皇后物品
+13.試煉模式前對話
+14.薩邁爾的大廳互動
+15.成就系統
+16.莉莉斯的對話
 '''
 #大廳物件
 class NPC:
@@ -28,6 +32,9 @@ class NPC:
         pass
     def say_normal_dialogue(self):
         #正常時說的話
+        pass
+    def before_challenge(self):
+        #試煉開始前說的話
         pass
 
 class all_item:
@@ -47,6 +54,19 @@ class all_item:
             if show_text:
                 print('圖鑑解鎖了',self.name_hide)
                 time.sleep(0.7)
+
+class achievement(all_item):
+    def __init__(self,name,description,hint):
+        all_item.__init__(self,name,description)
+        self.name = '???'
+        self.description = hint
+    def unlock_item(self):
+        if self.unlock == False:
+            self.unlock = True
+            self.name = self.name_hide
+            self.description = self.description_hide
+            print('已解鎖成就 ',self.name)
+            time.sleep(0.7)
 
 class shop_item:
     def __init__(self,name,price,stock,raise_multiply,description = ''):
@@ -152,15 +172,53 @@ class shopkeeper(NPC):
             time.sleep(2)
             player_lobby.max_item += 2
             print('你的物品持有上限增加2個')
-            time.sleep(1)
+            time.sleep(2)
+            lobby_NPC[0].unlock_achievement('扭曲的蛇')
 
+    def unlock_final_challenge(self):
+        print('利維坦: 小夥子，野心挺大的嘛')
+        time.sleep(3)
+        print('利維坦: 你要知道，挑戰惡魔試煉意味著你貪求惡魔的力量')
+        time.sleep(3)
+        print('利維坦: 真的要打的話，我們是不會放水的，請做好獻出靈魂的心理準備喔')
+        time.sleep(3)
+        print('利維坦: 如果你做好挑戰的準備，就去找薩邁爾吧，他會為你解釋你將面對什麼樣的地獄')
+        time.sleep(3)
+        print('利維坦: 祝你好運，小夥子')
+        time.sleep(3)
+        lobby_NPC[0].unlock_achievement('地獄之門')
+    
 
 
 class host(NPC):
     def __init__(self):
         NPC.__init__(self,'薩邁爾')
         pass
+
+    def challenge_mode_reward(self,player_lobby):
+        if '墮天使印記' not in player_lobby.unlockable_item:
+            player_lobby.unlockable_item.append('墮天使印記')
+            time.sleep(2)
+            print('薩邁爾從座位上站起來，向你鞠躬')
+            time.sleep(2)
+            print('薩邁爾: 你的實力，又或者說是運氣，我認可了')
+            time.sleep(2)
+            print('薩邁爾: 依照規定，我將賜予你我的羽翼')
+            time.sleep(2)
+            print('語畢，薩邁爾的身形開始逐漸化為不可名狀之物，惡魔的真身')
+            time.sleep(2)
+            print('衝擊性的畫面在你的眼中留下了烙印')
+            time.sleep(2)
+            print('你獲得了墮天使印記')
+            time.sleep(2)
+            print('薩邁爾: 這是我對你的祝福，亦或者是詛咒。無論如何，通過試煉的你，擁有見公主大人的資格')
+            time.sleep(2)
+            print('薩邁爾: 準備好之後就來大廳找我吧')
+            time.sleep(2)
+            lobby_NPC[0].unlock_achievement('墮天使的羽翼')
+
     def tutorial(self):
+        win_count = 0
         print('你走進了吵雜的賭場，一名男子憑空出現在你面前')
         time.sleep(2)
         print('薩邁爾: 你好，我是這裡的負責人，歡迎光臨BuckShot')
@@ -215,6 +273,7 @@ class host(NPC):
                     print('薩邁爾: 賭博這種事，運氣是很重要的。希望你已經掌握基本規則了')
                     break
                 elif computer1.hp <= 0:
+                    win_count += 1
                     print('薩邁爾: 很好，看來你已經掌握了基本規則')
                     break
             time.sleep(4)
@@ -247,9 +306,9 @@ class host(NPC):
             print('莉莉斯: 這裡有一般道具的介紹，記下來對你會很有幫助')
             time.sleep(4)
             action = input('查看圖鑑? 1.是 2.否')
+            lobby_NPC[0].unlock_normal_item()
+            lobby_NPC[0].unlock_special_item()
             if action == '1':
-                lobby_NPC[0].unlock_normal_item()
-                lobby_NPC[0].unlock_special_item()
                 lobby_NPC[0].show_normal_item()
             time.sleep(2)
             print('莉莉斯: 這些道具是普通道具，當然未來你在賭桌上有機會遇見一些特殊道具')
@@ -277,6 +336,7 @@ class host(NPC):
                     print('你忽然回過神來，發現自己正趴在賭桌前，莉莉斯剛好為你完成包紮')
                     break
                 elif computer1.hp <= 0:
+                    win_count += 1
                     print('莉莉斯: 你學得很快呢! 靈活運用道具是致勝的關鍵')
                     break
             time.sleep(4)
@@ -284,7 +344,7 @@ class host(NPC):
             time.sleep(4)
             print('莉莉斯: 如果有任何規則相關的問題，你可以在大廳找到薩邁爾，他會很樂意為你解答')
             time.sleep(4)
-            print('莉莉斯: 遇到新的道具時，也可以來我這裡查看圖鑑')
+            print('莉莉斯: 遇到新的道具或者想要一些關於賭局的技巧，都可以來找我')
             time.sleep(4)
             print('莉莉斯: 順帶一提，利維坦那笨蛋負責商店，等你有錢後也可以去她那裡光顧一下')
             time.sleep(4)
@@ -296,6 +356,10 @@ class host(NPC):
             print('莉莉斯: 那麼祝你好運，希望你能在這裡找到你想要的東西')
             time.sleep(4)
             input('按下Enter回到大廳')
+            if win_count == 0:
+                lobby_NPC[0].unlock_achievement('也許你不適合這裡')
+            elif win_count == 2:
+                lobby_NPC[0].unlock_achievement('炸魚')
             
          
 class collection_manager(NPC):
@@ -356,6 +420,63 @@ class collection_manager(NPC):
         self.item_list.append(self.mark_item)
         self.item_list.append(self.snake_item)
 
+        self.achievement_list = []
+        self.achievement_list.append(achievement('炸魚','活著通過新手教學','在教學階段表現良好'))
+        self.achievement_list.append(achievement('也許你不適合這裡','在新手教學死了兩次','你已經死兩次了'))
+        self.achievement_list.append(achievement('惡魔的喜好?','從莉莉斯口中得知惡魔眷屬一事','不小心說溜嘴了!'))
+        self.achievement_list.append(achievement('居心叵測','看過莉莉絲的全部對話','tips永遠不嫌多，八卦也是'))
+        self.achievement_list.append(achievement('破解','解鎖所有道具','收集道具還得靠運氣'))
+        self.achievement_list.append(achievement('誘惑的吻','通關莉莉斯的試煉','你的生命力夠頑強嗎'))
+        self.achievement_list.append(achievement('扭曲的蛇','通關利維坦的試煉','這東西不是這樣用的吧喂!'))
+        self.achievement_list.append(achievement('墮落的羽翼','通關薩邁爾的試煉','0%戰術，100%運氣'))
+        self.achievement_list.append(achievement('地獄之門','解鎖惡魔試煉','你已經準備好了'))
+        self.achievement_list.append(achievement('第一桶金','持有1000000元','來吧，開始遊戲吧'))
+        self.achievement_list.append(achievement('財富自由','持有50000000元','或許還債有望了?'))
+        self.achievement_list.append(achievement('富可敵國','持有99999999999元','兄弟，你是不是該買個島了?'))
+        self.achievement_list.append(achievement('見好就收','贏了一場後馬上放棄','Nope'))
+        self.achievement_list.append(achievement('恢復呼吸','第一次用人工心臟復活','貪婪的代價'))
+        self.achievement_list.append(achievement('風險大師','高風險模式下連續贏了10場','風險管理'))
+        self.achievement_list.append(achievement('互相傷害呀','殺手國王模式下連續贏了10場','國王與皇后的對決'))
+        self.achievement_list.append(achievement('真實力','幽閉皇后模式下連續贏了10場','靠自己也能贏'))
+        self.achievement_list.append(achievement('你才是挑戰者','莊家先手模式下連續贏了10場','想太多，順序根本不重要'))
+        self.achievement_list.append(achievement('賭神','下注全部模式下連續贏了10場','你的運氣是怎麼回事?'))
+        self.achievement_list.append(achievement('哈哈屁眼','莊家先手模式下第一回合就死了','這我也沒辦法'))
+        self.achievement_list.append(achievement('你是笨蛋嗎','使用手鉅對自己造成2點傷害並被嘲笑','你是笨蛋嗎?'))
+        self.achievement_list.append(achievement('漆黑子彈','血量低於5的狀態下使用漆黑皇后贏下一局','50%'))
+        self.achievement_list.append(achievement('道具永動機','獲得5層以上的蔚藍皇后效果','太...太多了'))
+        self.achievement_list.append(achievement('道理我都懂，但是這個背包怎麼這麼大','背包上限突破20','更大的背包'))
+        self.achievement_list.append(achievement('巨砲','用榴彈砲造成30以上的傷害','這武器攻擊力無上限對吧?'))
+        self.achievement_list.append(achievement('吸毒有礙身心健康，請勿輕易嘗試','吃禁藥死亡','來路不明的藥物別亂嗑'))
+        self.achievement_list.append(achievement('琉璃的祝福','獲得琉璃的祝福','這道具也太強了吧'))
+        self.achievement_list.append(achievement('就說了不行','嘗試偷走腎上腺素','有些東西是偷不走的'))
+        self.achievement_list.append(achievement('滿血','買下所有額外血量','保險起見啦'))
+        self.achievement_list.append(achievement('瘋狂的傻子','成為利維坦的眷屬','在利維坦面前耍帥一波'))
+        self.achievement_list.append(achievement('慾望的奴隸','成為莉莉斯的眷屬','向莉莉斯展現你的生命力'))
+        self.achievement_list.append(achievement('無謂的堅持','成為薩邁爾的眷屬','回應薩邁爾的期待'))
+
+        self.normal_dialogue = []
+        #莉莉斯的對話含有重要訊息，所以雖然是隨機但是會循環
+        self.dialogue_number = [i for i in range(0,17)]
+        
+        self.normal_dialogue.extend([f'莉莉斯: {main_player.name}你來啦，隨便坐，我去為你泡杯茶'\
+                                    ,'莉莉斯: 利維坦又設計了奇怪的道具...不要增加我的工作量啊!'\
+                                    ,'莉莉斯: 轉換器有個很方便的副作用，下次可以試著仔細觀察使用前後剩餘子彈數量'\
+                                    ,'莉莉斯: 國王道具無法被竊取，但是皇后可以，所以要小心!'\
+                                    ,'莉莉斯: 藍圖的道具合成有優先順序，和圖鑑的排序是一樣的'\
+                                    ,'莉莉斯: 手鉅的傷害加成對所有火兵器都有效，包括大口徑子彈、榴彈砲、彈藥包和漆黑皇后'\
+                                    ,'莉莉斯: 血量恢復是沒有上限的，我最喜歡生命力旺盛的靈魂了，如果有44點以上的話...啊!沒事!我什麼都沒說!'\
+                                    ,'莉莉斯: 手銬不能在一回合連續使用兩次，但可以連續兩回合各自使用一次'\
+                                    ,'莉莉斯: 手鉅無法和任何傷害加倍的效果疊加，最多就是兩倍!'\
+                                    ,'莉莉斯: 皇后道具是已故賭徒的靈魂殘渣，擁有提升獎金倍率的能力，很奇怪吧?'\
+                                    ,'莉莉斯: 榴彈砲殺不死血量比自己高的目標，想扭轉局勢可能得搭配其他道具'\
+                                    ,'莉莉斯: 禁藥的回血公式是翻倍再+3。你問我怎麼知道的? 當然是親自實測呀'\
+                                    ,'莉莉斯: 國王道具的效果非常誇張，建議隨時注意莊家的物品欄'\
+                                    ,'莉莉斯: 利維坦是個不按牌理出牌的傢伙，大家都說只有她才知道道具的真正使用方式'\
+                                    ,'莉莉斯: 好想要有更多眷屬啊......別這樣看著我，要收人類當眷屬的話，你得先學會看穿惡魔的喜好'\
+                                    ,'莉莉斯: 你知道嗎，整天收割人類靈魂的生活也是很無聊的，所以"她"才會想出這些遊戲來'\
+                                    ,'莉莉斯: 你看，這裡的人都是為了什麼而來呢? 也許是為了金錢，也許是為了力量，也許是為了......愛情?'])
+
+
     def unlock_normal_item(self):
         for item in self.normal_item:
             item.unlock_item(show_text=False)
@@ -366,10 +487,24 @@ class collection_manager(NPC):
         for item in self.queen_king_item:
             if item.name_hide == target:
                 item.unlock_item(True)
+        unlock_all = True
+        for cat in self.item_list:
+            for item in cat:
+                if item.name == '???':
+                    unlock_all = False 
+        if unlock_all:
+            self.unlock_achievement('破解') 
     def unlock_mark_item(self,target):
         for item in self.mark_item:
             if item.name_hide == target:
                 item.unlock_item(True)
+        unlock_all = True
+        for cat in self.item_list:
+            for item in cat:
+                if item.name == '???':
+                    unlock_all = False 
+        if unlock_all:
+            self.unlock_achievement('破解') 
     def unlock_snake_item(self):
         for item in self.snake_item:
             item.unlock_item(True)
@@ -408,15 +543,37 @@ class collection_manager(NPC):
             print(i+1,self.snake_item[i].name)
             print('    ',self.snake_item[i].description)
         input('按下Enter回到上一頁')
+    def show_achievement_1(self):
+        print('成就列表:')
+        for i in range(len(self.achievement_list)//2):
+            print(i+1,self.achievement_list[i].name)
+            print('     提示: ' if not self.achievement_list[i].unlock else '    ',self.achievement_list[i].description)
+        input('按下Enter查看下一頁')
+
+    def show_achievement_2(self):
+        print('成就列表:')
+        for i in range(len(self.achievement_list)//2,len(self.achievement_list)):
+            print(i+1,self.achievement_list[i].name)
+            print('     提示: ',self.achievement_list[i].description)
+        input('按下Enter回到列表')
+
+    def unlock_achievement(self,target):
+        for achievement in self.achievement_list:
+            if achievement.name_hide == target:
+                achievement.unlock_item()
+
     def show_list(self):
         print ('=================================================================')
-        print('道具列表:')
+        print('圖鑑:')
         print('1.普通道具')
         print('2.特殊道具')
         print('3.皇后&國王道具')
         print('4.惡魔印記')
         if '扭曲印記' in main_player.unlockable_item:
             print('5.扭曲印記啟用時的道具')
+            print('6.成就列表')
+        else:
+            print('5.成就列表')
         print('按下Enter離開')
         while True:
             try:
@@ -440,13 +597,34 @@ class collection_manager(NPC):
         elif choice == '5' and '扭曲印記' in main_player.unlockable_item:
             self.show_snake_item()
             self.show_list()
+        elif choice == '5' and '扭曲印記' not in main_player.unlockable_item:
+            self.show_achievement_1()
+            self.show_achievement_2()
+            self.show_list()
+        elif choice == '6':
+            self.show_achievement_1()
+            self.show_achievement_2()
+            self.show_list()
         else:
             return
     
     
     def say_normal_dialogue(self):
-        print('莉莉斯: 這裡是收藏室，你可以在這裡查看已解鎖的物品')
+        time.sleep(1)
+        if len(self.dialogue_number) == 0:
+            self.dialogue_number = [i for i in range(0,17)]
 
+        if 0 in self.dialogue_number:
+            number = self.dialogue_number.pop(0)
+        else:
+            number = self.dialogue_number.pop(random.randint(0,len(self.dialogue_number)-1))
+        
+        print(self.normal_dialogue[number])
+        if number == 14:
+            self.unlock_achievement('惡魔的喜好?')
+        if self.dialogue_number == []:
+            self.unlock_achievement('居心叵測')
+        time.sleep(2)
 
     def challenge_mode_dialogue(self,win_count):
         #每場結束時說的話
@@ -469,6 +647,7 @@ class collection_manager(NPC):
             player_lobby.extra_hp += 2
             print('你的額外生命增加了2點')
             time.sleep(1)
+            lobby_NPC[0].unlock_achievement('誘惑的吻')
 
 class player_in_lobby(NPC):
     def __init__(self,name,money):
@@ -820,6 +999,9 @@ class game:
                     time.sleep(1)
                     handsaw = True
                     self.player.blood_queen -= 1
+                if self.player.max_item >= 20:
+                    lobby_NPC[0].unlock_achievement('道理我都懂，但是這個背包怎麼這麼大')
+                    time.sleep(1)
                 while True:
                     try:
                         action = int(input())
@@ -862,12 +1044,18 @@ class game:
                     killer_queen = False
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
                 elif remain_bullet[0]&killer_queen:
                     self.computer.hp -= 5
                     print('你使用漆黑皇后射中了莊家,造成五點傷害')
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
                     killer_queen = False
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
                 elif remain_bullet[0]&handsaw:
                     self.computer.hp -= 2
                     print('你射中了莊家,造成兩點傷害')
@@ -930,6 +1118,7 @@ class game:
                         self.player.blood_queen -= 1
                     else:
                         print('你是笨蛋嗎?')
+                        lobby_NPC[0].unlock_achievement('你是笨蛋嗎')
                     handsaw = False
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
@@ -1190,6 +1379,8 @@ class game:
                         if self.player.hp == 1:
                             print('你死了')
                             time.sleep(2)
+                            lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                            time.sleep(2)      
                             return
                         self.player.hp = 1
                         print('你中毒了，血量降為1')
@@ -1300,6 +1491,10 @@ class game:
                     print('你使用了蔚藍皇后，輪到莊家的回合時你將獲得一個隨機物品')
                     self.player.item_queen += 1   
                     self.player.queen_used.append('蔚藍皇后')
+                    if self.item_queen >= 5 :
+                        time.sleep(1)
+                        lobby_NPC[0].unlock_achievement('道具永動機')
+                        time.sleep(1)
                 elif self.player.item[item-1] == '腥紅皇后':
                     #玩家的回合開始時，附加手鉅效果
                     print('你使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，可以觸發五次')
@@ -1310,6 +1505,8 @@ class game:
                     #若為空包彈則回復一點血量並消除莊家一個道具或獲得一個隨機道具
                     #使用當下清空莊家的道具、清空彈夾並裝上一顆實彈
                     print('你獲得了琉璃的祝福，莊家的道具被清空，彈夾重新裝填了')
+                    time.sleep(2)
+                    lobby_NPC[0].unlock_achievement('琉璃的祝福')
                     self.computer.item = [] 
                     self.computer.reset_bullet_pattern(1)
                     remain_bullet = [True]
@@ -1417,6 +1614,8 @@ class game:
                             if self.player.hp == 1:
                                 print('你死了')
                                 time.sleep(2)
+                                lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                                time.sleep(2)    
                                 return
                             self.player.hp = 1
                             print('你中毒了，血量降為1')
@@ -1449,9 +1648,13 @@ class game:
                                 self.computer.hp -= 2*damage
                                 print('你使用了榴彈砲,造成',2*damage,'點傷害')
                                 handsaw = False
+                                if damage >= 15:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
                             else:
                                 self.computer.hp -= damage
                                 print('你使用了榴彈砲,造成',damage,'點傷害')
+                                if damage >= 30:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
                             live_bullet -= 1
                         else:
                             print('你使用了榴彈砲,但是子彈打空了')
@@ -1495,6 +1698,8 @@ class game:
                         
                     elif self.computer.item[steal-1] == '腎上腺素':
                         print('你不能偷取腎上腺素')
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('就說了不行')
                         continue
                     else:
                         print('你不能偷取國王道具')
@@ -1551,6 +1756,10 @@ class game:
 
             skip = False
             not_blue_print = True
+            if action == 0:
+                achievement_first_dead = True
+            else:
+                achievement_first_dead = False
 
             while True:
                 #莊家進行剩餘子彈分析
@@ -1567,6 +1776,8 @@ class game:
                     print('**************************************')
                     print('你死了')
                     time.sleep(2)
+                    if achievement_first_dead:
+                        lobby_NPC[0].unlock_achievement('哈哈屁眼')
                     return
                 time.sleep(2)
                 if len(remain_bullet) == 0:
@@ -1737,8 +1948,6 @@ class game:
                             print('腥紅皇后使莊家免疫額外傷害')
                             self.computer.hp += 1
                             self.computer.blood_queen -= 1
-                        else:
-                            print('莊家是笨蛋嗎笑死')
                         handsaw = False
                         live_bullet -= 1
                         self.computer.pop_bullet_pattern()
@@ -2194,6 +2403,8 @@ class game:
                     print('**************************************')
                     print('你死了')
                     time.sleep(2)
+                    if achievement_first_dead:
+                        lobby_NPC[0].unlock_achievement('哈哈屁眼')
                     return
                 if self.computer.hp <= 0:
                     time.sleep(2)
@@ -2391,6 +2602,9 @@ class challenge_mode(game):
                     time.sleep(1)
                     handsaw = True
                     self.player.blood_queen -= 1
+                if self.player.max_item >= 20:
+                    lobby_NPC[0].unlock_achievement('道理我都懂，但是這個背包怎麼這麼大')
+                    time.sleep(1)
                 while True:
                     try:
                         action = int(input())
@@ -2427,12 +2641,18 @@ class challenge_mode(game):
                     killer_queen = False
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
                 elif remain_bullet[0]&killer_queen:
                     self.computer.hp -= 5
                     print('你使用漆黑皇后射中了利維坦,造成五點傷害')
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
                     killer_queen = False
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
                 elif remain_bullet[0]&handsaw:
                     self.computer.hp -= 2
                     print('你射中了利維坦,造成兩點傷害')
@@ -2489,6 +2709,7 @@ class challenge_mode(game):
                         self.player.blood_queen -= 1
                     else:
                         print('你是笨蛋嗎?')
+                        lobby_NPC[0].unlock_achievement('你是笨蛋嗎')
                     handsaw = False
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
@@ -2629,6 +2850,8 @@ class challenge_mode(game):
                         if self.player.hp == 1:
                             print('你死了')
                             time.sleep(2)
+                            lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                            time.sleep(2)    
                             return
                         self.player.hp = 1
                         print('你中毒了，血量降為1')
@@ -2739,6 +2962,10 @@ class challenge_mode(game):
                     print('你使用了蔚藍皇后，輪到利維坦的回合時你將獲得一個隨機物品')
                     self.player.item_queen += 1   
                     self.player.queen_used.append('蔚藍皇后')
+                    if self.item_queen >= 5 :
+                        time.sleep(1)
+                        lobby_NPC[0].unlock_achievement('道具永動機')
+                        time.sleep(1)
                 elif self.player.item[item-1] == '腥紅皇后':
                     #玩家的回合開始時，附加手鉅效果
                     print('你使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，可以觸發五次')
@@ -2749,6 +2976,8 @@ class challenge_mode(game):
                     #若為空包彈則回復一點血量並消除利維坦一個道具或獲得一個隨機道具
                     #使用當下清空利維坦的道具、清空彈夾並裝上一顆實彈
                     print('你獲得了琉璃的祝福，利維坦的道具被清空，彈夾重新裝填了')
+                    time.sleep(2)
+                    lobby_NPC[0].unlock_achievement('琉璃的祝福')
                     self.computer.item = [] 
                     self.computer.reset_bullet_pattern(1)
                     remain_bullet = [True]
@@ -2856,6 +3085,8 @@ class challenge_mode(game):
                             if self.player.hp == 1:
                                 print('你死了')
                                 time.sleep(2)
+                                lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                                time.sleep(2)    
                                 return
                             self.player.hp = 1
                             print('你中毒了，血量降為1')
@@ -2888,9 +3119,13 @@ class challenge_mode(game):
                                 self.computer.hp -= 2*damage
                                 print('你使用了榴彈砲,造成',2*damage,'點傷害')
                                 handsaw = False
+                                if damage >= 15:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
                             else:
                                 self.computer.hp -= damage
                                 print('你使用了榴彈砲,造成',damage,'點傷害')
+                                if damage >= 30:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
                             live_bullet -= 1
                         else:
                             print('你使用了榴彈砲,但是子彈打空了')
@@ -2934,6 +3169,8 @@ class challenge_mode(game):
                         
                     elif self.computer.item[steal-1] == '腎上腺素':
                         print('你不能偷取腎上腺素')
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('就說了不行')
                         continue
                     else:
                         print('你不能偷取國王道具')
@@ -2982,6 +3219,10 @@ class challenge_mode(game):
             time.sleep(1)
             try_count = 0
             not_blue_print = True
+            if action == 0:
+                achivement_first_dead = True
+            else:
+                achivement_first_dead = False
             '''
             利維坦道具說明:
             國王和皇后效果不變
@@ -3180,8 +3421,6 @@ class challenge_mode(game):
                             print('腥紅皇后使利維坦免疫額外傷害')
                             self.computer.hp += 1
                             self.computer.blood_queen -= 1
-                        else:
-                            print('利維坦是笨蛋嗎笑死')
                         handsaw = False
                         live_bullet -= 1
                         self.computer.pop_bullet_pattern()
@@ -3378,6 +3617,8 @@ class challenge_mode(game):
                     print('**************************************')
                     print('你死了')
                     time.sleep(2)
+                    if achievement_first_dead:
+                        lobby_NPC[0].unlock_achievement('哈哈屁眼')
                     return
                 if self.computer.hp <= 0:
                     time.sleep(2)
@@ -3659,6 +3900,9 @@ class challenge_mode(game):
                     time.sleep(1)
                     handsaw = True
                     self.player.blood_queen -= 1
+                if self.player.max_item >= 20:
+                    lobby_NPC[0].unlock_achievement('道理我都懂，但是這個背包怎麼這麼大')
+                    time.sleep(1)
                 while True:
                     try:
                         action = int(input())
@@ -3695,12 +3939,18 @@ class challenge_mode(game):
                     killer_queen = False
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
                 elif remain_bullet[0]&killer_queen:
                     self.computer.hp -= 5
                     print('你使用漆黑皇后射中了莉莉斯,造成五點傷害')
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
                     killer_queen = False
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
                 elif remain_bullet[0]&handsaw:
                     self.computer.hp -= 2
                     print('你射中了莉莉斯,造成兩點傷害')
@@ -3753,6 +4003,7 @@ class challenge_mode(game):
                         self.player.blood_queen -= 1
                     else:
                         print('你是笨蛋嗎?')
+                        lobby_NPC[0].unlock_achievement('你是笨蛋嗎')
                     handsaw = False
                     self.computer.pop_bullet_pattern()
                     live_bullet -= 1
@@ -3893,6 +4144,8 @@ class challenge_mode(game):
                         if self.player.hp == 1:
                             print('你死了')
                             time.sleep(2)
+                            lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                            time.sleep(2)    
                             return
                         self.player.hp = 1
                         print('你中毒了，血量降為1')
@@ -4003,6 +4256,10 @@ class challenge_mode(game):
                     print('你使用了蔚藍皇后，輪到莉莉斯的回合時你將獲得一個隨機物品')
                     self.player.item_queen += 1   
                     self.player.queen_used.append('蔚藍皇后')
+                    if self.item_queen >= 5 :
+                        time.sleep(1)
+                        lobby_NPC[0].unlock_achievement('道具永動機')
+                        time.sleep(1)
                 elif self.player.item[item-1] == '腥紅皇后':
                     #玩家的回合開始時，附加手鉅效果
                     print('你使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，可以觸發五次')
@@ -4013,6 +4270,8 @@ class challenge_mode(game):
                     #若為空包彈則回復一點血量並消除莉莉斯一個道具或獲得一個隨機道具
                     #使用當下清空莉莉斯的道具、清空彈夾並裝上一顆實彈
                     print('你獲得了琉璃的祝福，莉莉斯的道具被清空，彈夾重新裝填了')
+                    time.sleep(2)
+                    lobby_NPC[0].unlock_achievement('琉璃的祝福')
                     self.computer.item = [] 
                     self.computer.reset_bullet_pattern(1)
                     remain_bullet = [True]
@@ -4120,6 +4379,8 @@ class challenge_mode(game):
                             if self.player.hp == 1:
                                 print('你死了')
                                 time.sleep(2)
+                                lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                                time.sleep(2)    
                                 return
                             self.player.hp = 1
                             print('你中毒了，血量降為1')
@@ -4152,9 +4413,13 @@ class challenge_mode(game):
                                 self.computer.hp -= 2*damage
                                 print('你使用了榴彈砲,造成',2*damage,'點傷害')
                                 handsaw = False
+                                if damage >= 15:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
                             else:
                                 self.computer.hp -= damage
                                 print('你使用了榴彈砲,造成',damage,'點傷害')
+                                if damage >= 30:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
                             live_bullet -= 1
                         else:
                             print('你使用了榴彈砲,但是子彈打空了')
@@ -4198,6 +4463,8 @@ class challenge_mode(game):
                         
                     elif self.computer.item[steal-1] == '腎上腺素':
                         print('你不能偷取腎上腺素')
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('就說了不行')
                         continue
                     else:
                         print('你不能偷取國王道具')
@@ -4440,8 +4707,6 @@ class challenge_mode(game):
                             print('腥紅皇后使莉莉斯免疫額外傷害')
                             self.computer.hp += 1
                             self.computer.blood_queen -= 1
-                        else:
-                            print('莉莉斯是笨蛋嗎笑死')
                         handsaw = False
                         live_bullet -= 1
                         self.computer.pop_bullet_pattern()
@@ -4956,6 +5221,12 @@ while True:
     first_move = '玩家'
     money = 0
     in_challenge_mode = False
+    if main_player.money >= 10000000:
+        lobby_NPC[0].unlock_achievement('第一桶金')
+    if main_player.money >= 500000000:
+        lobby_NPC[0].unlock_achievement('財富自由')
+    if main_player.money >= 999999999999:
+        lobby_NPC[0].unlock_achievement('富可敵國')
 
     print('=====================================    BuckShot    =====================================')
     print('你的名字是',main_player.name,'你的金錢是',main_player.money,'你的道具欄位是',main_player.max_item,'你的額外血量是',main_player.extra_hp)
@@ -5005,6 +5276,9 @@ while True:
                 main_player.money -= lobby_NPC[1].shop[3].price  
                 lobby_NPC[1].player_buy_item(3)
                 print('你的血量增加了，現在有',main_player.extra_hp,'點額外血量')
+                if main_player.extra_hp >= 4:
+                    time.sleep(1)
+                    lobby_NPC[0].unlock_achievement('滿血') 
             else:
                 print('你的錢不夠或者連勝數不足')
         elif action == '5':
@@ -5026,12 +5300,13 @@ while True:
                 main_player.buy_item('最終試煉',lobby_NPC[1].shop[6].price)
                 lobby_NPC[1].player_buy_item(6)
                 print('你解鎖了最終試煉')
+                lobby_NPC[1].unlock_final_challenge()
             else:
                 print('你的錢不夠或者連勝數不足')
         time.sleep(2)
         continue
     elif action == '3':
-        print('你走向擺滿各種道具的展示櫃，一本圖鑑被放在最顯眼的位置')
+        print('你走進閱覽室，這裡的氣氛令你感到舒適，一本圖鑑被放在最顯眼的位置')
         time.sleep(1)
         if '嗜血印記' in main_player.unlockable_item:
             lobby_NPC[0].unlock_mark_item('嗜血印記')
@@ -5111,7 +5386,8 @@ while True:
                 time.sleep(1)
                 print('手術花費你50%的財產')
                 main_player.revive()
-                time.sleep(1)
+                time.sleep(2)
+                lobby_NPC[0].unlock_achievement('恢復呼吸')
                 break
             else:
                 print('你的屍體旁躺著未能帶走的',player1.money+main_player.money,'元')
@@ -5139,6 +5415,7 @@ while True:
                     main_player.earn_money(player1.money)
                     main_player.save_item(player1.item)
                     input('按下Enter離開')
+                    lobby_NPC[0].unlock_achievement('見好就收')
                     for item in player1.queen_used:
                         lobby_NPC[0].unlock_queen_king_item(item)
                     lobby_NPC[0].unlock_normal_item()
@@ -5213,6 +5490,17 @@ while True:
                     if (win_count >= 5):
                         print('你連勝了',win_count,'場')
                     input('按下Enter離開')
+                    if win_count >= 10:
+                        if risk % 2 == 0:
+                            lobby_NPC[0].unlock_achievement('風險大師')
+                        if risk % 3 == 0:
+                            lobby_NPC[0].unlock_achievement('互相傷害呀')
+                        if risk % 5 == 0:
+                            lobby_NPC[0].unlock_achievement('真實力')
+                        if risk % 7 == 0:
+                            lobby_NPC[0].unlock_achievement('你才是挑戰者')
+                        if risk == 210:
+                            lobby_NPC[0].unlock_achievement('賭神')
                     for item in player1.queen_used:
                         lobby_NPC[0].unlock_queen_king_item(item)
                     lobby_NPC[0].unlock_normal_item()
@@ -5293,7 +5581,9 @@ while True:
                 print('手術花費你50%的財產')
                 main_player.revive()
                 time.sleep(1)
+                lobby_NPC[0].unlock_achievement('恢復呼吸')
                 break
+
             else:
                 print('你的靈魂被',challenger.name,'徵收了，未能帶走的',player1.money+main_player.money,'元被回收了')
                 main_player.die()
