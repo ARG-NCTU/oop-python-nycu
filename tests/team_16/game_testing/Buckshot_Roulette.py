@@ -33,19 +33,20 @@ class NPC:
 class all_item:
     def __init__(self,name,description):
         self.name_hide = name
-        #self.name = '你尚未解鎖這個道具'
-        self.name = name
+        self.name = '你尚未解鎖這個道具'
+        #self.name = name
         self.description_hide = description
-        #self.description = '???'
-        self.description = description
+        self.description = '???'
+        #self.description = description
         self.unlock = False
-    def unlock_item(self):
+    def unlock_item(self,show_text):
         if self.unlock == False:
             self.unlock = True
             self.name = self.name_hide
             self.description = self.description_hide
-            print('圖鑑解鎖了',self.name_hide)
-            time.sleep(0.7)
+            if show_text:
+                print('圖鑑解鎖了',self.name_hide)
+                time.sleep(0.7)
 
 class shop_item:
     def __init__(self,name,price,stock,raise_multiply,description = ''):
@@ -159,6 +160,143 @@ class host(NPC):
     def __init__(self):
         NPC.__init__(self,'薩邁爾')
         pass
+    def tutorial(self):
+        print('你走進了吵雜的賭場，一名男子憑空出現在你面前')
+        time.sleep(2)
+        print('薩邁爾: 你好，我是這裡的負責人，歡迎光臨BuckShot')
+        time.sleep(2)
+        print('薩邁爾: 需要我為你介紹一下嗎?')
+        time.sleep(1)
+        action = input('觀看教學? 1.是 2.否')
+        if action == '2':
+            print('薩邁爾: 原來是熟客了呀，真是失禮了')
+            time.sleep(2)
+            print('薩邁爾: 如果有任何問題，隨時可以來大廳找我，祝你賭運昌隆')
+            time.sleep(2)
+            return
+        elif action == '1':
+            print('薩邁爾: 了解了，那麼請跟我來')
+            time.sleep(2)
+            print('薩邁爾: BuckShot是一間由惡魔經營的賭場，我們提供巨額獎金，而你則是用靈魂作為賭注')
+            time.sleep(4)
+            print('薩邁爾帶著你到賭桌前，並交給你一把散彈槍')
+            time.sleep(4)
+            print('薩邁爾: 每局開始時，這把槍會以隨機順序裝填2~8發實彈或空包彈')
+            time.sleep(4)
+            print('薩邁爾: 輪到你的回合時，你可以選擇開槍射向自己或射向莊家')
+            time.sleep(4)
+            print('薩邁爾: 被實彈射中者將會損失1點血量')
+            time.sleep(4)
+            print('薩邁爾: 當你用空包彈射中自己時，你將獲得一個額外的回合')
+            time.sleep(4)
+            print('薩邁爾: 雙方輪流開槍直到子彈打空，進入下一局並重新裝填子彈')
+            time.sleep(4)
+            print('薩邁爾: 先將對方血量歸零者獲勝')
+            time.sleep(4)
+            print('薩邁爾: 以上便是惡魔輪盤的基礎規則，準備好的話就來練習一場吧?')
+            time.sleep(4)
+            input('按下Enter開始練習')
+            player1 = player(5,[],0)
+            computer1 = computer(5,[])
+            tutorial_games={}
+            tutorial_games[0] = tutorial_game(player1,computer1,2)
+            while True:
+                if tutorial_games[0].round == 1:
+                    live_bullet = 2
+                    blank = 1
+                else:
+                    live_bullet = 2
+                    blank = 3
+                tutorial_games[0].basic_one_round(live_bullet,blank)
+                tutorial_games[0].round += 1
+                if player1.hp <= 0:
+                    print('你忽然回過神來，發現自己仍坐在賭桌前，彷彿剛才都只是一場夢')
+                    time.sleep(3)
+                    print('薩邁爾: 賭博這種事，運氣是很重要的。希望你已經掌握基本規則了')
+                    break
+                elif computer1.hp <= 0:
+                    print('薩邁爾: 很好，看來你已經掌握了基本規則')
+                    break
+            time.sleep(4)
+            print('薩邁爾: 那麼，接下來由利維坦為你介紹關於"道具"的規則吧')
+            time.sleep(4)
+            print('語畢，一名身材高挑，全身刺青的女子不知從何處出現，湊到你的面前')
+            time.sleep(4)
+            print('利維坦: 新來的小夥子挺標緻嘛，我是這裡的商店老闆，利維坦')
+            time.sleep(4)
+            print('利維坦: 你不覺得純粹賭運氣的遊戲有點無聊嗎?')
+            time.sleep(4)
+            print('利維坦: 然而只要加入道具，賭局就會變得更刺激，你說是吧?')
+            time.sleep(4)
+            print('薩邁爾在一旁瞪了她一眼，利維坦清了清喉嚨，繼續說道')
+            time.sleep(4)
+            print('利維坦: 接下來我會為你介紹一下道具的使用方法和規則')
+            time.sleep(4)
+            print('利維坦: 每局開始，也就是重新裝彈的時候，你和莊家都將隨機獲得2~5個道具')
+            time.sleep(4)
+            print('利維坦: 這些道具可以幫助你或者干擾對手，增加遊戲的變數性')
+            time.sleep(4)
+            print('利維坦: 你可以在每回合開槍前使用道具，想用幾個道具都可以，次數沒有限制')
+            time.sleep(4)
+            print('利維坦: 沒用完的道具將會保留，不過請注意每人最多持有8個道具')
+            time.sleep(4)
+            print('利維坦: 每個道具的效果各不相同，一般道具總共有9種，它們的效果分別是...什麼來著?')
+            time.sleep(4)
+            print('你聽到身後傳來一聲嘆氣，接著一本圖鑑被放到了賭桌上')
+            time.sleep(4)
+            print('莉莉斯: 這裡有一般道具的介紹，記下來對你會很有幫助')
+            time.sleep(4)
+            action = input('查看圖鑑? 1.是 2.否')
+            if action == '1':
+                lobby_NPC[0].unlock_normal_item()
+                lobby_NPC[0].unlock_special_item()
+                lobby_NPC[0].show_normal_item()
+            time.sleep(2)
+            print('莉莉斯: 這些道具是普通道具，當然未來你在賭桌上有機會遇見一些特殊道具')
+            time.sleep(4)
+            print('莉莉斯: 到時候你可以來我這裡查看圖鑑，我會告訴你如何使用這些道具')
+            time.sleep(4)
+            print('利維坦: 咳咳...總之，準備好的話就來練習一場吧? 嘿嘿嘿，我會讓你體驗道具真正的力量......')
+            time.sleep(4)
+            print('薩邁爾一拳打在利維坦頭上，強行把她拖走')
+            time.sleep(4)
+            print('莉莉斯: 那個笨蛋總是會搞出不必要的混亂。這場就由我來幫你練習吧?')
+            time.sleep(4)
+            input('按下Enter開始練習')
+            player1 = player(5,[],0)
+            computer1 = computer(5,[])
+            tutorial_games={}
+            tutorial_games[1] = tutorial_game(player1,computer1,6)
+            while True:
+                live_bullet = random.randint(1,4)
+                blank = random.randint(1,4)
+                item_number = random.randint(2,5)
+                tutorial_games[1].item_one_round(live_bullet,blank,item_number)
+                tutorial_games[1].round += 1
+                if player1.hp <= 0:
+                    print('你忽然回過神來，發現自己正趴在賭桌前，莉莉斯剛好為你完成包紮')
+                    break
+                elif computer1.hp <= 0:
+                    print('莉莉斯: 你學得很快呢! 靈活運用道具是致勝的關鍵')
+                    break
+            time.sleep(4)
+            print('莉莉斯: 那麼以上就是關於道具的使用方法和基本規則')
+            time.sleep(4)
+            print('莉莉斯: 如果有任何規則相關的問題，你可以在大廳找到薩邁爾，他會很樂意為你解答')
+            time.sleep(4)
+            print('莉莉斯: 遇到新的道具時，也可以來我這裡查看圖鑑')
+            time.sleep(4)
+            print('莉莉斯: 順帶一提，利維坦那笨蛋負責商店，等你有錢後也可以去她那裡光顧一下')
+            time.sleep(4)
+            print('莉莉斯: 然後這個給你，在你犯錯時可以救你一命，就當作是初次見面的禮物吧')
+            time.sleep(4)
+            print('你獲得了人工心臟，可以在死亡的復活一次，使用時消耗50%財產作為手術費用')
+            main_player.unlockable_item.append('人工心臟')
+            time.sleep(4)
+            print('莉莉斯: 那麼祝你好運，希望你能在這裡找到你想要的東西')
+            time.sleep(4)
+            input('按下Enter回到大廳')
+            
          
 class collection_manager(NPC):
     def __init__(self):
@@ -220,21 +358,21 @@ class collection_manager(NPC):
 
     def unlock_normal_item(self):
         for item in self.normal_item:
-            item.unlock_item()
+            item.unlock_item(show_text=False)
     def unlock_special_item(self):
         for item in self.special_item:
-            item.unlock_item()
+            item.unlock_item(show_text=False)
     def unlock_queen_king_item(self,target):
         for item in self.queen_king_item:
             if item.name_hide == target:
-                item.unlock_item()
+                item.unlock_item(True)
     def unlock_mark_item(self,target):
         for item in self.mark_item:
             if item.name_hide == target:
-                item.unlock_item()
+                item.unlock_item(True)
     def unlock_snake_item(self):
         for item in self.snake_item:
-            item.unlock_item()
+            item.unlock_item(True)
     def show_normal_item(self):
         print('普通道具:')
         #顯示物品名稱和敘述
@@ -342,7 +480,7 @@ class player_in_lobby(NPC):
         self.max_item = 0
         self.extra_hp = 0
         #商店物品
-        self.unlockable_item = ['扭曲印記']
+        self.unlockable_item = []
     def earn_money(self,amount):
         self.money += amount
     def show_money(self):
@@ -4782,12 +4920,37 @@ class challenge_mode(game):
                     self.give_participant_item(1,self.computer)
                 break      
 
+#新手教學
+class tutorial_game(challenge_mode):
+    def __init__(self,player,computer,hp):
+        game.__init__(self,player,computer,hp,1)
+    def basic_one_round(self, live_bullet, blank):
+        super().one_round_Samael(live_bullet, blank, 0)
+    def give_item(self, number):
+        for i in range(number):
+            if len(self.player.item) < self.player.max_item:                
+                item = self.item_list[random.randint(0,len(self.item_list)-1)]
+                print('你獲得了',item)
+                self.player.item.append(item)
+            else:
+                print('你的物品欄已滿')
+            if len(self.computer.item) < self.computer.max_item:
+                self.computer.item.append(self.item_list[random.randint(0,len(self.item_list)-1)])
+        self.player.item.sort(key = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+        self.computer.item.sort(key = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+    
+    def item_one_round(self, live_bullet, blank, item_number):
+        super().one_round_Lilit(live_bullet, blank, item_number)
+        
+        
 #主程式
 main_player = player_in_lobby(input('請輸入角色名字:'),0)
 lobby_NPC = []
 lobby_NPC.append(collection_manager())
 lobby_NPC.append(shopkeeper())
 lobby_NPC.append(host())
+#新手教學  
+lobby_NPC[2].tutorial()
 while True:
     risk = 1
     first_move = '玩家'
@@ -5162,6 +5325,3 @@ while True:
     if main_player.die_state:
         print('遊戲結束')
         break
-
-
-        
