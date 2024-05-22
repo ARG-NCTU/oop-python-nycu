@@ -4,29 +4,17 @@ import math
 import pickle
 import os
 '''未來想法:
-1.增加一些皇后效果
-2.增加國王系列道具，只有莊家可以直接獲得
-3.大廳，讓玩家選擇放棄之後獲得金錢，金錢可以在大廳用來購買物品
-4.增加一些額外賭注讓玩家在每局開始前選擇，例如莊家先手獎金2.5倍，無法獲得皇后/莊家可獲得國王獎金2倍，限定道具使用次數/無道具獎金1.5倍等
-5.商店可賣人工心臟，每次死亡可以使用人工心臟復活，但是價格很高且使用會消耗95%的金錢
-6.劇情線和結局
-7.教學模式
+
 8.改成用滑鼠操作的GUI
-9.朦朧國王:免疫每局第一次傷害
-10.狂暴國王:接下來5次傷害翻倍
-11.狡詐國王:知道前三發子彈是什麼
-12.貪婪國王:偷走玩家所有非皇后物品
-13.試煉模式前對話
-14.薩邁爾的大廳互動
-15.成就系統
-16.莉莉斯的對話
+
 '''
 #大廳物件
 class NPC:
     def __init__(self,name):
         self.name = name
+        self.devil_dependency = False
         pass
-    def challenge_mode_dialogue(self,win_count):
+    def challenge_mode_dialogue(self,win_count,computer):
         #每場結束時說的話
         pass
     def challenge_mode_reward(self,player_lobby):
@@ -37,6 +25,9 @@ class NPC:
         pass
     def before_challenge(self):
         #試煉開始前說的話
+        pass
+    def devil_transform(self):
+        #眷屬條件觸發成功，選擇是否成為眷屬
         pass
 
 class all_item:
@@ -159,6 +150,16 @@ class shopkeeper(NPC):
     def say_normal_dialogue(self):
         print(self.normal_dialogue[random.randint(0,len(self.normal_dialogue)-1)])
 
+    def before_challenge(self):
+        print('利維坦: 小夥子要挑戰我? 希望你已經做好赴死的心理準備了，我可不會手下留情喔')
+        time.sleep(2)
+        print('利維坦: 順帶一提，如果你還沒從莉莉斯納裡聽說過的話，我可是我們三人之中最強的喔?')
+        time.sleep(2)
+        print('利維坦: 如果你能讓我欣賞你，我就教你道具的真正使用方式吧! ')
+        time.sleep(2)
+        print('利維坦: 那麼，你準備好了嗎?')
+        time.sleep(2)
+        input('按下Enter開始挑戰')
     def challenge_mode_dialogue(self,win_count,computer):
         #每場結束時說的話
         if win_count == 5:
@@ -219,6 +220,19 @@ class host(NPC):
         NPC.__init__(self,'薩邁爾')
         pass
 
+    def before_challenge(self):
+        print('薩邁爾: 你要挑戰我? 你的勇氣令人敬佩')
+        time.sleep(2)
+        print('薩邁爾: 我和其他兩位不同，不喜歡花俏的道具或規則')
+        time.sleep(2)
+        print('薩邁爾: 這場試煉，請以你自己雙眼看破未來')
+        time.sleep(2)
+        print('薩邁爾: 如果你能擊敗我，我會賜予你我的羽翼')
+        time.sleep(2)
+        print('薩邁爾: 談話就此打住，準備好了嗎?')
+        time.sleep(2)
+        input('按下Enter開始挑戰')
+
     def challenge_mode_reward(self,player_lobby):
         if '墮天使印記' not in player_lobby.unlockable_item:
             player_lobby.unlockable_item.append('墮天使印記')
@@ -227,7 +241,7 @@ class host(NPC):
             time.sleep(2)
             print('薩邁爾: 你的實力，又或者說是運氣，我認可了')
             time.sleep(2)
-            print('薩邁爾: 依照規定，我將賜予你我的羽翼')
+            print('薩邁爾: 依照約定，我將賜予你我的羽翼')
             time.sleep(2)
             print('語畢，薩邁爾的身形開始逐漸化為不可名狀之物，惡魔的真身')
             time.sleep(2)
@@ -239,7 +253,47 @@ class host(NPC):
             time.sleep(2)
             print('薩邁爾: 準備好之後就來大廳找我吧')
             time.sleep(2)
-            lobby_NPC[0].unlock_achievement('墮天使的羽翼')
+            lobby_NPC[0].unlock_achievement('墮落的羽翼')
+
+    def devil_transform(self):
+        print('薩邁爾: 這位客官，請留步')
+        time.sleep(2)
+        print('薩邁爾: 你的靈魂，你的堅持，我很欣賞')
+        time.sleep(4)
+        print('薩邁爾: 如果你想要，我可以讓你成為我的眷屬')
+        time.sleep(4)
+        print('薩邁爾: 別看我這樣，我也曾經是一名天使')
+        time.sleep(4)
+        print('薩邁爾: 我能給予你渴求的力量，相對的，你也將永遠為我效力')
+        time.sleep(3)
+        action = input('成為薩邁爾的眷屬? 1.是 2.否')
+        if action == '1':
+            print('薩邁爾: 了解，從現在起，你便不再是一個人類')
+            time.sleep(4)
+            print('薩邁爾把手搭在你的肩上，你感覺到一股強大的力量湧入你的身體')
+            time.sleep(4)
+            print('墮天使印記昇華成為了★死之天使印記★')
+            main_player.unlockable_item.remove('墮天使印記')
+            main_player.unlockable_item.append('★死之天使印記★')
+            time.sleep(4)
+            print('你成為了薩邁爾的眷屬')
+            if main_player.devil == '':
+                main_player.devil = '薩邁爾'
+            else:
+                time.sleep(2)
+                print('你將不再是',main_player.devil,'的眷屬')
+                main_player.devil = '薩邁爾'
+            time.sleep(4)
+            print('薩邁爾: 當你做好直面"公主"的準備時，再來找我吧')
+            time.sleep(4)
+            lobby_NPC[0].unlock_achievement('無謂的堅持')
+        else:
+            print('薩邁爾: 了解了，你的選擇，我會記住的')
+            time.sleep(4)
+            print('薩邁爾: 做出改變並不是一件容易的事，你的堅持我尊重')
+            time.sleep(4)
+            print('薩邁爾: 當你做好直面"公主"的準備時，再來找我吧')
+            time.sleep(4)
 
     def tutorial(self):
         win_count = 0
@@ -421,7 +475,10 @@ class collection_manager(NPC):
         self.queen_king_item.append(all_item('貪婪國王','偷走玩家所有非皇后物品'))
         self.mark_item.append(all_item('嗜血印記','開槍造成1點傷害時，額外吸收莊家的1點血量'))
         self.mark_item.append(all_item('扭曲印記','每局可使用一次，使用後改變道具的本質(詳見下一頁)，直到本局結束'))
-        self.mark_item.append(all_item('墮天使印記','未知'))
+        self.mark_item.append(all_item('墮天使印記','剩下1點血量時，立即恢復3點血量，獲勝後重置使用次數'))
+        self.mark_item.append(all_item('★慾之血印記★','開槍造成1點傷害時，額外吸收莊家的1點血量。服用過期藥物和禁藥時不再損失血量'))
+        self.mark_item.append(all_item('扭曲印記','每局可使用一次，使用後改變道具的本質，直到本局結束'))
+        self.mark_item.append(all_item('★死之天使印記','剩下1點血量時，立即恢復3點血量，獲勝後重置使用次數。手機將預知全部子彈'))
         self.snake_item.append(all_item('*放大鏡','獲得1格背包空間，額外裝填3發子彈'))
         self.snake_item.append(all_item('*香菸','使當前空包彈變為實彈，若為實彈退彈'))
         self.snake_item.append(all_item('*手鋸','用手鉅攻擊莊家，造成1點傷害，無視朦朧國王效果'))
@@ -499,7 +556,8 @@ class collection_manager(NPC):
                                     ,'莉莉斯: 好想要有更多眷屬啊......別這樣看著我，要想成為眷屬的話，你得先學會看穿惡魔的喜好才行'\
                                     ,'莉莉斯: 說實話，整天收割人類靈魂的生活也是很無聊的，所以公主大人才會突發奇想了這間賭場'\
                                     ,'莉莉斯: 你應該有發覺，薩邁爾其實和利維坦不太合，但礙於實力差距，即使他是這裡的老大也只能嘴上抱怨而已'])
-
+        self.special_dialogue = []
+        self.special_dialogue.extend(['莉莉斯: 你想要的話，隨時可以喔🤍    畢竟你是我的眷屬嘛'])
 
     def unlock_normal_item(self):
         for item in self.normal_item:
@@ -556,9 +614,23 @@ class collection_manager(NPC):
     def show_mark_item(self):
         print('惡魔印記:')
         #顯示物品名稱和敘述
-        for i in range(len(self.mark_item)):
-            print(i+1,self.mark_item[i].name)
-            print('    ',self.mark_item[i].description)
+        if '★慾之血印記★' not in main_player.unlockable_item:
+            print(1,self.mark_item[0].name)
+            print('    ',self.mark_item[0].description)
+        elif '★慾之血印記★' in main_player.unlockable_item:
+            print(1,self.mark_item[3].name)
+            print('    ',self.mark_item[3].description)
+
+        print(2,self.mark_item[1].name)
+        print('    ',self.mark_item[1].description)
+
+        if '★死之天使印記★' not in main_player.unlockable_item:
+            print(3,self.mark_item[2].name)
+            print('    ',self.mark_item[2].description)
+        elif '★死之天使印記★' in main_player.unlockable_item:
+            print(3,self.mark_item[5].name)
+            print('    ',self.mark_item[5].description)
+
         input('按下Enter回到上一頁')
     def show_snake_item(self):
         print('扭曲印記啟用時的道具:')
@@ -648,6 +720,24 @@ class collection_manager(NPC):
         if self.dialogue_number == []:
             self.unlock_achievement('居心叵測')
         time.sleep(2)
+    
+    def before_challenge(self):
+        print('莉莉斯: 你要挑戰我嗎? 也不是不行，就來玩玩吧')
+        time.sleep(2)
+        print('莉莉斯: 久違的靈魂狩獵，就讓我嚐嚐你靈魂的滋味吧')
+        time.sleep(2)
+        print('莉莉斯: 如果你能贏過我，我就傳授你吸收他人靈魂的技巧!')
+        time.sleep(2)
+        if lobby_NPC[0].achievement_list[2].unlock:    
+            print('莉莉斯: ......')
+            time.sleep(2)
+            print('莉莉斯: ...如果你能讓我滿意的話，想成為眷屬什麼的也不是不行啦......')
+            time.sleep(2)
+            print('莉莉斯: 總之，你準備好之後就開始吧')
+        else:
+            print('莉莉斯: 那麼，你準備好了嗎?')
+        time.sleep(2)
+        input('按下Enter開始挑戰')
 
     def challenge_mode_dialogue(self,win_count,computer):
         #每場結束時說的話
@@ -662,24 +752,77 @@ class collection_manager(NPC):
             elif win_count == 4:
                 computer.item.append('禁藥')
                 computer.item.append('禁藥')
+
     def challenge_mode_reward(self,player_lobby):
         if '扭曲印記' not in player_lobby.unlockable_item:
             player_lobby.unlockable_item.append('嗜血印記')
-            time.sleep(2)
+            time.sleep(3)
             print('莉莉斯起身向前，給了你一個深深的吻')
-            time.sleep(2)
+            time.sleep(3)
             print('酥麻感流遍全身，你的靈魂深處感到一股強烈的...對鮮血的渴望')
-            time.sleep(2)
+            time.sleep(3)
             print('莉莉斯: 你的靈魂非常甜美，多謝款待')
-            time.sleep(2)
-            print('回過神來，莉莉斯已經離開了')
-            time.sleep(2)
+            time.sleep(3)
             print('你獲得了嗜血印記')
-            time.sleep(2)
+            time.sleep(3)
             player_lobby.extra_hp += 2
             print('你的額外生命增加了2點')
-            time.sleep(1)
+            time.sleep(3)
             lobby_NPC[0].unlock_achievement('誘惑的吻')
+    
+    def devil_transform(self):
+        print('莉莉斯: ......吶')
+        time.sleep(2)
+        print('莉莉斯叫住了你，一隻手輕輕地拉著你的衣角，面色潮紅')
+        time.sleep(4)
+        print('莉莉斯: 你應該知道了吧? 我喜歡的類型......')
+        time.sleep(4)
+        print('莉莉斯: ...你想成為我的眷屬嗎?')
+        time.sleep(4)
+        print('莉莉斯: 我可以教你更多...技巧，如果你懂我的意思的話')
+        time.sleep(4)
+        print('語畢，莉莉斯的手指輕輕地滑過你的臉頰')
+        time.sleep(4)
+        print('莉莉斯: 那麼，你的回答是?')
+        time.sleep(3)
+        action = input('1.接受 2.拒絕 :')
+        if action == '1':
+            print('莉莉斯: ......色鬼')
+            time.sleep(2)
+            print('......')
+            time.sleep(2)
+            print('......')
+            time.sleep(2)
+            print('......一段時間後')
+            time.sleep(2)
+            print('莉莉斯: 呼...不愧是年輕人，真是有活力')
+            time.sleep(4)
+            print('經歷漫長的儀式之後，你成為了莉莉斯的眷屬')
+            time.sleep(3)
+            if main_player.devil == '':
+                main_player.devil = '莉莉斯'
+            else:
+                time.sleep(2)
+                print('你將不再是',main_player.devil,'的眷屬')
+                main_player.devil = '莉莉斯'
+                time.sleep(2)
+            print('嗜血印記昇華成為了★慾之血印記★')
+            main_player.unlockable_item.append('★慾之血印記★')
+            main_player.unlockable_item.remove('嗜血印記')
+            time.sleep(3)
+            print('莉莉斯: 你的靈魂將永遠屬於我，不要忘記我們的約定喔')
+            time.sleep(3)
+            lobby_NPC[0].unlock_achievement('慾望的奴隸')
+            time.sleep(2)
+        else:
+            print('莉莉斯: 這樣啊......')
+            time.sleep(4)
+            print('你感受到莉莉斯的失落，但她很快又掛起了微笑')
+            time.sleep(4)
+            print('莉莉斯: 成為惡魔眷屬的機會只有一次，在做決定前要想清楚喔')
+            time.sleep(4)
+            print('莉莉斯: 你仍然可以隨時回來找我，我會等你的')
+            time.sleep(3)
 
 class player_in_lobby(NPC):
     def __init__(self,name,money):
@@ -689,7 +832,8 @@ class player_in_lobby(NPC):
         #保存下來的物品欄(商店升級)
         self.item = []
         self.max_item = 0
-        self.extra_hp = 0
+        self.extra_hp = 10
+        self.devil = ''
         #商店物品
         self.unlockable_item = []
     def earn_money(self,amount):
@@ -728,6 +872,7 @@ class participant:
 class computer(participant):
     def __init__(self, hp, item):
         participant.__init__(self, False, hp, item)
+        self.regen = False
         self.handcuff = False
         self.bullet_pattern = []
         self.known_live = 0
@@ -769,17 +914,21 @@ class player(participant):
         self.blood_queen = 0
         self.blessing = 0
         self.snake_mark_activate = False
+        self.death_mark_activate = False
         self.have_snake_mark = False
         self.have_blood_mark = False
         self.have_death_mark = False
+        self.have_angel_mark = False
+        self.have_lust_mark = False
     def dohandcuff(self):
         self.handcuff = True
     def unhandcuff(self):
         self.handcuff = False
-    def enable_mark(self,blood,snake,death):
-        self.have_blood_mark = blood
+    def enable_mark(self,blood,snake,death,lust,warp,angel):
+        self.have_blood_mark = blood or lust
+        self.have_lust_mark = lust
         self.have_snake_mark = snake
-        self.have_death_mark = death
+        self.have_death_mark = death or angel
     def use_snake_mark(self):
         self.have_snake_mark = False
         self.snake_mark_activate = True
@@ -1322,14 +1471,21 @@ class game:
                             return
                 elif self.player.item[item-1] == '手機':
                     print('你使用了手機')
-                    if len(remain_bullet) == 1:
-                        n = 0
+                    if self.player.have_angel_mark:
+                        for i in range(len(remain_bullet)):
+                            if remain_bullet[i]:
+                                print('第',i+1,'發是實彈')
+                            else:
+                                print('第',i+1,'發是空包彈')
                     else:
-                        n=random.randint(1,len(remain_bullet)-1)
-                    if remain_bullet[n]:
-                        print('第',n+1,'發是實彈')
-                    else:
-                        print('第',n+1,'發是空包彈')
+                        if len(remain_bullet) == 1:
+                            n = 0
+                        else:
+                            n=random.randint(1,len(remain_bullet)-1)
+                        if remain_bullet[n]:
+                            print('第',n+1,'發是實彈')
+                        else:
+                            print('第',n+1,'發是空包彈')
                 elif self.player.item[item-1] == '轉換器':
                     print('你使用了轉換器,現在這發子彈將反轉')
                     remain_bullet[0] = not remain_bullet[0]
@@ -1341,7 +1497,7 @@ class game:
                         blank += 1
                 elif self.player.item[item-1] == '過期藥物':
                     print('你使用了過期藥物')
-                    if random.randint(0,1):
+                    if random.randint(0,1) or self.player.have_lust_mark:
                         self.player.hp += 2
                         print('你回復了兩點血量')
                     else:
@@ -1403,7 +1559,7 @@ class game:
                 elif self.player.item[item-1] == '禁藥':
                     #70%機率血量翻倍並+3，30%血量降低到1點，若血量為1則死亡
                     print('你使用了禁藥')
-                    if random.randint(1,10) <= 7:
+                    if random.randint(1,10) <= 7 or self.player.have_lust_mark:
                         self.player.hp *= 2
                         self.player.hp += 3
                         print('你的血量大幅提升,現在血量為',self.player.hp)
@@ -1592,14 +1748,21 @@ class game:
                             return
                     elif self.computer.item[steal-1] == '手機':
                         print('你使用了手機')
-                        if len(remain_bullet) == 1:
-                            n = 0
+                        if self.player.have_angel_mark:
+                            for i in range(len(remain_bullet)):
+                                if remain_bullet[i]:
+                                    print('第',i+1,'發是實彈')
+                                else:
+                                    print('第',i+1,'發是空包彈')
                         else:
-                            n=random.randint(1,len(remain_bullet)-1)
-                        if remain_bullet[n]:
-                            print('第',n+1,'發是實彈')
-                        else:
-                            print('第',n+1,'發是空包彈')
+                            if len(remain_bullet) == 1:
+                                n = 0
+                            else:
+                                n=random.randint(1,len(remain_bullet)-1)
+                            if remain_bullet[n]:
+                                print('第',n+1,'發是實彈')
+                            else:
+                                print('第',n+1,'發是空包彈')
                     elif self.computer.item[steal-1] == '轉換器':
                         print('你使用了轉換器,現在這發子彈將反轉')
                         remain_bullet[0] = not remain_bullet[0]
@@ -1611,7 +1774,7 @@ class game:
                             blank += 1
                     elif self.computer.item[steal-1] == '過期藥物':
                         print('你使用了過期藥物')
-                        if random.randint(0,1):
+                        if random.randint(0,1) or self.player.have_lust_mark:
                             self.player.hp += 2
                             print('你回復了兩點血量')
                         else:
@@ -1639,7 +1802,7 @@ class game:
                         print('你獲得了未知藍圖')
                     elif self.computer.item[steal-1] == '禁藥':
                         print('你使用了禁藥')
-                        if random.randint(1,10) <= 7:
+                        if random.randint(1,10) <= 7 or self.player.have_lust_mark:
                             self.player.hp *= 2
                             self.player.hp += 3
                             print('你的血量大幅提升,現在血量為',self.player.hp)
@@ -1780,6 +1943,13 @@ class game:
             print('==========================================')
             print('莊家的回合')
             print('==========================================')
+
+            if self.player.hp == 1 and self.player.death_mark_activate:
+                print('墮天使的力量使你恢復了3點血量')
+                time.sleep(2)
+                self.player.death_mark_activate = False
+                self.player.hp +=3
+
             time.sleep(1)
             try_count = 0
             not_blue_print = True
@@ -2815,7 +2985,7 @@ class challenge_mode(game):
                         blank += 1
                 elif self.player.item[item-1] == '過期藥物':
                     print('你使用了過期藥物')
-                    if random.randint(0,1):
+                    if random.randint(0,1) or self.player.have_lust_mark:
                         self.player.hp += 2
                         print('你回復了兩點血量')
                     else:
@@ -2877,7 +3047,7 @@ class challenge_mode(game):
                 elif self.player.item[item-1] == '禁藥':
                     #70%機率血量翻倍並+3，30%血量降低到1點，若血量為1則死亡
                     print('你使用了禁藥')
-                    if random.randint(1,10) <= 7:
+                    if random.randint(1,10) <= 7 or self.player.have_lust_mark:
                         self.player.hp *= 2
                         self.player.hp += 3
                         print('你的血量大幅提升,現在血量為',self.player.hp)
@@ -3085,7 +3255,7 @@ class challenge_mode(game):
                             blank += 1
                     elif self.computer.item[steal-1] == '過期藥物':
                         print('你使用了過期藥物')
-                        if random.randint(0,1):
+                        if random.randint(0,1) or self.player.have_lust_mark:
                             self.player.hp += 2
                             print('你回復了兩點血量')
                         else:
@@ -3113,7 +3283,7 @@ class challenge_mode(game):
                         print('你獲得了未知藍圖')
                     elif self.computer.item[steal-1] == '禁藥':
                         print('你使用了禁藥')
-                        if random.randint(1,10) <= 7:
+                        if random.randint(1,10) <= 7 or self.player.have_lust_mark:
                             self.player.hp *= 2
                             self.player.hp += 3
                             print('你的血量大幅提升,現在血量為',self.player.hp)
@@ -3258,9 +3428,9 @@ class challenge_mode(game):
             try_count = 0
             not_blue_print = True
             if action == 0:
-                achivement_first_dead = True
+                achievement_first_dead = True
             else:
-                achivement_first_dead = False
+                achievement_first_dead = False
             '''
             利維坦道具說明:
             國王和皇后效果不變
@@ -3755,6 +3925,7 @@ class challenge_mode(game):
                     blank -= 1
                 remain_bullet.pop(0)
             elif action==2:
+                lobby_NPC[2].devil_dependency = False
                 if remain_bullet[0]:
                     self.player.hp -= 1
                     print('你射中了自己,造成一點傷害')
@@ -3785,6 +3956,12 @@ class challenge_mode(game):
                 print('你死了')
                 time.sleep(2)
                 return
+            
+            if self.computer.regen and self.computer.hp == 1:
+                print('薩邁爾的翅膀散發神聖的氣息，血量恢復了3')
+                self.computer.hp += 3
+                time.sleep(1)
+                self.computer.regen = False
             if len(remain_bullet) == 0:
                 print('子彈打完了')
                 print('進入下一局')
@@ -4112,7 +4289,7 @@ class challenge_mode(game):
                         blank += 1
                 elif self.player.item[item-1] == '過期藥物':
                     print('你使用了過期藥物')
-                    if random.randint(0,1):
+                    if random.randint(0,1) or self.player.have_lust_mark:
                         self.player.hp += 2
                         print('你回復了兩點血量')
                     else:
@@ -4174,7 +4351,7 @@ class challenge_mode(game):
                 elif self.player.item[item-1] == '禁藥':
                     #70%機率血量翻倍並+3，30%血量降低到1點，若血量為1則死亡
                     print('你使用了禁藥')
-                    if random.randint(1,10) <= 7:
+                    if random.randint(1,10) <= 7 or self.player.have_lust_mark:
                         self.player.hp *= 2
                         self.player.hp += 3
                         print('你的血量大幅提升,現在血量為',self.player.hp)
@@ -4382,7 +4559,7 @@ class challenge_mode(game):
                             blank += 1
                     elif self.computer.item[steal-1] == '過期藥物':
                         print('你使用了過期藥物')
-                        if random.randint(0,1):
+                        if random.randint(0,1) or self.player.have_lust_mark:
                             self.player.hp += 2
                             print('你回復了兩點血量')
                         else:
@@ -4410,7 +4587,7 @@ class challenge_mode(game):
                         print('你獲得了未知藍圖')
                     elif self.computer.item[steal-1] == '禁藥':
                         print('你使用了禁藥')
-                        if random.randint(1,10) <= 7:
+                        if random.randint(1,10) <= 70 or self.player.have_lust_mark:
                             self.player.hp *= 2
                             self.player.hp += 3
                             print('你的血量大幅提升,現在血量為',self.player.hp)
@@ -5341,6 +5518,12 @@ if __name__ == '__main__':
                 lobby_NPC[0].unlock_snake_item()
             if '墮天使印記' in main_player.unlockable_item:
                 lobby_NPC[0].unlock_mark_item('墮天使印記')
+            if '★慾之血印記★' in main_player.unlockable_item:
+                lobby_NPC[0].unlock_mark_item('★慾之血印記★')
+            if '★還沒想好★' in main_player.unlockable_item:
+                lobby_NPC[0].unlock_mark_item('★還沒想好★')
+            if '★死之天使印記★' in main_player.unlockable_item:
+                lobby_NPC[0].unlock_mark_item('★死之天使印記★')
             lobby_NPC[0].say_normal_dialogue()
             time.sleep(1.5)
             lobby_NPC[0].show_list()
@@ -5389,7 +5572,7 @@ if __name__ == '__main__':
         round = 0
         player1 = player(5,main_player.item,money)
         if not in_challenge_mode:
-            player1.enable_mark('嗜血印記' in main_player.unlockable_item, '扭曲印記' in main_player.unlockable_item, '墮天使印記' in main_player.unlockable_item)
+            player1.enable_mark('嗜血印記' in main_player.unlockable_item, '扭曲印記' in main_player.unlockable_item, '墮天使印記' in main_player.unlockable_item, '★慾之血印記★' in main_player.unlockable_item, '★還沒想好★' in main_player.unlockable_item, '★死之天使印記★' in main_player.unlockable_item)
         computer1 = computer(5,[])
         hp=random.randint(2,6)
         win_count = 0
@@ -5434,6 +5617,7 @@ if __name__ == '__main__':
                         print('你帶著',player1.money,'元繼續遊戲')
                         computer1 = computer(5,[])
                         hp=random.randint(2,6)
+                        player1.death_mark_activate = player1.have_death_mark
                         games[round] = game(player1,computer1,hp,risk)
                         continue
                     else:
@@ -5461,8 +5645,10 @@ if __name__ == '__main__':
                         print('你帶著',player1.money,'元繼續遊戲')
                         computer1 = computer(5,[])
                         hp=random.randint(2,6)
+                        player1.death_mark_activate = player1.have_death_mark
                         games[round] = game(player1,computer1,hp,risk)
                         games[round].player_bonus(win_count)
+                        
                         for i in range(int(round/3)):
                             games[round].computer_bonus(i)
                         continue
@@ -5552,8 +5738,14 @@ if __name__ == '__main__':
                 risk = 21
             elif challenger.name == '薩邁爾':
                 risk = 1
+                #偵測是否為第三局用
+                pp = 0
+                lobby_NPC[2].devil_dependency = True
             elif challenger.name == '惡魔公主':
                 pass
+            #開始前對話
+            challenger.before_challenge()
+
             challenge_games[round] = challenge_mode(player1,computer1,hp,risk,challenger.name)
             challenge_games[round].player_bonus(win_count)
         while in_challenge_mode == True:
@@ -5570,7 +5762,8 @@ if __name__ == '__main__':
                         print('莉莉斯咬碎手銬，恢復行動')
                     else:
                         challenge_games[round].Lilit_life_steal()
-                
+                if player1.hp >= 44:
+                    lobby_NPC[0].devil_dependency = True
             elif challenger.name == '利維坦':
                 risk = 21
                 max_round = 5
@@ -5594,7 +5787,10 @@ if __name__ == '__main__':
                 elif round == 3:
                     live_bullet = 1
                     blank = 1
+                    if pp == 0:
+                        challenge_games[round].computer.regen = True
                     foresee = 0
+                    pp = 1
                 item_number = 0
                 challenge_games[round].set_first_move('玩家')
                 challenge_games[round].one_round_Samael(live_bullet,blank,foresee)
@@ -5627,7 +5823,7 @@ if __name__ == '__main__':
                     challenge_games[round].player_bonus(win_count)
                     continue
                 else:
-                    challenger.challenge_mode_dialogue(win_count)
+                    challenger.challenge_mode_dialogue(win_count,computer1)
                     time.sleep(1)
                     print('你戰勝了',challenger.name,'通過了試煉')
                     challenger.challenge_mode_reward(main_player)
@@ -5637,6 +5833,12 @@ if __name__ == '__main__':
                     lobby_NPC[0].unlock_normal_item()
                     lobby_NPC[0].unlock_special_item()
                     time.sleep(2)
+                    if lobby_NPC[0].devil_dependency and challenger.name == '莉莉斯':
+                        lobby_NPC[0].devil_transform()
+                    elif lobby_NPC[1].devil_dependency and challenger.name == '利維坦':
+                        lobby_NPC[1].devil_transform()
+                    elif lobby_NPC[2].devil_dependency and challenger.name == '薩邁爾':
+                        lobby_NPC[2].devil_transform()
                 break
         if main_player.die_state:
             print('遊戲結束')
