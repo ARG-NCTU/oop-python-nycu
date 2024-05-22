@@ -61,6 +61,19 @@ class achievement(all_item):
             print('已解鎖成就 ',self.name)
             time.sleep(0.7)
 
+class rule(all_item):
+    def __init__(self,name,before_text,after_text):
+        self.name = name
+        self.before_text = before_text
+        self.after_text = after_text
+        self.unlock = False
+    def unlock_rule(self):
+        self.before_text = self.after_text
+        self.unlock = True
+    def show_rule(self):
+        print(self.before_text)
+    
+
 class shop_item:
     def __init__(self,name,price,stock,raise_multiply,description = ''):
         self.name = name
@@ -438,11 +451,202 @@ class host(NPC):
                 lobby_NPC[0].unlock_achievement('也許你不適合這裡')
             elif win_count == 2:
                 lobby_NPC[0].unlock_achievement('炸魚')
+    
+    def show_rule(self):
+        i = 5
+        rule_list = []
+        rule_list.extend(['一般規則','特殊道具規則','額外加注規則','皇后&國王道具規則'])
+        print ('=================================================================')
+        print('1.一般規則')
+        print('2.特殊道具規則')
+        print('3.額外加注規則')
+        print('4.皇后&國王道具規則')
+        if '最終試煉' in main_player.unlockable_item:
+            print(str(i)+'.惡魔試煉規則')
+            rule_list.append('惡魔試煉規則')
+            i += 1
+        if lobby_NPC[0].achievement_list[2].unlock == True:
+            print(str(i)+'.關於惡魔眷屬')
+            rule_list.append('惡魔眷屬規則')
+            i += 1
+        if not all([any(['嗜血印記' in main_player.unlockable_item, '★慾之血印記★' in main_player.unlockable_item]),
+                    any(['墮天使印記' in main_player.unlockable_item, '★死之天使印記★' in main_player.unlockable_item]),
+                    any(['扭曲印記' in main_player.unlockable_item, '還沒想好' in main_player.unlockable_item])]):
+            print(str(i)+'.大廳中央的大門?')
+            i += 1
+            rule_list.append('大廳中央的大門?')
+        else:
+            print(str(i)+'.進入大廳中央的大門')
+            rule_list.append('進入大廳中央的大門')
+            i += 1
+        
+        print(str(i)+'.沒事')
+        print ('=================================================================')
+        action = int(input(''))
+        if action > len(rule_list):
+            print('薩邁爾: 沒事就好，有問題再來找我吧')
+            return
+        if action == 1:
+            print('薩邁爾: 那麼我再為你複習一下基本規則')
+            time.sleep(5)
+            print('薩邁爾: 每一"場"賭局開始時，你和莊家都會隨機分配2~6點血量，血量先歸零者視為敗北')
+            time.sleep(5)
+            print('薩邁爾: 每一"局"開始時，散彈槍會以隨機順序裝填2~8發實彈或空包彈，兩人也會分別獲得2~5個隨機道具')
+            time.sleep(5)
+            print('薩邁爾: 子彈裝填完畢後將會輪到你的"回合"，你可以選擇使用道具、開槍射向自己或開槍射向莊家')
+            time.sleep(5)
+            print('薩邁爾: 道具為消耗品，每回合道具使用量不限，沒用完的道具會被保留，每人最多持有8個道具')
+            time.sleep(5)
+            print('薩邁爾: 如果你用實彈開槍射中自己，將損失1點血量並結束你的回合；當你用空包彈射中自己，你將獲得一個額外的回合')
+            time.sleep(5)
+            print('薩邁爾: 如果你選擇開槍射向莊家，若為實彈莊家將損失1點血量，空包彈則無事發生。無論射出的子彈為何，都將結束你的回合')    
+            time.sleep(5)
+            print('薩邁爾: 莊家的行動選項和你相同，雙方輪流開槍直到子彈打空，進入下一"局"，重新裝填子彈和獲得新道具')
+            time.sleep(5)
+            print('薩邁爾: 持續直到一方的血量歸零，結束這一"場"並獲得獎金')
+            time.sleep(5)
+            print('薩邁爾: 勝利後，若你選擇繼續，沒用完的道具可以繼承到下一場賭局')
+            time.sleep(5)
+            print('薩邁爾: 隨著你的連勝數增加，莊家的血量將會增加，所以請自行評估風險')
+            time.sleep(5)
+            print('薩邁爾: 以上就是賭局的基本規則')
+            input('按下Enter回到上一頁')
+        elif action == 2:
+            print('薩邁爾: 那麼我來為你講解一下特殊道具的規則')
+            time.sleep(5)
+            print('薩邁爾: 特殊道具擁有比一般道具更強力的效果，一般狀況下無法直接獲得')   
+            time.sleep(5)
+            print('薩邁爾: 唯一能夠在換彈後直接獲得的特殊道具是"未知藍圖"')
+            time.sleep(5)
+            print('薩邁爾: 其餘特殊道具的獲得方式是使用未知藍圖與一般道具進行"合成"')
+            time.sleep(5)
+            print('薩邁爾: 舉例來說，假設你的背包中持有3個"過期藥物"和1個"未知藍圖"')
+            time.sleep(5)
+            print('薩邁爾: 這時候使用"未知藍圖"，便可以消耗3個"過期藥物"和1個"未知藍圖"合成特殊道具"禁藥"')
+            time.sleep(5)
+            print('薩邁爾: 合成後的特殊道具將會直接放入你的背包中，能夠立即使用，並且不會消耗你的回合')
+            time.sleep(5)
+            print('薩邁爾: 合成表可以在莉莉斯的圖鑑中查看，她會為你提供更詳細的敘述')
+            time.sleep(5)
+            print('薩邁爾: 以上就是特殊道具的規則')
+            input('按下Enter回到上一頁')
+        elif action == 3:
+            print('薩邁爾: 我來為你講解一下額外加注的規則')
+            time.sleep(5)
+            print('薩邁爾: 額外加注可在賭局開始前選擇，新的規則會被加入賭局，獲勝獎金也將提高')
+            time.sleep(5)
+            print('薩邁爾: 獎金倍率可以彼此疊加，不過需要至少連勝5場，倍率才會被計算')
+            time.sleep(5)
+            print('薩邁爾: 目前有4種模式可加注:')
+            time.sleep(5)
+            print('薩邁爾: 1.高風險模式，獎金倍率5倍')
+            time.sleep(5)
+            print('薩邁爾: 這個模式下，雙方都有可能在新的一局開始時獲得"特殊道具"')   
+            time.sleep(5)   
+            print('薩邁爾: 另外，每場賭局開始時，有50%的機率大幅提升你和莊家的初始血量')
+            time.sleep(5)
+            print('薩邁爾: 2.殺手國王模式，獎金倍率10倍')
+            time.sleep(5)
+            print('薩邁爾: 這個模式下，莊家有可能在新的一局開始時獲得強力的"國王道具"')
+            time.sleep(5)
+            print('薩邁爾: 道具的效果可在遇見後解鎖圖鑑，莉莉斯能為你提供更詳細的敘述')
+            time.sleep(5)
+            print('薩邁爾: 3.幽閉皇后模式，獎金倍率7倍')
+            time.sleep(5)
+            print('薩邁爾: 這個模式下，你將無法獲得專屬玩家的強力"皇后道具"')
+            time.sleep(5)
+            print('薩邁爾: 和國王道具相同，遇見後可在莉莉斯的閱覽室查看圖鑑')
+            time.sleep(5)
+            print('薩邁爾: 4.莊家先手模式，獎金倍率50倍')
+            time.sleep(5)
+            print('薩邁爾: 這個模式下，每局子彈裝填完畢後莊家將先行獲得回合')
+            time.sleep(5)    
+            print('薩邁爾: 讓出先手權的風險相當高，當然獎金倍率也是最高的') 
+            time.sleep(5)
+            print('薩邁爾: 以上就是額外加注的規則')
+            input('按下Enter回到上一頁')
+        elif action == 4:
+            print('薩邁爾: 那麼我來為你講解一下皇后&國王道具的規則')
+            time.sleep(5)
+            print('薩邁爾: 皇后道具是一種稀有的道具，它們能夠在換彈時低機率直接獲得')
+            time.sleep(5)
+            print('薩邁爾: 皇后道具擁有強大的效果，能大幅提高獲勝機會')
+            time.sleep(5)
+            print('薩邁爾: 此外，皇后的使用次數將被記錄，並在你選擇退出賭局時提供額外的獎金倍率')
+            time.sleep(5)    
+            print('薩邁爾: 莊家無法獲得皇后道具，然而，這不代表他們不能"使用"皇后道具，這點請注意')
+            time.sleep(5)
+            print('薩邁爾: 相對於皇后道具，國王道具是一種專屬於莊家的強力道具')
+            time.sleep(5)
+            print('薩邁爾: 國王道具只有在下注殺手國王模式時，莊家才能夠在換彈時低機率獲得')
+            time.sleep(5)
+            print('薩邁爾: 皇后和國王道具的效果都可以在遇見後於圖鑑解鎖詳細敘述')
+            time.sleep(5)
+            print('薩邁爾: 以上就是皇后&國王道具的規則')
+            input('按下Enter回到上一頁')
+        elif rule_list[action-1] == '惡魔試煉規則':
+            print('薩邁爾: 你應該已經從利維坦那裡解鎖了惡魔試煉')
+            time.sleep(5)
+            print('薩邁爾: 如她所說，惡魔試煉將由莉莉斯、利維坦和我做為你的對手')
+            time.sleep(5)
+            print('薩邁爾: 惡魔試煉沒有獎金，然而，如果你能夠獲勝，將可以獲得惡魔的一部份力量:"惡魔印記"')
+            time.sleep(5)
+            print('薩邁爾: 請注意，我們三人的試煉皆會有自己獨特的規則和連勝要求，且惡魔印記對我們是沒有效果的')
+            time.sleep(5)
+            print('薩邁爾: 當你做好準備時，可以各自來找我們三個進行試煉')
+            time.sleep(5)
+            print('薩邁爾: 以上就是惡魔試煉的規則')
+            input('按下Enter回到上一頁')
+        elif rule_list[action-1] == '惡魔眷屬規則':
+            print('薩邁爾: 惡魔眷屬? 你從哪裡聽來的?')
+            time.sleep(5)
+            print('薩邁爾: ......莉莉斯那傢伙')
+            time.sleep(5)
+            print('薩邁爾: 算了，跟你說明也無妨')
+            time.sleep(5)
+            print('薩邁爾: 成為惡魔眷屬，意味著你將自己的靈魂獻給惡魔，已一生為惡魔效力為代價換取力量')
+            time.sleep(5)
+            print('薩邁爾: 然而，想成為眷屬並不是你說了算，你必須得到對方的邀請')
+            time.sleep(5)
+            print('薩邁爾: 具體來說，你不只必須在惡魔試煉中獲勝，還必須同時向我們展現你自己')
+            time.sleep(5)
+            print('薩邁爾: 每個惡魔都有自己的偏好，你必須滿足我們的要求，才有機會獲得邀請')
+            time.sleep(5)
+            print('薩邁爾: 一個靈魂只能成為一個惡魔的眷屬，所以做出選擇前請三思')
+            time.sleep(5)
+            print('薩邁爾: 大概這樣，至於惡魔的喜好，請自行摸索')
+            input('按下Enter回到上一頁')
+        elif rule_list[action-1] == '大廳中央的大門?':
+            print('薩邁爾: 你想進去那扇大門? 恕我拒絕')
+            time.sleep(5)
+            print('薩邁爾: 門後是這座賭場的創辦者，公主大人的房間')
+            time.sleep(5)
+            print('薩邁爾: 只有受到認可的賭徒才有資格和公主大人見面')
+            time.sleep(5)
+            print('薩邁爾: 等你的實力受到認可後，再來和我談這件事吧')
+            input('按下Enter回到上一頁')
+        elif rule_list[action-1] == '進入大廳中央的大門':
+            print('薩邁爾: 我了解了，你的實力已被認可，擁有謁見公主大人的權利')
+            time.sleep(5)
+            print('薩邁爾: 公主大人賞識有技巧的賭徒，她將會親自和你對局來確認你的實力')
+            time.sleep(5)
+            print('薩邁爾: 不過請小心，和公主大人的對局將是對彼此靈魂的廝殺，一旦死亡，人工心臟也舊不了你')
+            time.sleep(5)
+            print('薩邁爾: 無論如何，踏入那扇門便無法回頭，請三思')
+            time.sleep(5)
+            print('薩邁爾: 當你準備好時，我們就在門前碰面吧，我將帶你進入公主大人的房間')
+            time.sleep(3)
+            print('大廳解鎖了新的選項: 前往惡魔公主的房間')
+            input('按下Enter回到上一頁')
+
+        self.show_rule()
+        
             
          
 class collection_manager(NPC):
     def __init__(self):
         NPC.__init__(self,'莉莉斯')
+        self.finish_normal_dialogue = False
         self.normal_item=[]
         self.special_item=[]
         self.queen_king_item=[]
@@ -530,7 +734,7 @@ class collection_manager(NPC):
         self.achievement_list.append(achievement('吸毒有礙身心健康，請勿輕易嘗試','吃禁藥死亡','來路不明的藥物別亂嗑'))
         self.achievement_list.append(achievement('琉璃的祝福','獲得琉璃的祝福','這道具也太強了吧'))
         self.achievement_list.append(achievement('就說了不行','嘗試偷走腎上腺素','有些東西是偷不走的'))
-        self.achievement_list.append(achievement('滿血','買下所有額外血量','保險起見啦'))
+        self.achievement_list.append(achievement('滿血','獲得所有額外血量','保險起見啦'))
         self.achievement_list.append(achievement('瘋狂的傻子','成為利維坦的眷屬','在利維坦面前耍帥一波'))
         self.achievement_list.append(achievement('慾望的奴隸','成為莉莉斯的眷屬','向莉莉斯展現你的生命力'))
         self.achievement_list.append(achievement('無謂的堅持','成為薩邁爾的眷屬','回應薩邁爾的期待'))
@@ -708,16 +912,23 @@ class collection_manager(NPC):
         time.sleep(1)
         if len(self.dialogue_number) == 0:
             self.dialogue_number = [i for i in range(0,17)]
-
-        if 0 in self.dialogue_number:
+        if self.devil_dependency:
+            if random.randint(0,4) == 4 :
+                one_time_text = self.special_dialogue.pop(0)
+                print(one_time_text)
+        elif 0 in self.dialogue_number:
             number = self.dialogue_number.pop(0)
+            print(self.normal_dialogue[number])
         else:
             number = self.dialogue_number.pop(random.randint(0,len(self.dialogue_number)-1))
+            print(self.normal_dialogue[number])
         
-        print(self.normal_dialogue[number])
         if number == 14:
             self.unlock_achievement('惡魔的喜好?')
         if self.dialogue_number == []:
+            self.finish_normal_dialogue = True
+        
+        if self.finish_normal_dialogue and self.special_dialogue == []:
             self.unlock_achievement('居心叵測')
         time.sleep(2)
     
@@ -5427,6 +5638,9 @@ if __name__ == '__main__':
             lobby_NPC[0].unlock_achievement('財富自由')
         if main_player.money >= 999999999999:
             lobby_NPC[0].unlock_achievement('富可敵國')
+        if main_player.extra_hp >= 6:
+            time.sleep(1)
+            lobby_NPC[0].unlock_achievement('滿血') 
 
         #自動存檔
         save_game(main_player, lobby_NPC)
@@ -5438,9 +5652,17 @@ if __name__ == '__main__':
         if len(main_player.item) > 0:    
             main_player.show_item()
         print('==========================================================================================')
-        action = input('你站在吵雜的賭場中，輸入1進入設定,輸入2造訪商店,輸入3前往圖鑑,按下Enter前往賭桌  ')
+        action = input('你站在吵雜的賭場中，輸入1查看規則,輸入2造訪商店,輸入3前往圖鑑,按下Enter前往賭桌  ')
         if action == '1':
-            main_player.money += int(input('請輸入你的金錢:'))
+            print('你叫住了薩邁爾')
+            time.sleep(2)
+            if lobby_NPC[2].devil_dependency:
+                print('薩邁爾: 親愛的眷屬，需要什麼幫助嗎?')
+            else:
+                lobby_NPC[2].say_normal_dialogue()
+                print('薩邁爾: 需要什麼幫助嗎?')
+            time.sleep(2)
+            lobby_NPC[2].show_rule()
             continue
         elif action == '2':
             print('你走進了陰暗的店內')
@@ -5479,9 +5701,6 @@ if __name__ == '__main__':
                     main_player.money -= lobby_NPC[1].shop[3].price  
                     lobby_NPC[1].player_buy_item(3)
                     print('你的血量增加了，現在有',main_player.extra_hp,'點額外血量')
-                    if main_player.extra_hp >= 4:
-                        time.sleep(1)
-                        lobby_NPC[0].unlock_achievement('滿血') 
                 else:
                     print('你的錢不夠或者連勝數不足')
             elif action == '5':
