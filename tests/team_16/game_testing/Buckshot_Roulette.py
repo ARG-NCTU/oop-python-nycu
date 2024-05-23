@@ -612,9 +612,9 @@ class host(NPC):
             time.sleep(5)
             print('薩邁爾: 每個惡魔都有自己的偏好，你必須滿足我們的要求，才有機會獲得邀請')
             time.sleep(5)
-            print('薩邁爾: 一個靈魂只能成為一個惡魔的眷屬，所以做出選擇前請三思')
+            print('薩邁爾: 成為惡魔眷屬是永久性的，且一次只成為一位惡魔的眷屬，做出選擇前請三思')
             time.sleep(5)
-            print('薩邁爾: 大概這樣，至於惡魔的喜好，請自行摸索')
+            print('薩邁爾: 大致上是這樣，至於惡魔的喜好，請自行摸索')
             input('按下Enter回到上一頁')
         elif rule_list[action-1] == '大廳中央的大門?':
             print('薩邁爾: 你想進去那扇大門? 恕我拒絕')
@@ -637,6 +637,9 @@ class host(NPC):
             print('薩邁爾: 當你準備好時，我們就在門前碰面吧，我將帶你進入公主大人的房間')
             time.sleep(3)
             print('大廳解鎖了新的選項: 前往惡魔公主的房間')
+            main_player.unlockable_item.append('公主房間的鑰匙')
+            time.sleep(1)
+            lobby_NPC[0].unlock_achievement('公主的賭徒')
             input('按下Enter回到上一頁')
 
         self.show_rule()
@@ -761,7 +764,7 @@ class collection_manager(NPC):
                                     ,'莉莉斯: 說實話，整天收割人類靈魂的生活也是很無聊的，所以公主大人才會突發奇想了這間賭場'\
                                     ,'莉莉斯: 你應該有發覺，薩邁爾其實和利維坦不太合，但礙於實力差距，即使他是這裡的老大也只能嘴上抱怨而已'])
         self.special_dialogue = []
-        self.special_dialogue.extend(['莉莉斯: 你想要的話，隨時可以喔🤍    畢竟你是我的眷屬嘛'])
+        self.special_dialogue.extend(['莉莉斯: 你想要的話，隨時都可以喔~~ 畢竟你是我的眷屬嘛'])
 
     def unlock_normal_item(self):
         for item in self.normal_item:
