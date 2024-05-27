@@ -27,3 +27,4 @@ def test_city_planner():
     assert cp.g.get_node('Boston').get_name() == 'Boston'
 
     cp.get_shortest_path('Chicago', 'Boston')
+

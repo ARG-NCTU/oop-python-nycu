@@ -2,14 +2,7 @@ import pytest
 from lecture3_graph import *
 
 class TestDigraph:
-    """
-    This class contains unit tests for the Digraph class.
-    """
-
     def setup_method(self):
-        """
-        This method is called before each test. It sets up a fresh state for each test, ensuring that tests do not interfere with each other.
-        """
         self.graph = Digraph()
         self.node1 = Node('1')
         self.node2 = Node('2')
@@ -18,18 +11,12 @@ class TestDigraph:
         self.edge2 = Edge(self.node2, self.node3)
 
     def test_add_node(self):
-        """
-        This method tests the add_node and has_node methods of the Digraph class.
-        """
         self.graph.add_node(self.node1)
         assert self.graph.has_node(self.node1)
         assert not self.graph.has_node(self.node2)
 
     @pytest.mark.xfail(raises=ValueError)
     def test_add_edge(self):
-        """
-        This method tests the add_edge and children_of methods of the Digraph class.
-        """
         self.graph.add_node(self.node1)
         self.graph.add_node(self.node2)
         self.graph.add_edge(self.edge1)
@@ -39,9 +26,6 @@ class TestDigraph:
 
     @pytest.mark.xfail(raises=ValueError)
     def test_children_of(self):
-        """
-        This method tests the children_of method of the Digraph class.
-        """
         self.graph.add_node(self.node1)
         self.graph.add_node(self.node2)
         self.graph.add_edge(self.edge1)
@@ -50,24 +34,16 @@ class TestDigraph:
         assert self.graph.children_of(self.node2) == [self.node3]
 
     def test_has_node(self):
-        """
-        This method tests the has_node method of the Digraph class.
-        """
         self.graph.add_node(self.node1)
         assert self.graph.has_node(self.node1)
         assert not self.graph.has_node(Node('4'))
 
     def test_get_node(self):
-        """
-        This method tests the get_node method of the Digraph class.
-        """
         self.graph.add_node(self.node1)
         assert self.graph.get_node('1') == self.node1
 
 def test_build_city_graph():
-    """
-    This function tests the Digraph, Node, and Edge classes by building a larger graph representing a network of cities.
-    """
+    
     g = Digraph()
 
     for name in ('Boston', 'Providence', 'New York', 'Chicago',

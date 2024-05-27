@@ -1,35 +1,25 @@
 class Node:
+    """    Represents a node in a graph.
+    Each node has a name which is assumed to be a string.
     """
-    Represents a node in a graph.
-
-    Attributes:
-        name (str): The name of the node.
-    """
-
     def __init__(self, name):
         """
-        The constructor for Node class.
-
-        Parameters:
-            name (str): The name of the node.
+        Initializes a Node with a given name.
+        :param name: The name of the node.
         """
         self.name = name
 
     def get_name(self):
         """
         Returns the name of the node.
-
-        Returns:
-            str: The name of the node.
+        :return: The name of the node.
         """
         return self.name
 
     def __str__(self):
         """
-        Returns the string representation of the node.
-
-        Returns:
-            str: The name of the node.
+        Returns a string representation of the node.
+        :return: The name of the node.
         """
         return self.name
 
@@ -37,19 +27,13 @@ class Node:
 class Edge:
     """
     Represents a directed edge in a graph.
-
-    Attributes:
-        src (Node): The source node of the edge.
-        dest (Node): The destination node of the edge.
+    Each edge has a source node and a destination node.
     """
-
     def __init__(self, src, dest):
         """
-        The constructor for Edge class.
-
-        Parameters:
-            src (Node): The source node of the edge.
-            dest (Node): The destination node of the edge.
+        Initializes an Edge with a source node and a destination node.
+        :param src: The source node.
+        :param dest: The destination node.
         """
         self.src = src
         self.dest = dest
@@ -57,84 +41,41 @@ class Edge:
     def get_source(self):
         """
         Returns the source node of the edge.
-
-        Returns:
-            Node: The source node of the edge.
+        :return: The source node.
         """
         return self.src
 
     def get_destination(self):
         """
         Returns the destination node of the edge.
-
-        Returns:
-            Node: The destination node of the edge.
+        :return: The destination node.
         """
         return self.dest
 
     def __str__(self):
         """
-        Returns the string representation of the edge.
-
-        Returns:
-            str: The string representation of the edge in the format 'src->dest'.
+        Returns a string representation of the edge.
+        :return: A string in the format 'source->destination'.
         """
         return self.src.get_name() + '->' + self.dest.get_name()
 
 
 class Digraph:
     """
-    A class to represent a directed graph.
-
-    ...
-
-    Attributes
-    ----------
-    edges : dict
-        a dictionary mapping each node to a list of its children
-
-    Methods
-    -------
-    add_node(node):
-        Adds a node to the graph.
-    add_edge(edge):
-        Adds an edge to the graph.
-    children_of(node):
-        Returns the children of a node.
-    has_node(node):
-        Checks if a node is in the graph.
-    get_node(name):
-        Returns a node with the given name.
+    Represents a directed graph.
+    The graph is represented as a dictionary mapping each node to a list of its children.
     """
-
     def __init__(self):
         """
-        Constructs all the necessary attributes for the digraph object.
-
-        ...
-
-        Attributes
-        ----------
-        edges : dict
-            an empty dictionary to store the nodes and their children
+        Initializes an empty Digraph.
         """
         self.edges = {}
 
     def add_node(self, node):
         """
         Adds a node to the graph.
-
-        ...
-
-        Parameters
-        ----------
-        node : Node
-            a node to be added to the graph
-
-        Raises
-        ------
-        ValueError
-            if the node is already in the graph
+        Raises a ValueError if the node is already in the graph.
+        :param node: The node to be added.
         """
         if node in self.edges:
             raise ValueError('Duplicate node')
@@ -144,18 +85,8 @@ class Digraph:
     def add_edge(self, edge):
         """
         Adds an edge to the graph.
-
-        ...
-
-        Parameters
-        ----------
-        edge : Edge
-            an edge to be added to the graph
-
-        Raises
-        ------
-        ValueError
-            if the source or destination node is not in the graph
+        Raises a ValueError if the source or destination node is not in the graph.
+        :param edge: The edge to be added.
         """
         src = edge.get_source()
         dest = edge.get_destination()
@@ -166,59 +97,25 @@ class Digraph:
     def children_of(self, node):
         """
         Returns the children of a node.
-
-        ...
-
-        Parameters
-        ----------
-        node : Node
-            a node in the graph
-
-        Returns
-        -------
-        list
-            a list of the node's children
+        :param node: The node.
+        :return: A list of the node's children.
         """
         return self.edges[node]
 
     def has_node(self, node):
         """
         Checks if a node is in the graph.
-
-        ...
-
-        Parameters
-        ----------
-        node : Node
-            a node to check
-
-        Returns
-        -------
-        bool
-            True if the node is in the graph, False otherwise
+        :param node: The node to check.
+        :return: True if the node is in the graph, False otherwise.
         """
         return node in self.edges
 
     def get_node(self, name):
         """
-        Returns a node with the given name.
-
-        ...
-
-        Parameters
-        ----------
-        name : str
-            a name to search for
-
-        Returns
-        -------
-        Node
-            a node with the given name
-
-        Raises
-        ------
-        NameError
-            if a node with the given name does not exist
+        Returns the node with the given name.
+        Raises a NameError if no such node exists.
+        :param name: The name of the node.
+        :return: The node with the given name.
         """
         for n in self.edges:
             if n.get_name() == name:
@@ -228,20 +125,13 @@ class Digraph:
     def __str__(self):
         """
         Returns a string representation of the graph.
-
-        ...
-
-        Returns
-        -------
-        str
-            a string representation of the graph
+        :return: A string representing the graph.
         """
         result = ''
         for src in self.edges:
             for dest in self.edges[src]:
                 result += src.get_name() + '->' + dest.get_name() + '\n'
         return result[:-1]  # Omit final newline
-
 
 class Graph(Digraph):
     """
@@ -444,4 +334,3 @@ class CityPlanner():
                 destination, 'is', self.print_path(sp))
         else:
             print('There is no path from', source, 'to', destination)
-
