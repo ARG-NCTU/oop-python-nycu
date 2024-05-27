@@ -1,5 +1,7 @@
 import pygame
 import sys
+import os
+import pickle
 
 # Initialize Pygame
 pygame.init()
@@ -25,6 +27,7 @@ except pygame.error as e:
 
 # Load images
 try:
+    welcome_image = pygame.image.load('welcome.png')
     lobby_image = pygame.image.load('lobby.png')
     shop_image = pygame.image.load('shop.png')
     game_image = pygame.image.load('game.png')
@@ -36,7 +39,7 @@ except pygame.error as e:
 
 # Button class
 class Button:
-    def __init__(self, text, x, y, width, height, callback, description):
+    def __init__(self, text, x, y, width, height, callback, description=""):
         self.text = text
         self.rect = pygame.Rect(x, y, width, height)
         self.callback = callback
@@ -58,11 +61,33 @@ class Button:
                 self.callback()
 
     def draw_description(self, screen):
-        if self.hovered:
+        if self.hovered and self.description:
             description_surface = description_font.render(self.description, True, WHITE)
             screen.blit(description_surface, (self.rect.x, self.rect.y - 30))
 
 # Callback functions for buttons
+def start_new_game():
+    global current_screen
+    global main_player, lobby_NPC
+    main_player = player_in_lobby("Player", 0)
+    lobby_NPC = [collection_manager(), shopkeeper(), host()]
+    lobby_NPC[2].tutorial()
+    current_screen = 'lobby'
+
+def load_game():
+    global current_screen
+    global main_player, lobby_NPC
+    if os.path.exists('savefile.pkl'):
+        with open('savefile.pkl', 'rb') as f:
+            main_player, lobby_NPC = pickle.load(f)
+        current_screen = 'lobby'
+    else:
+        print("No saved game found")
+
+def quit_game():
+    pygame.quit()
+    sys.exit()
+
 def enter_shop():
     global current_screen
     current_screen = 'shop'
@@ -80,6 +105,12 @@ def return_to_lobby():
     current_screen = 'lobby'
 
 # Create buttons
+welcome_buttons = [
+    Button("Start New Game", 300, 200, 200, 50, start_new_game, "Start a new game."),
+    Button("Load Game", 300, 300, 200, 50, load_game, "Load a saved game."),
+    Button("Quit Game", 300, 400, 200, 50, quit_game, "Exit the game.")
+]
+
 lobby_buttons = [
     Button("Enter Shop", 300, 200, 200, 50, enter_shop, "Visit the shop to buy items."),
     Button("Enter Game", 300, 300, 200, 50, enter_game, "Start a new game."),
@@ -98,7 +129,7 @@ challenge_buttons = [
     Button("Return to Lobby", 300, 500, 200, 50, return_to_lobby, "Return to the lobby.")
 ]
 
-current_screen = 'lobby'
+current_screen = 'welcome'
 
 def resize_buttons(buttons, screen_width, screen_height):
     for button in buttons:
@@ -114,12 +145,16 @@ while running:
         elif event.type == pygame.VIDEORESIZE:
             SCREEN_WIDTH, SCREEN_HEIGHT = event.w, event.h
             screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE)
+            resize_buttons(welcome_buttons, SCREEN_WIDTH, SCREEN_HEIGHT)
             resize_buttons(lobby_buttons, SCREEN_WIDTH, SCREEN_HEIGHT)
             resize_buttons(shop_buttons, SCREEN_WIDTH, SCREEN_HEIGHT)
             resize_buttons(game_buttons, SCREEN_WIDTH, SCREEN_HEIGHT)
             resize_buttons(challenge_buttons, SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        if current_screen == 'lobby':
+        if current_screen == 'welcome':
+            for button in welcome_buttons:
+                button.handle_event(event)
+        elif current_screen == 'lobby':
             for button in lobby_buttons:
                 button.handle_event(event)
         elif current_screen == 'shop':
@@ -132,7 +167,13 @@ while running:
             for button in challenge_buttons:
                 button.handle_event(event)
 
-    if current_screen == 'lobby':
+    if current_screen == 'welcome':
+        resized_welcome_image = pygame.transform.scale(welcome_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        screen.blit(resized_welcome_image, (0, 0))
+        for button in welcome_buttons:
+            button.draw(screen)
+            button.draw_description(screen)
+    elif current_screen == 'lobby':
         resized_lobby_image = pygame.transform.scale(lobby_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
         screen.blit(resized_lobby_image, (0, 0))
         for button in lobby_buttons:
