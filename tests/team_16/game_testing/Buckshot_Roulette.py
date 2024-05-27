@@ -694,7 +694,6 @@ class host(NPC):
             print('大廳解鎖了新的選項: 前往惡魔公主的房間')
             main_player.unlockable_item.append('公主房間的鑰匙')
             time.sleep(1)
-            lobby_NPC[0].unlock_achievement('公主的賭徒')
             input('按下Enter回到上一頁')
         elif rule_list[action-1] == '挑戰惡魔試煉':
             self.before_challenge()
@@ -928,10 +927,22 @@ class collection_manager(NPC):
             print('     提示: ' if not self.achievement_list[i].unlock else '    ',self.achievement_list[i].description)
         input('按下Enter回到列表')
 
+    def show_ending(self):
+        print('結局列表:')
+        for i in range(len(self.ending_list)):
+            print(i+1,self.ending_list[i].name)
+            print('     提示: ' if not self.ending_list[i].unlock else '    ',self.ending_list[i].description)
+        input('按下Enter回到列表')
+
     def unlock_achievement(self,target):
         for achievement in self.achievement_list:
             if achievement.name_hide == target:
                 achievement.unlock_item()
+    
+    def unlock_ending(self,target):
+        for ending in self.ending_list:
+            if ending.name_hide == target:
+                ending.unlock_item()
 
     def show_list(self):
         print ('=================================================================')
@@ -952,6 +963,10 @@ class collection_manager(NPC):
             print('6.挑戰惡魔試煉')
         else:
             print('5.成就列表')
+        
+        if '公主房間的鑰匙' in main_player.unlockable_item:
+            print('E.結局列表')
+        print ('=================================================================')
 
         print('按下Enter離開')
         while True:
@@ -988,6 +1003,9 @@ class collection_manager(NPC):
             self.before_challenge()
         elif choice == '7' and '扭曲印記' in main_player.unlockable_item and main_player.enable_challenge:
             self.before_challenge()
+        elif choice == 'E' and '公主房間的鑰匙' in main_player.unlockable_item:
+            self.show_ending()
+            self.show_list()
         else:
             return
            
@@ -1125,12 +1143,12 @@ class player_in_lobby(NPC):
         self.money = money
         self.enable_challenge = False
         #保存下來的物品欄(商店升級)
-        self.item = []
+        self.item = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后']
         self.max_item = 0
-        self.extra_hp = 0
+        self.extra_hp = 10
         self.devil = ''
         #商店物品
-        self.unlockable_item = []
+        self.unlockable_item = ['公主房間的鑰匙']
     def earn_money(self,amount):
         self.money += amount
     def show_money(self):
@@ -1154,6 +1172,48 @@ class player_in_lobby(NPC):
         self.item = []
     def die(self):
         self.die_state = True
+
+
+#結局
+class one_of_ending:
+    def __init__(self,dependency,win):
+        self.dependency = dependency
+        self.win = win
+        if self.win:
+            if self.dependency == '莉莉斯':
+                self.ending_slave()
+            elif self.dependency == '利維坦':
+                self.ending_employee()
+            elif self.dependency == '薩邁爾':
+                self.ending_inherit()
+            elif self.dependency == '':
+                self.ending_freedom()
+        else:
+            if self.dependency == '莉莉斯':
+                self.ending_save_by_love()
+            elif self.dependency == '利維坦':
+                self.ending_coworker()
+            elif self.dependency == '薩邁爾':
+                self.ending_angel()
+            elif self.dependency == '':
+                self.ending_die()
+
+    def ending_freedom(self):
+        lobby_NPC[0].unlock_ending('自由的靈魂')
+    def ending_die(self):
+        lobby_NPC[0].unlock_ending('莊家終生職')
+    def ending_save_by_love(self):
+        lobby_NPC[0].unlock_ending('永恆之愛')
+    def ending_slave(self):
+        lobby_NPC[0].unlock_ending('太過沉重的愛')
+    def ending_coworker(self):
+        lobby_NPC[0].unlock_ending('創業同伴')
+    def ending_employee(self):
+        lobby_NPC[0].unlock_ending('廉價勞工')
+    def ending_angel(self):
+        lobby_NPC[0].unlock_ending('天使之羽')
+    def ending_inherit(self):
+        lobby_NPC[0].unlock_ending('繼承')
 
 #遊戲內部物件
 class participant:
@@ -5708,9 +5768,7 @@ class tutorial_game(challenge_mode):
         
 class final_game(game):
     def __init__(self, player, computer, hp, risk):
-        super().__init__(player, computer, hp, risk)
-        self.player.hp += 9
-        self.computer.hp += 9
+        super().__init__(player, computer, hp, 1)
         self.devil_princess_item_list = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']
     def give_item(self, number):
         if self.player.have_warp_mark:
@@ -5913,6 +5971,8 @@ class final_game(game):
                     handsaw = False
                 remain_bullet.pop(0)
                 handsaw = False
+
+                self.computer.hp = 0
             elif action==2 and gun_lock :
                 print('槍經過改造，這局無法再射向自己了')
                 time.sleep(1)
@@ -6547,10 +6607,46 @@ class final_game(game):
                         time.sleep(2)
                         lobby_NPC[0].unlock_achievement('就說了不行')
                         continue
+                    elif self.computer.item[steal-1] == '漆黑皇后':
+                        #same as player using this item
+                        print('你使用了漆黑皇后，彈藥裝填為一發空包彈一發5點傷害實彈，祈禱吧!')
+                        self.player.item = []
+                        remain_bullet = [True,False]
+                        live_bullet = 1
+                        blank = 1
+                        self.computer.reset_bullet_pattern(live_bullet+blank)
+                        random.shuffle(remain_bullet)
+                        killer_queen = True
+                        not_blue_print = False
+                        self.player.queen_used.append('漆黑皇后')
+                    elif self.computer.item[steal-1] == '神聖皇后':
+                        #same as player using this item
+                        print('你使用了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
+                        self.player.hp += 3
+                        self.player.max_item += 3
+                        self.give_participant_item(3,self.player)
+                        self.player.max_item -= 1
+                        self.player.queen_used.append('神聖皇后')
+                    elif self.computer.item[steal-1] == '蔚藍皇后':
+                        #same as player using this item
+                        print('你使用了蔚藍皇后，輪到惡魔公主的回合時你將獲得一個隨機物品')
+                        self.player.item_queen += 1   
+                        self.player.queen_used.append('蔚藍皇后')
+                        if self.player.item_queen >= 5 :
+                            time.sleep(1)
+                            lobby_NPC[0].unlock_achievement('道具永動機')
+                            time.sleep(1)
+                    elif self.computer.item[steal-1] == '腥紅皇后':
+                        #same as player using this item
+                        print('你使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，可以觸發五次')
+                        self.player.blood_queen += 5       
+                        self.player.queen_used.append('腥紅皇后')
                     else:
                         print('你不能偷取國王道具')
                         continue
                     self.computer.item.pop(steal-1)
+                    if killer_queen:
+                        self.computer.item = []
 
                 if not_blue_print and not skip: 
                     self.player.item.pop(item-1)
@@ -7052,7 +7148,7 @@ class final_game(game):
                         killer_queen = True
                         not_blue_print = False
                         if self.player.blessing > 0:
-                            handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                            handsaw = self.blessing(remain_bullet,'惡魔公主',handsaw)
                     elif self.computer.item[item] == '神聖皇后':
                         print('惡魔公主使用了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
                         self.computer.hp += 3
@@ -7315,17 +7411,43 @@ def save_game(main_player, lobby_NPC):
         pickle.dump((main_player, lobby_NPC), f)
     print('遊戲已儲存')
 
+def save_game_final_only_player(main_player):
+    with open('savefinal_player.pkl', 'wb') as f:
+        pickle.dump((main_player), f)
+
+def save_game_final_only_NPC(lobby_NPC):
+    with open('savefinal_NPC.pkl', 'wb') as f:
+        pickle.dump((lobby_NPC), f)
+
+def load_final():
+    with open('savefinal_player.pkl', 'rb') as f:
+        main_player = pickle.load(f)
+    with open('savefinal_NPC.pkl', 'rb') as f:
+        lobby_NPC = pickle.load(f)
+    return main_player, lobby_NPC
+
 def load_game():
     with open('savefile.pkl', 'rb') as f:
         main_player, lobby_NPC = pickle.load(f)
     return main_player, lobby_NPC
 #主程式
 if __name__ == '__main__':
-    if os.path.exists('savefile.pkl'):
+    if os.path.exists('savefinal_player.pkl'):
+        action = input('是否回到進入大門前? y/n')
+        if action == 'y':
+            main_player, lobby_NPC = load_final()
+        else:
+            main_player = player_in_lobby(input('請輸入角色名字:'),0)
+            lobby_NPC = []
+            lobby_NPC.append(collection_manager())
+            lobby_NPC.append(shopkeeper())
+            lobby_NPC.append(host())
+            #新手教學  
+            lobby_NPC[2].tutorial()
+    elif os.path.exists('savefile.pkl'):
         action = input('是否載入存檔? y/n')
         if action == 'y':
             main_player, lobby_NPC = load_game()
-            lobby_NPC[1]=(shopkeeper())
         else:
             main_player = player_in_lobby(input('請輸入角色名字:'),0)
             lobby_NPC = []
@@ -7347,6 +7469,7 @@ if __name__ == '__main__':
         first_move = '玩家'
         money = 0
         in_challenge_mode = False
+        in_final = False
         if main_player.money >= 1000000:
             lobby_NPC[0].unlock_achievement('第一桶金')
         if main_player.money >= 50000000:
@@ -7367,7 +7490,10 @@ if __name__ == '__main__':
         if len(main_player.item) > 0:    
             main_player.show_item()
         print('==========================================================================================')
-        action = input('你站在吵雜的賭場中，輸入1查看規則,輸入2造訪商店,輸入3前往圖鑑,輸入4離開賭場,按下Enter前往賭桌  ')
+        if '公主房間的鑰匙' in main_player.unlockable_item:
+            action = input('你站在吵雜的賭場中，輸入1查看規則,輸入2造訪商店,輸入3前往圖鑑,輸入4離開賭場,輸入5前往公主房間,按下Enter前往賭桌  ')
+        else:
+            action = input('你站在吵雜的賭場中，輸入1查看規則,輸入2造訪商店,輸入3前往圖鑑,輸入4離開賭場,按下Enter前往賭桌  ')
         if action == '1':
             print('你叫住了薩邁爾')
             time.sleep(2)
@@ -7473,7 +7599,13 @@ if __name__ == '__main__':
             print('你離開了賭場，進度已儲存')
             time.sleep(2)
             break
-            
+        elif action == '5' and '公主房間的鑰匙' in main_player.unlockable_item:
+            print('薩邁爾帶你進入了公主的房間')
+            time.sleep(2)
+            print('最終試煉開始,遊戲已儲存')
+            save_game_final_only_player(main_player)
+            main_player.challenge_NPC = '惡魔公主'
+            time.sleep(2)
         if main_player.challenge_NPC == '':
             #下注階段
             while True:
@@ -7512,22 +7644,25 @@ if __name__ == '__main__':
             if risk_input == '1':
                 risk *= 7
                 first_move = '莊家'
+        elif main_player.challenge_NPC == '惡魔公主':
+            #最終boss戰
+            in_final = True
         else:
             #試煉模式
             in_challenge_mode = True
         round = 0
         player1 = player(5,main_player.item,money)
-        if not in_challenge_mode:
+        if not in_challenge_mode and not in_final:
             player1.enable_mark('嗜血印記' in main_player.unlockable_item, '扭曲印記' in main_player.unlockable_item, '墮天使印記' in main_player.unlockable_item, '★慾之血印記★' in main_player.unlockable_item, '★纏繞之蛇印記★' in main_player.unlockable_item, '★死之天使印記★' in main_player.unlockable_item)
         computer1 = computer(5,[])
         hp=random.randint(2,6)
         win_count = 0
-        if not in_challenge_mode:
+        if not in_challenge_mode and not in_final:
             games={}
             games[round] = game(player1,computer1,hp,risk)
             games[round].player_bonus(win_count)
         #計算勝場數
-        while in_challenge_mode == False:
+        while in_challenge_mode == False and in_final == False:
             live_bullet = random.randint(1,4)
             blank = random.randint(1,4)
             item_number = random.randint(2,5)
@@ -7792,6 +7927,50 @@ if __name__ == '__main__':
                         lobby_NPC[1].devil_transform()
                     elif lobby_NPC[2].devil_dependency and challenger.name == '薩邁爾':
                         lobby_NPC[2].devil_transform()
+                break
+
+        if in_final == True:
+            round = 1
+            win_count = 0
+            player1 = player(5,main_player.item,money)
+            computer1 = computer(5,[])
+            hp=random.randint(9,20)
+            final_games={}
+            risk = 0
+
+            final_games[round] = final_game(player1,computer1,hp,risk)
+            final_games[round].player_bonus(win_count)
+        while in_final == True:
+            max_round = 5
+            live_bullet = random.randint(1,4)
+            blank = random.randint(1,4)
+            item_number = random.randint(3,6)
+            final_games[round].set_first_move('玩家')
+            final_games[round].one_round(live_bullet,blank,item_number)
+            final_games[round].round += 1
+            if player1.hp <= 0:
+                #ending check
+                ending = one_of_ending(main_player.devil, False)
+                #save_game_final_only_NPC(lobby_NPC)
+                break
+            elif computer1.hp <= 0:
+                win_count += 1
+                player1.end_snake_mark()
+                if win_count < max_round:
+                    round += 1
+                    challenger_item_list = computer1.item
+                    computer1 = computer(5,challenger_item_list)
+                    hp=random.randint(9,20+win_count*2)
+                    final_games[round] = final_game(player1,computer1,hp,risk)
+                    final_games[round].player_bonus(win_count)
+                    continue
+                else:
+                    #ending check
+                    ending = one_of_ending(main_player.devil, True)
+                    for item in player1.queen_used:
+                        lobby_NPC[0].unlock_queen_king_item(item)
+                    #save_game_final_only_NPC(lobby_NPC)
+
                 break
         if main_player.die_state:
             print('遊戲結束')
