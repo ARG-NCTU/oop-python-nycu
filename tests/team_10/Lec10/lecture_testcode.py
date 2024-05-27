@@ -14,6 +14,7 @@ test_data = """x y
 5.0 49.05
 """
 
+
 def create_test_file(file_name, data):
     with open(file_name, 'w') as f:
         f.write(data)
