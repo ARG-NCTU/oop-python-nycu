@@ -7411,40 +7411,13 @@ def save_game(main_player, lobby_NPC):
         pickle.dump((main_player, lobby_NPC), f)
     print('遊戲已儲存')
 
-def save_game_final_only_player(main_player):
-    with open('savefinal_player.pkl', 'wb') as f:
-        pickle.dump((main_player), f)
-
-def save_game_final_only_NPC(lobby_NPC):
-    with open('savefinal_NPC.pkl', 'wb') as f:
-        pickle.dump((lobby_NPC), f)
-
-def load_final():
-    with open('savefinal_player.pkl', 'rb') as f:
-        main_player = pickle.load(f)
-    with open('savefinal_NPC.pkl', 'rb') as f:
-        lobby_NPC = pickle.load(f)
-    return main_player, lobby_NPC
-
 def load_game():
     with open('savefile.pkl', 'rb') as f:
         main_player, lobby_NPC = pickle.load(f)
     return main_player, lobby_NPC
 #主程式
 if __name__ == '__main__':
-    if os.path.exists('savefinal_player.pkl'):
-        action = input('是否回到進入大門前? y/n')
-        if action == 'y':
-            main_player, lobby_NPC = load_final()
-        else:
-            main_player = player_in_lobby(input('請輸入角色名字:'),0)
-            lobby_NPC = []
-            lobby_NPC.append(collection_manager())
-            lobby_NPC.append(shopkeeper())
-            lobby_NPC.append(host())
-            #新手教學  
-            lobby_NPC[2].tutorial()
-    elif os.path.exists('savefile.pkl'):
+    if os.path.exists('savefile.pkl'):
         action = input('是否載入存檔? y/n')
         if action == 'y':
             main_player, lobby_NPC = load_game()
@@ -7951,7 +7924,7 @@ if __name__ == '__main__':
             if player1.hp <= 0:
                 #ending check
                 ending = one_of_ending(main_player.devil, False)
-                #save_game_final_only_NPC(lobby_NPC)
+                save_game(main_player, lobby_NPC)
                 break
             elif computer1.hp <= 0:
                 win_count += 1
@@ -7969,7 +7942,7 @@ if __name__ == '__main__':
                     ending = one_of_ending(main_player.devil, True)
                     for item in player1.queen_used:
                         lobby_NPC[0].unlock_queen_king_item(item)
-                    #save_game_final_only_NPC(lobby_NPC)
+                    save_game(main_player, lobby_NPC)
 
                 break
         if main_player.die_state:
