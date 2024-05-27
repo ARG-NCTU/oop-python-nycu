@@ -46,6 +46,7 @@ def plotData(fileName):
     pylab.plot(xVals, yVals, 'bo', label='Measured displacements')
     labelPlot()
 
+
 def fitData(fileName):
     xVals, yVals = getData(fileName)
     xVals = pylab.array(xVals)
