@@ -42,7 +42,7 @@ def plotData(fileName):
     xVals, yVals = getData(fileName)
     xVals = pylab.array(xVals)
     yVals = pylab.array(yVals)
-    xVals = xVals * 9.81  #acc. due to gravity
+    xVals = xVals * 9.81  # due to gravity
     pylab.plot(xVals, yVals, 'bo', label='Measured displacements')
     labelPlot()
 
