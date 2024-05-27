@@ -7,6 +7,7 @@ Created on Mon Sep 19 11:45:20 2016
 
 import random, pylab, numpy
 
+
 #set line width
 pylab.rcParams['lines.linewidth'] = 4
 #set font size for titles 
@@ -37,7 +38,7 @@ def getData(fileName):
         masses.append(float(m))
     dataFile.close()
     return (masses, distances)
-    
+  
 def labelPlot():
     pylab.title('Measured Displacement of Spring')
     pylab.xlabel('|Force| (Newtons)')
