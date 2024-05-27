@@ -3,6 +3,7 @@ import time
 import math
 import pickle
 import os
+from random import choice, choices, sample
 '''未來想法:
 
 8.改成用滑鼠操作的GUI
@@ -59,6 +60,19 @@ class achievement(all_item):
             self.name = self.name_hide
             self.description = self.description_hide
             print('已解鎖成就 ',self.name)
+            time.sleep(0.7)
+
+class ending(all_item):
+    def __init__(self,name,description,hint):
+        all_item.__init__(self,name,description)
+        self.name = '???'
+        self.description = hint
+    def unlock_item(self):
+        if self.unlock == False:
+            self.unlock = True
+            self.name = self.name_hide
+            self.description = self.description_hide
+            print('已解鎖結局 ',self.name)
             time.sleep(0.7)
 
 class rule(all_item):
@@ -785,8 +799,17 @@ class collection_manager(NPC):
         self.achievement_list.append(achievement('瘋狂的傻子','成為利維坦的眷屬','在利維坦面前耍帥一波'))
         self.achievement_list.append(achievement('慾望的奴隸','成為莉莉斯的眷屬','向莉莉斯展現你的生命力'))
         self.achievement_list.append(achievement('無謂的堅持','成為薩邁爾的眷屬','回應薩邁爾的期待'))
-        self.achievement_list.append(achievement('天文數字','達成50連勝','連勝次數突播天際'))
+        self.achievement_list.append(achievement('天文數字','達成50連勝','連勝次數突破天際'))
 
+        self.ending_list = []
+        self.ending_list.append(ending('自由的靈魂','靠一己之力擊敗惡魔公主','你選擇了獨立'))
+        self.ending_list.append(ending('莊家終生職','你敗給了公主，成為賭場的一員','你失敗了'))
+        self.ending_list.append(ending('永恆之愛','莉莉斯收留了你','也許惡魔的愛能夠守護你'))
+        self.ending_list.append(ending('太過沉重的愛','受到莉莉斯的囚禁','有些東西你承受不起'))
+        self.ending_list.append(ending('創業同伴','你成為利維坦的同事','也許狡詐的蛇會來救你'))
+        self.ending_list.append(ending('廉價勞工','你成為利維坦的員工','簽定契約前請看清楚'))
+        self.ending_list.append(ending('天使之羽','你的靈魂被解放了','來自天堂的惡魔算是有點義氣'))
+        self.ending_list.append(ending('繼承','你繼承了公主的詛咒','惡魔的賭場由你經營'))
 
         self.normal_dialogue = []
         #莉莉斯的對話含有重要訊息，所以雖然是隨機但是會循環
@@ -1104,7 +1127,7 @@ class player_in_lobby(NPC):
         #保存下來的物品欄(商店升級)
         self.item = []
         self.max_item = 0
-        self.extra_hp = 10
+        self.extra_hp = 0
         self.devil = ''
         #商店物品
         self.unlockable_item = []
@@ -1318,6 +1341,7 @@ class game:
             else:
                 if self.player.have_warp_mark:
                     print('你的物品欄增加了一格空間')
+                    self.player.max_item += 1
                 else:
                     print('你的物品欄已滿')
                 
@@ -5682,6 +5706,1609 @@ class tutorial_game(challenge_mode):
     def item_one_round(self, live_bullet, blank, item_number):
         super().one_round_Lilit(live_bullet, blank, item_number)
         
+class final_game(game):
+    def __init__(self, player, computer, hp, risk):
+        super().__init__(player, computer, hp, risk)
+        self.player.hp += 9
+        self.computer.hp += 9
+        self.devil_princess_item_list = ['朦朧國王','狂暴國王','狡詐國王','貪婪國王','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素']
+    def give_item(self, number):
+        if self.player.have_warp_mark:
+            number += 2
+        for i in range(number):
+            if len(self.player.item) < self.player.max_item:
+                item=self.item_list[random.randint(0,len(self.item_list)-1)]
+                print('你獲得了',item)
+                self.player.item.append(item)
+            else:
+                if self.player.have_warp_mark:
+                    print('你的物品欄增加了一格空間')
+                    self.player.max_item += 1
+                else:
+                    print('你的物品欄已滿')
+                
+            if len(self.computer.item) < self.computer.max_item:
+                self.computer.item.append(choice(self.devil_princess_item_list))
+        self.player.item.sort(key = ['琉璃皇后','漆黑皇后','神聖皇后','蔚藍皇后','腥紅皇后','未知藍圖','禁藥','大口徑子彈','榴彈砲','彈藥包','放大鏡','香菸','手鋸','啤酒','手銬','手機','轉換器','過期藥物','腎上腺素'].index)
+        self.computer.item.sort(key = self.devil_princess_item_list.index)
+    
+    def give_participant_item(self, number, participant):
+        return super().give_participant_item(number, participant)
+    def set_first_move(self, first_move):
+        return super().set_first_move(first_move)
+    def blessing(self,remain_bullet,turn,handsaw):
+        print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+        print('琉璃祝福治癒了你的傷口')
+        self.player.hp += self.player.blessing
+        if remain_bullet[0] & (turn == '玩家'):
+            print('你感覺到第一發子彈是實彈，這發子彈將造成兩倍傷害')
+            print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+            time.sleep(2)
+            return True
+        elif remain_bullet[0] & (turn != '玩家'):   
+            print('你感覺到第一發子彈是實彈，你將額外回復2點血量')
+            self.player.hp += 2
+        elif random.randint(0,1) and len(self.computer.item) > 0:
+            print('你感覺到第一發子彈是空包彈，惡魔公主的',self.computer.item[0],'將被摧毀')
+            self.computer.item.pop(0)
+        else:
+            print('你感覺到第一發子彈是空包彈，你將額外獲得一個物品')
+            self.give_participant_item(1,self.player)
+        print('★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★')
+        time.sleep(2)
+        return handsaw
+    def one_round(self,live_bullet,blank,item_number):
+        time.sleep(3)
+        print('第',self.round,'局開始')
+        #朦朧國王效果
+        self.computer.fog = self.computer.fog_king
+
+        if self.player.handcuff:
+            self.player.unhandcuff()
+            print('你的手銬解除,可以自由行動了')
+        if self.computer.handcuff:
+            self.computer.unhandcuff()
+            print('惡魔公主的手銬解除,可以自由行動了')
+        handsaw = False
+        skip = False    
+        killer_queen = False
+        self.give_item(item_number)
+        remain_bullet = []
+        self.computer.reset_bullet_pattern(live_bullet+blank)
+        print('這局有',live_bullet,'發實彈',blank,'發空包彈')
+        for i in range(live_bullet):
+            remain_bullet.append(True)
+        for i in range(blank):
+            remain_bullet.append(False)
+        random.shuffle(remain_bullet)
+        #狡詐國王效果
+        for i in range(self.computer.trick_king):
+            if i > len(remain_bullet)-1:
+                break
+            elif remain_bullet[i]:
+                self.computer.set_bullet_pattern(i,'live')
+            else:
+                self.computer.set_bullet_pattern(i,'blank')
+        #琉璃祝福效果
+        if self.player.blessing > 0:
+            handsaw = self.blessing(remain_bullet,self.first_move,handsaw)
+
+        time.sleep(2)        
+
+        while len(remain_bullet) > 0:
+            skip = False
+            try_count = 0
+            not_blue_print = True
+            gun_lock = False
+            temp_break = False
+
+            if self.player.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你死了')
+                time.sleep(2)
+                return
+            
+            time.sleep(1)
+            if self.first_move == '玩家':
+                print('==========================================')
+                print('你的回合')
+                print('你的物品欄:',self.player.item)
+                print('玩家血量:',self.player.hp,'惡魔公主血量:',self.computer.hp)  
+                print('剩餘',live_bullet,'發實彈',blank,'發空包彈')
+                print('請選擇要做的事')
+                if self.player.have_snake_mark:
+                    print('1.射向惡魔公主, 2.射向自己, 3.使用物品, 4.顯示惡魔公主物品欄, 5.使用扭曲印記')
+                else:
+                    print('1.射向惡魔公主, 2.射向自己, 3.使用物品, 4.顯示惡魔公主物品欄')
+                if len(self.computer.bullet_pattern) != len(remain_bullet):
+                    raise Exception('子彈數量不符')
+                if self.player.blood_queen > 0 and (handsaw==False):
+                    print('腥紅皇后使你獲得手鋸效果')
+                    time.sleep(1)
+                    handsaw = True
+                    self.player.blood_queen -= 1
+                if self.player.max_item >= 20:
+                    lobby_NPC[0].unlock_achievement('道理我都懂，但是這個背包怎麼這麼大')
+                    time.sleep(1)
+                while True:
+                    try:
+                        action = int(input())
+                    except ValueError:
+                        print('請輸入正確的數字')
+                        continue
+                    if type(action) != int:
+                        print('請輸入正確的數字')
+                        continue
+                    if action == 5 and self.player.have_snake_mark:
+                        self.player.use_snake_mark()
+                        temp_break == True
+                    elif action < 1 or action > 4:
+                        print('請輸入正確的數字')
+                        continue
+                    break
+                if temp_break:
+                    temp_break = False
+                    continue
+            else:
+                action = 0
+                self.first_move = '玩家'
+            
+            if action==1:
+                if remain_bullet[0] and (self.computer.fog > 0):
+                    print('朦朧國王使你射偏了')
+                    self.computer.pop_bullet_pattern()
+                    self.computer.fog -= 1
+                    handsaw = False
+                    killer_queen = False
+                    live_bullet -= 1
+                elif remain_bullet[0] and handsaw and killer_queen:
+                    self.computer.hp -= 10
+                    print('你使用漆黑皇后射中了惡魔公主,造成十點傷害')
+                    if self.computer.blood_queen > 0:
+                        print('腥紅皇后使惡魔公主免疫額外傷害')
+                        self.computer.hp += 5
+                        self.computer.blood_queen -= 1
+                    handsaw = False
+                    killer_queen = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
+                elif remain_bullet[0]&killer_queen:
+                    self.computer.hp -= 5
+                    print('你使用漆黑皇后射中了惡魔公主,造成五點傷害')
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                    killer_queen = False
+                    if (self.player.hp <= 5) and (self.computer.hp <= 0):
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('漆黑子彈')
+                elif remain_bullet[0]&handsaw:
+                    self.computer.hp -= 2
+                    print('你射中了惡魔公主,造成兩點傷害')
+                    if self.computer.blood_queen > 0:
+                        print('腥紅皇后使惡魔公主免疫額外傷害')
+                        self.computer.hp += 1
+                        self.computer.blood_queen -= 1
+                    handsaw = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]:
+                    self.computer.hp -= 1
+                    print('你射中了惡魔公主,造成一點傷害')
+                    if self.player.have_blood_mark:
+                        time.sleep(1)
+                        print('嗜血印記使你吸收一點血量')
+                        self.player.hp += 1
+                        self.computer.hp -= 1
+                        time.sleep(1)
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                else:
+                    print('你的子彈打空了')
+                    self.computer.pop_bullet_pattern()
+                    blank -= 1
+                    handsaw = False
+                remain_bullet.pop(0)
+                handsaw = False
+            elif action==2 and gun_lock :
+                print('槍經過改造，這局無法再射向自己了')
+                time.sleep(1)
+                continue
+            elif action==2:
+                if remain_bullet[0]&handsaw&killer_queen:
+                    self.player.hp -= 10
+                    print('你用漆黑皇后射中了自己,造成十點傷害')
+                    if self.player.blood_queen > 0:
+                        print('腥紅皇后使你免疫額外傷害')
+                        self.player.hp += 5
+                        self.player.blood_queen -= 1
+                    else:
+                        print('節哀順變')
+                    handsaw = False
+                    killer_queen = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]&killer_queen:
+                    self.player.hp -= 5
+                    print('你用漆黑皇后射中了自己,造成五點傷害')
+                    print('節哀順變')
+                    killer_queen = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]&handsaw:
+                    self.player.hp -= 2
+                    print('你射中了自己,造成兩點傷害')
+                    if self.player.blood_queen > 0:
+                        print('腥紅皇后使你免疫額外傷害')
+                        self.player.hp += 1
+                        self.player.blood_queen -= 1
+                    else:
+                        print('你是笨蛋嗎?')
+                        lobby_NPC[0].unlock_achievement('你是笨蛋嗎')
+                    handsaw = False
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                elif remain_bullet[0]:
+                    self.player.hp -= 1
+                    print('你射中了自己,造成一點傷害')
+                    self.computer.pop_bullet_pattern()
+                    live_bullet -= 1
+                    handsaw = False
+                else:
+                    print('你的子彈打空了,額外獲得一回合')
+                    remain_bullet.pop(0)
+                    self.computer.pop_bullet_pattern()
+                    blank -= 1
+                    handsaw = False
+                    continue
+                remain_bullet.pop(0)
+                handsaw = False
+
+            elif action==3 and self.player.snake_mark_activate: 
+                print('請選擇要使用的物品')
+                for i in range(len(self.player.item)):
+                    print(i+1,'.',self.player.item[i])
+                try:
+                    item = int(input())
+                except ValueError:
+                    print('請輸入正確的數字')
+                    continue
+                if item > len(self.player.item):    
+                    print('請輸入正確的數字')
+                    continue
+
+                if self.player.item[item-1] == '手鋸':
+                    print('你拿手鋸砍向惡魔公主,造成了一點傷害')
+                    time.sleep(1)
+                    self.computer.hp -= 1
+                elif self.player.item[item-1] == '啤酒':
+                    self.player.hp += 1
+                    print('你使用了啤酒,回復了一點血量')
+                elif self.player.item[item-1] == '手機':
+                    print('你使用了手機，改變了未來')
+                    random.shuffle(remain_bullet)
+                    self.computer.reset_bullet_pattern(live_bullet+blank)
+                    print('第一發是', '實彈' if remain_bullet[0] else '空包彈')
+                    print('第二發是', '實彈' if remain_bullet[1] else '空包彈')
+                elif self.player.item[item-1] == '轉換器':
+                    print('你使用了轉換器,反轉了所有子彈')
+                    for i in range(len(remain_bullet)):
+                        remain_bullet[i] = not remain_bullet[i] 
+                        if remain_bullet[i]:
+                            live_bullet += 1
+                            blank -= 1
+                        else:
+                            live_bullet -= 1
+                            blank += 1
+                elif self.player.item[item-1] == '過期藥物':
+                    print('你吸了一些過期藥物，high了起來')
+                    self.computer.fog == 0
+                    print('你看破了惡魔公主的朦朧國王效果')
+                elif self.player.item[item-1] == '放大鏡':
+                    print('你使用了放大鏡,身前的空間被扭曲了')
+                    self.player.max_item += 1
+                    for i in range(3):
+                        if random.randint(0,1):
+                            remain_bullet.append(True)
+                            live_bullet += 1
+                        else:
+                            remain_bullet.append(False)
+                            blank += 1
+                    self.computer.bullet_pattern.append('unknown')
+                    self.computer.bullet_pattern.append('unknown')
+                    self.computer.bullet_pattern.append('unknown')
+                elif self.player.item[item-1] == '香菸':
+                    if remain_bullet[0]:
+                        print('你抽了根菸,退掉一發實彈')
+                        live_bullet -= 1
+                        remain_bullet.pop(0)
+                        self.computer.pop_bullet_pattern()
+                    else:
+                        print('你把香菸塞進槍裡,空包彈被換成了實彈')
+                        remain_bullet[0] = True
+                        live_bullet += 1
+                        blank -= 1
+                    if len(remain_bullet) == 0:
+                        print('子彈打完了')
+                        print('進入下一局')
+                        return
+                elif self.player.item[item-1] == '手銬':
+                    if gun_lock:
+                        print('槍已經被改造過了')
+                        continue
+                    print('你用手銬改造了槍,這局無法再射向自己')
+                    gun_lock = True
+                elif self.player.item[item-1] == '未知藍圖':
+                    print('你撕碎未知藍圖，憑空變出了三樣物品')
+                    self.give_participant_item(3,self.player)
+                    
+                elif self.player.item[item-1] == '禁藥':
+                    print('你嗑了禁藥，身手變的快速，摸頭還要哭!')
+                    self.computer.dohandcuff()
+                    handsaw = True
+                    
+                elif self.player.item[item-1] == '大口徑子彈':
+                    print('你使用了大口徑子彈,所有空包彈被換成了實彈')
+                    for i in range(len(remain_bullet)):
+                        if remain_bullet[i] == False:
+                            remain_bullet[i] = True
+                            live_bullet += 1
+                            blank -= 1
+                elif self.player.item[item-1] == '榴彈砲':
+                    print('你使用榴彈砲強制射出所有子彈,造成了',live_bullet+blank,'點傷害')
+                    self.computer.hp -= live_bullet+blank
+                    time.sleep(1)
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                elif self.player.item[item-1] == '彈藥包':
+                    damage = 0
+                    for i in range(len(remain_bullet)-1):
+                        if remain_bullet.pop(0):
+                            live_bullet -= 1
+                            self.player.hp += 1
+                            self.computer.pop_bullet_pattern()
+                        else:
+                            damage += 1
+                            self.computer.pop_bullet_pattern()
+                            blank -= 1
+                    if handsaw:
+                        damage *= 2
+                        handsaw = False 
+                    self.computer.hp -= damage
+                    print('你用彈藥包清空大部分子彈，回復',live_bullet,'點血量，並對你造成',damage,'點傷害')
+                    
+                elif self.player.item[item-1] == '腎上腺素':    
+                    print('你使用了腎上腺素，眼神變得狂暴')
+                    handsaw = True
+                self.player.item.pop(item-1)
+                continue
+            elif action==3:
+                print('請選擇要使用的物品')
+                for i in range(len(self.player.item)):
+                    print(i+1,'.',self.player.item[i])
+                try:
+                    item = int(input())
+                except ValueError:
+                    print('請輸入正確的數字')
+                    continue
+
+                if item > len(self.player.item):    
+                    print('請輸入正確的數字')
+                    continue
+                if self.player.item[item-1] == '手鋸':
+                    if handsaw:
+                        print('手鉅效果已經存在了')
+                        continue
+                    handsaw = True
+                    print('你使用了手鋸,下一發子彈造成兩倍傷害')
+                elif self.player.item[item-1] == '啤酒':
+                    if remain_bullet.pop(0):
+                        print('你使用了啤酒,退掉一發實彈')
+                        live_bullet -= 1
+                    else:
+                        print('你使用了啤酒,退掉一發空包彈')
+                        blank -= 1
+                    self.computer.pop_bullet_pattern()
+                    if len(remain_bullet) == 0:
+                            print('子彈打完了')
+                            print('進入下一局')
+                            return
+                elif self.player.item[item-1] == '手機':
+                    print('你使用了手機')
+                    if self.player.have_angel_mark:
+                        for i in range(len(remain_bullet)):
+                            if remain_bullet[i]:
+                                print('第',i+1,'發是實彈')
+                            else:
+                                print('第',i+1,'發是空包彈')
+                    else:
+                        if len(remain_bullet) == 1:
+                            n = 0
+                        else:
+                            n=random.randint(1,len(remain_bullet)-1)
+                        if remain_bullet[n]:
+                            print('第',n+1,'發是實彈')
+                        else:
+                            print('第',n+1,'發是空包彈')
+                elif self.player.item[item-1] == '轉換器':
+                    print('你使用了轉換器,現在這發子彈將反轉')
+                    remain_bullet[0] = not remain_bullet[0]
+                    if remain_bullet[0]:
+                        live_bullet += 1
+                        blank -= 1
+                    else:
+                        live_bullet -= 1
+                        blank += 1
+                elif self.player.item[item-1] == '過期藥物':
+                    print('你使用了過期藥物')
+                    if random.randint(0,1) or self.player.have_lust_mark:
+                        self.player.hp += 2
+                        print('你回復了兩點血量')
+                    else:
+                        self.player.hp -= 1
+                        print('你失去了一點血量')
+                        if self.player.hp <= 0:
+                            time.sleep(2)
+                            print('**************************************')
+                            print('你死了')
+                            time.sleep(2)
+                            return
+                elif self.player.item[item-1] == '放大鏡':
+                    print('你使用了放大鏡看到 ','實彈' if remain_bullet[0] else '空包彈')
+                elif self.player.item[item-1] == '香菸':
+                    print('你使用了香菸,回復一點血量')
+                    self.player.hp += 1
+                elif self.player.item[item-1] == '手銬':
+                    if self.computer.handcuff:
+                        print('惡魔公主已經被銬住了')
+                        continue
+                    print('你使用了手銬,惡魔公主下回合無法行動')
+                    self.computer.dohandcuff()
+                elif self.player.item[item-1] == '未知藍圖':
+                    if self.player.item.count('過期藥物') >= 3:
+                        print('你獲得了禁藥')
+                        self.player.item.append('禁藥')
+                        for i in range(3):
+                            self.player.item.remove('過期藥物')
+                        self.player.item.remove('未知藍圖')
+                    elif (self.player.item.count('手鋸') >= 2) and  (self.player.item.count('放大鏡') >= 1):
+                        print('你獲得了大口徑子彈')
+                        self.player.item.append('大口徑子彈')
+                        for i in range(2):
+                            self.player.item.remove('手鋸')
+                        self.player.item.remove('放大鏡')
+                        self.player.item.remove('未知藍圖')
+                    elif (self.player.item.count('大口徑子彈') >= 1) and (self.player.item.count('腎上腺素') >= 1) and (self.player.item.count('轉換器') >= 1):
+                        print('你獲得了榴彈砲')
+                        self.player.item.append('榴彈砲')
+                        self.player.item.remove('腎上腺素')
+                        self.player.item.remove('大口徑子彈')
+                        self.player.item.remove('轉換器')
+                        self.player.item.remove('未知藍圖')
+                    elif (self.player.item.count('啤酒') >= 2) and (self.player.item.count('香菸') >= 1) and ((live_bullet+blank) >= 3):
+                        print('你獲得了彈藥包')
+                        self.player.item.remove('啤酒')
+                        self.player.item.remove('啤酒')
+                        self.player.item.remove('香菸')
+                        self.player.item.append('彈藥包')
+                        self.player.item.remove('未知藍圖')
+                    elif len(self.player.item) == self.player.max_item:
+                        print('你獲得了擴增背包,物品欄增加2格')
+                        self.player.item = []
+                        self.player.max_item += 2
+                    else:
+                        print('你的物品不足以合成')
+                        continue
+                    not_blue_print = False
+                elif self.player.item[item-1] == '禁藥':
+                    #70%機率血量翻倍並+3，30%血量降低到1點，若血量為1則死亡
+                    print('你使用了禁藥')
+                    if random.randint(1,10) <= 7 or self.player.have_lust_mark:
+                        self.player.hp *= 2
+                        self.player.hp += 3
+                        print('你的血量大幅提升,現在血量為',self.player.hp)
+                    else:
+                        if self.player.hp == 1:
+                            print('你死了')
+                            self.player.hp = 0  
+                            time.sleep(2)
+                            lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                            time.sleep(2)      
+                            return
+                        self.player.hp = 1
+                        print('你中毒了，血量降為1')
+                elif self.player.item[item-1] == '大口徑子彈':
+                    #將目前這發直接子彈替換成大口徑子彈並直接發射，造成3點傷害，如果有使用手鋸則造成6點傷害
+                    if self.computer.fog > 0:
+                        print('朦朧國王使你射偏了')
+                        self.computer.fog -= 1
+                        handsaw = False
+                    elif handsaw:
+                        self.computer.hp -= 6
+                        print('你發射了大口徑子彈,造成6點傷害')
+                    else:
+                        self.computer.hp -= 3
+                        print('你發射了大口徑子彈,造成3點傷害')
+                    if remain_bullet.pop(0):
+                        live_bullet -= 1
+                    else:
+                        blank -= 1
+                    self.computer.pop_bullet_pattern()
+                    self.player.item.pop(item-1)
+                    skip = True
+                    handsaw = False
+                elif self.player.item[item-1] == '榴彈砲':
+                    #將自身血量降低至1點，並發射現在這發子彈，若為實彈則造成(降低的血量+1)點傷害，使用手鋸則造成兩倍傷害，若為空包彈則不造成傷害，使用後輪到惡魔公主的回合
+                    damage = self.player.hp
+                    self.player.hp = 1
+                    if remain_bullet.pop(0):
+                        if self.computer.fog > 0:
+                            print('朦朧國王使你射偏了')
+                            self.computer.fog -= 1
+                            handsaw = False
+                        elif handsaw:
+                            self.computer.hp -= 2*damage
+                            print('你發射了榴彈砲,造成',2*damage,'點傷害')
+                            handsaw = False
+                        else:
+                            self.computer.hp -= damage
+                            print('你發射了榴彈砲,造成',damage,'點傷害')
+                        live_bullet -= 1
+                    else:
+                        print('你發射了榴彈砲,但是子彈打空了')
+                        blank -= 1
+                    self.computer.pop_bullet_pattern()
+                    self.player.item.pop(item-1)
+                    skip = True
+                elif self.player.item[item-1] == '彈藥包':
+                    #對惡魔公主造成剩餘實彈數量的傷害，之後用實彈和空包彈隨機將彈藥填滿至8發
+                    damage = live_bullet
+                    if self.computer.fog > 0:
+                        if damage > self.computer.fog:
+                            damage -= self.computer.fog
+                            self.computer.fog = 0
+                            if handsaw:
+                                damage *= 2
+                            self.computer.hp -= damage
+                            print('你使用了彈藥包')
+                            print('朦朧國王使你射偏了部分子彈,對惡魔公主造成',damage,'點傷害')
+                        else:
+                            print('你使用了彈藥包，但是朦朧國王使你射偏了所有子彈') 
+                            self.computer.fog -= damage
+                    else:
+                        if handsaw:
+                            damage *= 2
+                        print('你使用了彈藥包,對惡魔公主造成',damage,'點傷害')
+                        self.computer.hp -= damage
+                    handsaw = False
+                    remain_bullet = []
+                    live_bullet = 0
+                    blank = 0
+                    for i in range(8-len(remain_bullet)):
+                        if random.randint(0,1):
+                            remain_bullet.append(True)
+                            live_bullet += 1
+                        else:
+                            remain_bullet.append(False)
+                            blank += 1
+                    random.shuffle(remain_bullet)
+                    print('彈藥已重新裝填')
+                    self.computer.reset_bullet_pattern(live_bullet+blank)
+                    if self.player.blessing > 0:
+                        handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                elif self.player.item[item-1] == '漆黑皇后':
+                    #移除雙方所有道具，將彈夾裝填為一發空包彈一發實彈，這發實彈將造成5點傷害
+                    print('你使用了漆黑皇后，彈藥裝填為一發空包彈一發5點傷害實彈，祈禱吧!')
+                    self.player.item = []
+                    self.computer.item = []
+                    remain_bullet = [True,False]
+                    live_bullet = 1
+                    blank = 1
+                    self.computer.reset_bullet_pattern(live_bullet+blank)
+                    random.shuffle(remain_bullet)
+                    killer_queen = True
+                    not_blue_print = False
+                    self.player.queen_used.append('漆黑皇后')
+                    if self.player.blessing > 0:
+                        handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                elif self.player.item[item-1] == '神聖皇后':
+                    #回3點血量，背包上限+2，獲得3個隨機物品
+                    print('你使用了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
+                    self.player.hp += 3
+                    self.player.max_item += 3
+                    self.give_participant_item(3,self.player)
+                    self.player.max_item -= 1
+                    self.player.queen_used.append('神聖皇后')
+                elif self.player.item[item-1] == '蔚藍皇后':
+                    #玩家的回合結束時，獲得一個隨機物品
+                    print('你使用了蔚藍皇后，輪到惡魔公主的回合時你將獲得一個隨機物品')
+                    self.player.item_queen += 1   
+                    self.player.queen_used.append('蔚藍皇后')
+                    if self.player.item_queen >= 5 :
+                        time.sleep(1)
+                        lobby_NPC[0].unlock_achievement('道具永動機')
+                        time.sleep(1)
+                elif self.player.item[item-1] == '腥紅皇后':
+                    #玩家的回合開始時，附加手鉅效果
+                    print('你使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，可以觸發五次')
+                    self.player.blood_queen += 5       
+                    self.player.queen_used.append('腥紅皇后') 
+                elif self.player.item[item-1] == '琉璃皇后':
+                    #每次重新裝彈(回合開始、彈藥包、漆黑皇后)時通靈第一顆子彈，若為實彈則附加手鉅效果
+                    #若為空包彈則回復一點血量並消除惡魔公主一個道具或獲得一個隨機道具
+                    #使用當下清空惡魔公主的道具、清空彈夾並裝上一顆實彈
+                    print('你獲得了琉璃的祝福，惡魔公主的道具被清空，彈夾重新裝填了')
+                    time.sleep(2)
+                    lobby_NPC[0].unlock_achievement('琉璃的祝福')
+                    self.computer.item = [] 
+                    self.computer.reset_bullet_pattern(1)
+                    remain_bullet = [True]
+                    if not handsaw:
+                        handsaw = True
+                        print('你獲得了手鋸效果')
+                    time.sleep(1)
+                    live_bullet = 1
+                    blank = 0
+                    self.player.blessing += 1
+                    self.player.queen_used.append('琉璃皇后')                          
+                elif self.player.item[item-1] == '腎上腺素':
+                    print('你使用了腎上腺素,可以偷取惡魔公主的物品')
+                    if len(self.computer.item) == 0:
+                        print('惡魔公主沒有物品可以偷取')
+                        continue
+                    print('請選擇要偷取的物品:')
+                    for i in range(len(self.computer.item)):
+                        print(i+1,'.',self.computer.item[i])
+                    try:
+                        steal = int(input())
+                    except ValueError:
+                        print('請輸入正確的數字')
+                        time.sleep(1)
+                        continue  
+                    if steal > len(self.computer.item):
+                        print('請輸入正確的數字')
+                        continue
+                    elif steal <= 0:
+                        print('請輸入正確的數字')
+                        continue
+                    #馬上使用選擇的物品 
+                    if self.computer.item[steal-1] == '手鋸':
+                        if handsaw:
+                            print('手鉅效果已經存在了')
+                            continue
+                        handsaw = True
+                        print('你使用了手鋸,下一發子彈造成兩倍傷害')
+                    elif self.computer.item[steal-1] == '啤酒':
+                        if remain_bullet.pop(0):
+                            print('你使用了啤酒,退掉一發實彈')
+                            live_bullet -= 1
+                        else:
+                            print('你使用了啤酒,退掉一發空包彈')
+                            blank -= 1
+                        self.computer.pop_bullet_pattern()
+                        if len(remain_bullet) == 0:
+                            print('子彈打完了')
+                            print('進入下一局')
+                            return
+                    elif self.computer.item[steal-1] == '手機':
+                        print('你使用了手機')
+                        if self.player.have_angel_mark:
+                            for i in range(len(remain_bullet)):
+                                if remain_bullet[i]:
+                                    print('第',i+1,'發是實彈')
+                                else:
+                                    print('第',i+1,'發是空包彈')
+                        else:
+                            if len(remain_bullet) == 1:
+                                n = 0
+                            else:
+                                n=random.randint(1,len(remain_bullet)-1)
+                            if remain_bullet[n]:
+                                print('第',n+1,'發是實彈')
+                            else:
+                                print('第',n+1,'發是空包彈')
+                    elif self.computer.item[steal-1] == '轉換器':
+                        print('你使用了轉換器,現在這發子彈將反轉')
+                        remain_bullet[0] = not remain_bullet[0]
+                        if remain_bullet[0]:
+                            live_bullet += 1
+                            blank -= 1
+                        else:
+                            live_bullet -= 1
+                            blank += 1
+                    elif self.computer.item[steal-1] == '過期藥物':
+                        print('你使用了過期藥物')
+                        if random.randint(0,1) or self.player.have_lust_mark:
+                            self.player.hp += 2
+                            print('你回復了兩點血量')
+                        else:
+                            self.player.hp -= 1
+                            print('你失去了一點血量')
+                            if self.player.hp <= 0:
+                                time.sleep(2)
+                                print('**************************************')
+                                print('你死了')
+                                time.sleep(2)
+                                return
+                    elif self.computer.item[steal-1] == '放大鏡':
+                        print('你使用了放大鏡看到 ','實彈' if remain_bullet[0] else '空包彈')
+                    elif self.computer.item[steal-1] == '香菸':
+                        print('你使用了香菸,回復一點血量')
+                        self.player.hp += 1
+                    elif self.computer.item[steal-1] == '手銬':
+                        if self.computer.handcuff:
+                            print('惡魔公主已經被銬住了')
+                            continue
+                        print('你使用了手銬,惡魔公主下回合無法行動')
+                        self.computer.dohandcuff()
+                    elif self.computer.item[steal-1] == '未知藍圖':
+                        self.player.item.append('未知藍圖')
+                        print('你獲得了未知藍圖')
+                    elif self.computer.item[steal-1] == '禁藥':
+                        print('你使用了禁藥')
+                        if random.randint(1,10) <= 7 or self.player.have_lust_mark:
+                            self.player.hp *= 2
+                            self.player.hp += 3
+                            print('你的血量大幅提升,現在血量為',self.player.hp)
+                        else:
+                            if self.player.hp == 1:
+                                print('你死了')
+                                self.player.hp = 0  
+                                time.sleep(2)
+                                lobby_NPC[0].unlock_achievement('吸毒有礙身心健康，請勿隨意嘗試')
+                                time.sleep(2)    
+                                return
+                            self.player.hp = 1
+                            print('你中毒了，血量降為1')
+                    elif self.computer.item[steal-1] == '大口徑子彈':
+                        if self.computer.fog > 0:
+                            print('朦朧國王使你射偏了')
+                            self.computer.fog -= 1
+                            handsaw = False
+                        elif handsaw:
+                            self.computer.hp -= 6
+                            print('你使用了大口徑子彈,造成6點傷害')
+                        else:
+                            self.computer.hp -= 3
+                            print('你使用了大口徑子彈,造成3點傷害')
+                        if remain_bullet.pop(0):
+                            live_bullet -= 1
+                        else:
+                            blank -= 1
+                        self.computer.pop_bullet_pattern()
+                        handsaw = False
+                    elif self.computer.item[steal-1] == '榴彈砲':
+                        damage = self.player.hp 
+                        self.player.hp = 1
+                        if remain_bullet.pop(0):
+                            if self.computer.fog > 0:
+                                print('朦朧國王使你射偏了')
+                                self.computer.fog -= 1
+                                handsaw = False
+                            elif handsaw:
+                                self.computer.hp -= 2*damage
+                                print('你使用了榴彈砲,造成',2*damage,'點傷害')
+                                handsaw = False
+                                if damage >= 15:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
+                            else:
+                                self.computer.hp -= damage
+                                print('你使用了榴彈砲,造成',damage,'點傷害')
+                                if damage >= 30:
+                                    lobby_NPC[0].unlock_achievement('巨砲')
+                            live_bullet -= 1
+                        else:
+                            print('你使用了榴彈砲,但是子彈打空了')
+                            blank -= 1
+                            handsaw = False
+                        self.computer.pop_bullet_pattern()
+                    elif self.computer.item[steal-1] == '彈藥包':
+                        damage = live_bullet
+                        if self.computer.fog > 0:
+                            if damage > self.computer.fog:
+                                damage -= self.computer.fog
+                                self.computer.fog = 0
+                                if handsaw:
+                                    damage *= 2
+                                self.computer.hp -= damage
+                                print('你使用了彈藥包')
+                                print('朦朧國王使你射偏了部分子彈,對惡魔公主造成',damage,'點傷害')
+                            else:
+                                print('你使用了彈藥包，但是朦朧國王使你射偏了所有子彈') 
+                                self.computer.fog -= damage
+                        else:
+                            if handsaw:
+                                damage *= 2
+                            print('你使用了彈藥包,對惡魔公主造成',damage,'點傷害')
+                            self.computer.hp -= damage
+                        handsaw = False
+                        remain_bullet = []
+                        live_bullet = 0
+                        blank = 0
+                        for i in range(8-len(remain_bullet)):
+                            if random.randint(0,1):
+                                remain_bullet.append(True)
+                                live_bullet += 1
+                            else:
+                                remain_bullet.append(False)
+                                blank += 1
+                        random.shuffle(remain_bullet)
+                        print('彈藥已重新裝填')
+                        self.computer.reset_bullet_pattern(live_bullet+blank)
+                        if self.player.blessing > 0:
+                            handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                        
+                    elif self.computer.item[steal-1] == '腎上腺素':
+                        print('你不能偷取腎上腺素')
+                        time.sleep(2)
+                        lobby_NPC[0].unlock_achievement('就說了不行')
+                        continue
+                    else:
+                        print('你不能偷取國王道具')
+                        continue
+                    self.computer.item.pop(steal-1)
+
+                if not_blue_print and not skip: 
+                    self.player.item.pop(item-1)
+                time.sleep(2)
+                if self.computer.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你贏了')
+                    time.sleep(2)
+                    return
+                if not skip:
+                    continue
+            elif action==4:
+                print('惡魔公主的物品欄:',self.computer.item)
+                time.sleep(4)
+                continue
+            if self.computer.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你贏了')
+                time.sleep(2)
+                return
+            if self.player.hp <= 0:
+                time.sleep(2)
+                print('**************************************')
+                print('你死了')
+                time.sleep(2)
+                return
+            if len(remain_bullet) == 0:
+                print('子彈打完了')
+                print('進入下一局')
+                return
+            if self.player.item_queen > 0:
+                print('蔚藍皇后使你獲得隨機物品')
+                time.sleep(1)
+            for i in range(self.player.item_queen):
+                self.give_participant_item(1,self.player)
+            print('==========================================')
+            print('惡魔公主的回合')
+            print('==========================================')
+
+            if self.player.hp == 1 and self.player.death_mark_activate:
+                print('墮天使的力量使你恢復了3點血量')
+                time.sleep(2)
+                self.player.death_mark_activate = False
+                self.player.hp +=3
+
+            time.sleep(1)
+            try_count = 0
+            not_blue_print = True
+
+            if self.computer.handcuff:
+                print('惡魔公主被手銬銬住了,無法行動')
+                self.computer.unhandcuff()
+                continue
+
+            skip = False
+            not_blue_print = True
+            if action == 0:
+                achievement_first_dead = True
+            else:
+                achievement_first_dead = False
+
+            while True:
+                #惡魔公主進行剩餘子彈分析
+                if (live_bullet-self.computer.known_live) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'blank')
+                elif (blank-self.computer.known_blank) <= 0:
+                    for i in range(len(self.computer.bullet_pattern)):
+                        if self.computer.bullet_pattern[i] == 'unknown':
+                            self.computer.set_bullet_pattern(i,'live')
+                if self.player.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你死了')
+                    time.sleep(2)
+                    if achievement_first_dead:
+                        lobby_NPC[0].unlock_achievement('哈哈屁眼')
+                    return
+                time.sleep(2)
+                if len(remain_bullet) == 0:
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                if (self.computer.rage_king > 0) and (handsaw == False):
+                    print('狂暴國王給予惡魔公主手鉅效果')
+                    time.sleep(1)
+                    handsaw = True
+                    self.computer.rage_king -= 1
+                if self.computer.item.count('腥紅皇后') > 0 & (not handsaw):
+                    print('腥紅皇后使惡魔公主獲得手鋸效果')
+                    time.sleep(1)
+                    handsaw = True
+                    self.computer.blood_queen -= 1
+                #惡魔公主的行動判斷
+                if len(self.computer.bullet_pattern) != len(remain_bullet):
+                    raise Exception('子彈數量不符')
+                if len(self.computer.item) > 2 :
+                    if try_count >= 3:
+                        action = random.randint(1,2)
+                        if self.computer.bullet_pattern[0] == 'live':
+                            action = 1
+                        elif self.computer.bullet_pattern[0] == 'blank':
+                            action = 2
+                    elif random.randint(1,4) == 4:
+                        action = random.randint(1,2)
+                    else:
+                        action = 3
+                elif ('朦朧國王' in self.computer.item or '狂暴國王' in self.computer.item or '狡詐國王' in self.computer.item or '貪婪國王' in self.computer.item):
+                    action = 3
+                elif self.computer.bullet_pattern[0] == 'live':
+                    action = 1
+                elif self.computer.bullet_pattern[0] == 'blank':
+                    action = 2
+                elif len(self.computer.item) == 0:
+                    action = random.randint(1,2)
+                else:
+                    action = random.randint(1,3)
+                if (live_bullet > blank) & (action == 2):
+                    action = 1
+                if (self.computer.bullet_pattern[0] == 'live') and (action == 2):
+                    action = 1
+                elif (self.computer.bullet_pattern[0] == 'blank') and (action == 1):
+                    action = 2
+                
+                if (self.computer.bullet_pattern[0] == 'blank') & ('轉換器' in self.computer.item):
+                    print('惡魔公主使用了轉換器,現在這發子彈將反轉')
+                    remain_bullet[0] = True
+                    live_bullet += 1
+                    blank -= 1
+                    self.computer.bullet_pattern[0] = 'live'
+                    self.computer.item.remove('轉換器')
+                    time.sleep(2)
+                    continue
+                if (self.computer.bullet_pattern[0] == 'live') & ('手鋸' in self.computer.item) and not handsaw:  
+                    handsaw = True
+                    print('惡魔公主使用了手鋸,下一發子彈造成兩倍傷害')
+                    time.sleep(2)
+                    self.computer.item.remove('手鋸')
+                    action = 1
+                if '未知藍圖' in self.computer.item:
+                    #馬上使用未知藍圖
+                    print('惡魔公主使用了未知藍圖')
+                    time.sleep(2)
+                    temp = random.randint(1,5)
+                    if temp == 1:
+                        print('惡魔公主獲得了禁藥')
+                        
+                        self.computer.item.append('禁藥')
+                    elif temp == 2:
+                        print('惡魔公主獲得了大口徑子彈')
+                        
+                        self.computer.item.append('大口徑子彈')
+                    elif temp == 3:
+                        print('惡魔公主獲得了榴彈砲')
+                        
+                        self.computer.item.append('榴彈砲')
+                    elif temp == 4:
+                        print('惡魔公主獲得了彈藥包')
+                        
+                        self.computer.item.append('彈藥包')
+                    elif temp == 5:
+                        print('惡魔公主獲得了擴增背包')
+                        
+                        self.computer.max_item += 1
+                    self.computer.item.remove('未知藍圖')
+                    time.sleep(2)
+                    continue
+                if gun_lock and action == 2:
+                    action = 1
+                #惡魔公主的行動選項和玩家相同
+                if action==1:
+                    try_count = 0
+                    if remain_bullet[0]&handsaw&killer_queen:
+                        self.player.hp -= 10
+                        print('惡魔公主使用漆黑皇后射中了你,造成十點傷害')
+                        if self.player.blood_queen > 0:
+                            print('腥紅皇后使你免疫額外傷害')
+                            self.player.hp += 5
+                            self.player.blood_queen -= 1
+                        handsaw = False
+                        killer_queen = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]&killer_queen:
+                        self.player.hp -= 5
+                        print('惡魔公主使用漆黑皇后射中了你,造成五點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                        killer_queen = False
+                    elif remain_bullet[0]&handsaw:
+                        self.player.hp -= 2
+                        print('惡魔公主射中了你,造成兩點傷害')
+                        if self.player.blood_queen > 0:
+                            print('腥紅皇后使你免疫額外傷害')
+                            self.player.hp += 1
+                            self.player.blood_queen -= 1
+                        handsaw = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]:
+                        self.player.hp -= 1
+                        print('惡魔公主射中了你,造成一點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    else:
+                        print('惡魔公主的子彈打空了')
+                        blank -= 1
+                        self.computer.pop_bullet_pattern()
+                        handsaw = False
+                    remain_bullet.pop(0)
+                    handsaw = False
+                elif action==2:
+                    try_count = 0
+                    if remain_bullet[0] and (self.computer.fog > 0):
+                        print('朦朧國王使惡魔公主射偏了')
+                        self.computer.fog -= 1
+                        handsaw = False
+                        killer_queen = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]&handsaw&killer_queen:
+                        self.computer.hp -= 10
+                        print('惡魔公主使用漆黑皇后射中了自己,造成十點傷害')
+                        if self.computer.blood_queen > 0:
+                            print('腥紅皇后使你免疫額外傷害')
+                            self.computer.hp += 5
+                            self.computer.blood_queen -= 1
+                        else:
+                            print('你逃過了一截')
+                        handsaw = False
+                        killer_queen = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]&killer_queen:
+                        self.computer.hp -= 5
+                        print('惡魔公主使用漆黑皇后射中了自己,造成五點傷害')
+                        print('你逃過了一截')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                        killer_queen = False
+                    elif remain_bullet[0]&handsaw:
+                        self.computer.hp -= 2
+                        print('惡魔公主射中了自己,造成兩點傷害')
+                        if self.computer.blood_queen > 0:
+                            print('腥紅皇后使惡魔公主免疫額外傷害')
+                            self.computer.hp += 1
+                            self.computer.blood_queen -= 1
+                        handsaw = False
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                    elif remain_bullet[0]:
+                        self.computer.hp -= 1
+                        print('惡魔公主射中了自己,造成一點傷害')
+                        live_bullet -= 1
+                        self.computer.pop_bullet_pattern()
+                        handsaw = False
+                    else:
+                        print('惡魔公主射向自己，子彈打空了,額外獲得一回合')
+                        remain_bullet.pop(0)
+                        self.computer.pop_bullet_pattern()
+                        blank -= 1
+                        handsaw = False
+                        continue
+                    remain_bullet.pop(0)
+                    handsaw = False
+                elif action==3:
+                    item = random.randint(0,len(self.computer.item)-1)
+                    if (self.computer.item[item] == '啤酒') & (self.computer.bullet_pattern[0]=='live'):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '手銬') & self.player.handcuff:
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '過期藥物') & (self.computer.hp == 1):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '手機') & (len(remain_bullet) <= 2):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '手鋸') & handsaw:
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '手鋸') & (self.computer.bullet_pattern[0] == 'blank'):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '榴彈砲') & (self.computer.bullet_pattern[0] == 'blank'):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '放大鏡') & (self.computer.bullet_pattern[0] == 'blank'):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '放大鏡') & (self.computer.bullet_pattern[0] == 'live'):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '手機') & ('unknown' not in self.computer.bullet_pattern):
+                        try_count +=1
+                        continue
+                    if (self.computer.item[item] == '腎上腺素') & (len(self.player.item) == 0):
+                        try_count +=1
+                        continue     
+                    try_count = 0
+                    if self.computer.item[item] == '手鋸':
+                        handsaw = True
+                        print('惡魔公主使用了手鋸,下一發子彈造成兩倍傷害')
+                    elif self.computer.item[item] == '啤酒':
+                        if remain_bullet.pop(0):
+                            print('惡魔公主使用了啤酒,退掉一發實彈')
+                            live_bullet -= 1
+                            self.computer.pop_bullet_pattern()
+                        else:
+                            print('惡魔公主使用了啤酒,退掉一發空包彈')
+                            blank -= 1
+                            self.computer.pop_bullet_pattern()
+                        if len(remain_bullet) == 0:
+                            print('子彈打完了')
+                            print('進入下一局')
+                            return
+                    elif self.computer.item[item] == '手機':
+                        print('惡魔公主使用了手機')
+                        if len(remain_bullet) == 1:
+                            n = 0
+                        else:
+                            n=random.randint(1,len(remain_bullet)-1)
+                        if remain_bullet[n]:
+                            self.computer.set_bullet_pattern(n,'live')
+                        else:
+                            self.computer.set_bullet_pattern(n,'blank')
+                    elif self.computer.item[item] == '轉換器':
+                        print('惡魔公主使用了轉換器,現在這發子彈將反轉')
+                        remain_bullet[0] = not remain_bullet[0]
+                        if remain_bullet[0]:
+                            live_bullet += 1
+                            blank -= 1
+                        else:
+                            live_bullet -= 1
+                            blank += 1
+                        if self.computer.bullet_pattern[0] == 'live':
+                            self.computer.set_bullet_pattern(0,'blank')
+                        elif self.computer.bullet_pattern[0] == 'blank':
+                            self.computer.set_bullet_pattern(0,'live')
+                    elif self.computer.item[item] == '過期藥物':
+                        print('惡魔公主使用了過期藥物')
+                        if random.randint(0,1):
+                            self.computer.hp += 2
+                            print('惡魔公主回復了兩點血量')
+                        else:
+                            self.computer.hp -= 1
+                            print('惡魔公主失去了一點血量')
+                            if self.computer.hp <= 0:
+                                time.sleep(2)
+                                print('**************************************')
+                                print('你贏了')
+                                time.sleep(2)
+                                return
+                    elif self.computer.item[item] == '放大鏡':
+                        print('惡魔公主使用了放大鏡')
+                        self.computer.set_bullet_pattern(0,'live' if remain_bullet[0] else 'blank')
+                    elif self.computer.item[item] == '香菸':
+                        print('惡魔公主使用了香菸,回復一點血量')
+                        self.computer.hp += 1
+                    elif self.computer.item[item] == '手銬':
+                        print('惡魔公主使用了手銬,你下回合無法行動')
+                        self.player.dohandcuff()
+                    elif self.computer.item[item] == '朦朧國王':
+                        self.player.queen_used.append('朦朧國王')
+                        print('惡魔公主使用了***朦朧國王***，每回合額外免疫一次傷害')
+                        #fog_king為上限，fog為當前免疫次數
+                        self.computer.fog_king += 1
+                        self.computer.fog += 1
+                    elif self.computer.item[item] == '狂暴國王':
+                        self.player.queen_used.append('狂暴國王')   
+                        print('惡魔公主使用了***狂暴國王***，下5發子彈造成兩倍傷害')
+                        self.computer.rage_king += 5
+                    elif self.computer.item[item] == '狡詐國王':
+                        self.player.queen_used.append('狡詐國王')
+                        print('惡魔公主使用了***狡詐國王***，能夠預知部分未來')
+                        self.computer.trick_king += 3
+                    elif self.computer.item[item] == '貪婪國王':
+                        print('惡魔公主使用了***貪婪國王***，偷走你的道具')
+                        self.player.queen_used.append('貪婪國王')
+                        #偷走玩家所有非皇后道具，留下皇后道具
+                        temp_item = []
+                        for i in range(len(self.player.item)):
+                            if self.player.item[i] != '漆黑皇后' and self.player.item[i] != '神聖皇后' and self.player.item[i] != '蔚藍皇后' and self.player.item[i] != '腥紅皇后':
+                                self.computer.item.append(self.player.item[i])
+                            else:
+                                temp_item.append(self.player.item[i])
+                        self.player.item = temp_item                         
+                        self.computer.item.remove('貪婪國王')
+                        skip = True
+                    elif self.computer.item[item] == '未知藍圖':
+                        print('惡魔公主使用了未知藍圖')
+                        time.sleep(2)
+                        temp = random.randint(1,5)
+                        if temp == 1:
+                            print('惡魔公主獲得了禁藥')
+                            self.computer.item.pop(item)
+                            self.computer.item.append('禁藥')
+                        elif temp == 2:
+                            print('惡魔公主獲得了大口徑子彈')
+                            self.computer.item.pop(item)
+                            self.computer.item.append('大口徑子彈')
+                        elif temp == 3:
+                            print('惡魔公主獲得了榴彈砲')
+                            self.computer.item.pop(item)
+                            self.computer.item.append('榴彈砲')
+                        elif temp == 4:
+                            print('惡魔公主獲得了彈藥包')
+                            self.computer.item.pop(item)
+                            self.computer.item.append('彈藥包')
+                        elif temp == 5:
+                            print('惡魔公主獲得了擴增背包')
+                            self.computer.item.pop(item)
+                            self.computer.max_item += 1
+                    elif self.computer.item[item] == '禁藥':
+                        print('惡魔公主使用了禁藥')
+                        if random.randint(1,10) <= 7:
+                            self.computer.hp *= 2
+                            self.computer.hp += 3
+                            print('惡魔公主的血量大幅提升,現在血量為',self.computer.hp)
+                        else:
+                            if self.computer.hp == 1:
+                                print('惡魔公主中毒身亡，你贏了')
+                                self.computer.hp = 0
+                                time.sleep(2)
+                                return
+                            self.computer.hp = 1
+                            print('惡魔公主中毒了，血量降為1')    
+                    elif self.computer.item[item] == '大口徑子彈':
+                        self.computer.item.pop(item)
+                        if handsaw:
+                            self.player.hp -= 6
+                            print('惡魔公主使用了大口徑子彈,造成6點傷害')
+                        else:
+                            self.player.hp -= 3
+                            print('惡魔公主使用了大口徑子彈,造成3點傷害')
+                        if remain_bullet.pop(0):
+                            live_bullet -= 1
+                        else:
+                            blank -= 1
+                        self.computer.pop_bullet_pattern()
+                        skip = True
+                        handsaw = False
+                    elif self.computer.item[item] == '榴彈砲':
+                        self.computer.item.pop(item)
+                        damage = self.computer.hp 
+                        self.computer.hp = 1
+                        if remain_bullet.pop(0):
+                            if handsaw:
+                                self.player.hp -= 2*damage
+                                print('惡魔公主使用了榴彈砲,造成',2*damage,'點傷害')
+                                handsaw = False
+                            else:
+                                self.player.hp -= damage
+                                print('惡魔公主使用了榴彈砲,造成',damage,'點傷害')
+                            live_bullet -= 1
+                        else:
+                            print('惡魔公主使用了榴彈砲,但是子彈打空了')
+                            blank -= 1
+                            handsaw = False
+
+                        self.computer.pop_bullet_pattern()
+                        skip = True
+                    elif self.computer.item[item] == '彈藥包':
+                        damage = live_bullet
+                        if handsaw:
+                            damage *= 2
+                            handsaw = False 
+                        self.player.hp -= damage
+                        print('惡魔公主使用了彈藥包,對你造成',damage,'點傷害')
+                        remain_bullet = []
+                        live_bullet = 0
+                        blank = 0
+                        for i in range(8-len(remain_bullet)):
+                            if random.randint(0,1):
+                                remain_bullet.append(True)
+                                live_bullet += 1
+                            else:
+                                remain_bullet.append(False)
+                                blank += 1
+                        random.shuffle(remain_bullet)
+                        print('彈藥已重新裝填')
+                        if self.player.blessing > 0:
+                            handsaw = self.blessing(remain_bullet,'惡魔公主',handsaw)
+                        self.computer.reset_bullet_pattern(live_bullet+blank)
+
+                    elif self.computer.item[item] == '漆黑皇后':
+                        print('惡魔公主使用了漆黑皇后，彈藥裝填為一發空包彈一發5點傷害實彈，祈禱吧!')
+                        self.computer.item = []
+                        self.player.item = []
+                        remain_bullet = [True,False]
+                        live_bullet = 1
+                        blank = 1
+                        self.computer.reset_bullet_pattern(live_bullet+blank)
+                        random.shuffle(remain_bullet)
+                        killer_queen = True
+                        not_blue_print = False
+                        if self.player.blessing > 0:
+                            handsaw = self.blessing(remain_bullet,'玩家',handsaw)
+                    elif self.computer.item[item] == '神聖皇后':
+                        print('惡魔公主使用了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
+                        self.computer.hp += 3
+                        self.computer.max_item += 2
+                        for i in range(3):
+                            self.give_participant_item(1,self.computer)
+                    elif self.computer.item[item] == '蔚藍皇后':
+                        print('惡魔公主使用了蔚藍皇后，輪到你的回合時她將獲得一個隨機物品')
+                        self.computer.item_queen += 1
+                    
+                    elif self.computer.item[item] == '腥紅皇后':
+                        print('惡魔公主使用了腥紅皇后，每回合獲得手鋸效果並免疫手鉅的額外傷害，最多觸發五次')
+                        self.computer.blood_queen += 5                            
+
+                    elif self.computer.item[item] == '腎上腺素':    
+                        print('惡魔公主使用了腎上腺素,可以偷取你的物品')
+                        if len(self.player.item) == 0:
+                            print('你沒有物品可以偷取')
+                            continue
+                        #隨機偷取玩家的一件物品，馬上使用偷取的物品
+                        target = random.randint(0,len(self.player.item)-1)
+                        steal = self.player.item.pop(target)
+                        if steal == '手鋸':
+                            handsaw = True
+                            print('惡魔公主偷走了手鋸,下一發子彈造成兩倍傷害')
+                        elif steal == '啤酒':
+                            if remain_bullet.pop(0):
+                                print('惡魔公主偷走了啤酒,退掉一發實彈')
+                                live_bullet -= 1
+                                self.computer.pop_bullet_pattern()
+                            else:
+                                print('惡魔公主偷走了啤酒,退掉一發空包彈')
+                                blank -= 1
+                                self.computer.pop_bullet_pattern()
+                            if len(remain_bullet) == 0:
+                                print('子彈打完了')
+                                print('進入下一局')
+                                return
+                        elif steal == '手機':
+                            print('惡魔公主偷走了手機')
+                            if len(remain_bullet) == 1:
+                                n = 0
+                            else:
+                                n=random.randint(1,len(remain_bullet)-1)
+                            if remain_bullet[n]:
+                                self.computer.set_bullet_pattern(n,'live')
+                            else:
+                                self.computer.set_bullet_pattern(n,'blank')
+                        elif steal == '轉換器':
+                            print('惡魔公主偷走了轉換器,現在這發子彈將反轉')
+                            remain_bullet[0] = not remain_bullet[0]
+                            if remain_bullet[0]:
+                                live_bullet += 1
+                                blank -= 1
+                            else:
+                                live_bullet -= 1
+                                blank += 1
+                            if self.computer.bullet_pattern[0] == 'live':
+                                self.computer.set_bullet_pattern(0,'blank')
+                            elif self.computer.bullet_pattern[0] == 'blank':
+                                self.computer.set_bullet_pattern(0,'live')
+                        elif steal == '過期藥物':
+                            print('惡魔公主偷走了過期藥物')
+                            if random.randint(0,1):
+                                self.computer.hp += 2
+                                print('惡魔公主回復了兩點血量')
+                            else:
+                                self.computer.hp -= 1
+                                print('惡魔公主失去了一點血量')
+                                if self.computer.hp <= 0:
+                                    time.sleep(2)
+                                    print('**************************************')
+                                    print('你贏了')
+                                    time.sleep(2)
+                                    return
+                        elif steal == '放大鏡':
+                            print('惡魔公主偷走了放大鏡')
+                            self.computer.set_bullet_pattern(0,'live' if remain_bullet[0] else 'blank')
+                        elif steal == '香菸':
+                            print('惡魔公主偷走了香菸,回復一點血量')
+                            self.computer.hp += 1
+                        elif steal == '手銬':
+                            print('惡魔公主偷走了手銬,你下回合無法行動')
+                            self.player.dohandcuff()
+                        elif steal == '漆黑皇后':
+                            #效果和玩家使用漆黑皇后相同
+                            print('惡魔公主偷走了漆黑皇后，彈藥裝填為一發空包彈一發5點傷害實彈，祈禱吧!')
+                            self.computer.item = []
+                            self.player.item = []
+                            remain_bullet = [True,False]
+                            live_bullet = 1
+                            blank = 1
+                            self.computer.reset_bullet_pattern(live_bullet+blank)
+                            random.shuffle(remain_bullet)
+                            killer_queen = True
+                            not_blue_print = False
+                            if self.player.blessing > 0:
+                                self.blessing(remain_bullet,'惡魔公主',handsaw)
+                        elif steal == '神聖皇后':
+                            #效果和玩家使用神聖皇后相同
+                            print('惡魔公主偷走了神聖皇后，回復3點血量，背包上限+2，獲得3個隨機物品')
+                            self.computer.hp += 3
+                            self.computer.max_item += 2
+                            self.give_participant_item(3,self.computer)
+                        elif steal == '蔚藍皇后':
+                            #效果和玩家使用蔚藍皇后相同
+                            print('惡魔公主偷走了蔚藍皇后，你獲得回合時惡魔公主將獲得隨機物品')
+                            self.computer.item_queen += 1
+                        elif steal == '腥紅皇后':
+                            #效果和玩家使用腥紅皇后相同
+                            print('惡魔公主偷走了腥紅皇后，你獲得回合時惡魔公主將獲得手鋸效果')
+                            self.computer.blood_queen += 1
+                            
+                        elif steal == '未知藍圖':
+                            temp = random.randint(1,5)
+                            if temp == 1:
+                                print('惡魔公主獲得了禁藥')
+                                self.computer.item.append('禁藥')
+                            elif temp == 2:
+                                print('惡魔公主獲得了大口徑子彈')
+                                self.computer.item.append('大口徑子彈')
+                            elif temp == 3:
+                                print('惡魔公主獲得了榴彈砲')
+                                self.computer.item.append('榴彈砲')
+                            elif temp == 4:
+                                print('惡魔公主獲得了彈藥包')
+                                self.computer.item.append('彈藥包')
+                            elif temp == 5:
+                                print('惡魔公主獲得了擴增背包')
+                                self.computer.max_item += 1
+                        elif steal == '禁藥':
+                            print('惡魔公主偷走了禁藥')
+                            if random.randint(1,10) <= 7:
+                                self.computer.hp *= 2
+                                self.computer.hp += 3
+                                print('惡魔公主的血量大幅提升,現在血量為',self.computer.hp)
+                            else:
+                                if self.computer.hp == 1:
+                                    print('惡魔公主中毒身亡，你贏了')
+                                    time.sleep(2)
+                                    return
+                                self.computer.hp = 1
+                                print('惡魔公主中毒了，血量降為1')
+                        elif steal == '大口徑子彈':
+                            if handsaw:
+                                self.player.hp -= 6
+                                print('惡魔公主偷走了大口徑子彈,造成6點傷害')
+                            else:
+                                self.player.hp -= 3
+                                print('惡魔公主偷走了大口徑子彈,造成3點傷害')
+                            if remain_bullet.pop(0):
+                                live_bullet -= 1
+                            else:
+                                blank -= 1
+                            handsaw = False
+                            self.computer.pop_bullet_pattern()
+                            if self.player.handcuff:
+                                print('你被手銬銬住了,無法行動')
+                                self.player.unhandcuff()
+                                try_count = 0
+                                continue
+                            else:
+                                break
+                        elif steal == '榴彈砲':
+                            damage = self.computer.hp 
+                            self.computer.hp = 1
+                            if remain_bullet.pop(0):
+                                if handsaw:
+                                    self.player.hp -= 2*damage
+                                    print('惡魔公主偷走了榴彈砲,造成',2*damage,'點傷害')
+                                    handsaw = False
+                                else:
+                                    self.player.hp -= damage
+                                    print('惡魔公主偷走了榴彈砲,造成',damage,'點傷害')
+                                live_bullet -= 1
+                            else:
+                                print('惡魔公主偷走了榴彈砲,但是子彈打空了')
+                                blank -= 1
+                                handsaw = False
+                            self.computer.pop_bullet_pattern()
+                            if self.player.handcuff:
+                                print('你被手銬銬住了,無法行動')
+                                self.player.unhandcuff()
+                                try_count = 0
+                                continue
+                            else:
+                                break
+                        elif steal == '彈藥包':
+                            damage = live_bullet
+                            if handsaw:
+                                self.player.hp -= 2*damage
+                                handsaw = False
+                            self.player.hp -= damage
+                            print('惡魔公主偷走了彈藥包,對你造成',damage,'點傷害')
+                            remain_bullet = []
+                            live_bullet = 0
+                            blank = 0
+                            for i in range(8-len(remain_bullet)):
+                                if random.randint(0,1):
+                                    remain_bullet.append(True)
+                                    live_bullet += 1
+                                else:
+                                    remain_bullet.append(False)
+                                    blank += 1
+                            random.shuffle(remain_bullet)
+                            print('彈藥已重新裝填')
+                            if self.player.blessing > 0:
+                                handsaw = self.blessing(remain_bullet,'惡魔公主',handsaw)
+                            self.computer.reset_bullet_pattern(live_bullet+blank)
+                        elif steal == '腎上腺素':
+                            print('惡魔公主試著偷取腎上腺素但失敗了')
+                            self.player.item.append('腎上腺素')
+                        elif steal == '琉璃皇后':
+                            print('惡魔公主試著偷取琉璃皇后但失敗了')
+                            self.player.item.append('琉璃皇后')
+                    if skip and not self.player.handcuff:
+                        break
+                    elif skip and self.player.handcuff:
+                        print('你被手銬銬住了,無法行動')
+                        self.player.unhandcuff()
+                        try_count = 0
+                        continue
+                    if not_blue_print:
+                        self.computer.item.pop(item)
+                    continue
+                if self.player.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你死了')
+                    time.sleep(2)
+                    if achievement_first_dead:
+                        lobby_NPC[0].unlock_achievement('哈哈屁眼')
+                    return
+                if self.computer.hp <= 0:
+                    time.sleep(2)
+                    print('**************************************')
+                    print('你贏了')
+                    time.sleep(2)
+                    return
+                if self.player.handcuff:
+                    print('你被手銬銬住了,無法行動')
+                    self.player.unhandcuff()
+                    try_count = 0
+                    continue
+                if len(remain_bullet) == 0:
+                    print('子彈打完了')
+                    print('進入下一局')
+                    return
+                if self.computer.item_queen > 0:
+                    print('蔚藍皇后使惡魔公主獲得隨機物品')
+                    time.sleep(1)
+                for i in range(self.computer.item_queen):
+                    self.give_participant_item(1,self.computer)
+                break
+        
+    
 #存讀檔
 def save_game(main_player, lobby_NPC):
     with open('savefile.pkl', 'wb') as f:
@@ -5763,7 +7390,7 @@ if __name__ == '__main__':
                 print('8. 挑戰惡魔試煉')
                 print(str(len(lobby_NPC[1].shop)+1) + ' 離開商店')
             else:
-                print(str(len(lobby_NPC[1].shop)) + ' 離開商店')
+                print(str(len(lobby_NPC[1].shop)+1) + ' 離開商店')
             action = input(f'你有 {main_player.money} 元，購買商品?')
             if action == '1':
                 if main_player.money >= lobby_NPC[1].shop[0].price and lobby_NPC[1].shop[0].check_required_item(main_player):
