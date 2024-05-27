@@ -33,7 +33,6 @@ def getData(fileName):
     dataFile.close()
     return (masses, distances)
 
-
 def labelPlot():
     pylab.title('Measured Displacement of Spring')
     pylab.xlabel('|Force| (Newtons)')
