@@ -10,6 +10,11 @@ def test_location():
     loc2 = Location(1, 1)
     assert loc2.get_x() == 1
     assert loc2.get_y() == 1
+    
+    
+    loc6=Location(2,2)
+    assert loc6.get_x() == 2
+    assert loc6.get_y() == 2
 
     loc3 = loc1.move(2, 3)
     assert loc3.get_x() == 2
@@ -19,6 +24,11 @@ def test_location():
     assert loc4.get_x() == 0
     assert loc4.get_y() == 0
 
+    loc5 = loc6.move(-2,-2)
+    assert loc5.get_x() == 0
+    assert loc5.get_y() == 0
+
+    
     assert loc1.dist_from(loc2) == pytest.approx(1.41421356237, rel=1e-9)
     assert loc1.dist_from(loc3) == pytest.approx(3.60555127546, rel=1e-9)
     assert loc2.dist_from(loc3) == pytest.approx(2.23606797749, rel=1e-9)
