@@ -5980,8 +5980,6 @@ class final_game(game):
                     handsaw = False
                 remain_bullet.pop(0)
                 handsaw = False
-
-                self.computer.hp = 0
             elif action==2 and gun_lock :
                 print('槍經過改造，這局無法再射向自己了')
                 time.sleep(1)
