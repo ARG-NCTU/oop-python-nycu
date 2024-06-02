@@ -13,3 +13,6 @@ nvcc vector_add.cu -o vector_add.out
 time ./vector_add.out
 ```
 
+## Reference
+* https://cuda-tutorial.readthedocs.io/en/latest/tutorials/tutorial01/
+
