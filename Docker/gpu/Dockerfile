@@ -102,7 +102,7 @@ RUN pip3 install ipytest
 ##################################### Sound effect #####################################
 RUN pip3 install soundfile librosa jiwer transformers[torch]
 
-
+RUN pip3 install cupy-cuda111
 ##################################### setting ###################################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/

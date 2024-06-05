@@ -30,7 +30,6 @@ def test_walk(usual_drunk, field):
     assert walk(field, usual_drunk, 10) == pytest.approx(1.41, abs=0.01)  # test 10 steps
     assert walk(field, usual_drunk, 100) == pytest.approx(11.31, abs=0.1)  # test 100 steps
 
-
 def test_sim_walks(usual_drunk, masochist_drunk, field):
     seed(0)  # set random seed for reproducibility
     usual_distances = sim_walks(10, 10, UsualDrunk)
@@ -49,3 +48,5 @@ def test_sim_walks_num_steps(num_steps):
     for n in num_steps:
         distances = sim_walks(n, 10, UsualDrunk)
         assert len(distances) == 10
+        
+    
