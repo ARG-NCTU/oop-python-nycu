@@ -69,27 +69,27 @@ class Game:
                 running = False
             if mkeys [pygame.K_w]:
                 self.player1.jump()
-            elif mkeys [pygame.K_UP]:
+            if mkeys [pygame.K_UP]:
                 self.player2.jump()
-            elif mkeys [pygame.K_s]:
+            if mkeys [pygame.K_s]:
                 self.player1.move_down()
-            elif mkeys [pygame.K_DOWN]:
+            if mkeys [pygame.K_DOWN]:
                 self.player2.move_down()
-            elif mkeys[pygame.K_a]:
+            if mkeys[pygame.K_a]:
                 self.player1.speed_x = -PLAYER_SPEED
                 self.player1.turn_img("left")
-            elif mkeys[pygame.K_d]:
+            if mkeys[pygame.K_d]:
                 self.player1.speed_x = PLAYER_SPEED
                 self.player1.turn_img("right")
-            elif mkeys[pygame.K_LEFT]:
+            if mkeys[pygame.K_LEFT]:
                 self.player2.speed_x = -PLAYER_SPEED
                 self.player2.turn_img("left")
-            elif mkeys[pygame.K_RIGHT]:
+            if mkeys[pygame.K_RIGHT]:
                 self.player2.speed_x = PLAYER_SPEED
                 self.player2.turn_img("right")
-            elif mkeys[pygame.K_SPACE]:
+            if mkeys[pygame.K_SPACE]:
                 self.fire_bullet(self.player1, "up")
-            elif mkeys[pygame.K_RETURN]:
+            if mkeys[pygame.K_RETURN]:
                 self.fire_bullet(self.player2, "up")
             
             #讓角色滑行
