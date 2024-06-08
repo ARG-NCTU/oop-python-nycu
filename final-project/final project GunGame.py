@@ -1,6 +1,7 @@
 5/15
 import pygame
 import sys
+import math
 
 
 # 初始化 Pygame
@@ -23,7 +24,7 @@ FONT = 50
 
 
 # 重力加速度
-GRAVITY = 0.5
+GRAVITY = 0.6
 
 
 # 設定玩家初始位置和速度
@@ -43,9 +44,11 @@ class Game:
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         pygame.display.set_caption("GunGame")
         self.clock = pygame.time.Clock()
-        self.background_img = pygame.image.load("/home/wgb/oop-python-nycu/Final Project GunGame/background.jpg") # 載入背景圖片
-        self.player1 = Player(RED, RELIVE_X , RELIVE_Y )
-        self.player2 = Player(BLUE, RELIVE_X , RELIVE_Y)
+        self.background_img = pygame.image.load('./oop-python-nycu/final-project/background.jpg') # 載入背景圖片
+        self.player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
+        self.player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
+        self.player1 = Player(RELIVE_X , RELIVE_Y, self.player1_img)
+        self.player2 = Player(RELIVE_X , RELIVE_Y, self.player2_img)
         self.all_sprites = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.all_sprites.add(self.player1, self.player2)
@@ -56,40 +59,46 @@ class Game:
 
     def run(self):
         running = True
+        
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_w:
-                        self.player1.jump()
-                    elif event.key == pygame.K_UP:
-                        self.player2.jump()
-                    elif event.key == pygame.K_s:
-                        self.player1.move_down()
-                    elif event.key == pygame.K_DOWN:
-                        self.player2.move_down()
-                    elif event.key == pygame.K_a:
-                        self.player1.speed_x = -PLAYER_SPEED
-                    elif event.key == pygame.K_d:
-                        self.player1.speed_x = PLAYER_SPEED
-                    elif event.key == pygame.K_LEFT:
-                        self.player2.speed_x = -PLAYER_SPEED
-                    elif event.key == pygame.K_RIGHT:
-                        self.player2.speed_x = PLAYER_SPEED
-                    elif event.key == pygame.K_SPACE:
-                        self.fire_bullet(self.player1, "up")
-                    elif event.key == pygame.K_RETURN:
-                        self.fire_bullet(self.player2, "up")
-                elif event.type == pygame.KEYUP:
-                    if event.key == pygame.K_a or event.key == pygame.K_d:
-                        self.player1.speed_x = 0
-                    elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                        self.player2.speed_x = 0
+            mkeys = pygame.key.get_pressed()
+            if mkeys [pygame.QUIT]:
+                running = False
+            if mkeys [pygame.K_w]:
+                self.player1.jump()
+            elif mkeys [pygame.K_UP]:
+                self.player2.jump()
+            elif mkeys [pygame.K_s]:
+                self.player1.move_down()
+            elif mkeys [pygame.K_DOWN]:
+                self.player2.move_down()
+            elif mkeys[pygame.K_a]:
+                self.player1.speed_x = -PLAYER_SPEED
+                self.player1.turn_img("left")
+            elif mkeys[pygame.K_d]:
+                self.player1.speed_x = PLAYER_SPEED
+                self.player1.turn_img("right")
+            elif mkeys[pygame.K_LEFT]:
+                self.player2.speed_x = -PLAYER_SPEED
+                self.player2.turn_img("left")
+            elif mkeys[pygame.K_RIGHT]:
+                self.player2.speed_x = PLAYER_SPEED
+                self.player2.turn_img("right")
+            elif mkeys[pygame.K_SPACE]:
+                self.fire_bullet(self.player1, "up")
+            elif mkeys[pygame.K_RETURN]:
+                self.fire_bullet(self.player2, "up")
+            
+            #讓角色滑行
+            self.player1.speed_x = self.player1.speed_x * 0.93
+            self.player2.speed_x = self.player2.speed_x * 0.93
 
             self.all_sprites.update()
             self.bullets.update()
-
+            
             # 碰撞檢測
             for bullet in self.bullets:
                 if pygame.sprite.spritecollideany(bullet, self.all_sprites):
@@ -117,10 +126,11 @@ class Game:
     
     # 建立玩家類別
 class Player(pygame.sprite.Sprite):
-    def __init__(self, color, x, y):
+    def __init__(self, x, y, img):
         super().__init__()
-        self.image = pygame.Surface([PLAYER_WIDTH, PLAYER_HEIGHT])
-        self.image.fill(color)
+        self.image = img
+        self.left_img = img
+        self.right_img = pygame.transform.flip(img, True, False)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -130,8 +140,16 @@ class Player(pygame.sprite.Sprite):
         self.ground_level = None  #玩家所在的地板高度
 
     def print_x(self):
-        return self.rect.x
+        return self.rect.bottom
+    
+    def on_ground(self):
+        return self.on_ground
 
+    def turn_img(self, direction):
+        if direction == "left":
+            self.image = self.right_img
+        elif direction == "right":
+            self.image = self.left_img
     def update(self):
         # 應用重力
         self.speed_y += GRAVITY
@@ -157,8 +175,9 @@ class Player(pygame.sprite.Sprite):
     def move_down(self):
         # 玩家要在地板上才能往下移動
         if self.on_ground:
-            self.rect.y += 15
-            self.check_ground()
+            if not((self.rect.bottom == GROUND_LEVELS[2] and ((self.rect.x > 90 and self.rect.x < 360) or (self.rect.x > 890 and self.rect.x < 1160))) or (self.rect.bottom == GROUND_LEVELS[3] and (self.rect.x > 325 and self.rect.x < 940))):
+                self.rect.y += 15
+                self.check_ground()
 
     def check_ground(self):
         # 找到距離玩家最近的地板
