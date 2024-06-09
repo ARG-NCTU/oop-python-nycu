@@ -30,9 +30,10 @@ GRAVITY = 0.6
 # 設定玩家初始位置和速度
 PLAYER_WIDTH = 50
 PLAYER_HEIGHT = 50
-PLAYER_SPEED = 5
+PLAYER_SPEED = 10
+PLAYER_ACCERATION = 0.5
 JUMP_HEIGHT = 14  # 跳躍高度適中
-RELIVE_X  = 900 
+RELIVE_X  = [250, 970]
 RELIVE_Y = 0
 # 地板位置列表
 GROUND_LEVELS = [310, 410, 525, 615]  # 示例地板高度，可以根据实际情况修改
@@ -47,8 +48,10 @@ class Game:
         self.background_img = pygame.image.load('./oop-python-nycu/final-project/background.jpg') # 載入背景圖片
         self.player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
         self.player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
-        self.player1 = Player(RELIVE_X , RELIVE_Y, self.player1_img)
-        self.player2 = Player(RELIVE_X , RELIVE_Y, self.player2_img)
+        self.bomb_img = pygame.image.load('./oop-python-nycu/final-project/bomb.png') # 載入炸彈圖片
+        self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img)
+        self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img)
+        self.player2.turn_img("left")
         self.all_sprites = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.all_sprites.add(self.player1, self.player2)
@@ -76,16 +79,20 @@ class Game:
             if mkeys [pygame.K_DOWN]:
                 self.player2.move_down()
             if mkeys[pygame.K_a]:
-                self.player1.speed_x = -PLAYER_SPEED
+                if self.player1.speed_x >= -PLAYER_SPEED:
+                    self.player1.speed_x -= PLAYER_ACCERATION
                 self.player1.turn_img("left")
             if mkeys[pygame.K_d]:
-                self.player1.speed_x = PLAYER_SPEED
+                if self.player1.speed_x <= PLAYER_SPEED:
+                    self.player1.speed_x += PLAYER_ACCERATION
                 self.player1.turn_img("right")
             if mkeys[pygame.K_LEFT]:
-                self.player2.speed_x = -PLAYER_SPEED
+                if self.player2.speed_x >= -PLAYER_SPEED:
+                    self.player2.speed_x -= PLAYER_ACCERATION
                 self.player2.turn_img("left")
             if mkeys[pygame.K_RIGHT]:
-                self.player2.speed_x = PLAYER_SPEED
+                if self.player2.speed_x <= PLAYER_SPEED:
+                    self.player2.speed_x += PLAYER_ACCERATION
                 self.player2.turn_img("right")
             if mkeys[pygame.K_SPACE]:
                 self.fire_bullet(self.player1, "up")
@@ -104,7 +111,7 @@ class Game:
                 if pygame.sprite.spritecollideany(bullet, self.all_sprites):
                     bullet.kill()
 
-            text = self.font.render(str(self.player1.print_x()), True, (255, 255, 255))
+            text = self.font.render(str(self.player1.get_value("x")), True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  # 绘制背景图像
             self.all_sprites.draw(self.screen)
             self.bullets.draw(self.screen)
@@ -115,9 +122,9 @@ class Game:
 
             #玩家重生
             if self.player1.rect.top > WINDOW_HEIGHT:
-                self.player1.relive()
+                self.player1.relive(1)
             if self.player2.rect.top > WINDOW_HEIGHT:
-                self.player2.relive()
+                self.player2.relive(2)
 
     # 發射子彈
     def fire_bullet(self, player, direction):
@@ -139,8 +146,13 @@ class Player(pygame.sprite.Sprite):
         self.on_ground = True
         self.ground_level = None  #玩家所在的地板高度
 
-    def print_x(self):
-        return self.rect.bottom
+    def get_value(self, sub):
+        if sub == "x":
+            return self.rect.x
+        if sub == "y":
+            return self.rect.y
+        if sub == "bottom":
+            return self.rect.bottom
     
     def on_ground(self):
         return self.on_ground
@@ -206,9 +218,9 @@ class Player(pygame.sprite.Sprite):
             self.speed_y = 0
             self.rect.bottom = closest_ground
 
-    def relive(self):
+    def relive(self, num):
         #玩家復活
-        self.rect.x = RELIVE_X
+        self.rect.x = RELIVE_X[num-1]
         self.rect.y = RELIVE_Y
         self.on_ground = True
         self.speed_x = 0
