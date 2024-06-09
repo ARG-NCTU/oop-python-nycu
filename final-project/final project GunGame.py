@@ -32,7 +32,7 @@ PLAYER_WIDTH = 50
 PLAYER_HEIGHT = 50
 PLAYER_SPEED = 10
 PLAYER_ACCERATION = 0.5
-JUMP_HEIGHT = 14  # 跳躍高度適中
+JUMP_HEIGHT = 13  # 跳躍高度適中
 RELIVE_X  = [250, 970]
 RELIVE_Y = 0
 # 地板位置列表
@@ -62,7 +62,8 @@ class Game:
 
     def run(self):
         running = True
-        
+        self.player1_press_jump = 0
+        self.player2_press_jump = 0
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -71,9 +72,15 @@ class Game:
             if mkeys [pygame.QUIT]:
                 running = False
             if mkeys [pygame.K_w]:
-                self.player1.jump()
+                self.player1.jump(self.player1_press_jump)
+                self.player1_press_jump = 1
+            else :
+                self.player1_press_jump = 0
             if mkeys [pygame.K_UP]:
-                self.player2.jump()
+                self.player2.jump(self.player2_press_jump)
+                self.player2_press_jump = 1
+            else :
+                self.player2_press_jump = 0
             if mkeys [pygame.K_s]:
                 self.player1.move_down()
             if mkeys [pygame.K_DOWN]:
@@ -122,9 +129,9 @@ class Game:
 
             #玩家重生
             if self.player1.rect.top > WINDOW_HEIGHT:
-                self.player1.relive(1)
+                self.player1.relive(0)
             if self.player2.rect.top > WINDOW_HEIGHT:
-                self.player2.relive(2)
+                self.player2.relive(1)
 
     # 發射子彈
     def fire_bullet(self, player, direction):
@@ -179,10 +186,14 @@ class Player(pygame.sprite.Sprite):
         elif self.rect.right > WINDOW_WIDTH:
             self.rect.right = WINDOW_WIDTH
 
-    def jump(self):
+    def jump(self, check):
         if self.on_ground:  # 只有在地面上才能跳
             self.speed_y = -JUMP_HEIGHT
+            self.double_jump = 1
             self.on_ground = False
+        elif self.double_jump == 1 and check == 0: # 二段跳
+            self.speed_y = -10
+            self.double_jump = 0
 
     def move_down(self):
         # 玩家要在地板上才能往下移動
@@ -220,7 +231,7 @@ class Player(pygame.sprite.Sprite):
 
     def relive(self, num):
         #玩家復活
-        self.rect.x = RELIVE_X[num-1]
+        self.rect.x = RELIVE_X[num]
         self.rect.y = RELIVE_Y
         self.on_ground = True
         self.speed_x = 0
