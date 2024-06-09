@@ -118,7 +118,7 @@ class Game:
                 if pygame.sprite.spritecollideany(bullet, self.all_sprites):
                     bullet.kill()
 
-            text = self.font.render(str(self.player1.get_value("x")), True, (255, 255, 255))
+            text = self.font.render(str(self.player1.get_value("x")), True, (255, 255, 255)) #輸出左上角的字（用來測試）
             self.screen.blit(self.background_img, (0, 0))  # 绘制背景图像
             self.all_sprites.draw(self.screen)
             self.bullets.draw(self.screen)
@@ -153,7 +153,7 @@ class Player(pygame.sprite.Sprite):
         self.on_ground = True
         self.ground_level = None  #玩家所在的地板高度
 
-    def get_value(self, sub):
+    def get_value(self, sub): # 拿來取要的值
         if sub == "x":
             return self.rect.x
         if sub == "y":
