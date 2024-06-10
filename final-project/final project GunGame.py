@@ -86,21 +86,13 @@ class Game:
             if mkeys [pygame.K_DOWN]:
                 self.player2.move_down()
             if mkeys[pygame.K_a]:
-                if self.player1.speed_x >= -PLAYER_SPEED:
-                    self.player1.speed_x -= PLAYER_ACCERATION
-                self.player1.turn_img("left")
+                self.player1.move_x("left")
             if mkeys[pygame.K_d]:
-                if self.player1.speed_x <= PLAYER_SPEED:
-                    self.player1.speed_x += PLAYER_ACCERATION
-                self.player1.turn_img("right")
+                self.player1.move_x("right")
             if mkeys[pygame.K_LEFT]:
-                if self.player2.speed_x >= -PLAYER_SPEED:
-                    self.player2.speed_x -= PLAYER_ACCERATION
-                self.player2.turn_img("left")
+                self.player2.move_x("left")
             if mkeys[pygame.K_RIGHT]:
-                if self.player2.speed_x <= PLAYER_SPEED:
-                    self.player2.speed_x += PLAYER_ACCERATION
-                self.player2.turn_img("right")
+                self.player2.move_x("right")
             if mkeys[pygame.K_SPACE]:
                 self.fire_bullet(self.player1, "up")
             if mkeys[pygame.K_RETURN]:
@@ -137,11 +129,66 @@ class Game:
     def fire_bullet(self, player, direction):
         bullet = Bullet(BLACK, player.rect.centerx, player.rect.centery, direction)
         self.bullets.add(bullet)
-    
+
+# class Physics(object):
+#         def __init__(self, x, y, img):
+#             self.image = img
+#             self.rect = self.image.get_rect()
+#             self.rect.x = x
+#             self.rect.y = y
+#             self.speed_x = 0
+#             self.speed_y = 0
+#             self.on_ground = False
+
+#         def update(self):
+#             # 應用重力
+#             self.speed_y += GRAVITY
+
+#             # 移動
+#             self.rect.x += self.speed_x
+#             self.rect.y += self.speed_y
+
+#             # 檢查是否在地板上
+#             self.check_ground()
+
+#             # 限制在窗口內
+#             if self.rect.left < 0:
+#                 self.rect.left = 0
+#             elif self.rect.right > WINDOW_WIDTH:
+#                 self.rect.right = WINDOW_WIDTH
+        
+#         def check_ground(self):
+#             # 找到距離玩家最近的地板
+#             min_distance = float('inf')
+#             closest_ground = None
+#             for ground_level in GROUND_LEVELS:
+#                 if ground_level == GROUND_LEVELS[0] and not ((self.rect.x > 310 and self.rect.x < 570) or (self.rect.x > 680 and self.rect.x < 940)):
+#                     continue
+#                 if ground_level == GROUND_LEVELS[1] and not (self.rect.x > 185 and self.rect.x < 1070):
+#                     continue
+#                 if ground_level == GROUND_LEVELS[2] and not ((self.rect.x > 90 and self.rect.x < 360) or (self.rect.x > 890 and self.rect.x < 1160)):
+#                     continue
+#                 if ground_level == GROUND_LEVELS[3] and not (self.rect.x > 325 and self.rect.x < 940):
+#                     continue
+#                 distance = abs(self.rect.bottom - ground_level)
+#                 if distance < min_distance:
+#                     min_distance = distance
+#                     closest_ground = ground_level
+#             if min_distance >= 10:
+#                 self.on_ground = False
+#             if self.on_ground == True:
+#                 self.speed_y = 0
+#                 self.rect.bottom = closest_ground
+#             elif self.speed_y >= 0 and min_distance < self.speed_y:
+#                 self.on_ground = True
+#                 self.speed_y = 0
+#                 self.rect.bottom = closest_ground
+
     # 建立玩家類別
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, img):
         super().__init__()
+        # Physics.__init__(self, x, y, img)
         self.image = img
         self.left_img = img
         self.right_img = pygame.transform.flip(img, True, False)
@@ -169,6 +216,7 @@ class Player(pygame.sprite.Sprite):
             self.image = self.right_img
         elif direction == "right":
             self.image = self.left_img
+
     def update(self):
         # 應用重力
         self.speed_y += GRAVITY
@@ -186,6 +234,15 @@ class Player(pygame.sprite.Sprite):
         elif self.rect.right > WINDOW_WIDTH:
             self.rect.right = WINDOW_WIDTH
 
+    def move_x(self, direction):
+        if direction == "left":
+            if self.speed_x >= -PLAYER_SPEED:
+                self.speed_x -= PLAYER_ACCERATION
+            self.turn_img("left")
+        elif direction == "right":
+            if self.speed_x <= PLAYER_SPEED:
+                self.speed_x += PLAYER_ACCERATION
+            self.turn_img("right")
     def jump(self, check):
         if self.on_ground:  # 只有在地面上才能跳
             self.speed_y = -JUMP_HEIGHT
