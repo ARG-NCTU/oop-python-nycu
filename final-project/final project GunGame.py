@@ -38,6 +38,8 @@ RELIVE_Y = 0
 # 地板位置列表
 GROUND_LEVELS = [310, 410, 525, 615]  # 示例地板高度，可以根据实际情况修改
 
+def distance_2D(x1, y1, x2, y2):
+    return math.pow(math.pow(abs(x2-x1), 2) + math.pow(abs(y1-y2), 2), 0.5)
 
 # 建立遊戲場景類別
 class Game:
@@ -49,12 +51,14 @@ class Game:
         self.player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
         self.player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
         self.bomb_img = pygame.image.load('./oop-python-nycu/final-project/bomb.png') # 載入炸彈圖片
+        self.bomb_effect_img = pygame.image.load('./oop-python-nycu/final-project/bomb_effect.png') # 載入爆炸特效
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img)
         self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img)
         self.player2.turn_img("left")
         self.all_sprites = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.bombs = pygame.sprite.Group()
+        self.bomb_effects = pygame.sprite.Group()
         self.all_sprites.add(self.player1, self.player2)
         self.font = pygame.font.Font(None, FONT)
         
@@ -117,8 +121,21 @@ class Game:
                 if pygame.sprite.spritecollideany(bullet, self.all_sprites):
                     bullet.kill()
 
+            for bomb in self.bombs:
+                if bomb.countdown():
+                    bomb_effect = Bomb_effect(bomb.rect.centerx, bomb.rect.bottom, self.bomb_effect_img)
+                    self.bomb_effects.add(bomb_effect)
+                    bomb.explosion(self.player1)
+                    bomb.explosion(self.player2)
+                    bomb.kill()
+            
+            for bomb_effect in self.bomb_effects:
+                if bomb_effect.Countdown():
+                    bomb_effect.kill()
+
             text = self.font.render(str(self.player1.get_value("x")), True, (255, 255, 255)) #輸出左上角的字（用來測試）
             self.screen.blit(self.background_img, (0, 0))  # 绘制背景图像
+            self.bomb_effects.draw(self.screen)
             self.all_sprites.draw(self.screen)
             self.bullets.draw(self.screen)
             self.bombs.draw(self.screen)
@@ -289,14 +306,45 @@ class Bomb(pygame.sprite.Sprite, Physics):
         Physics.__init__(self, x, y, img)
         self.rect.centerx = x
         self.speed_x = 10 * direction
+        self.dir = direction
+        self.time_countdown = 150
 
     def update(self): # 繼承update
         Physics.update(self)
+        self.time_countdown -= 1
         if self.on_ground == True:
             self.speed_x = 0
+        else:
+            self.image = pygame.transform.rotate(self.image, 2*self.dir)
+        
+    def countdown(self): # 炸彈倒數計時
+        if self.time_countdown == 0:
+            return True
 
     def check_ground(self): # 繼承check_ground
         super().check_ground()
+
+    def explosion(self, player): # 爆炸
+        self.D = distance_2D(self.rect.centerx, self.rect.centery, player.rect.centerx, player.rect.centery)
+        if  self.D < 200:
+            player.speed_x += 20 * (player.rect.centerx - self.rect.centerx) / self.D
+            player.speed_y += 20 * (player.rect.centery - self.rect.centery) / self.D
+
+class Bomb_effect(pygame.sprite.Sprite):
+    def __init__(self, x, y, img):
+        super().__init__()
+        self.image = img 
+        self.rect = self.image.get_rect()
+        self.rect.x = x - 135
+        self.rect.y = y - 190
+        self.countdown = 10
+
+    def Countdown(self):
+        self.countdown -= 1
+        if self.countdown == 0:
+            return True
+        else:
+            return False
 
 
 # 執行遊戲
