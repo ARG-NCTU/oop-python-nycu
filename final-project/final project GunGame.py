@@ -324,11 +324,17 @@ class Bomb(pygame.sprite.Sprite, Physics):
     def check_ground(self): # 繼承check_ground
         super().check_ground()
 
+    def force(self, x1, y1, player, F):
+        player.speed_x += F * (player.rect.centerx - x1) / self.D
+        if (player.rect.centery - y1) > 0:
+            player.speed_y += F * (player.rect.centery - y1) / self.D
+
     def explosion(self, player): # 爆炸
         self.D = distance_2D(self.rect.centerx, self.rect.centery, player.rect.centerx, player.rect.centery)
-        if  self.D < 200:
-            player.speed_x += 20 * (player.rect.centerx - self.rect.centerx) / self.D
-            player.speed_y += 20 * (player.rect.centery - self.rect.centery) / self.D
+        if self.D < 60:
+            self.force(self.rect.centerx, self.rect.centery, player, 100)
+        elif self.D < 200:
+            self.force(self.rect.centerx, self.rect.centery, player, 360000/math.pow(self.D, 2))
 
 class Bomb_effect(pygame.sprite.Sprite):
     def __init__(self, x, y, img):
