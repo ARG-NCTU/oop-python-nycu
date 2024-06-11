@@ -110,7 +110,6 @@ class Game:
                 draw_init()
                 show_start_screen = False
 
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -139,10 +138,18 @@ class Game:
                 self.player2.move_x("left")
             if mkeys[pygame.K_RIGHT]:
                 self.player2.move_x("right")
-            if mkeys[pygame.K_SPACE]:
-                self.fire_bullet(self.player1, self.player1.get_direction())
-            if mkeys[pygame.K_RETURN]:
-                self.fire_bullet(self.player2, self.player2.get_direction())
+            if mkeys[pygame.K_v]:
+                if fire1_press_check == 0:
+                    self.fire_bullet(self.player1, self.player1.get_direction())
+                fire1_press_check = 1
+            else :
+                fire1_press_check = 0
+            if mkeys[pygame.K_k]:
+                if fire2_press_check == 0:
+                    self.fire_bullet(self.player2, self.player2.get_direction())
+                fire2_press_check = 1
+            else :
+                fire2_press_check = 0
             if mkeys[pygame.K_b]:
                 if bomb_press_check1 == 0 and self.player1.minus_bomb_num():
                     self.drop_bomb(self.player1, self.bomb_img)
@@ -162,8 +169,15 @@ class Game:
             
             # 碰撞檢測
             for bullet in self.bullets:
-                if (bullet.leave_check() and pygame.sprite.spritecollideany(bullet, self.all_sprites)) or bullet.out():
+                if bullet.out():
                     bullet.kill()
+                if bullet.leave_check():
+                    if bullet.rect.colliderect(self.player1.rect):
+                        self.player1.speed_x +=  3 * bullet.speed
+                        bullet.kill()
+                    if bullet.rect.colliderect(self.player2.rect):
+                        self.player2.speed_x += 3 * bullet.speed
+                        bullet.kill()
                 if not pygame.sprite.spritecollideany(bullet, self.all_sprites):
                     bullet.turn_check()
                 bullet.update()
@@ -351,14 +365,14 @@ class Player(pygame.sprite.Sprite, Physics):
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, color, x, y, direction):
         super().__init__()
-        self.image = pygame.Surface([5, 5])
+        self.image = pygame.Surface([15, 5])
         self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.direction = direction
         self.leave = False
         self.out_check = False
-        self.speed = 20 * direction
+        self.speed = 5 * direction
 
     def turn_check(self):
         self.leave = True
