@@ -96,17 +96,17 @@ class Game:
             if mkeys[pygame.K_RIGHT]:
                 self.player2.move_x("right")
             if mkeys[pygame.K_SPACE]:
-                self.fire_bullet(self.player1, "up")
+                self.fire_bullet(self.player1, self.player1.get_direction())
             if mkeys[pygame.K_RETURN]:
-                self.fire_bullet(self.player2, "up")
+                self.fire_bullet(self.player2, self.player2.get_direction())
             if mkeys[pygame.K_b]:
-                if bomb_press_check1 == 0:
+                if bomb_press_check1 == 0 and self.player1.minus_bomb_num():
                     self.drop_bomb(self.player1, self.bomb_img)
                 bomb_press_check1 = 1
             else :
                 bomb_press_check1 = 0
             if mkeys[pygame.K_l]:
-                if bomb_press_check2 == 0:
+                if bomb_press_check2 == 0 and self.player2.minus_bomb_num():
                     self.drop_bomb(self.player2, self.bomb_img)
                 bomb_press_check2 = 1
             else :
@@ -118,8 +118,12 @@ class Game:
             
             # 碰撞檢測
             for bullet in self.bullets:
-                if pygame.sprite.spritecollideany(bullet, self.all_sprites):
+                if (bullet.leave_check() and pygame.sprite.spritecollideany(bullet, self.all_sprites)) or bullet.out():
                     bullet.kill()
+                if not pygame.sprite.spritecollideany(bullet, self.all_sprites):
+                    bullet.turn_check()
+                bullet.update()
+
 
             for bomb in self.bombs:
                 if bomb.countdown():
@@ -209,7 +213,8 @@ class Physics(object):
             if min_distance >= 10:
                 self.on_ground = False
             if self.on_ground == True:
-                self.speed_y = 0
+                if self.speed_y > 0:
+                    self.speed_y = 0
                 self.rect.bottom = closest_ground
             elif self.speed_y >= 0 and min_distance < self.speed_y:
                 self.on_ground = True
@@ -225,6 +230,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.left_img = pygame.transform.flip(img, True, False)
         self.on_ground = True
         self.ground_level = None  #玩家所在的地板高度
+        self.bomb_num = 3
 
     def get_value(self, sub): # 拿來取要的值
         if sub == "x":
@@ -281,6 +287,13 @@ class Player(pygame.sprite.Sprite, Physics):
                 self.rect.y += 15
                 self.check_ground()
 
+    def minus_bomb_num(self):
+        self.bomb_num -= 1
+        if self.bomb_num < 0:
+            return False
+        else:
+            return True
+
     def relive(self, num):
         #玩家復活
         self.rect.x = RELIVE_X[num]
@@ -288,6 +301,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.on_ground = True
         self.speed_x = 0
         self.speed_y = 0
+        self.bomb_num = 3
 
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
@@ -298,6 +312,23 @@ class Bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.direction = direction
+        self.leave = False
+        self.out_check = False
+        self.speed = 20 * direction
+
+    def turn_check(self):
+        self.leave = True
+
+    def leave_check(self):
+        return self.leave
+
+    def update(self):
+        self.rect.x += self.speed
+        if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
+            self.out_check = True
+
+    def out(self):
+        return self.out_check
 
 # 建立炸彈類別
 class Bomb(pygame.sprite.Sprite, Physics):
@@ -307,15 +338,13 @@ class Bomb(pygame.sprite.Sprite, Physics):
         self.rect.centerx = x
         self.speed_x = 10 * direction
         self.dir = direction
-        self.time_countdown = 150
+        self.time_countdown = 100
 
     def update(self): # 繼承update
         Physics.update(self)
         self.time_countdown -= 1
         if self.on_ground == True:
             self.speed_x = 0
-        else:
-            self.image = pygame.transform.rotate(self.image, 2*self.dir)
         
     def countdown(self): # 炸彈倒數計時
         if self.time_countdown == 0:
@@ -326,7 +355,7 @@ class Bomb(pygame.sprite.Sprite, Physics):
 
     def force(self, x1, y1, player, F):
         player.speed_x += F * (player.rect.centerx - x1) / self.D
-        if (player.rect.centery - y1) > 0:
+        if (player.rect.centery - y1) < 0:
             player.speed_y += F * (player.rect.centery - y1) / self.D
 
     def explosion(self, player): # 爆炸
@@ -343,7 +372,7 @@ class Bomb_effect(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x - 135
         self.rect.y = y - 190
-        self.countdown = 10
+        self.countdown = 15
 
     def Countdown(self):
         self.countdown -= 1
