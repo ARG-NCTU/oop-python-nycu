@@ -457,7 +457,47 @@ class Gun():
 
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class GunImage(pygame.sprite.Sprite):
+    def __init__(self, player, player_num):
+        super().__init__()
+        self.player = player
+        self.smallgun1_img = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')
+        self.smallgun2_img = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
+        self.shotgun1_img = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
+        self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
+        self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
+        self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
+        self.rect = self.image.get_rect()
+        if player_num == 1:
+            self.image = self.smallgun1_img
+        elif player_num == 2:
+            self.image = self.smallgun2_img
 
+        
+
+        self.rect.x = player.rect.x
+        self.rect.y = player.rect.y - 60
+        self.player_num = player_num
+
+    def update(self):
+        if self.player_num == 1:
+            if self.player.now_gun() == "smallgun":
+                self.image = self.smallgun1_img
+            elif self.player.now_gun() == "shotgun":
+                self.image = self.shotgun1_img
+            elif self.player.now_gun() == "sniper":
+                self.image = self.sniper1_img
+
+        elif self.player_num == 2:
+            if self.player.now_gun() == "smallgun":
+                self.image = self.smallgun2_img
+            elif self.player.now_gun() == "shotgun":
+                self.image = self.shotgun2_img
+            elif self.player.now_gun() == "sniper":
+                self.image = self.sniper2_img
+
+        self.rect.x = self.player.rect.x
+        self.rect.y = self.player.rect.y - 60
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
