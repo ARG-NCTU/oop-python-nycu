@@ -1,9 +1,9 @@
-5/15
+
 import pygame
 import sys
 import math
 import time
-
+import random
 # 初始化 Pygame
 pygame.init()
 
@@ -110,7 +110,10 @@ class Game:
         self.bomb_effects = pygame.sprite.Group()
         self.all_sprites.add(self.player1, self.player2)
         self.font = pygame.font.Font(None, FONT)
-        
+    def spawn_treasure_box(self):
+        treasure_box = TreasureBox(random.randint(0, WINDOW_WIDTH),-100, [self.smallgun1_img, self.smallgun2_img, self.shotgun1_img, self.shotgun2_img, self.sniper1_img, self.sniper2_img])
+        self.all_sprites.add(treasure_box)
+        self.treasure_boxes.add(treasure_box)    
     def run(self):
         running = True
         self.player1_press_jump = 0
@@ -121,10 +124,18 @@ class Game:
             if show_start_screen:
                 draw_init()
                 show_start_screen = False
-
-            for event in pygame.event.get():
+            #########
+            for event in pygame.event.get():# 生成寶箱
                 if event.type == pygame.QUIT:
                     running = False
+            
+            for player in [self.pㄍlayer1, self.player2]:
+                hits = pygame.sprite.spritecollide(player, self.treasure_boxes, True)
+                for hit in hits:
+                    player.gun = hit.open()
+            ########
+            if random.random() < 0.01:
+                self.spawn_treasure_box()
             mkeys = pygame.key.get_pressed()
             if mkeys[pygame.QUIT]:
                 running = False
@@ -506,6 +517,28 @@ class Bomb_effect(pygame.sprite.Sprite):
         else:
             return False
 
+#寶箱掉落
+
+class TreasureBox(pygame.sprite.Sprite):
+    def __init__(self, x, y, gun_images):
+        super().__init__()
+        self.image = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')  # 載入寶箱圖片
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.gun_images = gun_images  # 槍的圖片列表
+        self.speed_y = 100  # 寶箱下落速度
+    def get_random_gun(self):
+        # 從槍的圖片列表中隨機選擇一個圖片
+        return random.choice(self.gun_images)
+
+    def open_box(self):
+        # 隨機獲得一把槍
+        return Gun(self.get_random_gun(), 5, 1, 100000, 5)
+    def update(self):
+        self.rect.y += self.speed_y
+        if self.rect.top > WINDOW_HEIGHT:
+            self.kill()
 
 # 執行遊戲
 if __name__ == "__main__":
