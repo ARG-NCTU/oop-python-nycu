@@ -85,6 +85,8 @@ class Game:
         pygame.display.set_caption("GunGame")
         self.clock = pygame.time.Clock()
         self.background_img = pygame.image.load('./oop-python-nycu/final-project/background.jpg') # 載入背景圖片
+        self.initial_img = pygame.image.load('./oop-python-nycu/final-project/initial.png') # 載入初始畫面
+        self.tap_img = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png') # 載入提示
         self.player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
         self.player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
         self.bomb_img = pygame.image.load('./oop-python-nycu/final-project/bomb.png') # 載入炸彈圖片
@@ -95,14 +97,9 @@ class Game:
         self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
         self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
+        self.box_img = pygame.image.load('./oop-python-nycu/final-project/box.png')
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img)
         self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img)
-        self.smallgun1 = Gun(self.smallgun1_img, 5, 1, 100000, 5)
-        self.smallgun2 = Gun(self.smallgun2_img, 5, 1, 100000, 5)
-        self.shotgun1 = Gun(self.shotgun1_img, 15, 2, 12, 30)
-        self.shotgun2 = Gun(self.shotgun2_img, 15, 2, 12, 30)
-        self.sniper1 = Gun(self.sniper1_img, 15, 4, 8, 60)
-        self.sniper2 = Gun(self.sniper2_img, 15, 4, 8, 60)
         self.player2.turn_img("left")
         self.all_sprites = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
@@ -111,31 +108,35 @@ class Game:
         self.all_sprites.add(self.player1, self.player2)
         self.font = pygame.font.Font(None, FONT)
         self.treasure_boxes = pygame.sprite.Group() 
+
     def spawn_treasure_box(self):
-        treasure_box = TreasureBox(random.randint(0, WINDOW_WIDTH),-100, [self.smallgun1_img, self.smallgun2_img, self.shotgun1_img, self.shotgun2_img, self.sniper1_img, self.sniper2_img])
+        treasure_box = TreasureBox(random.randint(90, 1160),-100, ["smallgun", "shotgun", "sniper"], self.box_img)
         self.all_sprites.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
+
     def run(self):
         running = True
         self.player1_press_jump = 0
         self.player2_press_jump = 0
+        self.box_check = 0
+        self.box_time = 300
         show_start_screen = True       # 顯示開始畫面-----------------------------------------
         while running:
             if show_start_screen:
                 draw_init()
                 show_start_screen = False
-            #########
-            for event in pygame.event.get():# 生成寶箱
+            
+            for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-            
-            for player in [self.player1, self.player2]:
-                hits = pygame.sprite.spritecollide(player, self.treasure_boxes, True)
-                for hit in hits:
-                    player.gun = hit.open()
-            ########
-            if random.random() < 0.01:
-                self.spawn_treasure_box()
+
+            if self.box_check == 0:# 生成寶箱
+                self.box_time -= 1
+                if self.box_time == 0:
+                    self.box_time = 300
+                    self.spawn_treasure_box()
+                    self.box_check = 1
+
             mkeys = pygame.key.get_pressed()
             if mkeys[pygame.QUIT]:
                 running = False
@@ -163,13 +164,13 @@ class Game:
                 self.player2.move_x("right")
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
-                    self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.smallgun1)
+                    self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun())
                 fire1_press_check = 1
             else :
                 fire1_press_check = 0
             if mkeys[pygame.K_k]:
                 if fire2_press_check == 0:
-                    self.fire_bullet(self.player2, self.player2.get_direction(), YELLOW, self.shotgun2)
+                    self.fire_bullet(self.player2, self.player2.get_direction(), YELLOW, self.player2.now_gun())
                 fire2_press_check = 1
             else :
                 fire2_press_check = 0
@@ -192,7 +193,6 @@ class Game:
             
             # 碰撞檢測
             for bullet in self.bullets:
-
                 if bullet.leave_check():
                     if bullet.rect.colliderect(self.player1.rect):
                         self.player1 .speed_x +=  3 * bullet.speed
@@ -217,7 +217,22 @@ class Game:
                 if bomb_effect.Countdown():
                     bomb_effect.kill()
 
-            text = self.font.render(str(self.player1.get_value("x")), True, (255, 255, 255)) #輸出左上角的字（用來測試）
+            for treasure_box in self.treasure_boxes:
+                if pygame.sprite.collide_rect(self.player1, treasure_box):
+                    gun = treasure_box.open_box()
+                    self.player1.change_gun(gun)
+                    treasure_box.kill()
+                    self.box_check = 0
+                if pygame.sprite.collide_rect(self.player2, treasure_box):
+                    gun = treasure_box.open_box()
+                    self.player2.change_gun(gun)
+                    treasure_box.kill()
+                    self.box_check = 0
+                if treasure_box.rect.top > WINDOW_HEIGHT:
+                    treasure_box.kill()
+                    self.box_check = 0
+
+            text = self.font.render(str(self.player1.now_gun()), True, (255, 255, 255)) #輸出左上角的字（用來測試）
             self.screen.blit(self.background_img, (0, 0))  # 绘制背景图像
             self.bomb_effects.draw(self.screen)
             self.all_sprites.draw(self.screen)
@@ -239,7 +254,7 @@ class Game:
         if player.get_value("gunlag") <= 0:
             bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun)
             self.bullets.add(bullet)
-            player.change_gunlag(gun.lagtime)
+            player.change_gunlag(gun)
 
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
@@ -315,9 +330,15 @@ class Player(pygame.sprite.Sprite, Physics):
         self.bomb_num = 3
         self.double_jump = 1
         self.gunlag = 0
+        self.gun = "smallgun"
                 
     def change_gunlag(self, num):
-        self.gunlag = num
+        if num == "smallgun":
+            self.gunlag = 5
+        elif num == "shotgun":
+            self.gunlag = 30
+        elif num == "sniper":
+            self.gunlag = 60
 
     def get_value(self, sub): # 拿來取要的值
         if sub == "x":
@@ -393,14 +414,16 @@ class Player(pygame.sprite.Sprite, Physics):
         self.speed_y = 0
         self.bomb_num = 3
 
+    def change_gun(self, gun):
+        self.gun = gun
+
+    def now_gun(self):
+        return self.gun
+        
+
 # 建立槍類別
-class Gun(pygame.sprite.Sprite):
-    def __init__(self, img, speed, recoil, numofbullet, lagtime):
-        super().__init__()
-        self.image = img
-        self.right_img = img
-        self.left_img = pygame.transform.flip(img, True, False)
-        self.rect = self.image.get_rect()
+class Gun():
+    def __init__(self, speed, recoil, numofbullet, lagtime):
         self.speed = speed
         self.recoil = recoil
         self.numofbullet = numofbullet
@@ -408,7 +431,7 @@ class Gun(pygame.sprite.Sprite):
 
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, color, x, y, direction, gun):
+    def __init__(self, color, x, y, direction, which_gun):
         super().__init__()
         self.image = pygame.Surface([15, 5])
         self.image.fill(color)
@@ -417,6 +440,12 @@ class Bullet(pygame.sprite.Sprite):
         self.direction = direction
         self.leave = False
         self.out_check = False
+        if which_gun == "smallgun":
+            gun = Gun(5, 1, 100000, 5)
+        if which_gun == "shotgun":
+            gun = Gun(15, 2, 12, 30)
+        if which_gun == "sniper":
+            gun = Gun(15, 4, 8, 60)
         self.speed = gun.speed * direction
         self.gun = gun
         self.creation_time = time.time()
@@ -518,26 +547,26 @@ class Bomb_effect(pygame.sprite.Sprite):
 
 #寶箱掉落
 
-class TreasureBox(pygame.sprite.Sprite):
-    def __init__(self, x, y, gun_images):
+class TreasureBox(pygame.sprite.Sprite, Physics):
+    def __init__(self, x, y, guns, box_images):
         super().__init__()
-        self.image = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')  # 載入寶箱圖片
+        self.image = box_images
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.gun_images = gun_images  # 槍的圖片列表
-        self.speed_y = 100  # 寶箱下落速度
+        self.guns = guns  # 槍的圖片列表
+        self.speed_x = 0  # 寶箱水平速度
+        self.speed_y = 0 # 寶箱下落速度
     def get_random_gun(self):
         # 從槍的圖片列表中隨機選擇一個圖片
-        return random.choice(self.gun_images)
+        return random.choice(self.guns)
 
     def open_box(self):
         # 隨機獲得一把槍
-        return Gun(self.get_random_gun(), 5, 1, 100000, 5)
+        return self.get_random_gun()
+    
     def update(self):
-        self.rect.y += self.speed_y
-        if self.rect.top > WINDOW_HEIGHT:
-            self.kill()
+        Physics.update(self)
 
 # 執行遊戲
 if __name__ == "__main__":
