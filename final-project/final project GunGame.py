@@ -407,12 +407,10 @@ class Bullet(pygame.sprite.Sprite):
         self.direction = direction
         self.leave = False
         self.out_check = False
-<<<<<<< HEAD
+
         self.speed = gun.speed * direction
         self.gun = gun
-=======
-        self.speed = 5 * direction
->>>>>>> 11589172bd4a0df0240df67e98e9a3c03de7081a
+
         self.creation_time = time.time()
     def turn_check(self):
         self.leave = True
@@ -424,17 +422,13 @@ class Bullet(pygame.sprite.Sprite):
         return self.leave
 
     def update(self):
-<<<<<<< HEAD
-        elapsed_time = time.time() - self.creation_time
-        accelerate = 0.012
-        if self.speed > 0:
-            self.speed -= accelerate * elapsed_time
-=======
+
+
         elapsed_time =time.time() - self.creation_time
         acceleration = 0.012
         if self.speed > 0:
             self.speed -= acceleration * elapsed_time
->>>>>>> 11589172bd4a0df0240df67e98e9a3c03de7081a
+
         self.rect.x += self.speed
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
             self.out_check = True
