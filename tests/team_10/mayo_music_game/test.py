@@ -26,7 +26,7 @@ display_pressed1 = pygame.Rect(150, 500, slot[0], slot[1])
 display_pressed2 = pygame.Rect(275, 500, slot[0], slot[1])
 display_pressed3 = pygame.Rect(400, 500, slot[0], slot[1])
 display_pressed4 = pygame.Rect(525, 500, slot[0], slot[1])
-music_location = "oop-python-nycu/tests/team_10/mayo_music_game/images/ver.hard.mp3"
+music_location = "oop-python-nycu/tests/team_10/mayo_music_game/images/hibana 2.mp3"
 track = pygame.mixer.music.load(music_location)
 font = pygame.font.Font("freesansbold.ttf", 32)
 
