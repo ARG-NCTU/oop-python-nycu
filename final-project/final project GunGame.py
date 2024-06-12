@@ -2,7 +2,7 @@
 import pygame
 import sys
 import math
-
+import time
 
 # 初始化 Pygame
 pygame.init()
@@ -89,8 +89,20 @@ class Game:
         self.player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
         self.bomb_img = pygame.image.load('./oop-python-nycu/final-project/bomb.png') # 載入炸彈圖片
         self.bomb_effect_img = pygame.image.load('./oop-python-nycu/final-project/bomb_effect.png') # 載入爆炸特效
+        self.smallgun1_img = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png') # 載入小槍圖片
+        self.smallgun2_img = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
+        self.shotgun1_img = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
+        self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
+        self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
+        self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img)
         self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img)
+        self.smallgun1 = Gun(self.smallgun1_img, 5, 1, 100000, 5)
+        self.smallgun2 = Gun(self.smallgun2_img, 5, 1, 100000, 5)
+        self.shotgun1 = Gun(self.shotgun1_img, 15, 2, 12, 30)
+        self.shotgun2 = Gun(self.shotgun2_img, 15, 2, 12, 30)
+        self.sniper1 = Gun(self.sniper1_img, 15, 4, 8, 60)
+        self.sniper2 = Gun(self.sniper2_img, 15, 4, 8, 60)
         self.player2.turn_img("left")
         self.all_sprites = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
@@ -140,13 +152,13 @@ class Game:
                 self.player2.move_x("right")
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
-                    self.fire_bullet(self.player1, self.player1.get_direction())
+                    self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.smallgun1)
                 fire1_press_check = 1
             else :
                 fire1_press_check = 0
             if mkeys[pygame.K_k]:
                 if fire2_press_check == 0:
-                    self.fire_bullet(self.player2, self.player2.get_direction())
+                    self.fire_bullet(self.player2, self.player2.get_direction(), YELLOW, self.shotgun2)
                 fire2_press_check = 1
             else :
                 fire2_press_check = 0
@@ -213,9 +225,11 @@ class Game:
                 self.player2.relive(1)
 
     # 發射子彈
-    def fire_bullet(self, player, direction):
-        bullet = Bullet(BLACK, player.rect.centerx, player.rect.centery, direction)
-        self.bullets.add(bullet)
+    def fire_bullet(self, player, direction, color, gun):
+        if player.get_value("gunlag") <= 0:
+            bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun)
+            self.bullets.add(bullet)
+            player.change_gunlag(gun.lagtime)
 
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
@@ -230,7 +244,7 @@ class Physics(object):
             self.speed_x = 0
             self.speed_y = 0
             self.on_ground = False
-
+        
         def update(self):
             # 應用重力
             self.speed_y += GRAVITY
@@ -250,7 +264,7 @@ class Physics(object):
             #     self.rect.left = 0
             # elif self.rect.right > WINDOW_WIDTH:
             #     self.rect.right = WINDOW_WIDTH
-        
+
         def check_ground(self):
             # 找到距離玩家最近的地板
             min_distance = float('inf')
@@ -289,6 +303,11 @@ class Player(pygame.sprite.Sprite, Physics):
         self.on_ground = True
         self.ground_level = None  #玩家所在的地板高度
         self.bomb_num = 3
+        self.double_jump = 1
+        self.gunlag = 0
+                
+    def change_gunlag(self, num):
+        self.gunlag = num
 
     def get_value(self, sub): # 拿來取要的值
         if sub == "x":
@@ -297,6 +316,8 @@ class Player(pygame.sprite.Sprite, Physics):
             return self.rect.y
         if sub == "bottom":
             return self.rect.bottom
+        if sub == "gunlag":
+            return self.gunlag
     
     def on_ground(self): # 回傳on_ground值
         return self.on_ground
@@ -315,6 +336,7 @@ class Player(pygame.sprite.Sprite, Physics):
     
     def update(self): # 繼承update
         Physics.update(self)
+        self.gunlag -= 1
 
     def check_ground(self): # 繼承check_ground
         super().check_ground()
@@ -361,29 +383,51 @@ class Player(pygame.sprite.Sprite, Physics):
         self.speed_y = 0
         self.bomb_num = 3
 
+# 建立槍類別
+class Gun(pygame.sprite.Sprite):
+    def __init__(self, img, speed, recoil, numofbullet, lagtime):
+        super().__init__()
+        self.image = img
+        self.right_img = img
+        self.left_img = pygame.transform.flip(img, True, False)
+        self.rect = self.image.get_rect()
+        self.speed = speed
+        self.recoil = recoil
+        self.numofbullet = numofbullet
+        self.lagtime = lagtime
+
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, color, x, y, direction):
+    def __init__(self, color, x, y, direction, gun):
         super().__init__()
         self.image = pygame.Surface([15, 5])
-        self.image.fill(YELLOW)
+        self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.direction = direction
         self.leave = False
         self.out_check = False
-        self.speed = 5 * direction
-
+        self.speed = gun.speed * direction
+        self.gun = gun
+        self.creation_time = time.time()
     def turn_check(self):
         self.leave = True
+
+    def fire(self):
+        self.lag = self.gun.lagtime
 
     def leave_check(self):
         return self.leave
 
     def update(self):
+        elapsed_time = time.time() - self.creation_time
+        accelerate = 0.012
+        if self.speed > 0:
+            self.speed -= accelerate * elapsed_time
         self.rect.x += self.speed
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
             self.out_check = True
+        
 
     def out(self):
         return self.out_check
@@ -396,13 +440,28 @@ class Bomb(pygame.sprite.Sprite, Physics):
         self.rect.centerx = x
         self.speed_x = 10 * direction
         self.dir = direction
-        self.time_countdown = 100
+        self.time_countdown = 120
+        self.fixed = 0
 
     def update(self): # 繼承update
         Physics.update(self)
         self.time_countdown -= 1
+        
         if self.on_ground == True:
+            if self.fixed == 0:
+                self.fixed_x = self.rect.x
+                self.fixed_y = self.rect.y
+                self.fixed = 1
             self.speed_x = 0
+            if self.time_countdown % 30 < 5:
+                self.image = pygame.transform.scale(self.image, (60, 60))
+                self.rect.x = self.fixed_x - 7.5
+                self.rect.y = self.fixed_y - 7.5
+            else:
+                self.image = pygame.transform.scale(self.image, (45, 45))
+                self.rect.x = self.fixed_x
+                self.rect.y = self.fixed_y
+        
         
     def countdown(self): # 炸彈倒數計時
         if self.time_countdown == 0:
@@ -414,14 +473,17 @@ class Bomb(pygame.sprite.Sprite, Physics):
     def force(self, x1, y1, player, F):
         player.speed_x += F * (player.rect.centerx - x1) / self.D
         if (player.rect.centery - y1) < 0:
-            player.speed_y += F * (player.rect.centery - y1) / self.D
+            if F * (player.rect.centery - y1) / self.D <- 30:
+                player.speed_y += -30
+            else:
+                player.speed_y += F * (player.rect.centery - y1) / self.D
 
     def explosion(self, player): # 爆炸
         self.D = distance_2D(self.rect.centerx, self.rect.centery, player.rect.centerx, player.rect.centery)
         if self.D < 60:
-            self.force(self.rect.centerx, self.rect.centery, player, 100)
+            self.force(self.rect.centerx, self.rect.centery, player, 80)
         elif self.D < 200:
-            self.force(self.rect.centerx, self.rect.centery, player, 360000/math.pow(self.D, 2))
+            self.force(self.rect.centerx, self.rect.centery, player, 288000/math.pow(self.D, 2))
 
 class Bomb_effect(pygame.sprite.Sprite):
     def __init__(self, x, y, img):
@@ -430,7 +492,7 @@ class Bomb_effect(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x - 135
         self.rect.y = y - 190
-        self.countdown = 15
+        self.countdown = 25
 
     def Countdown(self):
         self.countdown -= 1
