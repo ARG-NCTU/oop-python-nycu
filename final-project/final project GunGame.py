@@ -213,13 +213,13 @@ class Game:
                 self.player2.move_x("right")
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
-                    self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun())
+                    self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
                 fire1_press_check = 1
             else :
                 fire1_press_check = 0
             if mkeys[pygame.K_k]:
                 if fire2_press_check == 0:
-                    self.fire_bullet(self.player2, self.player2.get_direction(), YELLOW, self.player2.now_gun())
+                    self.fire_bullet(self.player2, self.player2.get_direction(), YELLOW, self.player2.now_gun(), 2)
                 fire2_press_check = 1
             else :
                 fire2_press_check = 0
@@ -249,7 +249,7 @@ class Game:
                     if bullet.rect.colliderect(self.player2.rect):
                         self.player2.speed_x += 3 * bullet.speed
                         bullet.kill()
-                if not pygame.sprite.spritecollideany(bullet, self.all_sprites):
+                if ((not bullet.rect.colliderect(self.player1.rect)) and bullet.which_player() == 1) or ((not bullet.rect.colliderect(self.player2.rect)) and bullet.which_player() == 2):
                     bullet.turn_check()
                 if bullet.out() or bullet.update():
                     bullet.kill()
@@ -299,9 +299,9 @@ class Game:
                 self.player2.relive(1)
 
     # 發射子彈
-    def fire_bullet(self, player, direction, color, gun):
+    def fire_bullet(self, player, direction, color, gun, which_player):
         if player.get_value("gunlag") <= 0:
-            bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun)
+            bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun, which_player)
             self.bullets.add(bullet)
             player.change_gunlag(gun)
 
@@ -486,7 +486,7 @@ class Gun():
 
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, color, x, y, direction, which_gun):
+    def __init__(self, color, x, y, direction, which_gun, which_player):
         super().__init__()
         self.image = pygame.Surface([15, 5])
         self.image.fill(color)
@@ -504,6 +504,10 @@ class Bullet(pygame.sprite.Sprite):
         self.speed = gun.speed * direction
         self.gun = gun
         self.creation_time = time.time()
+        self.numplayer = which_player
+    def which_player(self):
+        return self.numplayer
+
     def turn_check(self):
         self.leave = True
 
@@ -609,16 +613,13 @@ class TreasureBox(pygame.sprite.Sprite, Physics):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.guns =  ["smallgun", "shotgun", "sniper"]  # 槍的圖片列表
+        self.guns =  ["shotgun", "sniper"]  # 槍的圖片列表
         self.speed_x = 0  # 寶箱水平速度
         self.speed_y = 0 # 寶箱下落速度
-    def get_random_gun(self):
-        # 從槍的圖片列表中隨機選擇一個圖片
-        return random.choice(self.guns)
 
     def open_box(self):
         # 隨機獲得一把槍
-        return self.get_random_gun()
+        return random.choice(self.guns)
     
     def update(self):
         Physics.update(self)
