@@ -138,7 +138,7 @@ class Game:
 
     def run(self):
         running = True
-        self.player1_press_jump = 0
+        self.player1_press_jump = 0  #示例地板高度，可以根据实际情况修改
         self.player2_press_jump = 0
         self.box_check = 0
         self.box_time = 300
@@ -187,6 +187,8 @@ class Game:
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
                     self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
+                self.player1.speed_x += -0.5 * self.player1.get_direction()
+                
                 fire1_press_check = 1
             else :
                 fire1_press_check = 0
@@ -435,6 +437,8 @@ class Player(pygame.sprite.Sprite, Physics):
         self.speed_x = 0
         self.speed_y = 0
         self.bomb_num = 3
+        self.gun = "smallgun"
+
 
     def change_gun(self, gun):
         self.gun = gun
