@@ -53,16 +53,17 @@ def draw_text(screen, text, size, x, y):
 
 def draw_init():
     screen = pygame.display.set_mode(WINDOW_SIZE)
-    screen.fill(BLACK)
+    
+    initail_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png') # 載入背景圖片
+    screen.blit(initail_screen, (0, 0))
+    
     pygame.display.set_caption("GunGame")
     state = 0  # 0: show title, 1: show instructions, 2: start game
     while state < 2:
         if state == 0:
-            screen.fill(BLACK)
-            draw_text(screen, "GunGame", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
+            #draw_text(screen, "GunGame", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
             draw_text(screen, "Press any key to continue", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
         elif state == 1:
-            screen.fill(BLACK)
             draw_text(screen, "Instructions", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
             draw_text(screen, "WASD to move Player 1, Arrow keys to move Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
             draw_text(screen, "Space to shoot Player 1, Enter to shoot Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40)
@@ -428,6 +429,12 @@ class Gun():
         self.recoil = recoil
         self.numofbullet = numofbullet
         self.lagtime = lagtime
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
