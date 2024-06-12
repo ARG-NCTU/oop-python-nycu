@@ -36,7 +36,7 @@ JUMP_HEIGHT = 13  # 跳躍高度適中
 RELIVE_X  = [250, 970]
 RELIVE_Y = 0
 # 地板位置列表
-GROUND_LEVELS = [310, 410, 525, 615]  # 示例地板高度，可以根据实际情况修改
+GROUND_LEVELS = [300, 410, 525, 615]  # 示例地板高度，可以根据实际情况修改
 
 def distance_2D(x1, y1, x2, y2):
     return math.pow(math.pow(abs(x2-x1), 2) + math.pow(abs(y1-y2), 2), 0.5)
@@ -51,34 +51,7 @@ def draw_text(screen, text, size, x, y):
     text_rect.midtop = (x, y)
     screen.blit(text_surface, text_rect)
 
-'''def draw_init():
-    screen = pygame.display.set_mode(WINDOW_SIZE)
-    
-    initail_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png') # 載入背景圖片
-    
-    screen.blit(initail_screen, (0, 0))
-    
-    pygame.display.set_caption("GunGame")
-    state = 0  # 0: show title, 1: show instructions, 2: start game
-    while state < 2:
-        if state == 0:
-            #draw_text(screen, "GunGame", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
-            draw_text(screen, "Press any key to continue", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-        elif state == 1:
-            draw_text(screen, "Instructions", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
-            draw_text(screen, "WASD to move Player 1, Arrow keys to move Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-            draw_text(screen, "Space to shoot Player 1, Enter to shoot Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40)
-            draw_text(screen, "B to drop bomb Player 1, L to drop bomb Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 80)
-            draw_text(screen, "Press any key to start the game", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 120)
-        pygame.display.flip()
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYUP:
-                state += 1'''
-#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 def draw_init():
     
 
@@ -159,7 +132,7 @@ class Game:
         self.treasure_boxes = pygame.sprite.Group() 
 
     def spawn_treasure_box(self):
-        treasure_box = TreasureBox(random.randint(90, 1160),-100, self.box_img)
+        treasure_box = TreasureBox(random.randint(90, 1000),-100, self.box_img)
         self.all_sprites.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
 
