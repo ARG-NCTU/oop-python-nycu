@@ -2,7 +2,7 @@
 import pygame
 import sys
 import math
-
+import time
 
 # 初始化 Pygame
 pygame.init()
@@ -173,7 +173,7 @@ class Game:
                     bullet.kill()
                 if bullet.leave_check():
                     if bullet.rect.colliderect(self.player1.rect):
-                        self.player1.speed_x +=  3 * bullet.speed
+                        self.player1 .speed_x +=  3 * bullet.speed
                         bullet.kill()
                     if bullet.rect.colliderect(self.player2.rect):
                         self.player2.speed_x += 3 * bullet.speed
@@ -373,7 +373,7 @@ class Bullet(pygame.sprite.Sprite):
         self.leave = False
         self.out_check = False
         self.speed = 5 * direction
-
+        self.creation_time = time.time()
     def turn_check(self):
         self.leave = True
 
@@ -381,6 +381,10 @@ class Bullet(pygame.sprite.Sprite):
         return self.leave
 
     def update(self):
+        elapsed_time =time.time() - self.creation_time
+        acceleration = 0.012
+        if self.speed > 0:
+            self.speed -= acceleration * elapsed_time
         self.rect.x += self.speed
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
             self.out_check = True
