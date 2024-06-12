@@ -10,9 +10,9 @@ drop_before_arrive = 0.8
 pixel_per_second = 565 / drop_before_arrive
 
 # Object & Images
-mayo = pygame.image.load("images\mayo.webp").convert_alpha()
-start_menu = pygame.image.load("images\patrick_mayo.jpg").convert_alpha()
-start_button = pygame.image.load("images\start_button.png").convert_alpha()
+mayo = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/mayo.jpg").convert_alpha()
+start_menu = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/patrick_mayo.jpg").convert_alpha()
+start_button = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/start_button.png").convert_alpha()
 start_menu = pygame.transform.scale(start_menu, (800, 600))
 start_button = pygame.transform.scale(start_button, (200, 100))
 mayo = pygame.transform.rotate(mayo, 90)
@@ -25,7 +25,7 @@ display_pressed1 = pygame.Rect(150, 500, slot[0], slot[1])
 display_pressed2 = pygame.Rect(275, 500, slot[0], slot[1])
 display_pressed3 = pygame.Rect(400, 500, slot[0], slot[1])
 display_pressed4 = pygame.Rect(525, 500, slot[0], slot[1])
-music_location = "images\\ver.hard.mp3"
+music_location = "oop-python-nycu/tests/team_10/mayo_music_game/images/ver.hard.mp3"
 track = pygame.mixer.music.load(music_location)
 font = pygame.font.Font("freesansbold.ttf", 32)
 
@@ -39,14 +39,14 @@ times_arrive = []
 times_drop = []
 notes = []
 note_dict = {64:0, 192:1, 320:2, 448:3}
-with open(f"note_and_time\\times_{mode}.txt", "r") as time_f:
+with open(f"oop-python-nycu/tests/team_10/mayo_music_game/note_and_time/times_{mode}.txt", "r") as time_f:
     for i in time_f:
         i = int(i)
         i /= 1000
         i = round(i, 4)
         times_arrive.append(i)
 
-with open(f"note_and_time\\notes_{mode}.txt", "r") as note_f:
+with open(f"oop-python-nycu/tests/team_10/mayo_music_game/note_and_time/notes_{mode}.txt", "r") as note_f:
     for i in note_f:
         i = int(i)
         i = note_dict[i]
