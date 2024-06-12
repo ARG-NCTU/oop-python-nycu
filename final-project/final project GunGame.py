@@ -192,8 +192,7 @@ class Game:
             
             # 碰撞檢測
             for bullet in self.bullets:
-                if bullet.out():
-                    bullet.kill()
+
                 if bullet.leave_check():
                     if bullet.rect.colliderect(self.player1.rect):
                         self.player1 .speed_x +=  3 * bullet.speed
@@ -203,8 +202,8 @@ class Game:
                         bullet.kill()
                 if not pygame.sprite.spritecollideany(bullet, self.all_sprites):
                     bullet.turn_check()
-                bullet.update()
-
+                if bullet.out() or bullet.update():
+                    bullet.kill()
 
             for bomb in self.bombs:
                 if bomb.countdown():
@@ -418,10 +417,8 @@ class Bullet(pygame.sprite.Sprite):
         self.direction = direction
         self.leave = False
         self.out_check = False
-
         self.speed = gun.speed * direction
         self.gun = gun
-
         self.creation_time = time.time()
     def turn_check(self):
         self.leave = True
@@ -433,17 +430,19 @@ class Bullet(pygame.sprite.Sprite):
         return self.leave
 
     def update(self):
-
-
-        elapsed_time =time.time() - self.creation_time
-        acceleration = 0.012
-        if self.speed > 0:
-            self.speed -= acceleration * elapsed_time
-
+        elapsed_time = time.time() - self.creation_time
+        acceleration = 0.005
+        if self.speed == 0:
+            return True
+        elif self.speed > 0:
+            self.speed -= acceleration*elapsed_time
+        elif self.speed < 0:
+            self.speed += acceleration*elapsed_time
+            
         self.rect.x += self.speed
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
             self.out_check = True
-        
+        return False
 
     def out(self):
         return self.out_check
