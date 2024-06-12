@@ -51,10 +51,11 @@ def draw_text(screen, text, size, x, y):
     text_rect.midtop = (x, y)
     screen.blit(text_surface, text_rect)
 
-def draw_init():
+'''def draw_init():
     screen = pygame.display.set_mode(WINDOW_SIZE)
     
     initail_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png') # 載入背景圖片
+    
     screen.blit(initail_screen, (0, 0))
     
     pygame.display.set_caption("GunGame")
@@ -76,9 +77,56 @@ def draw_init():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYUP:
+                state += 1'''
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+def draw_init():
+    
+
+    screen = pygame.display.set_mode(WINDOW_SIZE)
+    
+    initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
+    
+    # 獲取圖片的原始大小
+    img_width, img_height = initial_screen.get_size()
+    
+    # 計算圖片縮放比例
+    scale = min(WINDOW_WIDTH / img_width, WINDOW_HEIGHT / img_height)
+    
+    # 計算縮放後的大小
+    new_size = (int(img_width * scale), int(img_height * scale))
+    
+    # 等比例縮小圖片
+    initial_screen = pygame.transform.scale(initial_screen, new_size)
+    
+    # 計算圖片在視窗中的位置，使其居中
+    pos_x = (WINDOW_WIDTH - new_size[0]) // 2
+    pos_y = (WINDOW_HEIGHT - new_size[1]) // 2
+    screen.blit(initial_screen, (pos_x, pos_y))
+    
+    pygame.display.set_caption("GunGame")
+    state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
+    while state < 2:
+        screen.fill((0, 0, 0))  # 清除屏幕
+        screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
+        
+        if state == 0:
+            draw_text(screen, "GunGame", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
+            draw_text(screen, "Press any key to continue", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+        elif state == 1:
+            draw_text(screen, "Instructions", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
+            draw_text(screen, "WASD to move Player 1, Arrow keys to move Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+            draw_text(screen, "Space to shoot Player 1, Enter to shoot Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40)
+            draw_text(screen, "B to drop bomb Player 1, L to drop bomb Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 80)
+            draw_text(screen, "Press any key to start the game", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 120)
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYUP:
                 state += 1
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 # 建立遊戲場景類別
 class Game:
     def __init__(self):
@@ -111,7 +159,7 @@ class Game:
         self.treasure_boxes = pygame.sprite.Group() 
 
     def spawn_treasure_box(self):
-        treasure_box = TreasureBox(random.randint(90, 1160),-100, ["smallgun", "shotgun", "sniper"], self.box_img)
+        treasure_box = TreasureBox(random.randint(90, 1160),-100, self.box_img)
         self.all_sprites.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
 
@@ -555,13 +603,13 @@ class Bomb_effect(pygame.sprite.Sprite):
 #寶箱掉落
 
 class TreasureBox(pygame.sprite.Sprite, Physics):
-    def __init__(self, x, y, guns, box_images):
+    def __init__(self, x, y, box_images):
         super().__init__()
         self.image = box_images
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.guns = guns  # 槍的圖片列表
+        self.guns =  ["smallgun", "shotgun", "sniper"]  # 槍的圖片列表
         self.speed_x = 0  # 寶箱水平速度
         self.speed_y = 0 # 寶箱下落速度
     def get_random_gun(self):
