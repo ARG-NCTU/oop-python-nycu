@@ -110,6 +110,7 @@ class Game:
         self.bomb_effects = pygame.sprite.Group()
         self.all_sprites.add(self.player1, self.player2)
         self.font = pygame.font.Font(None, FONT)
+        self.treasure_boxes = pygame.sprite.Group() 
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(0, WINDOW_WIDTH),-100, [self.smallgun1_img, self.smallgun2_img, self.shotgun1_img, self.shotgun2_img, self.sniper1_img, self.sniper2_img])
         self.all_sprites.add(treasure_box)
@@ -118,7 +119,6 @@ class Game:
         running = True
         self.player1_press_jump = 0
         self.player2_press_jump = 0
-
         show_start_screen = True       # 顯示開始畫面-----------------------------------------
         while running:
             if show_start_screen:
@@ -129,7 +129,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
             
-            for player in [self.pㄍlayer1, self.player2]:
+            for player in [self.player1, self.player2]:
                 hits = pygame.sprite.spritecollide(player, self.treasure_boxes, True)
                 for hit in hits:
                     player.gun = hit.open()
