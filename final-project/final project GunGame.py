@@ -192,7 +192,7 @@ class Game:
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
                     self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
-                
+                    #self.check_magazine(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
                 
                 fire1_press_check = 1
             else :
@@ -264,8 +264,8 @@ class Game:
             text = self.font.render(str(self.player1.now_gun()), True, (255, 255, 255)) #輸出左上角的字（用來測試）
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
             self.bomb_effects.draw(self.screen)
-            self.all_sprites.draw(self.screen)
             self.bullets.draw(self.screen)
+            self.all_sprites.draw(self.screen)
             self.bombs.draw(self.screen)
             self.screen.blit(text,(10,10))
             pygame.display.flip()
@@ -291,9 +291,17 @@ class Game:
                 player.speed_x -= 4 * direction
             elif gun == "sniper" :
                 player.speed_x -= 8 * direction
+
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
         self.bombs.add(bomb)
+
+    def check_magazine(self,player,direction,color,gun,which_player):
+        magazine = player.gun.numofbullet
+        if self.fire_bullet(self,player,direction,color,gun,which_player):
+            magazine -= 1
+            if magazine <= 0 :
+                player.gun = "smallgun"
 
 class Physics(object):
         def __init__(self, x, y, img):
@@ -475,9 +483,12 @@ class GunImage(pygame.sprite.Sprite):
         self.smallgun1_img_turn = pygame.transform.flip(self.smallgun1_img, True, False)
         self.smallgun2_img_turn = pygame.transform.flip(self.smallgun2_img, True, False)
         self.shotgun1_img_turn = pygame.transform.flip(self.shotgun1_img, True, False)
-        self.shotgun2_img_turn = pygame.transform.flip(self.shotgun2_img, True, False)
-        self.sniper1_img_turn = pygame.transform.flip(self.sniper1_img, True, False)
-        self.sniper2_img_turn = pygame.transform.flip(self.sniper2_img, True, False)
+        self.shotgun2_img_turn = self.shotgun2_img
+        self.shotgun2_img = pygame.transform.flip(self.shotgun2_img, True, False)
+        self.sniper1_img_turn = self.sniper1_img
+        self.sniper1_img = pygame.transform.flip(self.sniper1_img, True, False)
+        self.sniper2_img_turn = self.sniper2_img
+        self.sniper2_img = pygame.transform.flip(self.sniper2_img, True, False)
 
        
 
@@ -493,12 +504,11 @@ class GunImage(pygame.sprite.Sprite):
         self.player_num = player_num
 
     def update(self):
-
         if self.player.get_direction() == -1:  # 玩家面向左
             if self.player_num == 1:
                 if self.player.now_gun() == "smallgun":
                     self.image = self.smallgun1_img_turn
-                    self.rect.x = self.player.rect.x - 50
+                    self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
                     self.rect.y = self.player.rect.y + 40
 
                 elif self.player.now_gun() == "shotgun":
@@ -531,7 +541,7 @@ class GunImage(pygame.sprite.Sprite):
             if self.player_num == 1:
                 if self.player.now_gun() == "smallgun":
                     self.image = self.smallgun1_img
-                    self.rect.x = self.player.rect.x + 20
+                    self.rect.centerx = self.player.rect.centerx + 40
                     self.rect.y = self.player.rect.y + 40
 
                 elif self.player.now_gun() == "shotgun":
@@ -570,16 +580,16 @@ class Bullet(pygame.sprite.Sprite):
         self.image = pygame.Surface([15, 5])
         self.image.fill(color)
         self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        self.rect.center = (x + 50*direction, y)
         self.direction = direction
         self.leave = False
         self.out_check = False
         if which_gun == "smallgun":
-            gun = Gun(5, 1, 100000, 5)
+            gun = Gun(5, 8, 100000, 5)
         if which_gun == "shotgun":
-            gun = Gun(15, 4, 12, 30)
+            gun = Gun(15, 15, 12, 30)
         if which_gun == "sniper":
-            gun = Gun(15, 8, 8, 60)
+            gun = Gun(15, 30, 8, 60)
         self.speed = gun.speed * direction
         self.gun = gun
         self.creation_time = time.time()
