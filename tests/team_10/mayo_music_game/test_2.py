@@ -2,6 +2,7 @@ import pygame
 import time
 import moviepy.editor as mp
 import pandas as pd
+import numpy as np
 
 pygame.init()
 
@@ -66,9 +67,11 @@ video_surface = pygame.Surface((800, 600))
 
 # Load scores
 try:
+    # 尝试读取 scores.csv 文件
     scores_df = pd.read_csv("scores.csv")
 except FileNotFoundError:
-    scores_df = pd.DataFrame(columns=["name", "score"])
+    # 如果文件不存在，创建一个新的 DataFrame
+    scores_df = pd.DataFrame(columns=["name", "score", "average", "std"])
 
 # Classes
 class Note:
@@ -277,19 +280,46 @@ pygame.quit()
 
 # Save the score
 name = input("Enter your name: ")
+
+# 检查用户是否已经存在于 scores_df 中
 if name in scores_df["name"].values:
-    current_score = scores_df.loc[scores_df["name"] == name, "score"].values[0]
+    # 获取当前用户的所有记录
+    current_record = scores_df[scores_df["name"] == name]
+    current_score = current_record["score"].values[0]
+    current_average = current_record["average"].values[0]
+    current_plays = current_record["plays"].values[0]
+
+    # 更新用户的最高成绩
     if max_combo > current_score:
         scores_df.loc[scores_df["name"] == name, "score"] = max_combo
+
+    # 更新用户的游玩次数
+    new_plays = current_plays + 1
+    scores_df.loc[scores_df["name"] == name, "plays"] = new_plays
+
+    # 计算新的平均成绩并更新
+    new_average = (current_average * current_plays + max_combo) / new_plays
+    scores_df.loc[scores_df["name"] == name, "average"] = new_average
+
+    # 获取当前用户的所有分数，并添加当前分数
+    user_scores = current_record["score"].tolist() * int(current_plays) + [max_combo]
+    # 计算用户的标准差并更新
+    std_score = np.std(user_scores, ddof=0)  # ddof=0 计算总体标准差
+    scores_df.loc[scores_df["name"] == name, "std"] = std_score
 else:
-    new_score = pd.DataFrame({"name": [name], "score": [max_combo]})
+    # 添加新的分数记录并计算平均值和标准差
+    new_score = pd.DataFrame({
+        "name": [name], 
+        "score": [max_combo], 
+        "average": [max_combo],
+        "std": [0.0],  # 只有一个分数，标准差为0
+        "plays": [1]  # 新用户的游玩次数为1
+    })
     scores_df = pd.concat([scores_df, new_score], ignore_index=True)
 
+# 显示结果
+scores_df.index = scores_df.index + 1
+print(scores_df)
 
-try:
-    scores_df.to_csv("scores.csv", index=False)
-    print("Scores saved successfully.")
-    with open("scores.csv", "r") as file:
-        print(file.read())
-except Exception as e:
-    print("Error saving or reading scores:", e)
+# 保存结果到 scores.csv
+scores_df.to_csv("scores.csv", index=False)
