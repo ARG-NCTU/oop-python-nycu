@@ -192,7 +192,7 @@ class Game:
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
                     self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
-                self.player1.speed_x += -0.5 * self.player1.get_direction()
+                
                 
                 fire1_press_check = 1
             else :
@@ -284,7 +284,13 @@ class Game:
             bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun, which_player)
             self.bullets.add(bullet)
             player.change_gunlag(gun)
-
+            gun = player.now_gun()
+            if gun == "smallgun":
+                player.speed_x -= 1 * direction
+            elif gun == "shotgun" :
+                player.speed_x -= 4 * direction
+            elif gun == "sniper" :
+                player.speed_x -= 8 * direction
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
         self.bombs.add(bomb)
@@ -571,9 +577,9 @@ class Bullet(pygame.sprite.Sprite):
         if which_gun == "smallgun":
             gun = Gun(5, 1, 100000, 5)
         if which_gun == "shotgun":
-            gun = Gun(15, 2, 12, 30)
+            gun = Gun(15, 4, 12, 30)
         if which_gun == "sniper":
-            gun = Gun(15, 4, 8, 60)
+            gun = Gun(15, 8, 8, 60)
         self.speed = gun.speed * direction
         self.gun = gun
         self.creation_time = time.time()
