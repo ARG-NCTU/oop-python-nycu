@@ -1,6 +1,7 @@
 import pygame
 import time
 import moviepy.editor as mp
+import pandas as pd
 
 pygame.init()
 
@@ -62,6 +63,12 @@ for i in times_arrive:
 # Video Loading
 video = mp.VideoFileClip("oop-python-nycu/tests/team_10/mayo_music_game/video.mp4").resize((800, 600))
 video_surface = pygame.Surface((800, 600))
+
+# Load scores
+try:
+    scores_df = pd.read_csv("scores.csv")
+except FileNotFoundError:
+    scores_df = pd.DataFrame(columns=["name", "score"])
 
 # Classes
 class Note:
@@ -177,6 +184,7 @@ def combo_showing():
     global combo
     combo = 0
     note_died_count = 0
+    global max_combo
 
     for one_note in showing_array:
         if one_note.arrive_time < time_pass:
@@ -184,11 +192,24 @@ def combo_showing():
     for i in range(note_died_count):
         if showing_array[i].hit:
             combo += 1
+            if combo > max_combo:
+                max_combo = combo
         else:
             combo = 0
 
     combo_show = font.render(f"COMBO: {combo}", True, (255, 255, 255))
     wn.blit(combo_show, (10, 10))
+
+def check_game_over():
+    if pointer >= len(times_drop) and all(not note.show for note in showing_array):
+        return True
+    return False
+
+def show_game_over_screen():
+    game_over_text = font.render("Game Over", True, (255, 0, 0))
+    wn.blit(game_over_text, (300, 250))
+    pygame.display.flip()
+    time.sleep(5)  # Show the game over screen for 5 seconds
 
 def pygame_events():
     global running
@@ -211,10 +232,15 @@ video_playing = False
 showing_array = []
 time_pass = 0
 combo = 0
+max_combo = 0
 showing_pointer = 0
+game_over = False
 
 # Main process
 while running:
+    if game_over:
+        show_game_over_screen()
+        break
     mouse_pos = pygame.mouse.get_pos()
     keys = pygame.key.get_pressed()
     pygame_events()
@@ -240,8 +266,30 @@ while running:
         showingArray_appending(time_pass)
         note_displaying(time_pass)
         combo_showing()
+        
+    if check_game_over():
+        game_over = True
     
     pygame.display.update()
     post_time_handle(loop_start_time)
 
 pygame.quit()
+
+# Save the score
+name = input("Enter your name: ")
+if name in scores_df["name"].values:
+    current_score = scores_df.loc[scores_df["name"] == name, "score"].values[0]
+    if max_combo > current_score:
+        scores_df.loc[scores_df["name"] == name, "score"] = max_combo
+else:
+    new_score = pd.DataFrame({"name": [name], "score": [max_combo]})
+    scores_df = pd.concat([scores_df, new_score], ignore_index=True)
+
+
+try:
+    scores_df.to_csv("scores.csv", index=False)
+    print("Scores saved successfully.")
+    with open("scores.csv", "r") as file:
+        print(file.read())
+except Exception as e:
+    print("Error saving or reading scores:", e)
