@@ -41,7 +41,7 @@ times_arrive = []
 times_drop = []
 notes = []
 note_dict = {64: 0, 192: 1, 320: 2, 448: 3}
-with open(f"oop-python-nycu/tests/team_10/mayo_music_game/note_and_time/times_{mode}.txt", "r") as time_f:
+with open(f"oop-python-nycu/tests/team_10/mayo_music_game/note_and_time/hibana time.txt", "r") as time_f:
     for i in time_f:
         i = int(i)
         i /= 1000
