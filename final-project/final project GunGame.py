@@ -130,6 +130,11 @@ class Game:
         self.all_sprites.add(self.player1, self.player2)
         self.font = pygame.font.Font(None, FONT)
         self.treasure_boxes = pygame.sprite.Group() 
+        self.gun_images1 = GunImage(self.player1, 1)
+        self.gun_images2 = GunImage(self.player2, 2)
+        self.all_sprites.add(self.gun_images1, self.gun_images2)
+        
+
 
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(90, 1000),-100, self.box_img)
@@ -467,12 +472,12 @@ class GunImage(pygame.sprite.Sprite):
         self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
         self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
-        self.rect = self.image.get_rect()
+        
         if player_num == 1:
             self.image = self.smallgun1_img
         elif player_num == 2:
             self.image = self.smallgun2_img
-
+        self.rect = self.image.get_rect()
         
 
         self.rect.x = player.rect.x
