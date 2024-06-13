@@ -12,14 +12,14 @@ drop_before_arrive = 0.8
 pixel_per_second = 565 / drop_before_arrive
 
 # Object & Images
-mayo = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/mayo.jpg").convert_alpha()
+mayo = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/note.jpg").convert_alpha()
 start_menu = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/patrick_mayo.jpg").convert_alpha()
 start_button = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/start_button.png").convert_alpha()
 miss_img = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/miss.png").convert_alpha()  # Load miss image
 start_menu = pygame.transform.scale(start_menu, (800, 600))
 start_button = pygame.transform.scale(start_button, (200, 100))
 mayo = pygame.transform.rotate(mayo, 90)
-mayo = pygame.transform.scale(mayo, (100, 100))
+mayo = pygame.transform.scale(mayo, (100, 50))
 miss_img = pygame.transform.scale(miss_img, (100, 100))  # Scale miss image
 slot = (125, 30)
 white_back = pygame.Rect(0, 0, 800, 600)
@@ -34,7 +34,7 @@ track = pygame.mixer.music.load(music_location)
 font = pygame.font.Font("freesansbold.ttf", 32)
 
 # Screen
-pygame.display.set_caption("Is Mayonnaise an Instrument?")
+pygame.display.set_caption("hibana_music_game")
 pygame.display.set_icon(mayo)
 
 # Files
