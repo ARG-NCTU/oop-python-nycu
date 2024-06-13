@@ -480,8 +480,8 @@ class GunImage(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         
 
-        self.rect.x = player.rect.x
-        self.rect.y = player.rect.y - 60
+        self.rect.x = player.rect.x 
+        self.rect.y = player.rect.y + 30
         self.player_num = player_num
 
     def update(self):
@@ -502,7 +502,7 @@ class GunImage(pygame.sprite.Sprite):
                 self.image = self.sniper2_img
 
         self.rect.x = self.player.rect.x
-        self.rect.y = self.player.rect.y - 60
+        self.rect.y = self.player.rect.y + 50
 #////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
