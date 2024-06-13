@@ -115,16 +115,16 @@ def start_video():
     video_start_time = time.time()
 
 def draw_back():
-    pygame.draw.rect(wn, (107, 186, 241), white_back)
-    pygame.draw.rect(wn, (255, 255, 0), border_left_line)
-    pygame.draw.rect(wn, (255, 255, 0), border_right_line)
+    pygame.draw.rect(wn, (128, 128, 128), white_back)
+    pygame.draw.rect(wn, (128, 0, 128), border_left_line)
+    pygame.draw.rect(wn, (128, 0, 128), border_right_line)
     
     pygame.draw.line(wn, (255, 255, 255), (275, 0), (275, 600))
     pygame.draw.line(wn, (255, 255, 255), (400, 0), (400, 600))
     pygame.draw.line(wn, (255, 255, 255), (525, 0), (525, 600))
     
-    pygame.draw.line(wn, (100, 100, 100), (150, 500), (650, 500))
-    pygame.draw.line(wn, (100, 100, 100), (150, 530), (650, 530))
+    pygame.draw.line(wn, (0, 0, 0), (150, 500), (650, 500))
+    pygame.draw.line(wn, (0, 0, 0), (150, 530), (650, 530))
 
 def draw_press():
     if keys[pygame.K_d]:
