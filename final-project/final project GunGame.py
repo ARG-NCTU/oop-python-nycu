@@ -502,8 +502,8 @@ class GunImage(pygame.sprite.Sprite):
 
                 elif self.player.now_gun() == "sniper":
                     self.image = self.sniper1_img_turn
-                    self.rect.x = self.player.rect.x - 10
-                    self.rect.y = self.player.rect.y + 40
+                    self.rect.x = self.player.rect.x - 80
+                    self.rect.y = self.player.rect.y + 30
 
             elif self.player_num == 2:
                 if self.player.now_gun() == "smallgun":
@@ -518,8 +518,8 @@ class GunImage(pygame.sprite.Sprite):
 
                 elif self.player.now_gun() == "sniper":
                     self.image = self.sniper2_img_turn
-                    self.rect.x = self.player.rect.x - 10
-                    self.rect.y = self.player.rect.y + 40
+                    self.rect.x = self.player.rect.x - 80
+                    self.rect.y = self.player.rect.y + 30
 
         elif self.player.get_direction() == 1: # 玩家面向右
             if self.player_num == 1:
@@ -551,7 +551,7 @@ class GunImage(pygame.sprite.Sprite):
 
                 elif self.player.now_gun() == "sniper":
                     self.image = self.sniper2_img
-                    self.rect.x = self.player.rect.x
+                    self.rect.x = self.player.rect.x 
                     self.rect.y = self.player.rect.y + 30
 
 
