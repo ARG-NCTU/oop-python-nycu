@@ -43,7 +43,7 @@ def distance_2D(x1, y1, x2, y2):
 
 
 
-#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 def draw_text(screen, text, size, x, y):
     font = pygame.font.Font(None, size)
     text_surface = font.render(text, True, WHITE)
@@ -99,7 +99,7 @@ def draw_init():
                 sys.exit()
             if event.type == pygame.KEYUP:
                 state += 1
-#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 # 建立遊戲場景類別
 class Game:
     def __init__(self):
@@ -143,11 +143,11 @@ class Game:
 
     def run(self):
         running = True
-        self.player1_press_jump = 0  #示例地板高度，可以根据实际情况修改
-        self.player2_press_jump = 0
+        self.player1_press_jump = 0  # 玩家1是否按跳躍鍵
+        self.player2_press_jump = 0  # 玩家2是否按跳躍鍵
         self.box_check = 0
         self.box_time = 300
-        show_start_screen = True       # 顯示開始畫面-----------------------------------------
+        show_start_screen = True       # 顯示開始畫面
         while running:
             if show_start_screen:
                 draw_init()
@@ -262,7 +262,7 @@ class Game:
                     self.box_check = 0
 
             text = self.font.render(str(self.player1.now_gun()), True, (255, 255, 255)) #輸出左上角的字（用來測試）
-            self.screen.blit(self.background_img, (0, 0))  # 绘制背景图像
+            self.screen.blit(self.background_img, (0, 0))  #    背景圖片
             self.bomb_effects.draw(self.screen)
             self.all_sprites.draw(self.screen)
             self.bullets.draw(self.screen)
@@ -313,11 +313,6 @@ class Physics(object):
             #讓角色滑行
             self.speed_x = self.speed_x * 0.93
 
-            # 限制在窗口內
-            # if self.rect.left < 0:
-            #     self.rect.left = 0
-            # elif self.rect.right > WINDOW_WIDTH:
-            #     self.rect.right = WINDOW_WIDTH
 
         def check_ground(self):
             # 找到距離玩家最近的地板
@@ -460,7 +455,6 @@ class Gun():
         self.numofbullet = numofbullet
         self.lagtime = lagtime
 
-#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class GunImage(pygame.sprite.Sprite):
     def __init__(self, player, player_num):
@@ -494,60 +488,73 @@ class GunImage(pygame.sprite.Sprite):
 
     def update(self):
 
-        if self.player.get_direction() == -1:
+        if self.player.get_direction() == -1:  # 玩家面向左
             if self.player_num == 1:
                 if self.player.now_gun() == "smallgun":
                     self.image = self.smallgun1_img_turn
+                    self.rect.x = self.player.rect.x - 50
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "shotgun":
                     self.image = self.shotgun1_img_turn
+                    self.rect.x = self.player.rect.x - 70
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "sniper":
                     self.image = self.sniper1_img_turn
+                    self.rect.x = self.player.rect.x - 10
+                    self.rect.y = self.player.rect.y + 40
+
             elif self.player_num == 2:
                 if self.player.now_gun() == "smallgun":
                     self.image = self.smallgun2_img_turn
+                    self.rect.x = self.player.rect.x - 50
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "shotgun":
                     self.image = self.shotgun2_img_turn
+                    self.rect.x = self.player.rect.x - 70
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "sniper":
                     self.image = self.sniper2_img_turn
-        elif self.player.get_direction() == 1:
+                    self.rect.x = self.player.rect.x - 10
+                    self.rect.y = self.player.rect.y + 40
+
+        elif self.player.get_direction() == 1: # 玩家面向右
             if self.player_num == 1:
                 if self.player.now_gun() == "smallgun":
                     self.image = self.smallgun1_img
+                    self.rect.x = self.player.rect.x + 20
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "shotgun":
                     self.image = self.shotgun1_img
+                    self.rect.x = self.player.rect.x 
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "sniper":
                     self.image = self.sniper1_img
+                    self.rect.x = self.player.rect.x
+                    self.rect.y = self.player.rect.y + 30
+
             elif self.player_num == 2:
                 if self.player.now_gun() == "smallgun":
                     self.image = self.smallgun2_img
+                    self.rect.x = self.player.rect.x + 20
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "shotgun":
                     self.image = self.shotgun2_img
+                    self.rect.x = self.player.rect.x
+                    self.rect.y = self.player.rect.y + 40
+
                 elif self.player.now_gun() == "sniper":
                     self.image = self.sniper2_img
-                    
+                    self.rect.x = self.player.rect.x
+                    self.rect.y = self.player.rect.y + 30
 
 
-
-
-        '''if self.player_num == 1:
-            if self.player.now_gun() == "smallgun":
-                self.image = self.smallgun1_img
-            elif self.player.now_gun() == "shotgun":
-                self.image = self.shotgun1_img
-            elif self.player.now_gun() == "sniper":
-                self.image = self.sniper1_img
-
-        elif self.player_num == 2:
-            if self.player.now_gun() == "smallgun":
-                self.image = self.smallgun2_img
-            elif self.player.now_gun() == "shotgun":
-                self.image = self.shotgun2_img
-            elif self.player.now_gun() == "sniper":
-                self.image = self.sniper2_img'''
-
-        self.rect.x = self.player.rect.x - 10
-        self.rect.y = self.player.rect.y + 40
-#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 # 建立子彈類別
