@@ -627,6 +627,11 @@ class Bullet(pygame.sprite.Sprite):
     def update(self):
         elapsed_time = time.time() - self.creation_time
         acceleration = 0.005
+        
+        self.gun.numofbullet -= 1
+        if self.gun.numofbullet <= 0:
+            player.change_gun("smallgun")
+        
         if self.speed == 0:
             return True
         elif self.speed > 0:
