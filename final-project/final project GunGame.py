@@ -200,6 +200,7 @@ class Game():
         self.bomb_effects = pygame.sprite.Group()
         self.font = pygame.font.Font(None, FONT)
         #self.font = pygame.font.SysFont('Arial', 60)
+        self.font_i = pygame.font.SysFont('Arial', 60)
         self.treasure_boxes = pygame.sprite.Group() 
         self.gun_images1 = GunImage(self.player1)
         self.gun_images2 = GunImage(self.player2)
@@ -352,8 +353,8 @@ class Game():
                     treasure_box.kill()
                     self.box_check = 0
 
-            text_smallgun1_numofbullete = self.font.render("∞", True, (255, 255, 255)) #輸出左上角的字
-            text_smallgun2_numofbullete = self.font.render("∞", True, (255, 255, 255)) 
+            text_smallgun1_numofbullete = self.font_i.render("∞", True, (255, 255, 255)) #輸出左上角的字
+            text_smallgun2_numofbullete = self.font_i.render("∞", True, (255, 255, 255)) 
             text_player1_ammo = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255)) 
             text_player2_ammo = self.font.render(str(self.player2.realgun.numofbullet), True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
@@ -364,17 +365,12 @@ class Game():
             self.bombs.draw(self.screen)
             self.draw_object(self.player1, self.player2)
             if self.player1.realgun.gun_name == "smallgun":
-                self.font = pygame.font.SysFont('Arial', 60)
                 self.screen.blit(text_smallgun1_numofbullete,(10,100))
             else:
-                self.font = pygame.font.Font(None, FONT)
                 self.screen.blit(text_player1_ammo,(10,100))
-
             if self.player2.realgun.gun_name == "smallgun":
-                self.font = pygame.font.SysFont('Arial', 60)
                 self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 160,100))
             else:
-                self.font = pygame.font.Font(None, FONT) 
                 self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,100))
         
 
