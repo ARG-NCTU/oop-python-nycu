@@ -303,6 +303,9 @@ class Game():
                 if fire2_press_check == 0:
                     self.fire_bullet(self.player2, self.player2.get_direction(), YELLOW, self.player2.now_gun(), 2)
                 fire2_press_check = 1
+                if self.player2.realgun.numofbullet <= 0:
+                    self.player2.realgun = smallgun()
+                    self.player2.gun = "smallgun"
             else :
                 fire2_press_check = 0
             if mkeys[pygame.K_b]:
@@ -775,9 +778,6 @@ class Bullet(pygame.sprite.Sprite):
             self.speed += acceleration*elapsed_time
             
         self.rect.x += self.speed
-        if self.strgun == "shotgun":
-            if self.gun.numofbullet <= 0:
-                self.kill()
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
             self.out_check = True
         return False
