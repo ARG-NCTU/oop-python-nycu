@@ -198,8 +198,8 @@ class Game():
         self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
         self.box_img = pygame.image.load('./oop-python-nycu/final-project/box.png')
         self.heart_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/heart.png'), (40, 40))
-        self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img)
-        self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img)
+        self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
+        self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img, 2)
         self.player2.turn_img("left")
         self.player1_draw = pygame.sprite.Group()
         self.player2_draw = pygame.sprite.Group()
@@ -208,8 +208,8 @@ class Game():
         self.bomb_effects = pygame.sprite.Group()
         self.font = pygame.font.Font(None, FONT)
         self.treasure_boxes = pygame.sprite.Group() 
-        self.gun_images1 = GunImage(self.player1, 1)
-        self.gun_images2 = GunImage(self.player2, 2)
+        self.gun_images1 = GunImage(self.player1)
+        self.gun_images2 = GunImage(self.player2)
         self.player1_draw.add(self.player1, self.gun_images1)
         self.player2_draw.add(self.player2, self.gun_images2)
     def spawn_treasure_box(self):
@@ -287,16 +287,13 @@ class Game():
                 self.player2.move_x("right")
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
-                    self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
-                    #self.player1.realgun.numofbullet -= 1
+                    self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1) # 玩家1發射子彈
 
-                if self.player1.realgun.numofbullet <= 0:
-                    self.player1.realgun = smallgun()
-                    self.player1.gun = "smallgun"
-
-                    #self.check_magazine(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
-                
+                if self.player1.realgun.numofbullet <= 0: # 子彈數量用完換成小槍
+                    self.player1.realgun = smallgun() 
+                    self.player1.realgun.gun_name = "smallgun"
                 fire1_press_check = 1
+
             else :
                 fire1_press_check = 0
             if mkeys[pygame.K_k]:
@@ -305,7 +302,7 @@ class Game():
                 fire2_press_check = 1
                 if self.player2.realgun.numofbullet <= 0:
                     self.player2.realgun = smallgun()
-                    self.player2.gun = "smallgun"
+                    self.player2.realgun.gun_name = "smallgun"
             else :
                 fire2_press_check = 0
             if mkeys[pygame.K_b]:
@@ -324,7 +321,6 @@ class Game():
             self.player1_draw.update()
             self.player2_draw.update()
             self.bullets.update()
-
             self.bombs.update()
             
             # 碰撞檢測
@@ -355,13 +351,13 @@ class Game():
 
             for treasure_box in self.treasure_boxes:
                 if pygame.sprite.collide_rect(self.player1, treasure_box):
-                    gun = treasure_box.open_box()
-                    self.player1.change_gun(gun)
+                    gun_name = treasure_box.open_box()
+                    self.player1.change_gun(gun_name)
                     treasure_box.kill()
                     self.box_check = 0
                 if pygame.sprite.collide_rect(self.player2, treasure_box):
-                    gun = treasure_box.open_box()
-                    self.player2.change_gun(gun)
+                    gun_name = treasure_box.open_box()
+                    self.player2.change_gun(gun_name)
                     treasure_box.kill()
                     self.box_check = 0
                 if treasure_box.rect.top > WINDOW_HEIGHT:
@@ -397,17 +393,17 @@ class Game():
 
 
     # 發射子彈
-    def fire_bullet(self, player, direction, color, gun, which_player):
+    def fire_bullet(self, player, direction, color, gun_name, which_player):
         if player.get_value("gunlag") <= 0:
-            bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun, which_player)
+            bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun_name, which_player)
             self.bullets.add(bullet)
-            player.change_gunlag(gun)
-            gun = player.now_gun()
-            if gun == "smallgun":
+            player.change_gunlag(gun_name)
+            gun_name = player.now_gun()
+            if gun_name == "smallgun":
                 player.speed_x -= 1 * direction
-            elif gun == "shotgun" :
+            elif gun_name == "shotgun" :
                 player.speed_x -= 4 * direction
-            elif gun == "sniper" :
+            elif gun_name == "sniper" :
                 player.speed_x -= 8 * direction
             player.realgun.numofbullet -= 1
             
@@ -416,12 +412,12 @@ class Game():
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
         self.bombs.add(bomb)
 
-    def check_magazine(self,player,direction,color,gun,which_player):
+    '''def check_magazine(self,player,direction,color,gun,which_player):
         magazine = player.gun.numofbullet
         if self.fire_bullet(self,player,direction,color,gun,which_player):
             magazine -= 1
             if magazine <= 0 :
-                player.gun = "smallgun"
+                player.gun = "smallgun"'''
 
     def draw_object(self, player1, player2):
         for i in range(player1.live):
@@ -488,7 +484,7 @@ class Physics(object):
 
     # 建立玩家類別
 class Player(pygame.sprite.Sprite, Physics):
-    def __init__(self, x, y, img):
+    def __init__(self, x, y, img, playernumber):
         super().__init__()
         Physics.__init__(self, x, y, img)
         self.right_img = img
@@ -498,16 +494,16 @@ class Player(pygame.sprite.Sprite, Physics):
         self.bomb_num = 3
         self.double_jump = 1
         self.gunlag = 0
-        self.gun = "smallgun"
+        self.playernumber = playernumber
         self.live = 3
         self.realgun = smallgun()
                 
-    def change_gunlag(self, num):
-        if num == "smallgun":
+    def change_gunlag(self, gun_name):
+        if gun_name == "smallgun":
             self.gunlag = 5
-        elif num == "shotgun":
+        elif gun_name == "shotgun":
             self.gunlag = 30
-        elif num == "sniper":
+        elif gun_name == "sniper":
             self.gunlag = 60
 
     def get_value(self, sub): # 拿來取要的值
@@ -586,21 +582,21 @@ class Player(pygame.sprite.Sprite, Physics):
         self.speed_x = 0
         self.speed_y = 0
         self.bomb_num = 3
-        self.gun = "smallgun"
+        self.realgun = smallgun()
         self.live -= 1
 
-    def change_gun(self, gun):
-        self.gun = gun
-        if gun == "smallgun":
+    def change_gun(self, gun_name):
+        #self.gun = gun
+        if gun_name == "smallgun":
             self.realgun = smallgun()
-        elif gun == "shotgun":
+        elif gun_name == "shotgun":
             self.realgun = shotgun()
-        elif gun == "sniper":
+        elif gun_name == "sniper":
             self.realgun = sniper()
 
 
     def now_gun(self):
-        return self.gun
+        return self.realgun.gun_name
         
 
 # 建立槍類別
@@ -610,123 +606,92 @@ class Gun():
         self.recoil = recoil
         self.numofbullet = numofbullet
         self.lagtime = lagtime
+        
+
 class smallgun(Gun):
     def __init__(self):
         super().__init__(5, 8, 100000, 5)
         self.gun_name = "smallgun"
+        self.smallgun_img1 = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')
+        self.smallgun_img2 = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
+        self.smallgun_img1_turn = pygame.transform.flip(self.smallgun_img1, True, False)
+        self.smallgun_img2_turn = pygame.transform.flip(self.smallgun_img2, True, False)
 
 
 class shotgun(Gun):
     def __init__(self):
         super().__init__(15, 15, 12, 30)
         self.gun_name = "shotgun"
+        self.shotgun_img1 = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
+        self.shotgun_img2 = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
+        self.shotgun_img1_turn = pygame.transform.flip(self.shotgun_img1, True, False)
+        self.shotgun_img2_turn = self.shotgun_img2
+        self.shotgun_img2 = pygame.transform.flip(self.shotgun_img2, True, False)
+
 
 class sniper(Gun):
     def __init__(self):
         super().__init__(15, 30, 8, 60)
         self.gun_name = "sniper"
+        self.sniper_img1 = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
+        self.sniper_img2 = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
+        self.sniper_img1_turn = self.sniper_img1
+        self.sniper_img1 = pygame.transform.flip(self.sniper_img1, True, False)
+        self.sniper_img2_turn = self.sniper_img2
+        self.sniper_img2 = pygame.transform.flip(self.sniper_img2, True, False)
 
 
 
 
 class GunImage(pygame.sprite.Sprite):
-    def __init__(self, player, player_num):
+    def __init__(self, player):
         super().__init__()
         self.player = player
-        self.smallgun1_img = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')
-        self.smallgun2_img = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
-        self.shotgun1_img = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
-        self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
-        self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
-        self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
-        self.smallgun1_img_turn = pygame.transform.flip(self.smallgun1_img, True, False)
-        self.smallgun2_img_turn = pygame.transform.flip(self.smallgun2_img, True, False)
-        self.shotgun1_img_turn = pygame.transform.flip(self.shotgun1_img, True, False)
-        self.shotgun2_img_turn = self.shotgun2_img
-        self.shotgun2_img = pygame.transform.flip(self.shotgun2_img, True, False)
-        self.sniper1_img_turn = self.sniper1_img
-        self.sniper1_img = pygame.transform.flip(self.sniper1_img, True, False)
-        self.sniper2_img_turn = self.sniper2_img
-        self.sniper2_img = pygame.transform.flip(self.sniper2_img, True, False)
 
-        if player_num == 1:
-            self.image = self.smallgun1_img
-        elif player_num == 2:
-            self.image = self.smallgun2_img
+        if self.player.playernumber == 1:
+            self.image = self.player.realgun.smallgun_img1
+        elif self.player.playernumber == 2:
+            self.image = self.player.realgun.smallgun_img2
         self.rect = self.image.get_rect()
         
 
         self.rect.x = player.rect.x 
         self.rect.y = player.rect.y + 30
-        self.player_num = player_num
-
+        
     def update(self):
-        if self.player.get_direction() == -1:  # 玩家面向左
-            if self.player_num == 1:
-                if self.player.now_gun() == "smallgun":
-                    self.image = self.smallgun1_img_turn
-                    self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
-                    self.rect.y = self.player.rect.y + 40
+        if self.player.playernumber == 1:
+            if self.player.now_gun() == "smallgun":
+                self.image = self.player.realgun.smallgun_img1_turn
+                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
+                self.rect.y = self.player.rect.y + 40
 
-                elif self.player.now_gun() == "shotgun":
-                    self.image = self.shotgun1_img_turn
-                    self.rect.x = self.player.rect.x - 70
-                    self.rect.y = self.player.rect.y + 40
+            elif self.player.now_gun() == "shotgun":
+                self.image = self.player.realgun.shotgun_img1_turn
+                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
+                self.rect.y = self.player.rect.y + 40
 
-                elif self.player.now_gun() == "sniper":
-                    self.image = self.sniper1_img_turn
-                    self.rect.x = self.player.rect.x - 80
-                    self.rect.y = self.player.rect.y + 30
+            elif self.player.now_gun() == "sniper":
+                self.image = self.player.realgun.sniper_img1
+                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
+                self.rect.y = self.player.rect.y + 30
 
-            elif self.player_num == 2:
-                if self.player.now_gun() == "smallgun":
-                    self.image = self.smallgun2_img_turn
-                    self.rect.x = self.player.rect.x - 50
-                    self.rect.y = self.player.rect.y + 40
+        elif self.player.playernumber == 2:
+            if self.player.now_gun() == "smallgun":
+                self.image = self.player.realgun.smallgun_img2
+                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
+                self.rect.y = self.player.rect.y + 40
 
-                elif self.player.now_gun() == "shotgun":
-                    self.image = self.shotgun2_img_turn
-                    self.rect.x = self.player.rect.x - 70
-                    self.rect.y = self.player.rect.y + 40
+            elif self.player.now_gun() == "shotgun":
+                self.image = self.player.realgun.shotgun_img2
+                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
+                self.rect.y = self.player.rect.y + 40
 
-                elif self.player.now_gun() == "sniper":
-                    self.image = self.sniper2_img_turn
-                    self.rect.x = self.player.rect.x - 80
-                    self.rect.y = self.player.rect.y + 30
+            elif self.player.now_gun() == "sniper":
+                self.image = self.player.realgun.sniper_img2
+                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
+                self.rect.y = self.player.rect.y + 30
 
-        elif self.player.get_direction() == 1: # 玩家面向右
-            if self.player_num == 1:
-                if self.player.now_gun() == "smallgun":
-                    self.image = self.smallgun1_img
-                    self.rect.centerx = self.player.rect.centerx + 40
-                    self.rect.y = self.player.rect.y + 40
-
-                elif self.player.now_gun() == "shotgun":
-                    self.image = self.shotgun1_img
-                    self.rect.x = self.player.rect.x 
-                    self.rect.y = self.player.rect.y + 40
-
-                elif self.player.now_gun() == "sniper":
-                    self.image = self.sniper1_img
-                    self.rect.x = self.player.rect.x
-                    self.rect.y = self.player.rect.y + 30
-
-            elif self.player_num == 2:
-                if self.player.now_gun() == "smallgun":
-                    self.image = self.smallgun2_img
-                    self.rect.x = self.player.rect.x + 20
-                    self.rect.y = self.player.rect.y + 40
-
-                elif self.player.now_gun() == "shotgun":
-                    self.image = self.shotgun2_img
-                    self.rect.x = self.player.rect.x
-                    self.rect.y = self.player.rect.y + 40
-
-                elif self.player.now_gun() == "sniper":
-                    self.image = self.sniper2_img
-                    self.rect.x = self.player.rect.x 
-                    self.rect.y = self.player.rect.y + 30
-
+        
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, color, x, y, direction, which_gun, which_player):
