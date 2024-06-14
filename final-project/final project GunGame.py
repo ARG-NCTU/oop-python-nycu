@@ -171,6 +171,10 @@ class Game:
                     self.spawn_treasure_box()
                     self.box_check = 1
 
+            if self.player1.live == 0 or self.player2.live == 0:
+                running = False
+                
+
             mkeys = pygame.key.get_pressed()
             if mkeys[pygame.QUIT]:
                 running = False
@@ -630,7 +634,7 @@ class Bullet(pygame.sprite.Sprite):
         
         self.gun.numofbullet -= 1
         if self.gun.numofbullet <= 0:
-            player.change_gun("smallgun")
+            self.numplayer.change_gun("smallgun")
         
         if self.speed == 0:
             return True
