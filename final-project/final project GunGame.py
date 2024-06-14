@@ -625,8 +625,7 @@ class shotgun(Gun):
         self.shotgun_img1 = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
         self.shotgun_img2 = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
         self.shotgun_img1_turn = pygame.transform.flip(self.shotgun_img1, True, False)
-        self.shotgun_img2_turn = self.shotgun_img2
-        self.shotgun_img2 = pygame.transform.flip(self.shotgun_img2, True, False)
+        self.shotgun_img2_turn= pygame.transform.flip(self.shotgun_img2, True, False)
 
 
 class sniper(Gun):
@@ -635,10 +634,8 @@ class sniper(Gun):
         self.gun_name = "sniper"
         self.sniper_img1 = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.sniper_img2 = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
-        self.sniper_img1_turn = self.sniper_img1
-        self.sniper_img1 = pygame.transform.flip(self.sniper_img1, True, False)
-        self.sniper_img2_turn = self.sniper_img2
-        self.sniper_img2 = pygame.transform.flip(self.sniper_img2, True, False)
+        self.sniper_img1_turn = pygame.transform.flip(self.sniper_img1, True, False)
+        self.sniper_img2_turn = pygame.transform.flip(self.sniper_img2, True, False)
 
 
 
@@ -647,7 +644,7 @@ class GunImage(pygame.sprite.Sprite):
     def __init__(self, player):
         super().__init__()
         self.player = player
-
+        
         if self.player.playernumber == 1:
             self.image = self.player.realgun.smallgun_img1
         elif self.player.playernumber == 2:
@@ -659,39 +656,72 @@ class GunImage(pygame.sprite.Sprite):
         self.rect.y = player.rect.y + 30
         
     def update(self):
-        if self.player.playernumber == 1:
-            if self.player.now_gun() == "smallgun":
-                self.image = self.player.realgun.smallgun_img1_turn
-                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
-                self.rect.y = self.player.rect.y + 40
+        if self.player.get_direction() == -1:  # 玩家面向左
+            if self.player.playernumber == 1:
+                if self.player.now_gun() == "smallgun":
+                    self.image = self.player.realgun.smallgun_img1_turn
+                    self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
+                    self.rect.y = self.player.rect.y + 40
 
-            elif self.player.now_gun() == "shotgun":
-                self.image = self.player.realgun.shotgun_img1_turn
-                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
-                self.rect.y = self.player.rect.y + 40
+                elif self.player.now_gun() == "shotgun":
+                    self.image = self.player.realgun.shotgun_img1_turn
+                    self.rect.x = self.player.rect.x - 70
+                    self.rect.y = self.player.rect.y + 40
 
-            elif self.player.now_gun() == "sniper":
-                self.image = self.player.realgun.sniper_img1
-                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
-                self.rect.y = self.player.rect.y + 30
+                elif self.player.now_gun() == "sniper":
+                    self.image = self.player.realgun.sniper_img1_turn
+                    self.rect.x = self.player.rect.x - 80
+                    self.rect.y = self.player.rect.y + 30
 
-        elif self.player.playernumber == 2:
-            if self.player.now_gun() == "smallgun":
-                self.image = self.player.realgun.smallgun_img2
-                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
-                self.rect.y = self.player.rect.y + 40
+            elif self.player.playernumber == 2:
+                if self.player.now_gun() == "smallgun":
+                    self.image = self.player.realgun.smallgun_img2_turn
+                    self.rect.x = self.player.rect.x - 50
+                    self.rect.y = self.player.rect.y + 40
 
-            elif self.player.now_gun() == "shotgun":
-                self.image = self.player.realgun.shotgun_img2
-                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
-                self.rect.y = self.player.rect.y + 40
+                elif self.player.now_gun() == "shotgun":
+                    self.image = self.player.realgun.shotgun_img2_turn
+                    self.rect.x = self.player.rect.x - 70
+                    self.rect.y = self.player.rect.y + 40
 
-            elif self.player.now_gun() == "sniper":
-                self.image = self.player.realgun.sniper_img2
-                self.rect.centerx = self.player.rect.centerx + 40*self.player.get_direction()
-                self.rect.y = self.player.rect.y + 30
+                elif self.player.now_gun() == "sniper":
+                    self.image = self.player.realgun.sniper_img2_turn
+                    self.rect.x = self.player.rect.x - 80
+                    self.rect.y = self.player.rect.y + 30
 
-        
+        elif self.player.get_direction() == 1: # 玩家面向右
+            if self.player.playernumber == 1:
+                if self.player.now_gun() == "smallgun":
+                    self.image = self.player.realgun.smallgun_img1
+                    self.rect.centerx = self.player.rect.centerx + 40
+                    self.rect.y = self.player.rect.y + 40
+
+                elif self.player.now_gun() == "shotgun":
+                    self.image = self.player.realgun.shotgun_img1
+                    self.rect.x = self.player.rect.x 
+                    self.rect.y = self.player.rect.y + 40
+
+                elif self.player.now_gun() == "sniper":
+                    self.image = self.player.realgun.sniper_img1
+                    self.rect.x = self.player.rect.x
+                    self.rect.y = self.player.rect.y + 30
+
+            elif self.player.playernumber == 2:
+                if self.player.now_gun() == "smallgun":
+                    self.image = self.player.realgun.smallgun_img2
+                    self.rect.x = self.player.rect.x + 20
+                    self.rect.y = self.player.rect.y + 40
+
+                elif self.player.now_gun() == "shotgun":
+                    self.image = self.player.realgun.shotgun_img2
+                    self.rect.x = self.player.rect.x
+                    self.rect.y = self.player.rect.y + 40
+
+                elif self.player.now_gun() == "sniper":
+                    self.image = self.player.realgun.sniper_img2
+                    self.rect.x = self.player.rect.x 
+                    self.rect.y = self.player.rect.y + 30
+
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, color, x, y, direction, which_gun, which_player):
