@@ -85,7 +85,7 @@ def draw_init():
         screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
         
         if state == 0:
-            counttime += 1
+            counttime += 1 
             if counttime <= 50:
                 draw_text(screen, "<Tap Any Bottom To Start>", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 200)
             elif counttime > 100:
@@ -106,6 +106,76 @@ def draw_init():
                 sys.exit()
             if event.type == pygame.KEYUP:
                 state += 1
+
+
+def draw_end(who_win):
+    screen = pygame.display.set_mode(WINDOW_SIZE)
+    
+    initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
+    tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
+    
+    # 獲取圖片的原始大小
+    img_width, img_height = initial_screen.get_size()
+    
+    # 計算圖片縮放比例
+    scale = min(WINDOW_WIDTH / img_width, WINDOW_HEIGHT / img_height)
+    
+    # 計算縮放後的大小
+    new_size = (int(img_width * scale), int(img_height * scale))
+    
+    # 等比例縮小圖片
+    initial_screen = pygame.transform.scale(initial_screen, new_size)
+    
+    # 計算圖片在視窗中的位置，使其居中
+    pos_x = (WINDOW_WIDTH - new_size[0]) // 2
+    pos_y = (WINDOW_HEIGHT - new_size[1]) // 2
+    screen.blit(initial_screen, (pos_x, pos_y))
+    
+    pygame.display.set_caption("GunGame")
+
+    
+
+
+
+    #按兩下結束函數
+    state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
+    counttime = 0
+    while state < 1:
+        screen.fill((0, 0, 0))  # 清除屏幕
+        screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
+        
+        
+
+
+
+
+
+        if state == 0:
+            if who_win == 1:
+                draw_text(screen, "Player 1 Win", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 100)
+            elif who_win == 2:
+                draw_text(screen, "Player 2 Win", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 100)
+
+        elif state == 1:
+            
+            counttime += 1 
+            if counttime <= 50:
+                draw_text(screen, "<Tap Any Bottom To Start>", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 200)
+            elif counttime > 100:
+                counttime = 0
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYUP:
+                state += 1
+
+        
+    
+    
+
 
 # 建立遊戲場景類別
 class Game:
@@ -155,6 +225,7 @@ class Game:
         self.box_check = 0
         self.box_time = 300
         show_start_screen = True       # 顯示開始畫面
+        show_end_screen = True         # 顯示結束畫面
         while running:
             if show_start_screen:
                 draw_init()
@@ -164,13 +235,21 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
-            if self.player1.live == 0:
-                draw_text(self.screen, "Player 2 Win", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-                running = False
+            if self.player1.live == 0 and show_end_screen:
+                draw_end(2)
+                self.player1.live = 3
+                draw_init()
+             
+                #按下任意鍵回到開始畫面
 
-            if self.player2.live == 0:
-                draw_text(self.screen, "Player 1 Win", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-                running = False
+                
+
+            if self.player2.live == 0 and show_end_screen:
+                draw_end(1)
+                self.player2.live = 3
+                draw_init()
+            #按下任意鍵回到開始畫面
+                
 
 
 
