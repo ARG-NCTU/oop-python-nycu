@@ -58,7 +58,11 @@ def draw_init():
     screen = pygame.display.set_mode(WINDOW_SIZE)
     
     initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
-    tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
+    intro_img = pygame.image.load('./oop-python-nycu/final-project/intro.png')  
+    player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
+    player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
+    player1_img = pygame.transform.scale(player1_img, (160, 220))
+    player2_img = pygame.transform.scale(player2_img, (160, 220))
     
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
@@ -71,6 +75,7 @@ def draw_init():
     
     # 等比例縮小圖片
     initial_screen = pygame.transform.scale(initial_screen, new_size)
+    intro_img = pygame.transform.scale(intro_img, new_size)
     
     # 計算圖片在視窗中的位置，使其居中
     pos_x = (WINDOW_WIDTH - new_size[0]) // 2
@@ -83,21 +88,22 @@ def draw_init():
     while state < 2:
         screen.fill((0, 0, 0))  # 清除屏幕
         screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
-        
+        counttime += 1
         if state == 0:
-            counttime += 1 
             if counttime <= 50:
                 draw_text(screen, "<Tap Any Bottom To Start>", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 200)
-            elif counttime > 100:
-                counttime = 0
 
         elif state == 1:
-            draw_text(screen, "Instructions", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
-            draw_text(screen, "WASD to move Player 1, Arrow keys to move Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-            draw_text(screen, "Space to shoot Player 1, Enter to shoot Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40)
-            draw_text(screen, "B to drop bomb Player 1, L to drop bomb Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 80)
-            draw_text(screen, "Press any key to start the game", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 120)
-
+            screen.blit(intro_img, (pos_x, pos_y))
+            if counttime <= 50:
+                screen.blit(player1_img, (WINDOW_WIDTH / 2-250, WINDOW_HEIGHT / 2 + 20-100))
+                screen.blit(player2_img, (WINDOW_WIDTH / 2+300, WINDOW_HEIGHT / 2 + 20-100))
+            else:
+                screen.blit(player1_img, (WINDOW_WIDTH / 2-250, WINDOW_HEIGHT / 2-100))
+                screen.blit(player2_img, (WINDOW_WIDTH / 2+300, WINDOW_HEIGHT / 2-100))
+            counttime += 1
+        if counttime > 100:
+            counttime = 0
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -114,6 +120,7 @@ def draw_end(who_win):
     initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
     tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
     
+    
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
     
@@ -133,10 +140,6 @@ def draw_end(who_win):
     
     pygame.display.set_caption("GunGame")
 
-    
-
-
-
     #按兩下結束函數
     state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
     counttime = 0
@@ -144,12 +147,6 @@ def draw_end(who_win):
         screen.fill((0, 0, 0))  # 清除屏幕
         screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
         
-        
-
-
-
-
-
         if state == 0:
             if who_win == 1:
                 draw_text(screen, "Player 1 Win", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 100)
@@ -171,11 +168,6 @@ def draw_end(who_win):
                 sys.exit()
             if event.type == pygame.KEYUP:
                 state += 1
-
-        
-    
-    
-
 
 # 建立遊戲場景類別
 class Game():
@@ -238,10 +230,7 @@ class Game():
                 draw_end(2)
                 self.player1.live = 3
                 draw_init()
-             
                 #按下任意鍵回到開始畫面
-
-                
 
             if self.player2.live == 0 and show_end_screen:
                 draw_end(1)
@@ -249,10 +238,6 @@ class Game():
                 draw_init()
             #按下任意鍵回到開始畫面
                 
-
-
-
-
             if self.box_check == 0:# 生成寶箱
                 self.box_time -= 1
                 if self.box_time == 0:
