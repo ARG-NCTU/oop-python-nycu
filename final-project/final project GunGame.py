@@ -401,7 +401,7 @@ class Game():
             elif gun_name == "sniper" :
                 player.speed_x -= 8 * direction
             player.realgun.numofbullet -= 1
-            
+            #123
 
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
