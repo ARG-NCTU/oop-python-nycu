@@ -228,13 +228,15 @@ class Game():
 
             if self.player1.live == 0 and show_end_screen:
                 draw_end(2)
-                self.player1.live = 3
+                self.player1.restart(0)
+                self.player2.restart(1)
                 draw_init()
                 #按下任意鍵回到開始畫面
 
             if self.player2.live == 0 and show_end_screen:
                 draw_end(1)
-                self.player2.live = 3
+                self.player1.restart(0)
+                self.player2.restart(1)
                 draw_init()
             #按下任意鍵回到開始畫面
                 
@@ -570,6 +572,16 @@ class Player(pygame.sprite.Sprite, Physics):
         self.bomb_num = 3
         self.realgun = smallgun()
         self.live -= 1
+
+    def restart(self, num):
+        self.rect.x = RELIVE_X[num]
+        self.rect.y = RELIVE_Y
+        self.on_ground = True
+        self.speed_x = 0
+        self.speed_y = 0
+        self.bomb_num = 3
+        self.realgun = smallgun()
+        self.live = 3
 
     def change_gun(self, gun_name):
         #self.gun = gun
