@@ -722,7 +722,7 @@ class GunImage(pygame.sprite.Sprite):
                     self.rect.x = self.player.rect.x 
                     self.rect.y = self.player.rect.y + 30
 
-                    #123666
+                    #123666456
 
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
