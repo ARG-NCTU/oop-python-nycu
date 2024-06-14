@@ -366,6 +366,8 @@ class Game():
 
             text_alien = self.font.render("Alien", True, (255, 255, 255)) #輸出左上角的字
             text_astrount = self.font.render("Astrount", True, (255, 255, 255)) 
+            text_player1_ammo = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255)) 
+            text_player2_ammo = self.font.render(str(self.player2.realgun.numofbullet), True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
             self.bomb_effects.draw(self.screen)
             self.bullets.draw(self.screen)
@@ -374,6 +376,8 @@ class Game():
             self.bombs.draw(self.screen)
             self.screen.blit(text_alien,(10,10))
             self.screen.blit(text_astrount,(WINDOW_WIDTH - 160,10))
+            self.screen.blit(text_player1_ammo,(10,150))
+            self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,150))
             self.draw_object(self.player1, self.player2)
             pygame.display.flip()
 
@@ -388,9 +392,6 @@ class Game():
             #顯示玩家一的子彈數量
             text_bullet1 = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255))
             self.screen.blit(text_bullet1, (10, 10))
-
-
-
 
     # 發射子彈
     def fire_bullet(self, player, direction, color, gun_name, which_player):
