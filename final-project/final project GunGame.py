@@ -199,6 +199,7 @@ class Game():
         self.bombs = pygame.sprite.Group()
         self.bomb_effects = pygame.sprite.Group()
         self.font = pygame.font.Font(None, FONT)
+        #self.font = pygame.font.SysFont('Arial', 60)
         self.treasure_boxes = pygame.sprite.Group() 
         self.gun_images1 = GunImage(self.player1)
         self.gun_images2 = GunImage(self.player2)
@@ -208,7 +209,7 @@ class Game():
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.player1_draw.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
-
+        
     def run(self):
         running = True
         self.player1_press_jump = 0  # 玩家1是否按跳躍鍵
@@ -351,8 +352,8 @@ class Game():
                     treasure_box.kill()
                     self.box_check = 0
 
-            text_smallgun1_numofbullete = self.font.render("IFINITE", True, (255, 255, 255)) #輸出左上角的字
-            text_smallgun2_numofbullete = self.font.render("IFINITE", True, (255, 255, 255)) 
+            text_smallgun1_numofbullete = self.font.render("∞", True, (255, 255, 255)) #輸出左上角的字
+            text_smallgun2_numofbullete = self.font.render("∞", True, (255, 255, 255)) 
             text_player1_ammo = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255)) 
             text_player2_ammo = self.font.render(str(self.player2.realgun.numofbullet), True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
@@ -361,19 +362,20 @@ class Game():
             self.player1_draw.draw(self.screen)
             self.player2_draw.draw(self.screen)
             self.bombs.draw(self.screen)
-            #self.screen.blit(text_player1_ammo,(10,150))
-            #self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,150))
             self.draw_object(self.player1, self.player2)
-
             if self.player1.realgun.gun_name == "smallgun":
-                self.screen.blit(text_smallgun1_numofbullete,(10,10))
+                self.font = pygame.font.SysFont('Arial', 60)
+                self.screen.blit(text_smallgun1_numofbullete,(10,100))
             else:
-                self.screen.blit(text_player1_ammo,(10,10))
+                self.font = pygame.font.Font(None, FONT)
+                self.screen.blit(text_player1_ammo,(10,100))
 
             if self.player2.realgun.gun_name == "smallgun":
-                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 160,10))
+                self.font = pygame.font.SysFont('Arial', 60)
+                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 160,100))
             else:
-                self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,10))
+                self.font = pygame.font.Font(None, FONT) 
+                self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,100))
         
 
             pygame.display.flip()
@@ -410,22 +412,16 @@ class Game():
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
         self.bombs.add(bomb)
 
-    '''def check_magazine(self,player,direction,color,gun,which_player):
-        magazine = player.gun.numofbullet
-        if self.fire_bullet(self,player,direction,color,gun,which_player):
-            magazine -= 1
-            if magazine <= 0 :
-                player.gun = "smallgun"'''
 
     def draw_object(self, player1, player2):
         for i in range(player1.live):
-            self.screen.blit(self.heart_img, (10 + 45 * i, 50))
+            self.screen.blit(self.heart_img, (10 + 45 * i, 10))
         for i in range(player2.live):
-            self.screen.blit(self.heart_img, (WINDOW_WIDTH - 45 * (i + 1), 50))
+            self.screen.blit(self.heart_img, (WINDOW_WIDTH - 45 * (i + 1), 10))
         for i in range(player1.bomb_num):
-            self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (10 + 45 * i, 100))
+            self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (10 + 45 * i, 50))
         for i in range(player2.bomb_num):
-            self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (WINDOW_WIDTH - 45 * (i + 1), 100))
+            self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (WINDOW_WIDTH - 45 * (i + 1), 50))
 
 class Physics(object):
         def __init__(self, x, y, img):
