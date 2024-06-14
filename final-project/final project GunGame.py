@@ -134,10 +134,8 @@ class Game:
         self.gun_images2 = GunImage(self.player2, 2)
         self.all_sprites.add(self.gun_images1, self.gun_images2)
         
-
-
     def spawn_treasure_box(self):
-        treasure_box = TreasureBox(random.randint(90, 1000),-100, self.box_img)
+        treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.all_sprites.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
 
@@ -369,6 +367,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.double_jump = 1
         self.gunlag = 0
         self.gun = "smallgun"
+        self.live = 3
                 
     def change_gunlag(self, num):
         if num == "smallgun":
@@ -452,7 +451,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.speed_y = 0
         self.bomb_num = 3
         self.gun = "smallgun"
-
+        self.live -= 1
 
     def change_gun(self, gun):
         self.gun = gun
