@@ -178,7 +178,7 @@ def draw_end(who_win):
 
 
 # 建立遊戲場景類別
-class Game:
+class Game():
     def __init__(self):
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         pygame.display.set_caption("GunGame")
@@ -212,7 +212,6 @@ class Game:
         self.gun_images2 = GunImage(self.player2, 2)
         self.player1_draw.add(self.player1, self.gun_images1)
         self.player2_draw.add(self.player2, self.gun_images2)
-
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.player1_draw.add(treasure_box)
@@ -289,6 +288,12 @@ class Game:
             if mkeys[pygame.K_v]:
                 if fire1_press_check == 0:
                     self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
+                    #self.player1.realgun.numofbullet -= 1
+
+                if self.player1.realgun.numofbullet <= 0:
+                    self.player1.realgun = smallgun()
+                    self.player1.gun = "smallgun"
+
                     #self.check_magazine(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1)
                 
                 fire1_press_check = 1
@@ -316,6 +321,7 @@ class Game:
             self.player1_draw.update()
             self.player2_draw.update()
             self.bullets.update()
+
             self.bombs.update()
             
             # 碰撞檢測
@@ -380,6 +386,12 @@ class Game:
             if self.player2.rect.top > WINDOW_HEIGHT:
                 self.player2.relive(1)
             
+            #顯示玩家一的子彈數量
+            text_bullet1 = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255))
+            self.screen.blit(text_bullet1, (10, 10))
+
+
+
 
     # 發射子彈
     def fire_bullet(self, player, direction, color, gun, which_player):
@@ -394,6 +406,8 @@ class Game:
                 player.speed_x -= 4 * direction
             elif gun == "sniper" :
                 player.speed_x -= 8 * direction
+            player.realgun.numofbullet -= 1
+            
 
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
@@ -483,6 +497,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.gunlag = 0
         self.gun = "smallgun"
         self.live = 3
+        self.realgun = smallgun()
                 
     def change_gunlag(self, num):
         if num == "smallgun":
@@ -573,6 +588,13 @@ class Player(pygame.sprite.Sprite, Physics):
 
     def change_gun(self, gun):
         self.gun = gun
+        if gun == "smallgun":
+            self.realgun = smallgun()
+        elif gun == "shotgun":
+            self.realgun = shotgun()
+        elif gun == "sniper":
+            self.realgun = sniper()
+
 
     def now_gun(self):
         return self.gun
@@ -585,6 +607,23 @@ class Gun():
         self.recoil = recoil
         self.numofbullet = numofbullet
         self.lagtime = lagtime
+class smallgun(Gun):
+    def __init__(self):
+        super().__init__(5, 8, 100000, 5)
+        self.gun_name = "smallgun"
+
+
+class shotgun(Gun):
+    def __init__(self):
+        super().__init__(15, 15, 12, 30)
+        self.gun_name = "shotgun"
+
+class sniper(Gun):
+    def __init__(self):
+        super().__init__(15, 30, 8, 60)
+        self.gun_name = "sniper"
+
+
 
 
 class GunImage(pygame.sprite.Sprite):
@@ -718,12 +757,14 @@ class Bullet(pygame.sprite.Sprite):
 
     def leave_check(self):
         return self.leave
+    
+    
 
     def update(self):
         elapsed_time = time.time() - self.creation_time
-        acceleration = 1
+        acceleration = 0.001
         
-        self.gun.numofbullet -= 1
+        #self.gun.numofbullet -= 1
         #if self.gun.numofbullet <= 0: # 子彈數量用完換成小槍
         
         if self.speed == 0:
@@ -734,7 +775,7 @@ class Bullet(pygame.sprite.Sprite):
             self.speed += acceleration*elapsed_time
             
         self.rect.x += self.speed
-        if self.strgun == "sniper":
+        if self.strgun == "shotgun":
             if self.gun.numofbullet <= 0:
                 self.kill()
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
