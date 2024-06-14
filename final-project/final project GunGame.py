@@ -486,7 +486,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.playernumber = playernumber
         self.live = 3
         self.realgun = smallgun()
-                
+                 
     def change_gunlag(self, gun_name):
         if gun_name == "smallgun":
             self.gunlag = 5
@@ -571,7 +571,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.speed_x = 0
         self.speed_y = 0
         self.bomb_num = 3
-        self.realgun = smallgun()
+        self.gun = smallgun()
         self.live -= 1
 
     def restart(self, num):
@@ -581,21 +581,21 @@ class Player(pygame.sprite.Sprite, Physics):
         self.speed_x = 0
         self.speed_y = 0
         self.bomb_num = 3
-        self.realgun = smallgun()
+        self.gun  = smallgun()
         self.live = 3
 
     def change_gun(self, gun_name):
         #self.gun = gun
         if gun_name == "smallgun":
-            self.realgun = smallgun()
+            self.gun  = smallgun()
         elif gun_name == "shotgun":
-            self.realgun = shotgun()
+            self.gun = shotgun()
         elif gun_name == "sniper":
-            self.realgun = sniper()
+            self.gun  = sniper()
 
 
     def now_gun(self):
-        return self.realgun.gun_name
+        return self.gun.gun_name
         
 
 # 建立槍類別
