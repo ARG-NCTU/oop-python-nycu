@@ -722,6 +722,8 @@ class GunImage(pygame.sprite.Sprite):
                     self.rect.x = self.player.rect.x 
                     self.rect.y = self.player.rect.y + 30
 
+                    #123
+
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, color, x, y, direction, which_gun, which_player):
