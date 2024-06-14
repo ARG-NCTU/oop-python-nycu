@@ -277,9 +277,9 @@ class Game():
                 if fire1_press_check == 0:
                     self.fire_bullet(self.player1, self.player1.get_direction(), RED, self.player1.now_gun(), 1) # 玩家1發射子彈
 
-                if self.player1.realgun.numofbullet <= 0: # 子彈數量用完換成小槍
-                    self.player1.realgun = smallgun() 
-                    self.player1.realgun.gun_name = "smallgun"
+                if self.player1.gun.numofbullet <= 0: # 子彈數量用完換成小槍
+                    self.player1.gun = smallgun() 
+                    self.player1.gun.gun_name = "smallgun"
                 fire1_press_check = 1
 
             else :
@@ -288,9 +288,9 @@ class Game():
                 if fire2_press_check == 0:
                     self.fire_bullet(self.player2, self.player2.get_direction(), YELLOW, self.player2.now_gun(), 2)
                 fire2_press_check = 1
-                if self.player2.realgun.numofbullet <= 0:
-                    self.player2.realgun = smallgun()
-                    self.player2.realgun.gun_name = "smallgun"
+                if self.player2.gun.numofbullet <= 0:
+                    self.player2.gun = smallgun()
+                    self.player2.gun.gun_name = "smallgun"
             else :
                 fire2_press_check = 0
             if mkeys[pygame.K_b]:
@@ -304,7 +304,7 @@ class Game():
                     self.drop_bomb(self.player2, self.bomb_img)
                 bomb_press_check2 = 1
             else :
-                bomb_press_check2 = 0
+                bomb_press_check2 = 0 
 
             self.player1_draw.update()
             self.player2_draw.update()
@@ -349,13 +349,13 @@ class Game():
                     treasure_box.kill()
                     self.box_check = 0
                 if treasure_box.rect.top > WINDOW_HEIGHT:
-                    treasure_box.kill()
+                    treasure_box.kill()   
                     self.box_check = 0
 
             text_smallgun1_numofbullete = self.font_i.render("∞", True, (255, 255, 255)) #輸出左上角的字
             text_smallgun2_numofbullete = self.font_i.render("∞", True, (255, 255, 255)) 
-            text_player1_ammo = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255)) 
-            text_player2_ammo = self.font.render(str(self.player2.realgun.numofbullet), True, (255, 255, 255))
+            text_player1_ammo = self.font.render(str(self.player1.gun.numofbullet), True, (255, 255, 255)) 
+            text_player2_ammo = self.font.render(str(self.player2.gun.numofbullet), True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
             self.bomb_effects.draw(self.screen)
             self.bullets.draw(self.screen)
@@ -363,11 +363,11 @@ class Game():
             self.player2_draw.draw(self.screen)
             self.bombs.draw(self.screen)
             self.draw_object(self.player1, self.player2)
-            if self.player1.realgun.gun_name == "smallgun":
+            if self.player1.gun.gun_name == "smallgun":
                 self.screen.blit(text_smallgun1_numofbullete,(10,100))
             else:
                 self.screen.blit(text_player1_ammo,(10,100))
-            if self.player2.realgun.gun_name == "smallgun":
+            if self.player2.gun.gun_name == "smallgun":
                 self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 60,100))
             else:
                 self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 50,100))
@@ -382,12 +382,12 @@ class Game():
                 self.player1.relive(0)
             if self.player2.rect.top > WINDOW_HEIGHT:
                 self.player2.relive(1)
-            
+        
             #顯示玩家一的子彈數量
-            text_bullet1 = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255))
+            text_bullet1 = self.font.render(str(self.player1.gun.numofbullet), True, (255, 255, 255))
             self.screen.blit(text_bullet1, (10, 10))
 
-    # 發射子彈
+    # 發射子彈 
     def fire_bullet(self, player, direction, color, gun_name, which_player):
         if player.get_value("gunlag") <= 0:
             bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun_name, which_player)
@@ -400,7 +400,7 @@ class Game():
                 player.speed_x -= 4 * direction
             elif gun_name == "sniper" :
                 player.speed_x -= 8 * direction
-            player.realgun.numofbullet -= 1
+            player.gun.numofbullet -= 1
             #123
 
     def drop_bomb(self, player, img):
