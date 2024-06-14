@@ -164,16 +164,23 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
+            if self.player1.live == 0:
+                draw_text(self.screen, "Player 2 Win", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+                running = False
+
+            if self.player2.live == 0:
+                draw_text(self.screen, "Player 1 Win", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+                running = False
+
+
+
+
             if self.box_check == 0:# 生成寶箱
                 self.box_time -= 1
                 if self.box_time == 0:
                     self.box_time = 300
                     self.spawn_treasure_box()
                     self.box_check = 1
-
-            if self.player1.live == 0 or self.player2.live == 0:
-                running = False
-                
 
             mkeys = pygame.key.get_pressed()
             if mkeys[pygame.QUIT]:
@@ -293,6 +300,7 @@ class Game:
                 self.player1.relive(0)
             if self.player2.rect.top > WINDOW_HEIGHT:
                 self.player2.relive(1)
+            
 
     # 發射子彈
     def fire_bullet(self, player, direction, color, gun, which_player):
@@ -414,6 +422,9 @@ class Player(pygame.sprite.Sprite, Physics):
             return self.rect.bottom
         if sub == "gunlag":
             return self.gunlag
+        if sub == "live":
+            return self.live
+        
     
     def on_ground(self): # 回傳on_ground值
         return self.on_ground
@@ -633,8 +644,8 @@ class Bullet(pygame.sprite.Sprite):
         acceleration = 0.005
         
         self.gun.numofbullet -= 1
-        if self.gun.numofbullet <= 0:
-            self.numplayer.change_gun("smallgun")
+        #if self.gun.numofbullet <= 0:
+            #player.change_gun("smallgun")
         
         if self.speed == 0:
             return True
