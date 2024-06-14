@@ -259,6 +259,7 @@ class Game:
                     treasure_box.kill()
                     self.box_check = 0
 
+
             text = self.font.render(str(self.player1.now_gun()), True, (255, 255, 255)) #輸出左上角的字（用來測試）
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
             self.bomb_effects.draw(self.screen)
@@ -266,6 +267,7 @@ class Game:
             self.all_sprites.draw(self.screen)
             self.bombs.draw(self.screen)
             self.screen.blit(text,(10,10))
+            self.draw_heart(self.player1, self.player2)
             pygame.display.flip()
 
             self.clock.tick(60)
@@ -300,6 +302,12 @@ class Game:
             magazine -= 1
             if magazine <= 0 :
                 player.gun = "smallgun"
+
+    def draw_heart(self, player1, player2):
+        for i in range(player1.live):
+            pygame.draw.ellipse(self.screen, RED, [10 + 30 * i, 50, 20, 20])
+        for i in range(player2.live):
+            pygame.draw.ellipse(self.screen, RED, [WINDOW_WIDTH - 30 * (i + 1), 50, 20, 20])
 
 class Physics(object):
         def __init__(self, x, y, img):
