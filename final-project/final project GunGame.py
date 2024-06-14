@@ -696,6 +696,7 @@ class Bullet(pygame.sprite.Sprite):
         self.direction = direction
         self.leave = False
         self.out_check = False
+        self.strgun = which_gun
         if which_gun == "smallgun":
             gun = Gun(5, 8, 100000, 5)
         if which_gun == "shotgun":
@@ -720,11 +721,10 @@ class Bullet(pygame.sprite.Sprite):
 
     def update(self):
         elapsed_time = time.time() - self.creation_time
-        acceleration = 0.005
+        acceleration = 1
         
         self.gun.numofbullet -= 1
-        #if self.gun.numofbullet <= 0:
-            #player.change_gun("smallgun")
+        #if self.gun.numofbullet <= 0: # 子彈數量用完換成小槍
         
         if self.speed == 0:
             return True
@@ -734,6 +734,9 @@ class Bullet(pygame.sprite.Sprite):
             self.speed += acceleration*elapsed_time
             
         self.rect.x += self.speed
+        if self.strgun == "sniper":
+            if self.gun.numofbullet <= 0:
+                self.kill()
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
             self.out_check = True
         return False
