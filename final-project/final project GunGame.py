@@ -58,6 +58,7 @@ def draw_init():
     screen = pygame.display.set_mode(WINDOW_SIZE)
     
     initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
+    tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
     
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
@@ -78,19 +79,25 @@ def draw_init():
     
     pygame.display.set_caption("GunGame")
     state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
+    counttime = 0
     while state < 2:
         screen.fill((0, 0, 0))  # 清除屏幕
         screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
         
         if state == 0:
-            draw_text(screen, "GunGame", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
-            draw_text(screen, "Press any key to continue", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+            counttime += 1
+            if counttime <= 50:
+                draw_text(screen, "<Tap Any Bottom To Start>", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 200)
+            elif counttime > 100:
+                counttime = 0
+
         elif state == 1:
             draw_text(screen, "Instructions", 64, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4)
             draw_text(screen, "WASD to move Player 1, Arrow keys to move Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
             draw_text(screen, "Space to shoot Player 1, Enter to shoot Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 40)
             draw_text(screen, "B to drop bomb Player 1, L to drop bomb Player 2", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 80)
             draw_text(screen, "Press any key to start the game", 22, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 120)
+
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -120,23 +127,25 @@ class Game:
         self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
         self.box_img = pygame.image.load('./oop-python-nycu/final-project/box.png')
+        self.heart_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/heart.png'), (40, 40))
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img)
         self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img)
         self.player2.turn_img("left")
-        self.all_sprites = pygame.sprite.Group()
+        self.player1_draw = pygame.sprite.Group()
+        self.player2_draw = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.bombs = pygame.sprite.Group()
         self.bomb_effects = pygame.sprite.Group()
-        self.all_sprites.add(self.player1, self.player2)
         self.font = pygame.font.Font(None, FONT)
         self.treasure_boxes = pygame.sprite.Group() 
         self.gun_images1 = GunImage(self.player1, 1)
         self.gun_images2 = GunImage(self.player2, 2)
-        self.all_sprites.add(self.gun_images1, self.gun_images2)
-        
+        self.player1_draw.add(self.player1, self.gun_images1)
+        self.player2_draw.add(self.player2, self.gun_images2)
+
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
-        self.all_sprites.add(treasure_box)
+        self.player1_draw.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
 
     def run(self):
@@ -214,7 +223,8 @@ class Game:
             else :
                 bomb_press_check2 = 0
 
-            self.all_sprites.update()
+            self.player1_draw.update()
+            self.player2_draw.update()
             self.bullets.update()
             self.bombs.update()
             
@@ -259,15 +269,17 @@ class Game:
                     treasure_box.kill()
                     self.box_check = 0
 
-
-            text = self.font.render(str(self.player1.now_gun()), True, (255, 255, 255)) #輸出左上角的字（用來測試）
+            text_alien = self.font.render("Alien", True, (255, 255, 255)) #輸出左上角的字
+            text_astrount = self.font.render("Astrount", True, (255, 255, 255)) 
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
             self.bomb_effects.draw(self.screen)
             self.bullets.draw(self.screen)
-            self.all_sprites.draw(self.screen)
+            self.player1_draw.draw(self.screen)
+            self.player2_draw.draw(self.screen)
             self.bombs.draw(self.screen)
-            self.screen.blit(text,(10,10))
-            self.draw_heart(self.player1, self.player2)
+            self.screen.blit(text_alien,(10,10))
+            self.screen.blit(text_astrount,(WINDOW_WIDTH - 160,10))
+            self.draw_object(self.player1, self.player2)
             pygame.display.flip()
 
             self.clock.tick(60)
@@ -303,11 +315,15 @@ class Game:
             if magazine <= 0 :
                 player.gun = "smallgun"
 
-    def draw_heart(self, player1, player2):
+    def draw_object(self, player1, player2):
         for i in range(player1.live):
-            pygame.draw.ellipse(self.screen, RED, [10 + 30 * i, 50, 20, 20])
+            self.screen.blit(self.heart_img, (10 + 45 * i, 50))
         for i in range(player2.live):
-            pygame.draw.ellipse(self.screen, RED, [WINDOW_WIDTH - 30 * (i + 1), 50, 20, 20])
+            self.screen.blit(self.heart_img, (WINDOW_WIDTH - 45 * (i + 1), 50))
+        for i in range(player1.bomb_num):
+            self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (10 + 45 * i, 100))
+        for i in range(player2.bomb_num):
+            self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (WINDOW_WIDTH - 45 * (i + 1), 100))
 
 class Physics(object):
         def __init__(self, x, y, img):
@@ -497,8 +513,6 @@ class GunImage(pygame.sprite.Sprite):
         self.sniper2_img_turn = self.sniper2_img
         self.sniper2_img = pygame.transform.flip(self.sniper2_img, True, False)
 
-       
-
         if player_num == 1:
             self.image = self.smallgun1_img
         elif player_num == 2:
@@ -576,9 +590,6 @@ class GunImage(pygame.sprite.Sprite):
                     self.image = self.sniper2_img
                     self.rect.x = self.player.rect.x 
                     self.rect.y = self.player.rect.y + 30
-
-
-
 
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
@@ -690,7 +701,7 @@ class Bomb_effect(pygame.sprite.Sprite):
         self.image = img 
         self.rect = self.image.get_rect()
         self.rect.x = x - 135
-        self.rect.y = y - 190
+        self.rect.y = y - 180
         self.countdown = 25
 
     def Countdown(self):
