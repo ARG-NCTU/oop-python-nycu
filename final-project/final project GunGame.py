@@ -351,8 +351,8 @@ class Game():
                     treasure_box.kill()
                     self.box_check = 0
 
-            text_alien = self.font.render("Alien", True, (255, 255, 255)) #輸出左上角的字
-            text_astrount = self.font.render("Astrount", True, (255, 255, 255)) 
+            text_smallgun1_numofbullete = self.font.render("IFINITE", True, (255, 255, 255)) #輸出左上角的字
+            text_smallgun2_numofbullete = self.font.render("IFINITE", True, (255, 255, 255)) 
             text_player1_ammo = self.font.render(str(self.player1.realgun.numofbullet), True, (255, 255, 255)) 
             text_player2_ammo = self.font.render(str(self.player2.realgun.numofbullet), True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
@@ -361,11 +361,21 @@ class Game():
             self.player1_draw.draw(self.screen)
             self.player2_draw.draw(self.screen)
             self.bombs.draw(self.screen)
-            self.screen.blit(text_alien,(10,10))
-            self.screen.blit(text_astrount,(WINDOW_WIDTH - 160,10))
-            self.screen.blit(text_player1_ammo,(10,150))
-            self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,150))
+            #self.screen.blit(text_player1_ammo,(10,150))
+            #self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,150))
             self.draw_object(self.player1, self.player2)
+
+            if self.player1.realgun.gun_name == "smallgun":
+                self.screen.blit(text_smallgun1_numofbullete,(10,10))
+            else:
+                self.screen.blit(text_player1_ammo,(10,10))
+
+            if self.player2.realgun.gun_name == "smallgun":
+                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 160,10))
+            else:
+                self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,10))
+        
+
             pygame.display.flip()
 
             self.clock.tick(60)
