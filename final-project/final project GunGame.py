@@ -199,7 +199,6 @@ class Game():
         self.bombs = pygame.sprite.Group()
         self.bomb_effects = pygame.sprite.Group()
         self.font = pygame.font.Font(None, FONT)
-        #self.font = pygame.font.SysFont('Arial', 60)
         self.font_i = pygame.font.SysFont('Arial', 60)
         self.treasure_boxes = pygame.sprite.Group() 
         self.gun_images1 = GunImage(self.player1)
@@ -369,9 +368,9 @@ class Game():
             else:
                 self.screen.blit(text_player1_ammo,(10,100))
             if self.player2.realgun.gun_name == "smallgun":
-                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 160,100))
+                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 60,100))
             else:
-                self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 120,100))
+                self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 50,100))
         
 
             pygame.display.flip()
