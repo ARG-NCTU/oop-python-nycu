@@ -605,10 +605,10 @@ class Gun():
         self.numofbullet = numofbullet
         self.lagtime = lagtime
         self.gun_name = None
-        self.img1 = None
-        self.img2 = None
-        self.img1_turn = None
-        self.img2_turn = None
+        self.img1_right = None
+        self.img2_right = None
+        self.img1_left= None
+        self.img2_left = None
         self.correction_xleft = 0   
         self.correction_yleft = 0
         self.correction_xright = 0
@@ -619,10 +619,10 @@ class smallgun(Gun):
     def __init__(self):
         super().__init__(5, 8, 100000, 5)
         self.gun_name = "smallgun"
-        self.img1 = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')
-        self.img2 = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
-        self.img1_turn = pygame.transform.flip(self.img1, True, False)
-        self.img2_turn = pygame.transform.flip(self.img2, True, False)
+        self.img1_right = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')
+        self.img2_right = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
+        self.img1_left = pygame.transform.flip(self.img1_right, True, False)
+        self.img2_left = pygame.transform.flip(self.img2_right, True, False)
         self.correction_xleft = -50
         self.correction_yleft = 40
         self.correction_xright = 20
@@ -633,10 +633,10 @@ class shotgun(Gun):
     def __init__(self):
         super().__init__(15, 15, 12, 30)
         self.gun_name = "shotgun"
-        self.img1 = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
-        self.img2 = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
-        self.img1_turn = pygame.transform.flip(self.img1, True, False)
-        self.img2_turn= pygame.transform.flip(self.img2, True, False)
+        self.img1_right = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
+        self.img2_right = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
+        self.img1_left = pygame.transform.flip(self.img1_right, True, False)
+        self.img2_left= pygame.transform.flip(self.img2_right, True, False)
         self.correction_xleft = -70
         self.correction_yleft = 40
         self.correction_xright = 0
@@ -646,10 +646,10 @@ class sniper(Gun):
     def __init__(self):
         super().__init__(15, 30, 8, 60)
         self.gun_name = "sniper"
-        self.img1 = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
-        self.img2 = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
-        self.img1_turn = pygame.transform.flip(self.img1, True, False)
-        self.img2_turn = pygame.transform.flip(self.img2, True, False)
+        self.img1_right = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
+        self.img2_right = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
+        self.img1_left = pygame.transform.flip(self.img1_right, True, False)
+        self.img2_left = pygame.transform.flip(self.img2_right, True, False)
         self.correction_xleft = -80
         self.correction_yleft = 30
         self.correction_xright = 0
@@ -661,7 +661,7 @@ class GunImage(pygame.sprite.Sprite):
     def __init__(self, player):
         super().__init__()
         self.player = player
-        self.image = player.gun.img1
+        self.image = player.gun.img1_right
         self.rect = self.image.get_rect()
         self.rect.x = player.rect.x + player.gun.correction_xleft
         self.rect.y = player.rect.y + player.gun.correction_yleft
@@ -671,23 +671,23 @@ class GunImage(pygame.sprite.Sprite):
     def update(self):
         if self.player.get_direction() == -1:  # 玩家面向左
             if self.player.playernumber == 1:
-                self.image = self.player.gun.img1_turn
+                self.image = self.player.gun.img1_left
                 self.rect.x = self.player.rect.x + self.player.gun.correction_xleft
                 self.rect.y = self.player.rect.y + self.player.gun.correction_yleft
 
             elif self.player.playernumber == 2:
-                self.image = self.player.gun.img2_turn
+                self.image = self.player.gun.img2_left
                 self.rect.x = self.player.rect.x + self.player.gun.correction_xleft
                 self.rect.y = self.player.rect.y + self.player.gun.correction_yleft
 
         elif self.player.get_direction() == 1: # 玩家面向右
             if self.player.playernumber == 1:
-                self.image = self.player.gun.img1
+                self.image = self.player.gun.img1_right
                 self.rect.x = self.player.rect.x + self.player.gun.correction_xright
                 self.rect.y = self.player.rect.y + self.player.gun.correction_yright
 
             elif self.player.playernumber == 2:
-                self.image = self.player.gun.img2
+                self.image = self.player.gun.img2_right
                 self.rect.x = self.player.rect.x + self.player.gun.correction_xright
                 self.rect.y = self.player.rect.y + self.player.gun.correction_yright
 
