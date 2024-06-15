@@ -257,16 +257,18 @@ class Game():
 
             if self.player1.live == 0 and show_end_screen:
                 draw_end(2)
+                running = False
                 self.player1.restart(0)
                 self.player2.restart(1)
-                draw_init()
+                #draw_init()
                 #按下任意鍵回到開始畫面
 
             if self.player2.live == 0 and show_end_screen:
                 draw_end(1)
+                running = False
                 self.player1.restart(0)
                 self.player2.restart(1)
-                draw_init()
+                #draw_init()
             #按下任意鍵回到開始畫面
                 
             if self.box_check == 0:# 生成寶箱
