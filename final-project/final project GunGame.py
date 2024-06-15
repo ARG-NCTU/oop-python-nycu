@@ -279,7 +279,6 @@ class Game():
 
                 if self.player1.gun.numofbullet <= 0: # 子彈數量用完換成小槍
                     self.player1.gun = smallgun() 
-                    self.player1.gun.gun_name = "smallgun"
                 fire1_press_check = 1
 
             else :
@@ -290,7 +289,6 @@ class Game():
                 fire2_press_check = 1
                 if self.player2.gun.numofbullet <= 0:
                     self.player2.gun = smallgun()
-                    self.player2.gun.gun_name = "smallgun"
             else :
                 fire2_press_check = 0
             if mkeys[pygame.K_b]:
