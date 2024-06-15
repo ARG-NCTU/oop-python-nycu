@@ -694,18 +694,20 @@ class GunImage(pygame.sprite.Sprite):
     def update(self):
         direction = self.player.get_direction()
         playernumber = self.player.playernumber
+        
+        if direction in [-1, 1]:
+            # 根据方向决定使用左图还是右图
+            direction_str = 'left' if direction == -1 else 'right'
+            correction_x = getattr(self.player.gun, f'correction_x{direction_str}')
+            correction_y = getattr(self.player.gun, f'correction_y{direction_str}')
             
-        if direction == -1:  # 玩家面向左
             if playernumber in [1, 2]:
-                self.image = getattr(self.player.gun, f'img{playernumber}_left')
-                self.rect.x = self.player.rect.x + self.player.gun.correction_xleft
-                self.rect.y = self.player.rect.y + self.player.gun.correction_yleft
+                # 动态获取属性名
+                image_attribute = f'img{playernumber}_{direction_str}'
+                self.image = getattr(self.player.gun, image_attribute)
+                self.rect.x = self.player.rect.x + correction_x
+                self.rect.y = self.player.rect.y + correction_y
 
-        elif direction == 1:  # 玩家面向右
-            if playernumber in [1, 2]:
-                self.image = getattr(self.player.gun, f'img{playernumber}_right')
-                self.rect.x = self.player.rect.x + self.player.gun.correction_xright
-                self.rect.y = self.player.rect.y + self.player.gun.correction_yright
 
 
 # 建立子彈類別
