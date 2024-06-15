@@ -61,9 +61,14 @@ def draw_init():
     intro_img = pygame.image.load('./oop-python-nycu/final-project/intro.png')  
     player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
     player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
-    player1_img = pygame.transform.scale(player1_img, (160, 220))
-    player2_img = pygame.transform.scale(player2_img, (160, 220))
-    
+    player1_img = pygame.transform.scale(player1_img, (120, 165))
+    player2_img = pygame.transform.scale(player2_img, (120, 165))
+    Player1 = Player(0, 0, player1_img, 1)
+    Player2 = Player(WINDOW_WIDTH, 0, player2_img, 2)
+    player1_img = pygame.transform.scale(player1_img, (192, 264))
+    player2_img = pygame.transform.scale(player2_img, (192, 264))
+    all_players = pygame.sprite.Group()
+    all_players.add(Player1, Player2)
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
     
@@ -85,22 +90,45 @@ def draw_init():
     pygame.display.set_caption("GunGame")
     state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
     counttime = 0
+    dir1 = "right"
+    dir2 = "left"
     while state < 2:
         screen.fill((0, 0, 0))  # 清除屏幕
         screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
         counttime += 1
+        speed_x = 10
+        
         if state == 0:
             if counttime <= 50:
                 draw_text(screen, "<Tap Any Bottom To Start>", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 200)
+            Player1.gravity()
+            Player2.gravity()
+            if Player1.rect.right > WINDOW_WIDTH:
+                dir1 = "left"
+            if Player1.rect.left < 0:
+                dir1 = "right"
+            if Player2.rect.right > WINDOW_WIDTH:
+                dir2 = "left"
+            if Player2.rect.left < 0:
+                dir2 = "right"
+            if Player1.rect.bottom > WINDOW_HEIGHT:
+                Player1.speed_y = random.randint(-27, -10)
+            if Player2.rect.bottom > WINDOW_HEIGHT:
+                Player2.speed_y = random.randint(-27, -10)
+            Player1.move_x(dir1)
+            Player2.move_x(dir2)
+            all_players.draw(screen)
 
         elif state == 1:
             screen.blit(intro_img, (pos_x, pos_y))
+            draw_text(screen, "move              fire     bomb", 50, WINDOW_WIDTH / 2-250, WINDOW_HEIGHT / 2 + 250)
+            draw_text(screen, "move              fire     bomb", 50, WINDOW_WIDTH / 2+345, WINDOW_HEIGHT / 2 + 250)
             if counttime <= 50:
-                screen.blit(player1_img, (WINDOW_WIDTH / 2-250, WINDOW_HEIGHT / 2 + 20-100))
-                screen.blit(player2_img, (WINDOW_WIDTH / 2+300, WINDOW_HEIGHT / 2 + 20-100))
+                screen.blit(player1_img, (WINDOW_WIDTH / 2-300, WINDOW_HEIGHT / 2 + 20-220))
+                screen.blit(player2_img, (WINDOW_WIDTH / 2+300, WINDOW_HEIGHT / 2 + 20-220))
             else:
-                screen.blit(player1_img, (WINDOW_WIDTH / 2-250, WINDOW_HEIGHT / 2-100))
-                screen.blit(player2_img, (WINDOW_WIDTH / 2+300, WINDOW_HEIGHT / 2-100))
+                screen.blit(player1_img, (WINDOW_WIDTH / 2-300, WINDOW_HEIGHT / 2-220))
+                screen.blit(player2_img, (WINDOW_WIDTH / 2+300, WINDOW_HEIGHT / 2-220))
             counttime += 1
         if counttime > 100:
             counttime = 0
@@ -408,9 +436,9 @@ class Game():
 
     def draw_object(self, player1, player2):
         for i in range(player1.live):
-            self.screen.blit(self.heart_img, (10 + 45 * i, 10))
+            self.screen.blit(self.heart_img, (7 + 45 * i, 10))
         for i in range(player2.live):
-            self.screen.blit(self.heart_img, (WINDOW_WIDTH - 45 * (i + 1), 10))
+            self.screen.blit(self.heart_img, (WINDOW_WIDTH - 45 * (i + 1)-3, 10))
         for i in range(player1.bomb_num):
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (10 + 45 * i, 50))
         for i in range(player2.bomb_num):
@@ -425,6 +453,12 @@ class Physics(object):
             self.speed_x = 0
             self.speed_y = 0
             self.on_ground = False
+
+        def gravity(self):
+            self.speed_y += GRAVITY
+            self.rect.x += self.speed_x
+            self.rect.y += self.speed_y
+
         
         def update(self):
             # 應用重力
@@ -718,8 +752,6 @@ class Bullet(pygame.sprite.Sprite):
 
     def leave_check(self):
         return self.leave
-    
-    
 
     def update(self):
         elapsed_time = time.time() - self.creation_time
@@ -729,8 +761,6 @@ class Bullet(pygame.sprite.Sprite):
         if self.strgun == "shotgun":
             if self.count <= 0:
                 self.kill()
-
-
         if self.speed == 0:
             return True
         elif self.speed > 0:
@@ -746,8 +776,6 @@ class Bullet(pygame.sprite.Sprite):
     def out(self):
         return self.out_check
     
-    
-
 # 建立炸彈類別
 class Bomb(pygame.sprite.Sprite, Physics):
     def __init__(self, x, y, img, direction):
