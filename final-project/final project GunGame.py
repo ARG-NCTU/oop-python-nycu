@@ -623,7 +623,7 @@ class smallgun(Gun):
         self.img2_right = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
         self.img1_left = pygame.transform.flip(self.img1_right, True, False)
         self.img2_left = pygame.transform.flip(self.img2_right, True, False)
-        self.correction_xleft = -50
+        self.correction_xleft = -50    # 設定槍的位置
         self.correction_yleft = 40
         self.correction_xright = 20
         self.correction_yright = 40
@@ -637,7 +637,7 @@ class shotgun(Gun):
         self.img2_right = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
         self.img1_left = pygame.transform.flip(self.img1_right, True, False)
         self.img2_left= pygame.transform.flip(self.img2_right, True, False)
-        self.correction_xleft = -70
+        self.correction_xleft = -70       # 設定槍的位置    
         self.correction_yleft = 40
         self.correction_xright = 0
         self.correction_yright = 40
@@ -650,7 +650,7 @@ class sniper(Gun):
         self.img2_right = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
         self.img1_left = pygame.transform.flip(self.img1_right, True, False)
         self.img2_left = pygame.transform.flip(self.img2_right, True, False)
-        self.correction_xleft = -80
+        self.correction_xleft = -80         # 設定槍的位置
         self.correction_yleft = 30
         self.correction_xright = 0
         self.correction_yright = 30
@@ -707,6 +707,8 @@ class Bullet(pygame.sprite.Sprite):
         self.gun = gun
         self.creation_time = time.time()
         self.numplayer = which_player
+        self.count = 10
+
     def which_player(self):
         return self.numplayer
 
@@ -725,6 +727,12 @@ class Bullet(pygame.sprite.Sprite):
         elapsed_time = time.time() - self.creation_time
         acceleration = 0.001
         
+        self.count -= 1
+        if self.strgun == "shotgun":
+            if self.count <= 0:
+                self.kill()
+
+
         if self.speed == 0:
             return True
         elif self.speed > 0:
@@ -739,6 +747,8 @@ class Bullet(pygame.sprite.Sprite):
 
     def out(self):
         return self.out_check
+    
+    
 
 # 建立炸彈類別
 class Bomb(pygame.sprite.Sprite, Physics):
