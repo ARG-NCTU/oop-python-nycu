@@ -668,7 +668,7 @@ class GunImage(pygame.sprite.Sprite):
 
         
         
-    def update(self):
+    '''def update(self):
         if self.player.get_direction() == -1:  # 玩家面向左
             if self.player.playernumber == 1:
                 self.image = self.player.gun.img1_left
@@ -688,6 +688,22 @@ class GunImage(pygame.sprite.Sprite):
 
             elif self.player.playernumber == 2:
                 self.image = self.player.gun.img2_right
+                self.rect.x = self.player.rect.x + self.player.gun.correction_xright
+                self.rect.y = self.player.rect.y + self.player.gun.correction_yright'''
+    
+    def update(self):
+        direction = self.player.get_direction()
+        playernumber = self.player.playernumber
+            
+        if direction == -1:  # 玩家面向左
+            if playernumber in [1, 2]:
+                self.image = getattr(self.player.gun, f'img{playernumber}_left')
+                self.rect.x = self.player.rect.x + self.player.gun.correction_xleft
+                self.rect.y = self.player.rect.y + self.player.gun.correction_yleft
+
+        elif direction == 1:  # 玩家面向右
+            if playernumber in [1, 2]:
+                self.image = getattr(self.player.gun, f'img{playernumber}_right')
                 self.rect.x = self.player.rect.x + self.player.gun.correction_xright
                 self.rect.y = self.player.rect.y + self.player.gun.correction_yright
 
