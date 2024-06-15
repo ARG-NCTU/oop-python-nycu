@@ -666,43 +666,18 @@ class GunImage(pygame.sprite.Sprite):
         self.rect.x = player.rect.x + player.gun.correction_xleft
         self.rect.y = player.rect.y + player.gun.correction_yleft
 
-        
-        
-    '''def update(self):
-        if self.player.get_direction() == -1:  # 玩家面向左
-            if self.player.playernumber == 1:
-                self.image = self.player.gun.img1_left
-                self.rect.x = self.player.rect.x + self.player.gun.correction_xleft
-                self.rect.y = self.player.rect.y + self.player.gun.correction_yleft
-
-            elif self.player.playernumber == 2:
-                self.image = self.player.gun.img2_left
-                self.rect.x = self.player.rect.x + self.player.gun.correction_xleft
-                self.rect.y = self.player.rect.y + self.player.gun.correction_yleft
-
-        elif self.player.get_direction() == 1: # 玩家面向右
-            if self.player.playernumber == 1:
-                self.image = self.player.gun.img1_right
-                self.rect.x = self.player.rect.x + self.player.gun.correction_xright
-                self.rect.y = self.player.rect.y + self.player.gun.correction_yright
-
-            elif self.player.playernumber == 2:
-                self.image = self.player.gun.img2_right
-                self.rect.x = self.player.rect.x + self.player.gun.correction_xright
-                self.rect.y = self.player.rect.y + self.player.gun.correction_yright'''
-    
     def update(self):
         direction = self.player.get_direction()
         playernumber = self.player.playernumber
         
         if direction in [-1, 1]:
-            # 根据方向决定使用左图还是右图
+            # 根據玩家面向的方向，設定槍的位置
             direction_str = 'left' if direction == -1 else 'right'
             correction_x = getattr(self.player.gun, f'correction_x{direction_str}')
             correction_y = getattr(self.player.gun, f'correction_y{direction_str}')
             
             if playernumber in [1, 2]:
-                # 动态获取属性名
+                # 根據玩家的編號，設定槍的圖片
                 image_attribute = f'img{playernumber}_{direction_str}'
                 self.image = getattr(self.player.gun, image_attribute)
                 self.rect.x = self.player.rect.x + correction_x
