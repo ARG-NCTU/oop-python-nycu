@@ -385,11 +385,13 @@ class Game():
                 if pygame.sprite.collide_rect(self.player1, treasure_box):
                     gun_name = treasure_box.open_box()
                     self.player1.change_gun(gun_name)
+                    self.player1.change_gunlag_to_zero()
                     treasure_box.kill()
                     self.box_check = 0
                 if pygame.sprite.collide_rect(self.player2, treasure_box):
                     gun_name = treasure_box.open_box()
                     self.player2.change_gun(gun_name)
+                    self.player2.change_gunlag_to_zero()
                     treasure_box.kill()
                     self.box_check = 0
                 if treasure_box.rect.top > WINDOW_HEIGHT:
@@ -421,7 +423,11 @@ class Game():
                 self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 45,80))
             else:
                 self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 45,95))
-        
+            self.lagtime_back1.update()
+            self.lagtime_back2.update()
+            self.lagtime_images1.update()
+            self.lagtime_images2.update()
+
 
             pygame.display.flip()
 
@@ -540,6 +546,9 @@ class Player(pygame.sprite.Sprite, Physics):
                  
     def change_gunlag(self):
         self.gunlag = self.gun.lagtime
+
+    def change_gunlag_to_zero(self):
+        self.gunlag = 0
 
     def get_value(self, sub): # 拿來取要的值
         if sub == "x":
@@ -739,12 +748,17 @@ class Lagtime_Image(pygame.sprite.Sprite):
         self.rect.y = player.rect.y -35
 
     def update(self):
+        self.rect.x = self.player.rect.x
+        self.rect.y = self.player.rect.y -35
         if self.player.gunlag >= 0 and (self.player.gun.gun_name == "shotgun" or self.player.gun.gun_name == "sniper"):
             self.image = pygame.Surface([80*(self.player.gunlag/self.player.gun.lagtime), 12])
             self.image.fill((0,255,254))
             self.rect = self.image.get_rect()
             self.rect.x = self.player.rect.x
             self.rect.y = self.player.rect.y -35
+        if self.player.gun.gun_name == "smallgun":
+            self.rect.x = self.player.rect.x
+            self.rect.y = self.player.rect.y + 5000
 
 class Lagtime_back_Image(pygame.sprite.Sprite):
     def __init__(self, player):
@@ -756,7 +770,10 @@ class Lagtime_back_Image(pygame.sprite.Sprite):
         self.rect.x = player.rect.x + player.gun.correction_xleft
         self.rect.y = player.rect.y -35
 
+
     def update(self):
+        self.rect.x = self.player.rect.x
+        self.rect.y = self.player.rect.y -35
         if self.player.gunlag >= 0 and (self.player.gun.gun_name == "shotgun" or self.player.gun.gun_name == "sniper"):
             self.image = pygame.Surface([80, 12])
             self.image.fill((60,60,60))
@@ -766,6 +783,10 @@ class Lagtime_back_Image(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
         self.rect.x = self.player.rect.x
         self.rect.y = self.player.rect.y -35
+
+        if self.player.gun.gun_name == "smallgun":
+            self.rect.x = self.player.rect.x
+            self.rect.y = self.player.rect.y +50000
 
 # 建立子彈類別
 class Bullet(pygame.sprite.Sprite):
