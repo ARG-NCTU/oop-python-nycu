@@ -212,6 +212,7 @@ def combo_showing():
     combo_show = font.render(f"COMBO: {combo}", True, (255, 255, 255))
     wn.blit(combo_show, (10, 10))
 
+# Check if the game is over
 def check_game_over():
     if pointer >= len(times_drop) and all(not note.show for note in showing_array):
         return True
