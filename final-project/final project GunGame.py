@@ -275,6 +275,11 @@ class Game():
                     running = False
 
             if self.player1.live == 0 and show_end_screen:
+                assert self.player1.remain_life + self.player1.death_count == 5
+                assert self.player2.remain_life + self.player2.death_count == 5
+                assert self.player1.hit_count <= self.player2.shoot_count
+                assert self.player2.hit_count <= self.player1.shoot_count
+
                 self.export_player_data(self.player1, self.player2)
                 draw_end(2)
                 running = False
@@ -286,6 +291,10 @@ class Game():
                 #按下任意鍵回到開始畫面
 
             if self.player2.live == 0 and show_end_screen:
+                assert self.player1.remain_life + self.player1.death_count == 5
+                assert self.player2.remain_life + self.player2.death_count == 5
+                assert self.player1.hit_count <= self.player2.shoot_count
+                assert self.player2.hit_count <= self.player1.shoot_count
                 self.export_player_data(self.player1, self.player2)
                 draw_end(1)
                 running = False

@@ -2,14 +2,14 @@ import pandas as pd
 import json
 import matplotlib.pyplot as plt
 
-# 读取JSON文件并将其转换为字典列表
+# 讀取玩家數據
 with open('./oop-python-nycu/final-project/player_data.json', 'r') as f:
     data = json.load(f)
 
-# 将数据转换为DataFrame
+# 將數據轉換為 DataFrame
 df = pd.DataFrame(data)
 
-# 计算每个玩家的跳跃次数、射击次数和炸弹次数的平均值
+# 計算每個玩家的跳躍次數、射擊次數和炸彈次數的平均值
 player1_jump_mean = df['player1_jump_count'].mean()
 player1_shoot_mean = df['player1_shoot_count'].mean()
 player1_bomb_mean = df['player1_bomb_count'].mean()
@@ -18,7 +18,7 @@ player2_jump_mean = df['player2_jump_count'].mean()
 player2_shoot_mean = df['player2_shoot_count'].mean()
 player2_bomb_mean = df['player2_bomb_count'].mean()
 
-# 计算每个玩家的跳跃次数、射击次数和炸弹次数的标准差
+# 計算每個玩家的跳躍次數、射擊次數和炸彈次數的標準差
 player1_jump_std = df['player1_jump_count'].std()
 player1_shoot_std = df['player1_shoot_count'].std()
 player1_bomb_std = df['player1_bomb_count'].std()
@@ -27,7 +27,7 @@ player2_jump_std = df['player2_jump_count'].std()
 player2_shoot_std = df['player2_shoot_count'].std()
 player2_bomb_std = df['player2_bomb_count'].std()
 
-# 绘制折线图：每个玩家的跳跃次数、射击次数和炸弹次数
+# 繪製折線圖：每個玩家的動作次數對比
 plt.figure(figsize=(12, 8))
 
 # Player 1
@@ -64,7 +64,7 @@ plt.legend()
 plt.xticks(df.index)
 plt.show()
 
-# 输出每个玩家的平均值和标准差
+# 輸出玩家數據統計結果
 print("Player 1 Statistics:")
 print("  - Jump Mean:", player1_jump_mean)
 print("  - Shoot Mean:", player1_shoot_mean)
