@@ -1,31 +1,38 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import json
+import matplotlib.pyplot as plt
 
-# 讀取 JSON 檔案到 Python 字典
+# 讀取JSON文件的每一行，將其轉換為字典列表
+data = []
 with open('./oop-python-nycu/final-project/player_data.json', 'r') as f:
-    data = json.load(f)
+    for line in f:
+        data.append(json.loads(line))
 
-# 將字典轉換成 Pandas DataFrame
-df = pd.DataFrame.from_dict(data, orient='index')
+# 將數據轉換為DataFrame
+df = pd.DataFrame(data)
 
-# 計算統計量
-means = df.mean()
-std_devs = df.std()
-std_errs = df.sem()
+# 顯示數據框架的前幾行
+print(df.head())
 
-# 視覺化呈現
-
-# 製作平均值的柱狀圖
-means.plot(kind='bar', yerr=std_errs, capsize=5)
-plt.title('Average Statistics')
-plt.ylabel('Mean Value')
-plt.xticks(rotation=0)
+# 繪製圖表
+# 例如：繪製每個玩家的跳躍次數對比
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['player1_jump_count'], label='Player 1 Jump Count')
+plt.plot(df.index, df['player2_jump_count'], label='Player 2 Jump Count')
+plt.xlabel('Game Index')
+plt.ylabel('Jump Count')
+plt.title('Player Jump Counts Over Games')
+plt.legend()
 plt.show()
 
-# 製作標準差的柱狀圖
-std_devs.plot(kind='bar')
-plt.title('Standard Deviation')
-plt.ylabel('Standard Deviation Value')
-plt.xticks(rotation=0)
+# 繪製每個玩家的射擊次數對比
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['player1_shoot_count'], label='Player 1 Shoot Count')
+plt.plot(df.index, df['player2_shoot_count'], label='Player 2 Shoot Count')
+plt.xlabel('Game Index')
+plt.ylabel('Shoot Count')
+plt.title('Player Shoot Counts Over Games')
+plt.legend()
 plt.show()
+
+# 你可以根據需要繪製更多的圖表，比如炸彈使用次數、死亡次數等

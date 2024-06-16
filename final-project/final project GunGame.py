@@ -5,6 +5,7 @@ import math
 import time
 import random
 import json
+import os
 # 初始化 Pygame
 pygame.init()
 
@@ -490,7 +491,7 @@ class Game():
 
 
     def export_player_data(self, player1, player2):
-        # elapsed_time = time.time() - player.start_time
+        # 创建新的数据条目
         player_data = {
             'player1_jump_count': player1.jump_count,
             'player1_shoot_count': player1.shoot_count,
@@ -507,11 +508,27 @@ class Game():
             'player2_pickup_count': player2.pickup_count,
             'player2_remain_life': player2.remain_life,
         }
-            
-        with open('./oop-python-nycu/final-project/player_data.json', 'a') as f:
-            json.dump(player_data, f, indent=4)
-            f.write('\n')
 
+        # 定义文件路径
+        file_path = './oop-python-nycu/final-project/player_data.json'
+
+        # 检查文件是否存在
+        if os.path.exists(file_path):
+            # 读取现有数据
+            with open(file_path, 'r') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    data = []
+        else:
+            data = []
+
+        # 將新的数据条目添加到数据集
+        data.append(player_data)
+
+        # 将整个数据集写回文件
+        with open(file_path, 'w') as f:
+            json.dump(data, f, indent=4)
 
 
 
