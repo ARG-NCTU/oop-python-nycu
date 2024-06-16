@@ -61,6 +61,7 @@ def draw_init():
     intro_img = pygame.image.load('./oop-python-nycu/final-project/intro.png')  
     player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
     player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
+    #tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
     player1_img = pygame.transform.scale(player1_img, (120, 165))
     player2_img = pygame.transform.scale(player2_img, (120, 165))
     Player1 = Player(0, 0, player1_img, 1)
@@ -143,13 +144,14 @@ def draw_init():
 
 
 def draw_end(who_win):
+    pygame.init()  # 初始化 Pygame
     screen = pygame.display.set_mode(WINDOW_SIZE)
     
+    # 載入圖片
     initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
-    tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
-    player1_img = pygame.image.load('./oop-python-nycu/final-project/1_player.png') # 載入玩家圖片
-    player2_img = pygame.image.load('./oop-python-nycu/final-project/2_player.png') # 載入玩家圖片
-    player_win = pygame.image.load('./oop-python-nycu/final-project/player_win.png') # 載入玩家勝利圖片
+    player1_img = pygame.image.load('./oop-python-nycu/final-project/1_player.png')  # 載入玩家1圖片
+    player2_img = pygame.image.load('./oop-python-nycu/final-project/2_player.png')  # 載入玩家2圖片
+    player_win = pygame.image.load('./oop-python-nycu/final-project/player_win.png')  # 載入玩家勝利圖片
 
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
@@ -170,39 +172,38 @@ def draw_end(who_win):
     
     pygame.display.set_caption("GunGame")
 
-    #按兩下結束函數
+    # 按兩下結束函數
     state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
     counttime = 0
+    start_ticks = pygame.time.get_ticks()  # 開始計時
+
     while state < 1:
         screen.fill((0, 0, 0))  # 清除屏幕
         screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
         
         if state == 0:
-
-
-            screen.blit(player_win,(200,WINDOW_HEIGHT/2))
+            screen.blit(player_win, (200, WINDOW_HEIGHT / 2))
             mid = 720
             if who_win == 1:
-                screen.blit(player1_img,(mid + 10,WINDOW_HEIGHT/2 + 15))
-                
+                screen.blit(player1_img, (mid + 10, WINDOW_HEIGHT / 2 + 15))
             elif who_win == 2:
-                screen.blit(player2_img,(mid,WINDOW_HEIGHT/2 + 15))
-
-        elif state == 1:
-            
-            counttime += 1 
-            if counttime <= 50:
-                draw_text(screen, "<Tap Any Bottom To Start>", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 200)
-            elif counttime > 100:
-                counttime = 0
+                screen.blit(player2_img, (mid, WINDOW_HEIGHT / 2 + 15))
+        
         pygame.display.flip()
 
+        # 檢查事件
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYUP:
-                state += 1
+
+        # 檢查時間是否已經超過3秒
+        if pygame.time.get_ticks() - start_ticks > 3000:  # 3000 毫秒 = 3 秒
+            state = 1  # 結束循環
+
+    # 等待3秒後關閉遊戲
+    pygame.quit()
+    sys.exit()
 
 # 建立遊戲場景類別
 class Game():
@@ -266,16 +267,16 @@ class Game():
             if self.player1.live == 0 and show_end_screen:
                 draw_end(2)
                 running = False
-                self.player1.restart(0)
-                self.player2.restart(1)
+                #self.player1.restart(0)
+                #self.player2.restart(1)
                 #draw_init()
                 #按下任意鍵回到開始畫面
 
             if self.player2.live == 0 and show_end_screen:
                 draw_end(1)
                 running = False
-                self.player1.restart(0)
-                self.player2.restart(1)
+                #self.player1.restart(0)
+                #self.player2.restart(1)
                 #draw_init()
             #按下任意鍵回到開始畫面
                 
