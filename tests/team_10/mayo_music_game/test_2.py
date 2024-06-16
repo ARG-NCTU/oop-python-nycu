@@ -309,7 +309,7 @@ if name in scores_df["name"].values:
     new_plays = current_plays + 1
     scores_df.loc[scores_df["name"] == name, "plays"] = new_plays
 
-    # 计算新的平均成绩并更新
+    # calculate the new average
     new_average = (current_average * current_plays + max_combo) / new_plays
     scores_df.loc[scores_df["name"] == name, "average"] = new_average
 
