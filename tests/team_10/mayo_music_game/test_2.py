@@ -161,6 +161,7 @@ def post_time_handle(loop_start_time):
     if loop_time < 0.001:
         time.sleep(0.001 - loop_time)
 
+# Note functions
 def note_remove(time_pass):
     for one_note in showing_array:
         if one_note.check_remove(time_pass):
