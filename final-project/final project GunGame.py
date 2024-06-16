@@ -4,6 +4,7 @@ import sys
 import math
 import time
 import random
+import json
 # 初始化 Pygame
 pygame.init()
 
@@ -200,7 +201,7 @@ def draw_end(who_win):
                 sys.exit()
 
         # 檢查時間是否已經超過3秒
-        if pygame.time.get_ticks() - start_ticks > 100000:  # 3000 毫秒 = 3 秒
+        if pygame.time.get_ticks() - start_ticks > 1000:  # 3000 毫秒 = 3 秒
             state = 1  # 結束循環
 
     # 等待3秒後關閉遊戲
@@ -232,6 +233,7 @@ class Game():
         self.heart_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/heart.png'), (40, 40))
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
         self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img, 2)
+        self.players = [self.player1, self.player2]
         self.player2.turn_img("left")
         self.player1_draw = pygame.sprite.Group()
         self.player2_draw = pygame.sprite.Group()
@@ -272,16 +274,24 @@ class Game():
                     running = False
 
             if self.player1.live == 0 and show_end_screen:
+                for player in self.players:
+                    self.export_player_data(player)
                 draw_end(2)
                 running = False
+                #self.export_player_data(self.player1)
+                #self.export_player_data(self.player2)
                 #self.player1.restart(0)
                 #self.player2.restart(1)
                 #draw_init()
                 #按下任意鍵回到開始畫面
 
             if self.player2.live == 0 and show_end_screen:
+                for player in self.players:
+                    self.export_player_data(player)
                 draw_end(1)
                 running = False
+                #self.export_player_data(self.player1)
+                #self.export_player_data(self.player2)
                 #self.player1.restart(0)
                 #ㄊself.player2.restart(1)
                 #draw_init()
@@ -360,9 +370,11 @@ class Game():
                 if bullet.leave_check():
                     if bullet.rect.colliderect(self.player1.rect):
                         self.player1.speed_x += 2 * bullet.speed
+                        self.player2.hit_count += 1
                         bullet.kill()
                     if bullet.rect.colliderect(self.player2.rect):
                         self.player2.speed_x += 2 * bullet.speed
+                        self.player1.hit_count += 1
                         bullet.kill()
                 if ((not bullet.rect.colliderect(self.player1.rect)) and bullet.which_player() == 1) or ((not bullet.rect.colliderect(self.player2.rect)) and bullet.which_player() == 2):
                     bullet.turn_check()
@@ -384,12 +396,14 @@ class Game():
             for treasure_box in self.treasure_boxes:
                 if pygame.sprite.collide_rect(self.player1, treasure_box):
                     gun_name = treasure_box.open_box()
+                    self.player1.pickup_count += 1
                     self.player1.change_gun(gun_name)
                     self.player1.change_gunlag_to_zero()
                     treasure_box.kill()
                     self.box_check = 0
                 if pygame.sprite.collide_rect(self.player2, treasure_box):
                     gun_name = treasure_box.open_box()
+                    self.player2.pickup_count += 1
                     self.player2.change_gun(gun_name)
                     self.player2.change_gunlag_to_zero()
                     treasure_box.kill()
@@ -436,9 +450,13 @@ class Game():
             #玩家重生
             if self.player1.rect.top > WINDOW_HEIGHT:
                 self.player1.relive(0)
+                self.player1.death_count += 1
+                self.player1.remain_life -= 1
             if self.player2.rect.top > WINDOW_HEIGHT:
                 self.player2.relive(1)
-        
+                self.player2.death_count += 1
+                self.player2.remain_life -= 1
+
             #顯示玩家一的子彈數量
             text_bullet1 = self.font.render(str(self.player1.gun.numofbullet), True, (255, 255, 255))
             self.screen.blit(text_bullet1, (10, 10))
@@ -452,11 +470,13 @@ class Game():
             gun_name = player.now_gun()
             player.speed_x -= player.gun.recoil * direction
             player.gun.numofbullet -= 1
+            player.shoot_count += 1
           
 
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
         self.bombs.add(bomb)
+        player.bomb_count += 1
 
 
     def draw_object(self, player1, player2):
@@ -468,6 +488,30 @@ class Game():
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (10 + 45 * i, 50))
         for i in range(player2.bomb_num):
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (WINDOW_WIDTH - 45 * (i + 1), 50))
+
+
+
+    def export_player_data(self, player):
+        # elapsed_time = time.time() - player.start_time
+        player_data = {
+            'player_number': player.playernumber,
+            'jump_count': player.jump_count,
+            'shoot_count': player.shoot_count,
+            'bomb_count': player.bomb_count,
+            'death_count': player.death_count,
+            'hit_count': player.hit_count,
+            'pickup_count': player.pickup_count,
+            'remain_life': player.remain_life,
+        }
+            
+        with open('./oop-python-nycu/final-project/player_data.json', 'a') as f:
+            json.dump(player_data, f, indent=4)
+            f.write('\n')
+
+
+
+
+
 
 class Physics(object):
         def __init__(self, x, y, img):
@@ -543,6 +587,15 @@ class Player(pygame.sprite.Sprite, Physics):
         self.playernumber = playernumber
         self.live = 5
         self.gun = smallgun()
+        self.jump_count = 0
+        self.double_jump_count = 0
+        self.shoot_count = 0
+        self.bomb_count = 0
+        self.walk_distance = 0
+        self.death_count = 0
+        self.pickup_count = 0
+        self.hit_count = 0
+        self.remain_life = 5
                  
     def change_gunlag(self):
         self.gunlag = self.gun.lagtime
@@ -599,9 +652,11 @@ class Player(pygame.sprite.Sprite, Physics):
         if self.on_ground:  # 只有在地面上才能跳
             self.speed_y = -JUMP_HEIGHT
             self.double_jump = 1
+            self.jump_count += 1
             self.on_ground = False
         elif self.double_jump == 1 and check == 0: # 二段跳
             self.speed_y = -10
+            self.double_jump_count += 1
             self.double_jump = 0
 
     def move_down(self):
