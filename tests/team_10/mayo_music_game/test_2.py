@@ -237,7 +237,7 @@ def pygame_events():
         if event.type != pygame.MOUSEBUTTONDOWN:
             mouse = ""
 
-# Global Variable
+# Global Variables
 running = True
 mouse = ""
 pointer = 0
