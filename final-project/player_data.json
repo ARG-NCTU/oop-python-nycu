@@ -1,0 +1,160 @@
+{
+    "player_number": 1,
+    "jump_count": 35,
+    "shoot_count": 96,
+    "bomb_count": 10,
+    "death_count": 5,
+    "hit_count": 30,
+    "pickup_count": 5,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 61,
+    "shoot_count": 31,
+    "bomb_count": 6,
+    "death_count": 1,
+    "hit_count": 10,
+    "pickup_count": 11,
+    "remain_life": 4
+}
+{
+    "player_number": 1,
+    "jump_count": 19,
+    "shoot_count": 80,
+    "bomb_count": 13,
+    "death_count": 5,
+    "hit_count": 30,
+    "pickup_count": 3,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 25,
+    "shoot_count": 121,
+    "bomb_count": 2,
+    "death_count": 0,
+    "hit_count": 50,
+    "pickup_count": 2,
+    "remain_life": 5
+}
+{
+    "player_number": 1,
+    "jump_count": 117,
+    "shoot_count": 119,
+    "bomb_count": 5,
+    "death_count": 2,
+    "hit_count": 40,
+    "pickup_count": 18,
+    "remain_life": 3
+}
+{
+    "player_number": 2,
+    "jump_count": 109,
+    "shoot_count": 337,
+    "bomb_count": 8,
+    "death_count": 5,
+    "hit_count": 100,
+    "pickup_count": 9,
+    "remain_life": 0
+}
+{
+    "player_number": 1,
+    "jump_count": 121,
+    "shoot_count": 138,
+    "bomb_count": 8,
+    "death_count": 5,
+    "hit_count": 44,
+    "pickup_count": 14,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 127,
+    "shoot_count": 196,
+    "bomb_count": 8,
+    "death_count": 4,
+    "hit_count": 75,
+    "pickup_count": 15,
+    "remain_life": 1
+}
+{
+    "player_number": 1,
+    "jump_count": 29,
+    "shoot_count": 90,
+    "bomb_count": 3,
+    "death_count": 5,
+    "hit_count": 33,
+    "pickup_count": 2,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 21,
+    "shoot_count": 102,
+    "bomb_count": 12,
+    "death_count": 4,
+    "hit_count": 35,
+    "pickup_count": 6,
+    "remain_life": 1
+}
+{
+    "player_number": 1,
+    "jump_count": 60,
+    "shoot_count": 280,
+    "bomb_count": 2,
+    "death_count": 5,
+    "hit_count": 78,
+    "pickup_count": 7,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 63,
+    "shoot_count": 49,
+    "bomb_count": 2,
+    "death_count": 1,
+    "hit_count": 27,
+    "pickup_count": 7,
+    "remain_life": 4
+}
+{
+    "player_number": 1,
+    "jump_count": 78,
+    "shoot_count": 253,
+    "bomb_count": 4,
+    "death_count": 5,
+    "hit_count": 85,
+    "pickup_count": 6,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 67,
+    "shoot_count": 128,
+    "bomb_count": 3,
+    "death_count": 0,
+    "hit_count": 42,
+    "pickup_count": 11,
+    "remain_life": 5
+}
+{
+    "player_number": 1,
+    "jump_count": 23,
+    "shoot_count": 146,
+    "bomb_count": 3,
+    "death_count": 5,
+    "hit_count": 40,
+    "pickup_count": 4,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 40,
+    "shoot_count": 45,
+    "bomb_count": 2,
+    "death_count": 0,
+    "hit_count": 16,
+    "pickup_count": 5,
+    "remain_life": 5
+}
