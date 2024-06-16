@@ -293,7 +293,7 @@ pygame.quit()
 # Save the score
 name = input("Enter your name: ")
 
-# 检查用户是否已经存在于 scores_df 中
+# check if the name is in the scores.csv
 if name in scores_df["name"].values:
     # 获取当前用户的所有记录
     current_record = scores_df[scores_df["name"] == name]
