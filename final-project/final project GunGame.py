@@ -147,8 +147,10 @@ def draw_end(who_win):
     
     initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
     tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
-    
-    
+    player1_img = pygame.image.load('./oop-python-nycu/final-project/1_player.png') # 載入玩家圖片
+    player2_img = pygame.image.load('./oop-python-nycu/final-project/2_player.png') # 載入玩家圖片
+    player_win = pygame.image.load('./oop-python-nycu/final-project/player_win.png') # 載入玩家勝利圖片
+
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
     
@@ -176,10 +178,15 @@ def draw_end(who_win):
         screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
         
         if state == 0:
+
+
+            screen.blit(player_win,(200,WINDOW_HEIGHT/2))
+            mid = 720
             if who_win == 1:
-                draw_text(screen, "Player 1 Win", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 100)
+                screen.blit(player1_img,(mid + 10,WINDOW_HEIGHT/2 + 15))
+                
             elif who_win == 2:
-                draw_text(screen, "Player 2 Win", 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 100)
+                screen.blit(player2_img,(mid,WINDOW_HEIGHT/2 + 15))
 
         elif state == 1:
             
