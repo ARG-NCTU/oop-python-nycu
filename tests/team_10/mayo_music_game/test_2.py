@@ -139,6 +139,7 @@ def draw_press():
     if keys[pygame.K_k]:
         pygame.draw.rect(wn, (99, 170, 219), display_pressed4)
 
+# Pre time handle
 def pre_time_handle():
     global loop_start_time
     global start_time
