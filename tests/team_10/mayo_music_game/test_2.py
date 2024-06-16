@@ -225,6 +225,7 @@ def show_game_over_screen():
     pygame.display.flip()
     time.sleep(5)  # Show the game over screen for 5 seconds
 
+# Pygame events
 def pygame_events():
     global running
     global mouse
