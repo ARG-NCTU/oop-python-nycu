@@ -291,8 +291,8 @@ class Game():
                 #self.export_player_data(self.player1)
                 #self.export_player_data(self.player2)
                 #self.player1.restart(0)
-                #ㄊself.player2.restart(1)
-                #draw_init()
+                #ㄊself.player2.restavrt(1)
+                #draw_init()vdbddddsv
             #按下任意鍵回到開始畫面
                 
             if self.box_check == 0:# 生成寶箱
@@ -301,8 +301,8 @@ class Game():
                     self.box_time = 300
                     self.spawn_treasure_box()
                     self.box_check = 1
-
-aaa            mkeys = pygame.key.get_pressed()
+            mkeys = pygame.key.get_pressed()
+        
             if mkeys[pygame.QUIT]:
                 running = False
             if mkeys[pygame.K_w]:
