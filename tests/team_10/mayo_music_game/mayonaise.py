@@ -13,7 +13,6 @@ mode = "normal"  # "normal" or "hard"
 drop_before_arrive = 0.8
 pixel_per_second = 565 / drop_before_arrive
 
-
 # Object & Images
 mayo = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/mayo.jpg").convert_alpha()
 start_menu = pygame.image.load("oop-python-nycu/tests/team_10/mayo_music_game/images/patrick_mayo.jpg").convert_alpha()
