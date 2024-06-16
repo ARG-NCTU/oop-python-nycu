@@ -87,7 +87,7 @@ class Note:
         self.miss_time = None  # Add miss_time attribute
 
     def ycor_update(self, time_pass):
-        p = time_pass - self.drop_time  # Time passed since the note started droppin
+        p = time_pass - self.drop_time  # Time passed since the note started dropping
         self.ycor += pixel_per_second * p - (self.ycor + 60)  # Update the y-coordinate
 
     def check_remove(self, time_pass):
