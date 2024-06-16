@@ -57,7 +57,7 @@ with open(f"oop-python-nycu/tests/team_10/mayo_music_game/note_and_time/hibana n
         notes.append(i)
 
 for i in times_arrive:
-    i -= drop_before_arrive  # dropping rat
+    i -= drop_before_arrive  # dropping rate
     i = round(i, 4)
     times_drop.append(i)
 
