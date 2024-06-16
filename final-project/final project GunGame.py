@@ -216,6 +216,7 @@ class Game():
         self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
         self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
+        self.bullet_img = pygame.image.load('./oop-python-nycu/final-project/bullet.png')
         self.box_img = pygame.image.load('./oop-python-nycu/final-project/box.png')
         self.heart_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/heart.png'), (40, 40))
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
@@ -384,6 +385,7 @@ class Game():
             text_smallgun2_numofbullete = self.font_i.render("∞", True, (255, 255, 255)) 
             text_player1_ammo = self.font.render(str(self.player1.gun.numofbullet), True, (255, 255, 255)) 
             text_player2_ammo = self.font.render(str(self.player2.gun.numofbullet), True, (255, 255, 255))
+            text_multiple = self.font.render("x", True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
             self.bomb_effects.draw(self.screen)
             self.bullets.draw(self.screen)
@@ -391,12 +393,17 @@ class Game():
             self.player2_draw.draw(self.screen)
             self.bombs.draw(self.screen)
             self.draw_object(self.player1, self.player2)
+
+            self.screen.blit(self.bullet_img , (WINDOW_WIDTH - 140 , 100))
+            self.screen.blit(self.bullet_img , (5 , 100))
+            self.screen.blit(text_multiple,(60,95))
+            self.screen.blit(text_multiple,(WINDOW_WIDTH - 90,95))
             if self.player1.gun.gun_name == "smallgun":
-                self.screen.blit(text_smallgun1_numofbullete,(10,100))
+                self.screen.blit(text_smallgun1_numofbullete,(100,80))
             else:
-                self.screen.blit(text_player1_ammo,(10,100))
+                self.screen.blit(text_player1_ammo,(100,100))
             if self.player2.gun.gun_name == "smallgun":
-                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 60,100))
+                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 60,80))
             else:
                 self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 50,100))
         
