@@ -70,7 +70,7 @@ try:
     # try to load scores.csv file
     scores_df = pd.read_csv("scores.csv")
 except FileNotFoundError:
-    # 如果文件不存在，创建一个新的 DataFrame
+    # if，创建一个新的 DataFrame
     scores_df = pd.DataFrame(columns=["name", "score", "average", "std"])
 
 # Classes
