@@ -149,6 +149,7 @@ def pre_time_handle():
     time_pass = float(loop_start_time - start_time)
     time_pass = round(time_pass, 4)
 
+# Post time handle
 def post_time_handle(loop_start_time):
     now_end_time = time.time()
     now_end_time = round(now_end_time, 4)
