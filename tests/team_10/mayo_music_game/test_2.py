@@ -73,7 +73,7 @@ except FileNotFoundError:
     # if file not exist，create a new DataFrame
     scores_df = pd.DataFrame(columns=["name", "score", "average", "std"])
 
-# Classes
+# Class
 class Note:
     def __init__(self, drop_time, arrive_time, xcor, ycor, block):
         self.drop_time = drop_time
