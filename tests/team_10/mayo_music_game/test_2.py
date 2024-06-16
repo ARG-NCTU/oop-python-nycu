@@ -131,6 +131,7 @@ def draw_back():
     pygame.draw.line(wn, (0, 0, 0), (150, 500), (650, 500))
     pygame.draw.line(wn, (0, 0, 0), (150, 530), (650, 530))
 
+# Draw the press
 def draw_press():
     if keys[pygame.K_d]:
         pygame.draw.rect(wn, (99, 170, 219), display_pressed1)
