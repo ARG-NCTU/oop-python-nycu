@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import json
 
 # 讀取 JSON 檔案到 Python 字典
-with open('player_data.json', 'r') as f:
+with open('./oop-python-nycu/final-project/player_data.json', 'r') as f:
     data = json.load(f)
 
 # 將字典轉換成 Pandas DataFrame
