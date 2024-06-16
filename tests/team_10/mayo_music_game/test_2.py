@@ -179,6 +179,7 @@ def showingArray_appending(time_pass):
         showing_array.append(one_note)
         pointer += 1
 
+# Display notes
 def note_displaying(time_pass):
     global showing_array
     for one_note in showing_array:
