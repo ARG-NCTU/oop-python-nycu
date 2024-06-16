@@ -83,7 +83,7 @@ class Note:
         self.block = block
         self.hit = False
         self.show = True
-        self.missed = False  # Add missed attribute
+        self.missed = False  # Add missed attribut
         self.miss_time = None  # Add miss_time attribute
 
     def ycor_update(self, time_pass):
