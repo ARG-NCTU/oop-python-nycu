@@ -315,7 +315,7 @@ if name in scores_df["name"].values:
 
     # calculate the new standard deviation
     user_scores = current_record["score"].tolist() * int(current_plays) + [max_combo]
-    # 计算用户的标准差并更新
+    # calculate the standard deviation
     std_score = np.std(user_scores, ddof=0)  # ddof=0 计算总体标准差
     scores_df.loc[scores_df["name"] == name, "std"] = std_score
 else:
