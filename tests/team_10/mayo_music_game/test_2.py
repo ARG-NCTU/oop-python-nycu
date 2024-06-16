@@ -329,7 +329,7 @@ else:
     })
     scores_df = pd.concat([scores_df, new_score], ignore_index=True)
 
-# 显示结果
+# sort the scores by score
 scores_df.index = scores_df.index + 1
 print(scores_df)
 
