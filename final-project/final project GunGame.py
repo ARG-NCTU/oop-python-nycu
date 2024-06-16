@@ -41,9 +41,6 @@ GROUND_LEVELS = [300, 410, 525, 615]  # 示例地板高度，可以根据实际�
 def distance_2D(x1, y1, x2, y2):
     return math.pow(math.pow(abs(x2-x1), 2) + math.pow(abs(y1-y2), 2), 0.5)
 
-
-
-
 def draw_text(screen, text, size, x, y):
     font = pygame.font.Font(None, size)
     text_surface = font.render(text, True, WHITE)
@@ -51,12 +48,8 @@ def draw_text(screen, text, size, x, y):
     text_rect.midtop = (x, y)
     screen.blit(text_surface, text_rect)
 
-
 def draw_init():
-    
-
     screen = pygame.display.set_mode(WINDOW_SIZE)
-    
     initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
     intro_img = pygame.image.load('./oop-python-nycu/final-project/intro.png')  
     player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
@@ -152,6 +145,13 @@ def draw_end(who_win):
     player1_img = pygame.image.load('./oop-python-nycu/final-project/1_player.png')  # 載入玩家1圖片
     player2_img = pygame.image.load('./oop-python-nycu/final-project/2_player.png')  # 載入玩家2圖片
     player_win = pygame.image.load('./oop-python-nycu/final-project/player_win.png')  # 載入玩家勝利圖片
+    space_img = pygame.image.load('./oop-python-nycu/final-project/space.jpg')  # 載入背景圖片
+    crown_img = pygame.image.load('./oop-python-nycu/final-project/crown.png')
+    player_1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png')  # 載入玩家1圖片
+    player_2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png')  # 載入玩家2圖片
+    player_1_img = pygame.transform.scale(player_1_img, (240, 330))
+    player_2_img = pygame.transform.scale(player_2_img, (240, 330))
+    crown_img = pygame.transform.scale(crown_img, (100, 100))
 
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
@@ -172,23 +172,25 @@ def draw_end(who_win):
     
     pygame.display.set_caption("GunGame")
 
-    # 按兩下結束函數
+    # 按兩下結束函數aaaaa
     state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
     counttime = 0
     start_ticks = pygame.time.get_ticks()  # 開始計時
 
     while state < 1:
         screen.fill((0, 0, 0))  # 清除屏幕
-        screen.blit(initial_screen, (pos_x, pos_y))  # 確保背景圖片始終顯示
+        screen.blit(space_img, (pos_x, pos_y))  # 確保背景圖片始終顯示
         
         if state == 0:
-            screen.blit(player_win, (200, WINDOW_HEIGHT / 2))
+            screen.blit(player_win, (200, WINDOW_HEIGHT / 2 - 270))
             mid = 720
             if who_win == 1:
-                screen.blit(player1_img, (mid + 10, WINDOW_HEIGHT / 2 + 15))
+                screen.blit(player1_img, (mid + 10, WINDOW_HEIGHT / 2 - 250))
+                screen.blit(player_1_img, (mid - 200, WINDOW_HEIGHT / 2 - 60))
             elif who_win == 2:
-                screen.blit(player2_img, (mid, WINDOW_HEIGHT / 2 + 15))
-        
+                screen.blit(player2_img, (mid, WINDOW_HEIGHT / 2 - 250))
+                screen.blit(player_2_img, (mid - 200, WINDOW_HEIGHT / 2 - 60))
+            screen.blit(crown_img, (mid - 120, WINDOW_HEIGHT / 2 - 120))
         pygame.display.flip()
 
         # 檢查事件
@@ -225,7 +227,7 @@ class Game():
         self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
         self.bullet_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/bullet.png'), (35,35))
-
+        self.space_img = pygame.image.load('./oop-python-nycu/final-project/space.jpg')
         self.box_img = pygame.image.load('./oop-python-nycu/final-project/box.png')
         self.heart_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/heart.png'), (40, 40))
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
@@ -864,7 +866,6 @@ class Bomb_effect(pygame.sprite.Sprite):
             return False
 
 #寶箱掉落
-
 class TreasureBox(pygame.sprite.Sprite, Physics):
     def __init__(self, x, y, box_images):
         super().__init__()
