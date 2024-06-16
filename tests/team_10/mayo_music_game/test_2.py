@@ -118,6 +118,7 @@ def start_video():
     global video_start_time
     video_start_time = time.time()
 
+# Draw the background
 def draw_back():
     pygame.draw.rect(wn, (128, 128, 128), white_back)
     pygame.draw.rect(wn, (128, 0, 128), border_left_line)
