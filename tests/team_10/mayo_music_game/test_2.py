@@ -168,6 +168,7 @@ def note_remove(time_pass):
             one_note.hit = True
             one_note.show = False
 
+# Append notes to the showing array
 def showingArray_appending(time_pass):
     global showing_array
     global pointer
