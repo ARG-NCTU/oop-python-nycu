@@ -305,7 +305,7 @@ if name in scores_df["name"].values:
     if max_combo > current_score:
         scores_df.loc[scores_df["name"] == name, "score"] = max_combo
 
-    # 更新用户的游玩次数
+    # record the new play
     new_plays = current_plays + 1
     scores_df.loc[scores_df["name"] == name, "plays"] = new_plays
 
