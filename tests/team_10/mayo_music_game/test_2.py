@@ -333,5 +333,5 @@ else:
 scores_df.index = scores_df.index + 1
 print(scores_df)
 
-# 保存结果到 scores.csv
+# save scores.csv
 scores_df.to_csv("scores.csv", index=False)
