@@ -98,7 +98,7 @@ class Note:
             self.miss_time = time_pass  # Record the miss time
         return block_check and time_check
 
-# Function
+# Functions
 def background_display(mouse_pos):
     global started
     global start_time
