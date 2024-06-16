@@ -8,7 +8,7 @@ pygame.init()
 
 wn = pygame.display.set_mode((800, 600))
 
-mode = "normal"  # "normal" 
+mode = "normal"  # "nor
 drop_before_arrive = 0.8
 pixel_per_second = 565 / drop_before_arrive
 
