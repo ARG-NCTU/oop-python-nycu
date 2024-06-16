@@ -325,7 +325,7 @@ else:
         "score": [max_combo], 
         "average": [max_combo],
         "std": [0.0],  # new user's standard deviation is 0
-        "plays": [1]  # 新用户的游玩次数为1
+        "plays": [1]  # new user's plays is 1
     })
     scores_df = pd.concat([scores_df, new_score], ignore_index=True)
 
