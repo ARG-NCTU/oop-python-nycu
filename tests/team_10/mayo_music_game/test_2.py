@@ -295,7 +295,7 @@ name = input("Enter your name: ")
 
 # check if the name is in the scores.csv
 if name in scores_df["name"].values:
-    # 获取当前用户的所有记录
+    # get the current record of the user
     current_record = scores_df[scores_df["name"] == name]
     current_score = current_record["score"].values[0]
     current_average = current_record["average"].values[0]
