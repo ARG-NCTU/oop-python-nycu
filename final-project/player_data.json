@@ -1,4 +1,4 @@
-[ 
+[
     {
         "player1_jump_count": 35,
         "player1_shoot_count": 96,
@@ -7,7 +7,7 @@
         "player1_hit_count": 30,
         "player1_pickup_count": 5,
         "player1_remain_life": 0,
-        "player2_jump_count":61,
+        "player2_jump_count": 61,
         "player2_shoot_count": 31,
         "player2_bomb_count": 6,
         "player2_death_count": 1,
@@ -127,7 +127,6 @@
         "player2_pickup_count": 5,
         "player2_remain_life": 5
     },
-    
     {
         "player1_jump_count": 84,
         "player1_shoot_count": 317,
