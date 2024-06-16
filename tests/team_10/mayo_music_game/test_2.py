@@ -113,6 +113,7 @@ def background_display(mouse_pos):
                 video_playing = True
                 start_video()
 
+# Start the video
 def start_video():
     global video_start_time
     video_start_time = time.time()
