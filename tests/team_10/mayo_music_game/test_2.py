@@ -301,7 +301,7 @@ if name in scores_df["name"].values:
     current_average = current_record["average"].values[0]
     current_plays = current_record["plays"].values[0]
 
-    # 更新用户的最高成绩
+    # replace the score if the new score is higher
     if max_combo > current_score:
         scores_df.loc[scores_df["name"] == name, "score"] = max_combo
 
