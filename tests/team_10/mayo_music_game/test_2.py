@@ -38,7 +38,7 @@ font = pygame.font.Font("freesansbold.ttf", 32)
 pygame.display.set_caption("hibana_music_game")
 pygame.display.set_icon(mayo)
 
-# File
+# Files
 times_arrive = []
 times_drop = []
 notes = []
