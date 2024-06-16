@@ -88,7 +88,7 @@ class Note:
 
     def ycor_update(self, time_pass):
         p = time_pass - self.drop_time  # Time passed since the note started dropping
-        self.ycor += pixel_per_second * p - (self.ycor + 60)  # Update the y-coordinate of the note
+        self.ycor += pixel_per_second * p - (self.ycor + 60)  # date the y-coordinate of the note
 
     def check_remove(self, time_pass):
         block_check = keys[self.block]
