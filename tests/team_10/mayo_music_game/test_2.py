@@ -218,6 +218,7 @@ def check_game_over():
         return True
     return False
 
+# Show the game over screen
 def show_game_over_screen():
     game_over_text = font.render("Game Over", True, (255, 0, 0))
     wn.blit(game_over_text, (300, 250))
