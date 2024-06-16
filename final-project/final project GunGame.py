@@ -224,7 +224,8 @@ class Game():
         self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
         self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
-        self.bullet_img = pygame.image.load('./oop-python-nycu/final-project/bullet.png')
+        self.bullet_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/bullet.png'), (35,35))
+
         self.box_img = pygame.image.load('./oop-python-nycu/final-project/box.png')
         self.heart_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/heart.png'), (40, 40))
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
@@ -402,8 +403,8 @@ class Game():
             self.bombs.draw(self.screen)
             self.draw_object(self.player1, self.player2)
 
-            self.screen.blit(self.bullet_img , (WINDOW_WIDTH - 140 , 90))
-            self.screen.blit(self.bullet_img , (5 , 90))         # 玩家1的子彈
+            self.screen.blit(self.bullet_img , (WINDOW_WIDTH - 135 , 93))
+            self.screen.blit(self.bullet_img , (10 , 93))         # 玩家1的子彈
             self.screen.blit(text_multiple,(60,95))            # 玩家1乘法符號
             self.screen.blit(text_multiple,(WINDOW_WIDTH - 85,95))
             if self.player1.gun.gun_name == "smallgun":
