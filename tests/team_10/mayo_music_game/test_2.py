@@ -34,7 +34,7 @@ music_location = "oop-python-nycu/tests/team_10/mayo_music_game/images/hibana 2.
 track = pygame.mixer.music.load(music_location)
 font = pygame.font.Font("freesansbold.ttf", 32)
 
-# Screen
+# Scre
 pygame.display.set_caption("hibana_music_game")
 pygame.display.set_icon(mayo)
 
