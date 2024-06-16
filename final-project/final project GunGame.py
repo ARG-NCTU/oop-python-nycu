@@ -685,7 +685,7 @@ class smallgun(Gun):
 
 class shotgun(Gun):
     def __init__(self):
-        super().__init__(35, 8, 12, 30)
+        super().__init__(40, 8, 12, 30)
         self.gun_name = "shotgun"
         self.img1_right = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
         self.img2_right = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
@@ -698,7 +698,7 @@ class shotgun(Gun):
 
 class sniper(Gun):
     def __init__(self):
-        super().__init__(25, 12, 8, 100)
+        super().__init__(30, 12, 8, 100)
         self.gun_name = "sniper"
         self.img1_right = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
         self.img2_right = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
