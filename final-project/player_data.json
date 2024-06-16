@@ -18,3 +18,19 @@
     "pickup_count": 1,
     "remain_life": 4
 }
+{
+    "player1_jump_count": 0,
+    "player1_shoot_count": 0,
+    "player1_bomb_count": 0,
+    "player1_death_count": 5,
+    "player1_hit_count": 0,
+    "player1_pickup_count": 0,
+    "player1_remain_life": 0,
+    "player2_jump_count": 0,
+    "player2_shoot_count": 0,
+    "player2_bomb_count": 0,
+    "player2_death_count": 0,
+    "player2_hit_count": 0,
+    "player2_pickup_count": 0,
+    "player2_remain_life": 5
+}

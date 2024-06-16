@@ -274,8 +274,7 @@ class Game():
                     running = False
 
             if self.player1.live == 0 and show_end_screen:
-                for player in self.players:
-                    self.export_player_data(player)
+                self.export_player_data(self.player1, self.player2)
                 draw_end(2)
                 running = False
                 #self.export_player_data(self.player1)
@@ -286,8 +285,7 @@ class Game():
                 #按下任意鍵回到開始畫面
 
             if self.player2.live == 0 and show_end_screen:
-                for player in self.players:
-                    self.export_player_data(player)
+                self.export_player_data(self.player1, self.player2)
                 draw_end(1)
                 running = False
                 #self.export_player_data(self.player1)
@@ -491,17 +489,24 @@ class Game():
 
 
 
-    def export_player_data(self, player):
+    def export_player_data(self, player1, player2):
         # elapsed_time = time.time() - player.start_time
         player_data = {
-            'player_number': player.playernumber,
-            'jump_count': player.jump_count,
-            'shoot_count': player.shoot_count,
-            'bomb_count': player.bomb_count,
-            'death_count': player.death_count,
-            'hit_count': player.hit_count,
-            'pickup_count': player.pickup_count,
-            'remain_life': player.remain_life,
+            'player1_jump_count': player1.jump_count,
+            'player1_shoot_count': player1.shoot_count,
+            'player1_bomb_count': player1.bomb_count,
+            'player1_death_count': player1.death_count,
+            'player1_hit_count': player1.hit_count,
+            'player1_pickup_count': player1.pickup_count,
+            'player1_remain_life': player1.remain_life,
+
+            'player2_jump_count': player2.jump_count,
+            'player2_shoot_count': player2.shoot_count,
+            'player2_bomb_count': player2.bomb_count,
+            'player2_death_count': player2.death_count,
+            'player2_hit_count': player2.hit_count,
+            'player2_pickup_count': player2.pickup_count,
+            'player2_remain_life': player2.remain_life,
         }
             
         with open('./oop-python-nycu/final-project/player_data.json', 'a') as f:
