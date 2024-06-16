@@ -313,7 +313,7 @@ if name in scores_df["name"].values:
     new_average = (current_average * current_plays + max_combo) / new_plays
     scores_df.loc[scores_df["name"] == name, "average"] = new_average
 
-    # 获取当前用户的所有分数，并添加当前分数
+    # calculate the new standard deviation
     user_scores = current_record["score"].tolist() * int(current_plays) + [max_combo]
     # 计算用户的标准差并更新
     std_score = np.std(user_scores, ddof=0)  # ddof=0 计算总体标准差
