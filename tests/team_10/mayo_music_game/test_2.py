@@ -92,7 +92,7 @@ class Note:
 
     def check_remove(self, time_pass):
         block_check = keys[self.block]
-        time_check = abs(time_pass - self.arrive_time) <= 0.
+        time_check = abs(time_pass - self.arrive_time) <= 0.1
         if not self.hit and time_pass - self.arrive_time > 0.1 and self.miss_time is None:  # If the note is not hit and it's past the arrive time
             self.missed = True
             self.miss_time = time_pass  # Record the miss time
