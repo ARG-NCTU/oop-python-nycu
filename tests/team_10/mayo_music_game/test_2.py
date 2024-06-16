@@ -251,7 +251,7 @@ max_combo = 0
 showing_pointer = 0
 game_over = False
 
-# Main process
+# Main proces
 while running:
     if game_over:
         show_game_over_screen()
