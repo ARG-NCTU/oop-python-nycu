@@ -291,7 +291,7 @@ class Game():
                 #self.export_player_data(self.player1)
                 #self.export_player_data(self.player2)
                 #self.player1.restart(0)
-                #ㄊself.player2.restavcrt(1)
+                #ㄊself.player2.restavckrt(1)
                 #draw_init()vdbddddsv
             #按下任意鍵回到開始畫面
                 
