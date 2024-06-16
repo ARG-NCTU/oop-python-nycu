@@ -1,0 +1,20 @@
+{
+    "player_number": 1,
+    "jump_count": 16,
+    "shoot_count": 20,
+    "bomb_count": 3,
+    "death_count": 5,
+    "hit_count": 15,
+    "pickup_count": 3,
+    "remain_life": 0
+}
+{
+    "player_number": 2,
+    "jump_count": 14,
+    "shoot_count": 77,
+    "bomb_count": 0,
+    "death_count": 1,
+    "hit_count": 13,
+    "pickup_count": 1,
+    "remain_life": 4
+}
