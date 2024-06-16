@@ -64,6 +64,7 @@ display_pressed4 = pygame.Rect(525, 500, slot[0], slot[1])
 
 
 
+
 # Music and font
 music_location = "oop-python-nycu/tests/team_10/mayo_music_game/images/ver.hard.mp3"
 track = pygame.mixer.music.load(music_location)
