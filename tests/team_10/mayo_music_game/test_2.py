@@ -67,7 +67,7 @@ video_surface = pygame.Surface((800, 600))
 
 # Load scores
 try:
-    # try to scores.csv 文件
+    # try to load scores.csv 文件
     scores_df = pd.read_csv("scores.csv")
 except FileNotFoundError:
     # 如果文件不存在，创建一个新的 DataFrame
