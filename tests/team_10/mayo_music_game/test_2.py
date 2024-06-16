@@ -191,6 +191,7 @@ def note_displaying(time_pass):
         if one_note.ycor >= 900:  # Note goes off-screen
             one_note.show = False
 
+# Combo showing
 def combo_showing():
     global combo
     combo = 0
