@@ -276,7 +276,7 @@ class Game():
                 draw_end(1)
                 running = False
                 #self.player1.restart(0)
-                #self.player2.restart(1)
+                #ㄊself.player2.restart(1)
                 #draw_init()
             #按下任意鍵回到開始畫面
                 
@@ -402,18 +402,18 @@ class Game():
             self.bombs.draw(self.screen)
             self.draw_object(self.player1, self.player2)
 
-            self.screen.blit(self.bullet_img , (WINDOW_WIDTH - 140 , 100))
-            self.screen.blit(self.bullet_img , (5 , 100))
-            self.screen.blit(text_multiple,(60,95))
-            self.screen.blit(text_multiple,(WINDOW_WIDTH - 90,95))
+            self.screen.blit(self.bullet_img , (WINDOW_WIDTH - 140 , 90))
+            self.screen.blit(self.bullet_img , (5 , 90))         # 玩家1的子彈
+            self.screen.blit(text_multiple,(60,95))            # 玩家1乘法符號
+            self.screen.blit(text_multiple,(WINDOW_WIDTH - 85,95))
             if self.player1.gun.gun_name == "smallgun":
-                self.screen.blit(text_smallgun1_numofbullete,(100,80))
+                self.screen.blit(text_smallgun1_numofbullete,(100,80)) # 玩家1的子彈數量
             else:
-                self.screen.blit(text_player1_ammo,(100,100))
+                self.screen.blit(text_player1_ammo,(100,95))
             if self.player2.gun.gun_name == "smallgun":
-                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 60,80))
+                self.screen.blit(text_smallgun2_numofbullete,(WINDOW_WIDTH - 45,80))
             else:
-                self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 50,100))
+                self.screen.blit(text_player2_ammo,(WINDOW_WIDTH - 45,95))
         
 
             pygame.display.flip()
