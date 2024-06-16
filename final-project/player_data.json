@@ -1,5 +1,6 @@
 {
     "player_number": 1,
+<<<<<<< HEAD
     "jump_count": 35,
     "shoot_count": 96,
     "bomb_count": 10,
@@ -106,10 +107,18 @@
     "death_count": 5,
     "hit_count": 78,
     "pickup_count": 7,
+    "jump_count": 16,
+    "shoot_count": 20,
+    "bomb_count": 3,
+    "death_count": 5,
+    "hit_count": 15,
+    "pickup_count": 3,
+>>>>>>> a5b9a085312026d73e3939813dea65884a231073
     "remain_life": 0
 }
 {
     "player_number": 2,
+<<<<<<< HEAD
     "jump_count": 63,
     "shoot_count": 49,
     "bomb_count": 2,
@@ -157,4 +166,45 @@
     "hit_count": 16,
     "pickup_count": 5,
     "remain_life": 5
+=======
+    "jump_count": 14,
+    "shoot_count": 77,
+    "bomb_count": 0,
+    "death_count": 1,
+    "hit_count": 13,
+    "pickup_count": 1,
+    "remain_life": 4
+}
+{
+    "player1_jump_count": 0,
+    "player1_shoot_count": 0,
+    "player1_bomb_count": 0,
+    "player1_death_count": 5,
+    "player1_hit_count": 0,
+    "player1_pickup_count": 0,
+    "player1_remain_life": 0,
+    "player2_jump_count": 0,
+    "player2_shoot_count": 0,
+    "player2_bomb_count": 0,
+    "player2_death_count": 0,
+    "player2_hit_count": 0,
+    "player2_pickup_count": 0,
+    "player2_remain_life": 5
+>>>>>>> a5b9a085312026d73e3939813dea65884a231073
+}
+{
+    "player1_jump_count": 0,
+    "player1_shoot_count": 0,
+    "player1_bomb_count": 0,
+    "player1_death_count": 5,
+    "player1_hit_count": 0,
+    "player1_pickup_count": 0,
+    "player1_remain_life": 0,
+    "player2_jump_count": 0,
+    "player2_shoot_count": 0,
+    "player2_bomb_count": 0,
+    "player2_death_count": 0,
+    "player2_hit_count": 0,
+    "player2_pickup_count": 0,
+    "player2_remain_life": 5
 }
