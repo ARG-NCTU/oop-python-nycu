@@ -202,7 +202,7 @@ def draw_end(who_win):
                 sys.exit()
 
         # 檢查時間是否已經超過3秒
-        if pygame.time.get_ticks() - start_ticks > 1000:  # 3000 毫秒 = 3 秒
+        if pygame.time.get_ticks() - start_ticks > 10000:  # 3000 毫秒 = 3 秒
             state = 1  # 結束循環
 
     # 等待3秒後關閉遊戲
