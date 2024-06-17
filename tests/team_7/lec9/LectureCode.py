@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 19 11:45:20 2016
-@author: johnguttag
-Modified: egrimson
-"""
 
 import random, pylab, numpy
 
@@ -67,9 +61,6 @@ def fitData(fileName):
                label = 'Linear fit, k = '
                + str(round(1/a, 5)))
     pylab.legend(loc = 'best')
-
-#fitData('springData.txt')
-
 
 def fitData1(fileName):
     xVals, yVals = getData(fileName)
@@ -168,10 +159,3 @@ def genNoisyParabolicData(a, b, c, xVals, fName):
         f.write(str(yVals[i]) + ' ' + str(xVals[i]) + '\n')
     f.close()
 
-
-def testErrors(xVals, yVals, degrees, fName):
-    noisyYVals = yVals
-    pylab.plot(xVals, noisyYVals, 'o', label = 'Data')
-    models = genFits(xVals, noisyYVals, degrees)
-    testFits(models, degrees, xVals, noisyYVals, 'Noisy Data')
-    pylab.savefig(fName)

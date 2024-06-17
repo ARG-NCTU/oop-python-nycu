@@ -6,6 +6,7 @@ hello:
 
 test:
 	pytest -sv tests/team_ta/newTest/new_test_food.py
+	pytest -sv tests/test_lab3.py
 
 clean:
 	rm -rf ./pytest_cache
