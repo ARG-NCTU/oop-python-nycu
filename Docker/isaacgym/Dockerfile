@@ -160,6 +160,7 @@ RUN pip3 install -q -e .
 ENV NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all \
     VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
 USER root
+RUN pip3 install git+https://github.com/isaac-sim/IsaacGymEnvs.git
 ################################## aerial_gym_simulator #########################
 RUN pip3 install git+https://github.com/mmatl/urdfpy.git
 # Switch to the non-root user
