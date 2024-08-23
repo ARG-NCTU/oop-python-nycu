@@ -102,6 +102,8 @@ RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade && \
     git \
     libegl1 \
     git-lfs \
+    xvfb \
+    ffmpeg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 # Force gcc 9 to avoid CUDA 10 build issues on newer base OS
