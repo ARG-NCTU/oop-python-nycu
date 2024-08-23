@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y \
     python3.8 \
     python3.8-venv \
     python3.8-dev \
+    python3.8-tk \
     python3-pip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -145,22 +146,27 @@ RUN python3.8 -m pip install --no-cache-dir --ignore-installed PyYAML \
 # Download Isaac Gym from NVIDIA and extract it
 RUN wget https://developer.nvidia.com/isaac-gym-preview-4 -O /tmp/IsaacGym_Preview_4_Package.tar.gz && \
     tar -xvzf /tmp/IsaacGym_Preview_4_Package.tar.gz -C /opt && \
-    rm /tmp/IsaacGym_Preview_4_Package.tar.gz
+    rm /tmp/IsaacGym_Preview_4_Package.tar.gz && \
+    cd /opt/isaacgym && \
+    git clone https://github.com/isaac-sim/IsaacGymEnvs.git && \
+    chown -R ${NB_USER}:${NB_GID} /opt/isaacgym && \
+    chown -R ${NB_USER}:${NB_GID} /opt/isaacgym/IsaacGymEnvs
 
 # Change ownership of the Isaac Gym directory to the non-root user
-RUN chown -R ${NB_USER}:${NB_GID} /opt/isaacgym
+# RUN chown -R ${NB_USER}:${NB_GID} /opt/isaacgym \
+#     && chown -R ${NB_USER}:${NB_GID} /opt/IsaacGymEnvs
 
 # Switch to the non-root user
 USER ${NB_USER}
 
 # Install gym modules
 ENV PATH="${HOME}/.local/bin:$PATH"
-WORKDIR /opt/isaacgym/python
-RUN pip3 install -q -e .
+RUN pip3 install -q -e /opt/isaacgym/python && \
+    pip3 install -q -e /opt/isaacgym/IsaacGymEnvs
 ENV NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all \
     VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
 USER root
-RUN pip3 install git+https://github.com/isaac-sim/IsaacGymEnvs.git
+# RUN pip3 install git+https://github.com/isaac-sim/IsaacGymEnvs.git
 ################################## aerial_gym_simulator #########################
 RUN pip3 install git+https://github.com/mmatl/urdfpy.git
 # Switch to the non-root user
