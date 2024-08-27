@@ -143,7 +143,8 @@ RUN python3.10 -m pip install --no-cache-dir --ignore-installed PyYAML \
     hf_transfer \
     opencv-python-headless \
     timm \
-    omniverse
+    omniverse \
+    omni
 
 ################################## IsaacGym #####################################
 # Download Isaac Gym from NVIDIA and extract it
