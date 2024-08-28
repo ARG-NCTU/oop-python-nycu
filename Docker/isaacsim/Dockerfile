@@ -142,50 +142,18 @@ RUN python3.10 -m pip install --no-cache-dir --ignore-installed PyYAML \
     datasets \
     hf_transfer \
     opencv-python-headless \
-    timm \
-    omni
+    timm
 
-################################## IsaacGym #####################################
-RUN python3.10 -m pip install --no-cache-dir --ignore-installed PyYAML \
-    && python3.10 -m pip install \
-    isaacsim==4.1.0.0 --extra-index-url https://pypi.nvidia.com
-
-################################## IsaacGym #####################################
-# Download Isaac Gym from NVIDIA and extract it
-# RUN wget https://developer.nvidia.com/isaac-gym-preview-4 -O /tmp/IsaacGym_Preview_4_Package.tar.gz && \
-#     tar -xvzf /tmp/IsaacGym_Preview_4_Package.tar.gz -C /opt && \
-#     rm /tmp/IsaacGym_Preview_4_Package.tar.gz && \
-#     cd /opt/isaacgym && \
-#     git clone https://github.com/isaac-sim/IsaacGymEnvs.git && \
-#     chown -R ${NB_USER}:${NB_GID} /opt/isaacgym && \
-#     chown -R ${NB_USER}:${NB_GID} /opt/isaacgym/IsaacGymEnvs
-
-# # Change ownership of the Isaac Gym directory to the non-root user
-# # RUN chown -R ${NB_USER}:${NB_GID} /opt/isaacgym \
-# #     && chown -R ${NB_USER}:${NB_GID} /opt/IsaacGymEnvs
-
-# # Switch to the non-root user
-# USER ${NB_USER}
-
-# # Install gym modules
-# ENV PATH="${HOME}/.local/bin:$PATH"
-# RUN pip3 install -q -e /opt/isaacgym/python && \
-#     pip3 install -q -e /opt/isaacgym/IsaacGymEnvs
-# ENV NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all \
-#     VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
-# USER root
-# # RUN pip3 install git+https://github.com/isaac-sim/IsaacGymEnvs.git
-# ################################## aerial_gym_simulator #########################
-# RUN pip3 install git+https://github.com/mmatl/urdfpy.git
-# # Switch to the non-root user
-# WORKDIR /opt
-# RUN git clone https://github.com/ntnu-arl/aerial_gym_simulator.git && \
-#     cd aerial_gym_simulator && \
-#     pip3 install -q -e .
+################################## IsaacSim #####################################
+RUN python3.10 -m pip install \
+    isaacsim==4.1.0.0 --extra-index-url https://pypi.nvidia.com \
+    isaacsim-extscache-physics==4.1.0.0 isaacsim-extscache-kit==4.1.0.0 isaacsim-extscache-kit-sdk==4.1.0.0 --extra-index-url https://pypi.nvidia.com
 
 
 RUN echo "root ALL=(ALL)  ALL" >> /etc/sudoers 
     # && echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ${HOME}/.bashrc 
 
-ENV XLA_PYTHON_CLIENT_PREALLOCATE=false
-ENV HF_HUB_ENABLE_HF_TRANSFER=1
+
+ENV XLA_PYTHON_CLIENT_PREALLOCATE=false \
+    HF_HUB_ENABLE_HF_TRANSFER=1 \
+    OMNI_KIT_ACCEPT_EULA=YES \
