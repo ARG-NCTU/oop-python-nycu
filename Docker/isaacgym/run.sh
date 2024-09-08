@@ -55,6 +55,7 @@ docker run \
   -v "/etc/localtime:/etc/localtime:ro" \
   -v "/dev:/dev" \
   -v "/var/run/docker.sock:/var/run/docker.sock" \
+  -v "/usr/share/vulkan/icd.d/nvidia_icd.json:/usr/share/vulkan/icd.d/nvidia_icd.json" \
   --user "root:root" \
   --workdir "/home/${USER_NAME}/${REPO_NAME}" \
   --name "${CONTAINER_NAME}" \
