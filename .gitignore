@@ -142,7 +142,7 @@ tags*
 *.build/
 
 # local files
-myname.txt
+# myname.txt
 group13_project/
 
 prof
