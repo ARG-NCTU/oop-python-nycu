@@ -53,8 +53,8 @@ while running:
         player_y_speed = -player_jump_power
     if keys[pygame.K_UP] and not player_is_jumping and player_is_dashing:
         player_is_jumping = True
+        player_y_speed = -player_jump_power
         player_is_dashing = False
-        player_super_dash = True
 
     if keys[pygame.K_w] and dash_CD <= 0:
         player_is_dashing = True
