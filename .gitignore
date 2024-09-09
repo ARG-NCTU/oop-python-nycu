@@ -137,6 +137,18 @@ tags*
 .DS_Store
 .idea/
 
-mit-ocw-exercises/
+# mit-ocw-exercises/
 *.bin
 *.build/
+
+# local files
+# myname.txt
+group13_project/
+
+prof
+*.orig
+<<<<<<< HEAD
+=======
+
+ml/images
+>>>>>>> upstream/main
