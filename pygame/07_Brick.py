@@ -16,6 +16,7 @@ class Brick():
         self.poly = pyivp.string_to_poly(
             "x = " + str(x) + ", y = " + str(y) + ", format = radial, radius = " + str(radius) + ", pts = 4")
         self.get_vertex()
+        self.visible = True  # new attribute
 
     def get_vertex(self):
         self.vertex = []
@@ -24,7 +25,8 @@ class Brick():
             self.vertex.append((self.seg.get_vx(i), self.seg.get_vy(i)))
 
     def draw(self, screen):
-        pygame.draw.lines(screen, WHITE, True, self.vertex)
+        if self.visible:  # only draw if visible
+            pygame.draw.lines(screen, WHITE, True, self.vertex)
 
     def dis_to_brick(self, x, y):
         return self.poly.dist_to_poly(x, y)
@@ -58,17 +60,27 @@ class Ball():
                 self.x - self.radius <= 0:
             self.x_direction = -self.x_direction
 
-        if self.y + self.radius >= SCREEN_HEIGHT or\
-                self.y - self.radius <= 0:
+        if self.y - self.radius <= 0:
             self.y_direction = -self.y_direction
 
     def contact_detect_brick(self, brick):
-        if (brick.dis_to_brick(self.x, self.y) - self.radius <= 0):
+        if brick.visible and (brick.dis_to_brick(self.x, self.y) - self.radius <= 0):
+            if not isinstance(brick, Pad):
+                brick.visible = False
             self.bounce(brick)
 
     def draw(self, screen):
         pygame.draw.circle(screen, WHITE, (self.x, self.y), self.radius)
 
+class Pad(Brick):
+    def move_left(self):
+        self.x -= 20
+        self.poly = pyivp.string_to_poly("x = " + str(self.x) + ", y = " + str(self.y) + ", format = radial, radius = " + str(self.radius) + ", pts = 4")
+        self.get_vertex()
+    def move_right(self):
+        self.x += 20
+        self.poly = pyivp.string_to_poly("x = " + str(self.x) + ", y = " + str(self.y) + ", format = radial, radius = " + str(self.radius) + ", pts = 4")
+        self.get_vertex()
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -80,23 +92,36 @@ with open('./config/07_config.json', 'r') as f:
     config = json.load(f)
 
 ball = Ball(config["ball_x"], config["ball_y"], config["ball_radius"])
-brick = Brick(config["brick_x"], config["brick_y"], config["brick_radius"])
+
+bricks = []
+for brick_dict in config["bricks"]:
+    brick = Brick(brick_dict["x"], brick_dict["y"], brick_dict["radius"])
+    bricks.append(brick)
+
+pad = Pad(config["pad_x"], config["pad_y"], config["pad_radius"])
 
 # game loop
 is_running = True
 while is_running:
     screen.fill((0, 0, 0))
 
-    brick.draw(screen)
-    ball.contact_detect_brick(brick)
+    pad.draw(screen)
+    ball.contact_detect_brick(pad)
+    for brick in bricks:
+        ball.contact_detect_brick(brick)
+        brick.draw(screen)
     ball.move()
     ball.draw(screen)
-
+    keys=pygame.key.get_pressed()
     # event handler
     for event in pygame.event.get():
         # quit game
         if event.type == pygame.QUIT:
             is_running = False
+        if keys[pygame.K_RIGHT]:
+            pad.move_right()
+        if keys[pygame.K_LEFT]:
+            pad.move_left()
     pygame.display.flip()
     clock.tick(50)
 
