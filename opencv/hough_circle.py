@@ -55,7 +55,6 @@ def main(argv):
     ## [draw]
 
     saved_name = data_name + '_circle'
-    print(saved_name)
     saved_file = data_path + saved_name + data_type
     cv.imwrite(saved_file, src)
 

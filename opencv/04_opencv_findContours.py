@@ -4,21 +4,16 @@ import numpy as np
 
 def find_and_draw_contours(image):
     # Convert the image to grayscale
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
     # Apply Canny edge detection to the grayscale image
-    edged = cv2.Canny(gray, 30, 200)
+    
+    # Display the edged image with contours
+    
     # Find the contours in the edged image using RETR_EXTERNAL mode
-    contours, hierarchy = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-
+    
     # Draw the contours on the original image
-    cv2.drawContours(image, contours, -1, (0, 255, 0), 3)
-
-    # Print the number of contours found
-    print("Number of Contours found = " + str(len(contours)))
-
-    # Return the original image with the contours drawn
+    #print("Number of Contours found = " + str(len(contours)))
     return image
-
 
 if __name__ == "__main__":
     image = cv2.imread('/home/arg/oop-python-nycu/images/potter.jpg')

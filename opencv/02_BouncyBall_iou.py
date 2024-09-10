@@ -2,7 +2,6 @@ import pygame
 import cv2 as cv
 import numpy as np
 from random import choice
-import math
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
@@ -12,13 +11,18 @@ BLACK = (0, 0, 0)
 import numpy as np
 
 def calculate_iou(circle1, circle2):
-    x1, y1, r1 = circle1
-    x2, y2, r2 = circle2
-    d = math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-    if d >= r1 + r2:
-        return 0
-    else:
-        return 1
+    iou=0
+    # Calculate the distance between the centers of the circles
+    
+    # Calculate the radius of the intersection between the circles
+    
+    # Calculate the area of the intersection and union between the circles
+    
+    # Calculate the IOU as the ratio between the area of the intersection and the area of the union
+    
+    # Check if the circles overlap
+    
+    return iou
 
 class Ball():
     def __init__(self):
@@ -29,8 +33,8 @@ class Ball():
         self.y_direction = choice((-2, 2))
 
     def move(self):
-        self.x += self.x_direction*8
-        self.y += self.y_direction*8
+        self.x += self.x_direction*2
+        self.y += self.y_direction*2
         self.contact_detect()
 
     def contact_detect(self):
@@ -80,7 +84,7 @@ while is_running:
                                param1=100, param2=30,
                                minRadius=1, maxRadius=50)
     if circles is not None:
-        if circles.shape[1] == 2:
+        if circles.shape[1] is 2:
             iou = calculate_iou(circles[0][0], circles[0][1])
             if iou > 0:
                 print(iou)
