@@ -39,8 +39,8 @@ def main(argv):
     rows = gray.shape[0]
     # Demo 1 : Let the hough circle detect work !
     circles = cv.HoughCircles(gray, cv.HOUGH_GRADIENT, 1, rows / 8,
-                               param1=100, param2=20,
-                               minRadius=1, maxRadius=200)
+                               param1=100, param2=30,
+                               minRadius=1, maxRadius=30)
     # Please Know what is changing when you adjust every argument!!
     ## [houghcircles]
     
@@ -57,7 +57,6 @@ def main(argv):
     ## [draw]
 
     saved_name = data_name + '_circle'
-    print(saved_name)
     saved_file = data_path + saved_name + data_type
     cv.imwrite(saved_file, src)
 
