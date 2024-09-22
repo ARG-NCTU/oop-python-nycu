@@ -1,5 +1,15 @@
 # Guide: How to check your commit count
 
+## Sync your fork
+Go to your fork page and click "Sync fork" then "Update branch"
+
+
+Open your terminal and get ready for the repo:
+```sh
+cd oop-python-nycu/
+git pull
+```
+
 ## Run the docker
 ```sh
 source docker_run.sh
@@ -50,7 +60,7 @@ user.name=zhuchi76
 Rerun the docker
 ```sh
 source docker_run.sh
-cd utils
+cd utils/
 ```
 
 ## Run the script to get commit count
