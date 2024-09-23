@@ -60,6 +60,8 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
         print("To filter by a specific user, use the '--user' argument followed by the username.")
         print("Example: python3 git_commit_num.py --user username")
 
+    return commits_by_user
+
 
 def main():
     parser = argparse.ArgumentParser(description='Get commit counts by user from a git repository.')
@@ -68,7 +70,7 @@ def main():
     parser.add_argument('--start_date', type=str, default='2024-08-26', help='Start date for commit count calculation. Format: YYYY-MM-DD', nargs='?')
     args = parser.parse_args()
 
-    get_commits_by_user(args.repo, args.user, args.start_date)
+    commits_by_user = get_commits_by_user(args.repo, args.user, args.start_date)
 
 if __name__ == '__main__':
     main()
