@@ -14,7 +14,7 @@ def set_safe_directory(repo_path):
         return False
     return True
 
-def get_commits_by_user(repo_path, username=None):
+def get_commits_by_user(repo_path, username=None, start_date=None):
     # Ensure the repository is considered 'safe' by Git
     if not set_safe_directory(repo_path):
         return
@@ -27,7 +27,10 @@ def get_commits_by_user(repo_path, username=None):
         return
     
     # Define the time period: from 3 months ago to now
-    since_date = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
+    if start_date:
+        since_date = start_date
+    else:
+        since_date = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
 
     # Prepare git log command
     cmd = ["git", "-C", repo_path, "log", "--since", since_date, "--pretty=format:%H;%an"]
@@ -57,14 +60,17 @@ def get_commits_by_user(repo_path, username=None):
         print("To filter by a specific user, use the '--user' argument followed by the username.")
         print("Example: python3 git_commit_num.py --user username")
 
+    return commits_by_user
+
 
 def main():
     parser = argparse.ArgumentParser(description='Get commit counts by user from a git repository.')
     parser.add_argument('--user', type=str, help='Username to filter commit counts by.')
     parser.add_argument('--repo', type=str, default='/home/arg/oop-python-nycu', help='Path to the git repository.')
+    parser.add_argument('--start_date', type=str, default='2024-08-26', help='Start date for commit count calculation. Format: YYYY-MM-DD', nargs='?')
     args = parser.parse_args()
 
-    get_commits_by_user(args.repo, args.user)
+    commits_by_user = get_commits_by_user(args.repo, args.user, args.start_date)
 
 if __name__ == '__main__':
     main()
