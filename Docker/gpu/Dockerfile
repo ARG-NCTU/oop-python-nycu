@@ -103,6 +103,12 @@ RUN pip3 install ipytest
 RUN pip3 install soundfile librosa jiwer transformers[torch]
 
 RUN pip3 install cupy-cuda111
+
+##################################### CMake 3.30.0 #####################################
+RUN wget https://cmake.org/files/v3.30/cmake-3.30.0-linux-x86_64.sh
+RUN chmod +x cmake-3.30.0-linux-x86_64.sh
+RUN bash cmake-3.30.0-linux-x86_64.sh --skip-license --prefix=/usr/local
+
 ##################################### setting ###################################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/

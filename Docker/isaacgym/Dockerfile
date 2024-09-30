@@ -120,6 +120,7 @@ RUN python3.8 -m pip install \
     pytest \
     Pillow \
     tensorboard \
+    tensorflow \
     swig \
     warp-lang \
     urdfpy \
