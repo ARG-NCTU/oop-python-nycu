@@ -1,6 +1,6 @@
 import random
 
-from test_lec12_bubble_buggy_111511198 import *
+from tests.group3.test_lec12_bubble_buggy import *
 
 #testList = [1,3,5,7,2,6,25,18,13]
 
