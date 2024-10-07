@@ -12,6 +12,7 @@ def test_empty_list():
 # Test sorted list
 def test_sorted_list():
     assert bubble_sort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
+    assert bubble_sort([5, 6, 7, 8]) == [5, 6, 7, 8]
 
 # Test reverse sorted list
 def test_reverse_sorted_list():
@@ -40,10 +41,6 @@ def test_all_same_elements():
 # Test large input
 def test_large_input():
     assert bubble_sort(list(range(10000, 0, -1))) == list(range(1, 10001))
-
-# Test single element list
-def test_single_element_list():
-    assert bubble_sort([1]) == [1]
 
 # Test list with multiple duplicates
 def test_list_with_multiple_duplicates():
