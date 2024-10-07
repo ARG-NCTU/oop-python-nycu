@@ -9,3 +9,12 @@ def bubble_sort(arr):
     return arr
 
 print(bubble_sort([4, 2, 1, 8, 7, 6]))
+
+def test_bubble_sort():
+    assert bubble_sort([4, 2, 1, 8, 7, 6]) == [1, 2, 4, 6, 7, 8]
+    assert bubble_sort([5, 3, 8, 4, 2]) == [2, 3, 4, 5, 8]
+    assert bubble_sort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
+    assert bubble_sort([]) == []
+    assert bubble_sort([1]) == [1]
+
+test_bubble_sort()
