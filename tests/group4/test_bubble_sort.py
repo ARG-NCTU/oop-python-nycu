@@ -3,7 +3,7 @@
 import pytest
 import numpy as np
 import time
-from lec12_sorting import bubble_sort
+from sorting_111511236 import bubble_sort
 
 # Test empty list
 def test_empty_list():

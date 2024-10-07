@@ -1,7 +1,7 @@
 # test_bubble_sort.py
 
 import pytest
-from lec12_sorting import bubble_sort
+from sorting_111511236 import bubble_sort
 
 def test_bubble_sort():
     assert bubble_sort([3, 2, 1]) == [1, 2, 3]

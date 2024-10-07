@@ -1,6 +1,6 @@
 # pytest for merge_sort
 import pytest
-from lec12_sorting import merge_sort
+from sorting_111511236 import merge_sort
 import numpy as np
 import time
 

@@ -1,8 +1,7 @@
 import pytest
+import add_path
 import random
-from lec11_module import minkowskiDist
-from lec11_module import variance
-from lec11_module import Animal
+from mit_ocw_data_science.lec11.lec11_module import *
 import numpy as np
 import time
 
