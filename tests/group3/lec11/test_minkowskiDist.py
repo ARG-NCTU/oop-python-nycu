@@ -1,4 +1,13 @@
 import pytest
+"""
+This module contains unit tests for the `minkowskiDist` function from the `lec11_intro_to_ML` module.
+
+Functions:
+    test_minkowskiDist(): Tests the `minkowskiDist` function with various inputs and expected outputs.
+
+Usage:
+    Run this module with pytest to execute the tests.
+"""
 from lec11_intro_to_ML import minkowskiDist
 
 def test_minkowskiDist():
