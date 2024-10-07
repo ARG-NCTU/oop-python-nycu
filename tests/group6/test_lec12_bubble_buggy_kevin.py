@@ -29,7 +29,7 @@ def test_list_with_duplicates():
 
 # Test list with negatives
 def test_list_with_negatives():
-    assert bubble_sort([4, -1, 5, -9, 8, 7]) == [-9, -1, 4, 5, 7, 8]
+    assert bubble_sort([4, -1, 5, -9, 8, 7]) == [-9, -1, 4, 5, 7, 9]
 
 # Test single element list
 def test_single_element_list():
