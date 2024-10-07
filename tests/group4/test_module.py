@@ -27,6 +27,18 @@ def test_variance_random(): #with denomiator = n
         n = random.randint(1,100)
         X = [random.randint(0,100) for i in range(n)]
         assert variance(X) == sum([(x - sum(X)/n)**2 for x in X])/n
+
+# Test variance with single element
+def test_variance_single_element():
+    assert variance([1]) == 0.0
+    assert variance([-1]) == 0.0
+    assert variance([0]) == 0.0
+
+# Test variance with all same elements
+def test_variance_all_same_elements():
+    assert variance([2, 2, 2, 2, 2]) == 0.0
+    assert variance([-2, -2, -2, -2, -2]) == 0.0
+
     
 def test_minkowskiDist_p(): #v1 = [1,2,3] v2 = [4,5,6] p = 1~10
     v1 = [1,2,3]
