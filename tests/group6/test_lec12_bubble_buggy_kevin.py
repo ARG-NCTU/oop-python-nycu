@@ -25,7 +25,7 @@ def test_unsorted_list():
 
 # Test list with duplicates
 def test_list_with_duplicates():
-    assert bubble_sort([3, 2, 2, 5, 8, 6]) == [2, 2, 3, 5, 6, 8]
+    assert bubble_sort([3, 2, 2, 5, 8, 6]) == [2, 2, 3, 5, 7, 8]
 
 # Test list with negatives
 def test_list_with_negatives():
