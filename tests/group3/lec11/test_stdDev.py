@@ -15,7 +15,7 @@ from lec11_intro_to_ML import stdDev
 
 def test_stdDev():
     # Test with an empty list (this should raise an error like ZeroDivisionError)
-    with pytest.raises(ZeroDivisionError):
+    with pytest.raises(ValueError, match="The input list is empty"):
         stdDev([])
 
     # Test with a list of one element, standard deviation should be 0
