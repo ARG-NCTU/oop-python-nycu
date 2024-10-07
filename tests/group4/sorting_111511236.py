@@ -1,5 +1,3 @@
-import random
-import time
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -43,36 +41,5 @@ def insertion_sort(arr):
         arr[j + 1] = key
     return arr
 
-def test_sort(): 
-    n = 20    #n is the number of elements in the array
-    arr = [random.randint(0, 500) for i in range(n)]
-    print("Original array:", arr)
-    print("-----------------------------------------------")
-    #bubble_sort
-    arr_copy = arr.copy()
-    t1 = time.time()
-    bubble_sort(arr_copy)
-    t2 = time.time()
-    print("Bubble sorted array:   ", arr_copy)
-    print("Time taken:", t2 - t1)
-    print("-----------------------------------------------")
+
     
-    #insertion_sort
-    arr_copy = arr.copy()
-    t1 = time.time()
-    insertion_sort(arr_copy)
-    t2 = time.time()
-    print("Insertion sorted array:", arr_copy)
-    print("Time taken:", t2 - t1)
-    print("-----------------------------------------------")
-    
-    #merge_sort
-    arr_copy = arr.copy()
-    t1=time.time()
-    merge_sort(arr_copy)
-    t2=time.time()
-    print("Merge sorted array:    ", arr_copy)
-    print("Time taken:", t2 - t1)
-    print("-----------------------------------------------")
-    
-test_sort() # 20 elements in the array
