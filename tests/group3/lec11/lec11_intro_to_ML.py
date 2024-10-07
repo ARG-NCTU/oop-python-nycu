@@ -20,6 +20,9 @@ pylab.rcParams['ytick.major.size'] = 7
 pylab.rcParams['lines.markersize'] = 10
 
 def variance(X):
+    # division by zero when X is empty
+    if len(X) == 0:
+        raise ValueError("The input list is empty")
     mean = float(sum(X))/len(X)
     diffs = 0.0
     for x in X:
