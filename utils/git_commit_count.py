@@ -54,13 +54,14 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
         else:
             print(f"No commits found for user '{username}'. This might be due to a wrong username or the user made no commits in the last 3 months.")
     else:
+        commit_count = None
         for user, count in commits_by_user.items():
             print(f"User: {user}, Commit Count: {count}")
         print("\nNo username specified. Displaying all users' commit counts above.")
         print("To filter by a specific user, use the '--user' argument followed by the username.")
         print("Example: python3 git_commit_num.py --user username")
 
-    return commits_by_user
+    return commit_count
 
 
 def main():
@@ -70,7 +71,7 @@ def main():
     parser.add_argument('--start_date', type=str, default='2024-08-26', help='Start date for commit count calculation. Format: YYYY-MM-DD', nargs='?')
     args = parser.parse_args()
 
-    commits_by_user = get_commits_by_user(args.repo, args.user, args.start_date)
+    commit_count = get_commits_by_user(args.repo, args.user, args.start_date)
 
 if __name__ == '__main__':
     main()
