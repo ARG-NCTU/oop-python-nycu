@@ -37,6 +37,18 @@ def test_single_element_list():
 def test_all_same_elements():
     assert bubble_sort([2, 2, 2, 2, 2]) == [2, 2, 2, 2, 2]
 
+# Test large input
+def test_large_input():
+    assert bubble_sort(list(range(10000, 0, -1))) == list(range(1, 10001))
+
+# Test single element list
+def test_single_element_list():
+    assert bubble_sort([1]) == [1]
+
+# Test list with multiple duplicates
+def test_list_with_multiple_duplicates():
+    assert bubble_sort([4, 2, 2, 8, 7, 6, 4, 8, 7]) == [2, 2, 4, 4, 6, 7, 7, 8, 8]
+
 # Test random input and measure execution time
 def test_random_input():
     random_input = np.random.randint(0, 1000, size=1000).tolist()
