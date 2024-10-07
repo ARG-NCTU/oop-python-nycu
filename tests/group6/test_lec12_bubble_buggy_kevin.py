@@ -25,11 +25,11 @@ def test_unsorted_list():
 
 # Test list with duplicates
 def test_list_with_duplicates():
-    assert bubble_sort([3, 2, 2, 5, 8, 6]) == [2, 2, 3, 5, 7, 8]
+    assert bubble_sort([3, 2, 2, 5, 8, 6]) == [2, 2, 3, 5, 6, 8]
 
 # Test list with negatives
 def test_list_with_negatives():
-    assert bubble_sort([4, -1, 5, -9, 8, 7]) == [-9, -1, 4, 5, 7, 9]
+    assert bubble_sort([4, -1, 5, -9, 8, 7]) == [-9, -1, 4, 5, 7, 8]
 
 # Test single element list
 def test_single_element_list():
