@@ -2,17 +2,14 @@ def bubble_sort(arr):
     n = len(arr)
     ind = list(range(n))
     for i in range(n):
-        swapped = False
         for j in range(0, n-i-1):
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
                 ind[j], ind[j+1] = ind[j+1], ind[j]
-                swapped = True
-        print(f"After round {i+1}:")
-        print("Array: ", arr)
-        print("Index: ", ind, "\n")
-        if not swapped:
-            break
+        # print(f"After round {i+1}:")
+        # print("Array: ", arr)
+        # print("Index: ", ind, "\n")
+    return arr
 
 def quick_sort(arr, low, high, ind):
     if low < high:
@@ -31,9 +28,9 @@ def partition(arr, low, high, ind):
             ind[i], ind[j] = ind[j], ind[i]
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
     ind[i + 1], ind[high] = ind[high], ind[i + 1]
-    print(f"Partition at index {i+1}:")
-    print("Array: ", arr)
-    print("Index: ", ind, "\n")
+    # print(f"Partition at index {i+1}:")
+    # print("Array: ", arr)
+    # print("Index: ", ind, "\n")
     return i + 1
 
 def insertion_sort(arr):
@@ -49,30 +46,31 @@ def insertion_sort(arr):
             j -= 1
         arr[j + 1] = key
         ind[j + 1] = key_index
-        print(f"After inserting index {i}:")
-        print("Array: ", arr)
-        print("Index: ", ind, "\n")
+        # print(f"After inserting index {i}:")
+        # print("Array: ", arr)
+        # print("Index: ", ind, "\n")
+    return arr
 
-def sort_and_display(arr):
-    print("Initial array:", arr)
+# def sort_and_display(arr):
+#     print("Initial array:", arr)
     
-    # Bubble Sort
-    print("\nBubble Sort:")
-    arr_copy = arr[:]
-    bubble_sort(arr_copy)
-    print("=============================================================\n")
+#     # Bubble Sort
+#     print("\nBubble Sort:")
+#     arr_copy = arr[:]
+#     bubble_sort(arr_copy)
+#     print("=============================================================\n")
 
-    # Quick Sort
-    print("Quick Sort:")
-    arr_copy = arr[:]
-    quick_sort(arr_copy, 0, len(arr_copy) - 1, list(range(len(arr_copy))))
-    print("=============================================================\n")
+#     # Quick Sort
+#     print("Quick Sort:")
+#     arr_copy = arr[:]
+#     quick_sort(arr_copy, 0, len(arr_copy) - 1, list(range(len(arr_copy))))
+#     print("=============================================================\n")
 
-    # Insertion Sort
-    print("Insertion Sort:")
-    arr_copy = arr[:]
-    insertion_sort(arr_copy)
+#     # Insertion Sort
+#     print("Insertion Sort:")
+#     arr_copy = arr[:]
+#     insertion_sort(arr_copy)
 
-arr = [4, 1, 2, 2, 1, 3, 2]
+# arr = [4, 1, 2, 2, 1, 3, 2]
 
-sort_and_display(arr)
+# sort_and_display(arr)
