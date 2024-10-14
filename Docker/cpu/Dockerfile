@@ -94,7 +94,8 @@ RUN pip3 install \
     matplotlib \
     tensorflow \
     tensorboard \
-    pygwidgets
+    pygwidgets \
+    xlsxwriter
 
 # RUN pip install \
 #     torch==1.10 \
