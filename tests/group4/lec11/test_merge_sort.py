@@ -23,6 +23,18 @@ def test_merge_sort_negatives():
 def test_merge_sort_all_same():
     assert merge_sort([2, 2, 2, 2, 2]) == [2, 2, 2, 2, 2]
 
+# Test large input
+def test_merge_sort_large_input():
+    assert merge_sort(list(range(10000, 0, -1))) == list(range(1, 10001))
+
+# Test list with multiple duplicates
+def test_merge_sort_list_with_multiple_duplicates():
+    assert merge_sort([4, 2, 2, 8, 7, 6, 4, 8, 7]) == [2, 2, 4, 4, 6, 7, 7, 8, 8]
+
+# Test with large number
+def test_merge_sort_large_number():
+    assert merge_sort([1000000000, 100000000, 10000000, 1000000, 100000, 10000, 1000, 100, 10, 1]) == [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000]
+
 # Test random input and measure execution time
 def test_random_input():
     random_input = np.random.randint(0, 1000, size=1000).tolist()
