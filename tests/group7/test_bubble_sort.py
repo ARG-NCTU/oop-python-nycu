@@ -14,6 +14,6 @@ def test_bubble_sort():
         if sorted_arr == expected_output:
             print(f"Test case {i + 1}: Passed")
         else:
-            print(f"Test case {i + 1}: Failed. Expected {expected_output}, but got {sorted_arr}")
+            print(f"Test case {i + 1}: Failed. Correct Ans = {expected_output}, Your Ans = {sorted_arr}")
 
 test_bubble_sort()
