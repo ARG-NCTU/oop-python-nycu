@@ -345,6 +345,7 @@ def test_7_linear_search_int_list_factory_sorted(int_list_factory, num_elements)
     print(f'Time taken for linear search with {num_elements: 10d} elements sorted list: {end-start:.2e}')
 
 # test built-in 'in' operator for shuffled list and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_list_factory_shuffled(int_list_factory_shuffled, num_elements):
     # Create list spends some time therefore we create it before the timer
     shuffled_list = int_list_factory_shuffled(num_elements)
@@ -355,6 +356,7 @@ def test_7_in_operator_int_list_factory_shuffled(int_list_factory_shuffled, num_
     print(f'Time taken for \'in\' operator with {num_elements: 10d} elements shuffled list: {end-start:.2e}')
 
 # test built-in 'in' operator for list and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_list_factory(int_list_factory, num_elements):
     # Create list spends some time therefore we create it before the timer
     sorted_list = int_list_factory(num_elements)
@@ -374,6 +376,7 @@ def int_7_set_factory(int_list_factory):
 
 # set uses a hashtable as its underlying data structure, so it has the O(1) membership checking
 # test built-in 'set' container and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_set_factory(int_set_factory, num_elements):
     # Create set spends some time therefore we create it before the timer
     target_set = int_set_factory(num_elements)
@@ -393,6 +396,7 @@ def int_dict_factory(int_list_factory):
 
 # dict also uses a hashtable as its underlying data structure, so it has the O(1) membership checking
 # test built-in 'dict' container and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_dict_factory(int_dict_factory, num_elements):
     # Create dict spends some time therefore we create it before the timer
     target_dict = int_dict_factory(num_elements)
