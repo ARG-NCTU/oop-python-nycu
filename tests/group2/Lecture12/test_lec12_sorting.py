@@ -1,5 +1,5 @@
 import add_path
-from mit_ocw_exercises.lec12_sorting import *
+from lec12_sorting import *
 import pytest
 import time
 import random
