@@ -1,5 +1,5 @@
 import add_path
-import mit_ocw_exercises.lec11_complexity_part2 as lec11
+import lec11_complexity_part2 as lec11
 import pytest
 
 def test_bisect_search2():
