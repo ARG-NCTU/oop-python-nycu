@@ -283,3 +283,22 @@ See more prompts in [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab
 
 You will see something like this:
 <img width="822" alt="Screen Shot 2024-04-07 at 11 29 02 AM" src="https://github.com/ARG-NCTU/oop-python-nycu/assets/16217256/6109c880-ffe1-44c2-a387-8a482051d17b">
+
+## Git Commit With GitHub Copilot
+
+1. Add neovim as default editor
+```
+git config --global core.editor nvim
+```
+
+2. Do the regular `git add`;
+```
+git coomit
+```
+Now you will use neovim as editor.
+Within nvim call CopilotChat by
+```
+:CopilotChatCommitStaged
+```
+Press Ctrl + y to accept diff.
+
