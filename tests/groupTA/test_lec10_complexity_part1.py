@@ -406,6 +406,7 @@ def test_7_in_operator_int_dict_factory(int_dict_factory, num_elements):
     # print the result using exponential notation
     print(f'Time taken for \'dict\' container with {num_elements: 10d} elements: {end-start:.2e}')
 
+@pytest.mark.slow
 def test_2_linear_search():
     assert lec10.linear_search([3, 1, 4, 1, 5, 9, 2, 6], 3) == True 
     assert lec10.linear_search([3, 1, 4, 1, 5, 9, 2, 6], 7) == False
