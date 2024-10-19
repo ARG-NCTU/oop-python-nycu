@@ -33,9 +33,9 @@ jobs:
       - name: Run tests
         run: |
           pytest
-        working-directory: tests  
-      - name: Upload test results
-        uses: actions/upload-artifact@v5
-        with:
-          name: test-results
+        working-directory: tests/groupTA  
+          #       - name: Upload test results
+          #         uses: actions/upload-artifact@v5
+          #         with:
+          #           name: test-results
 
