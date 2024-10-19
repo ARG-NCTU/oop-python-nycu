@@ -293,7 +293,7 @@ git config --global core.editor nvim
 
 2. Do the regular `git add`;
 ```
-git coomit
+git commit
 ```
 Now you will use neovim as editor.
 Within nvim call CopilotChat by
