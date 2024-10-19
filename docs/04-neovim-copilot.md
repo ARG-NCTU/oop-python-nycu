@@ -248,7 +248,7 @@ EOF
 
 
 nmap <F5> :CopilotChatToggle<CR>
-nmap <F6> :CopilotChatExplain<CR>
+nmap <F6> :CopilotChatCommitStaged<CR>
 nmap <F7> :CopilotChatDocs<CR>
 ```
 
@@ -276,7 +276,7 @@ Within Nvim,
 3. <kbd>Ctrl</kbd> + <kbd>y</kbd> to replace the code with the ones with docs
 
 * <kbd>F5</kbd>: CopilotChatToggle
-* <kbd>F6</kbd>: CopilotChatExplain - Explain how it works
+* <kbd>F6</kbd>: CopilotChatCommitStaged - Commit the selected code with the generated comment
 * <kbd>F7</kbd>: CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
 
 See more prompts in [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
