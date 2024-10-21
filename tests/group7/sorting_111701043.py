@@ -50,7 +50,8 @@ def merge_sort(arr):
             k += 1
     return arr
 
-class test_SortingObject:
+
+class sortingObject:
     def __init__(self, sort_type):
         self.sort_type = sort_type
         self.arr = self.generate_random_array()
@@ -77,6 +78,6 @@ class test_SortingObject:
 # Example usage
 if __name__ == "__main__":
     for sort_func in [merge_sort, insertion_sort, bubble_sort]:
-        tester = test_SortingObject(sort_func)
+        tester = sortingObject(sort_func)
         tester.print_results()
         print("=============================================================")
