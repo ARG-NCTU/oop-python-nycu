@@ -1,7 +1,0 @@
-{
-    "python.testing.pytestArgs": [
-        "group7"
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
-}
