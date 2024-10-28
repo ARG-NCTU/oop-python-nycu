@@ -24,10 +24,6 @@ def test_linear_search_int_list(sample_data):
     assert lec10.linear_search(sample_data, 3) == True 
     assert lec10.linear_search(sample_data, 6) == False
 
-
-
-
-
 # test linear search with empty list
 def test_linear_search_empty_list(empty_list):
     assert lec10.linear_search(empty_list, 3) == False
@@ -48,7 +44,7 @@ def int_list_factory():
         return list(range(n))
     return _int_list
 
-
+@pytest.mark.slow
 def test_linear_search_int_list_factory(int_list_factory):
     assert lec10.linear_search(int_list_factory(10), 4) == True
     assert lec10.linear_search(int_list_factory(10000), 4) == True
@@ -112,8 +108,6 @@ def test_intersect_in():
     assert 2 in [1, 2, 3]
     assert 4 not in [1, 2, 3]
     
-
-
 # create a fixture factory that takes a parameter n for number of elements, and shuffles the list
 @pytest.fixture
 def int_list_factory_shuffled():
@@ -132,6 +126,7 @@ def num_elements(request):
 # pytest test_lec10_complexity_part1.py -s
 
 # test linear search with both shuffled and sorted list and calculate time
+@pytest.mark.slow
 def test_linear_search_int_list_factory_shuffled(int_list_factory_shuffled, num_elements):
     # Create list spends some time therefore we create it before the timer
     shuffled_list = int_list_factory_shuffled(num_elements)
@@ -141,6 +136,7 @@ def test_linear_search_int_list_factory_shuffled(int_list_factory_shuffled, num_
     # print the result using exponential notation
     print(f'Time taken for linear search with {num_elements: 10d} elements shuffled list: {end-start:.2e}')
 
+@pytest.mark.slow
 def test_linear_search_int_list_factory_sorted(int_list_factory, num_elements):
     # Create list spends some time therefore we create it before the timer
     sorted_list = int_list_factory(num_elements)
@@ -151,6 +147,7 @@ def test_linear_search_int_list_factory_sorted(int_list_factory, num_elements):
     print(f'Time taken for linear search with {num_elements: 10d} elements sorted list: {end-start:.2e}')
 
 # test built-in 'in' operator for shuffled list and calculate time
+@pytest.mark.slow
 def test_in_operator_int_list_factory_shuffled(int_list_factory_shuffled, num_elements):
     # Create list spends some time therefore we create it before the timer
     shuffled_list = int_list_factory_shuffled(num_elements)
@@ -208,7 +205,6 @@ def test_in_operator_int_dict_factory(int_dict_factory, num_elements):
     # print the result using exponential notation
     print(f'Time taken for \'dict\' container with {num_elements: 10d} elements: {end-start:.2e}')
 
-
 @pytest.fixture
 def empty_7_list():
     return []
@@ -228,10 +224,6 @@ def test_7_linear_search_int_list(sample_7_data):
     assert lec10.linear_search(sample_7_data, 6) == True 
     assert lec10.linear_search(sample_7_data, 5) == False
 
-
-
-
-
 # test linear search with empty list
 def test_7_linear_search_empty_list(empty_7_list):
     assert lec10.linear_search(empty_7_list, 3) == False
@@ -240,6 +232,7 @@ def test_7_linear_search_empty_list(empty_7_list):
 def int_7_list(n):
     return list(range(n))
 
+@pytest.mark.slow
 def test_7_linear_search_int_list():
     assert lec10.linear_search(int_7_list(40), 4) == True
     assert lec10.linear_search(int_7_list(8000), 4) == True
@@ -252,7 +245,7 @@ def int_7_list_factory():
         return list(range(n))
     return _int_list
 
-
+@pytest.mark.slow
 def test_7_linear_search_int_list_factory(int_list_factory):
     assert lec10.linear_search(int_list_factory(10), 8) == True
     assert lec10.linear_search(int_list_factory(10000), 8) == True
@@ -265,7 +258,6 @@ def num_7_elements(request):
 
 def test_7_linear_search_int_list_factory_enum(int_list_factory, num_elements):
     assert lec10.linear_search(int_list_factory(num_elements), 4) == True
-
 
 @pytest.fixture
 def sample1():
@@ -303,8 +295,6 @@ def test_7_search(test_7_list):
     assert lec10.search(test_7_list,18) == True
     assert lec10.search(test_7_list,7) == False
 
-
-
 # test intersection
 def test_7_intersect():
     assert lec10.intersect([1, 2, 3, 2, 3], [2, 3, 4]) == [2, 3]
@@ -316,8 +306,6 @@ def test_7_intersect_in():
     assert 2 in [1, 2, 3]
     assert 4 not in [1, 2, 3]
     
-
-
 # create a fixture factory that takes a parameter n for number of elements, and shuffles the list
 @pytest.fixture
 def int_list_factory_shuffled():
@@ -336,6 +324,7 @@ def num_elements(request):
 # pytest test_lec10_complexity_part1.py -s
 
 # test linear search with both shuffled and sorted list and calculate time
+@pytest.mark.slow
 def test_7_linear_search_int_list_factory_shuffled(int_list_factory_shuffled, num_elements):
     # Create list spends some time therefore we create it before the timer
     shuffled_list = int_list_factory_shuffled(num_elements)
@@ -345,6 +334,7 @@ def test_7_linear_search_int_list_factory_shuffled(int_list_factory_shuffled, nu
     # print the result using exponential notation
     print(f'Time taken for linear search with {num_elements: 10d} elements shuffled list: {end-start:.2e}')
 
+@pytest.mark.slow
 def test_7_linear_search_int_list_factory_sorted(int_list_factory, num_elements):
     # Create list spends some time therefore we create it before the timer
     sorted_list = int_list_factory(num_elements)
@@ -355,6 +345,7 @@ def test_7_linear_search_int_list_factory_sorted(int_list_factory, num_elements)
     print(f'Time taken for linear search with {num_elements: 10d} elements sorted list: {end-start:.2e}')
 
 # test built-in 'in' operator for shuffled list and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_list_factory_shuffled(int_list_factory_shuffled, num_elements):
     # Create list spends some time therefore we create it before the timer
     shuffled_list = int_list_factory_shuffled(num_elements)
@@ -365,6 +356,7 @@ def test_7_in_operator_int_list_factory_shuffled(int_list_factory_shuffled, num_
     print(f'Time taken for \'in\' operator with {num_elements: 10d} elements shuffled list: {end-start:.2e}')
 
 # test built-in 'in' operator for list and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_list_factory(int_list_factory, num_elements):
     # Create list spends some time therefore we create it before the timer
     sorted_list = int_list_factory(num_elements)
@@ -384,6 +376,7 @@ def int_7_set_factory(int_list_factory):
 
 # set uses a hashtable as its underlying data structure, so it has the O(1) membership checking
 # test built-in 'set' container and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_set_factory(int_set_factory, num_elements):
     # Create set spends some time therefore we create it before the timer
     target_set = int_set_factory(num_elements)
@@ -403,6 +396,7 @@ def int_dict_factory(int_list_factory):
 
 # dict also uses a hashtable as its underlying data structure, so it has the O(1) membership checking
 # test built-in 'dict' container and calculate time
+@pytest.mark.slow
 def test_7_in_operator_int_dict_factory(int_dict_factory, num_elements):
     # Create dict spends some time therefore we create it before the timer
     target_dict = int_dict_factory(num_elements)
@@ -412,8 +406,7 @@ def test_7_in_operator_int_dict_factory(int_dict_factory, num_elements):
     # print the result using exponential notation
     print(f'Time taken for \'dict\' container with {num_elements: 10d} elements: {end-start:.2e}')
 
-
-
+@pytest.mark.slow
 def test_2_linear_search():
     assert lec10.linear_search([3, 1, 4, 1, 5, 9, 2, 6], 3) == True 
     assert lec10.linear_search([3, 1, 4, 1, 5, 9, 2, 6], 7) == False
@@ -432,14 +425,15 @@ def test_2_intersect():
     assert lec10.intersect([1, 2, 3], [4, 5, 6]) == []
     assert lec10.intersect([], [4, 5, 6]) == []
 
-
 def test_5_intersect_in():
     assert 2 in [1, 2, 3]
     assert 4 not in [1, 2, 3]   
+
 def test_5_intersect():
     assert lec10.intersect([1, 2, 3, 2, 3], [2, 3, 4]) == [2, 3]
     assert lec10.intersect([1, 2, 3], [4, 5, 6]) == []
     assert lec10.intersect([], [4, 5, 6]) == []
+
 def test_5_inSubset():
     assert lec10.isSubset([2,3,4], [1,2,3,4,5]) == True
     assert lec10.isSubset([2,7], [1,2,3,4,5]) == False
