@@ -133,4 +133,4 @@ def sort_and_display(arr):
 # Example usage
 arr = [4, 1, 2, 2, 1, 3, 2]
 sort_and_display(arr)
-
+# commit test 2
