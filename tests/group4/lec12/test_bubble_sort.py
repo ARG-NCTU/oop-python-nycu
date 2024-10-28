@@ -39,6 +39,7 @@ def test_all_same_elements():
     assert bubble_sort([2, 2, 2, 2, 2]) == [2, 2, 2, 2, 2]
 
 # Test large input
+@pytest.mark.slow
 def test_large_input():
     assert bubble_sort(list(range(10000, 0, -1))) == list(range(1, 10001))
 
@@ -47,6 +48,7 @@ def test_list_with_multiple_duplicates():
     assert bubble_sort([4, 2, 2, 8, 7, 6, 4, 8, 7]) == [2, 2, 4, 4, 6, 7, 7, 8, 8]
 
 # Test random input and measure execution time
+@pytest.mark.slow
 def test_random_input():
     random_input = np.random.randint(0, 1000, size=1000).tolist()
     start_time = time.time()
