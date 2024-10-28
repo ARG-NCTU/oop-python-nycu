@@ -33,7 +33,7 @@ jobs:
           pip install pytest-skip-slow
       - name: Run G3 tests
         run: |
-          pip install -r tests/group3/requirements.txt
+          pip install -r requirements.txt
           pytest
         working-directory: tests/group3  
       - name: Run tests
