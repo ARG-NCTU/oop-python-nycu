@@ -73,6 +73,7 @@ RUN pip3 install \
     torchaudio \
     torchvision \
     quart \
+    pytest-skip-slow \
     rich \
     opencv-python
     
