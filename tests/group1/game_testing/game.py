@@ -1,40 +1,40 @@
 import pygame
 import sys
+from script.entity import physics_entity
+from script.utils import load_image
 
 #constants
 SCREEN_Width = 640
 SCREEN_HEIGHT = 480
+HALF_SCREEN_WIDTH = SCREEN_Width // 2
+HALF_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
+FPS = 60
 
 class main_game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("Koakuma's Adventure")
         self.screen = pygame.display.set_mode((SCREEN_Width, SCREEN_HEIGHT))
+        #放大兩倍
+        self.display = pygame.Surface((HALF_SCREEN_WIDTH, HALF_SCREEN_HEIGHT))
 
         self.clock = pygame.time.Clock()
 
-        self.image = pygame.image.load("data/images/clouds/cloud_1.png")
-        self.image.set_colorkey((0,0,0))
+        self.player = physics_entity(self, "player", (100,200), (8,15))
 
-        self.image_position = [100,200] 
-        self.movements = [False, False]
+        self.movements = [False,False]
+
+        self.assets = {
+            "player": load_image("entities/player.png")
+        }
 
         self.collision_area = pygame.Rect(50,50,300,400)
     def run(self):
         while True:
-            self.screen.fill((14,219,248))
+            self.display.fill((14,219,248))
 
-            img_rect = pygame.Rect(self.image_position[0], self.image_position[1], self.image.get_width(), self.image.get_height())
-
-            if img_rect.colliderect(self.collision_area):
-                pygame.draw.rect(self.screen, (255,0,0), self.collision_area)
-            else:
-                pygame.draw.rect(self.screen, (0,255,0), self.collision_area)
-
-            self.image_position[0] += (self.movements[1] - self.movements[0]) * 5
-            self.screen.blit(self.image, self.image_position)   
-
-            
+            self.player.update((self.movements[1] - self.movements[0],0))
+            self.player.render(self.display)
 
 
             for event in pygame.event.get():
@@ -53,8 +53,8 @@ class main_game:
                         self.movements[1] = False
 
 
-            
+            self.screen.blit(pygame.transform.scale(self.display, (SCREEN_Width, SCREEN_HEIGHT)), (0,0))
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(FPS)
 
 main_game().run()
