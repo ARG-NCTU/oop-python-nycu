@@ -14,5 +14,8 @@ class physics_entity:
         self.position[0] += frame_movement[0]
         self.position[1] += frame_movement[1]
 
+
+        self.velocity[1] = min(5, self.velocity[1] + 0.1) #gravity
+
     def render(self,surface):
         surface.blit(self.main_game.assets['player'],self.position)
