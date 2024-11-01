@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+import time
 from script.entity import physics_entity
 from script.utils import load_image
 from script.utils import load_tile
@@ -23,7 +24,7 @@ class main_game:
 
         self.clock = pygame.time.Clock()
 
-        self.player = physics_entity(self, "player", (100,200), (8,15))
+        self.player = physics_entity(self, "player", (100,100), (8,15))
 
         self.movements = [False,False]
 
@@ -44,9 +45,13 @@ class main_game:
 
             self.tilemap.render(self.display) #render background
 
-            self.player.update((self.movements[1] - self.movements[0],0)) 
+            self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
             self.player.render(self.display) #render player
 
+
+            self.max_jump_height = -3  # Maximum jump velocity
+            self.min_jump_height = -1   # Minimum jump velocity
+            self.jump_start_time = None
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -57,6 +62,8 @@ class main_game:
                         self.movements[0] = True
                     if event.key == pygame.K_RIGHT:
                         self.movements[1] = True
+                    if event.key == pygame.K_UP:
+                        self.player.velocity[1] = -3
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
                         self.movements[0] = False
