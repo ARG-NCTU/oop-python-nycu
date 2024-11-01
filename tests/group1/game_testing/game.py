@@ -1,7 +1,10 @@
 import pygame
 import sys
+import os
 from script.entity import physics_entity
 from script.utils import load_image
+from script.utils import load_tile
+from script.tilemap import Tilemap
 
 #constants
 SCREEN_Width = 640
@@ -25,16 +28,24 @@ class main_game:
         self.movements = [False,False]
 
         self.assets = {
+            "decor" : load_tile("tiles/decor"),
+            "stone" : load_tile("tiles/stone"),
+            "grass" : load_tile("tiles/grass"),
+            "large_decor" : load_tile("tiles/large_decor"),
             "player": load_image("entities/player.png")
         }
 
-        self.collision_area = pygame.Rect(50,50,300,400)
+        self.tilemap = Tilemap(self)
+
+
     def run(self):
         while True:
             self.display.fill((14,219,248))
 
-            self.player.update((self.movements[1] - self.movements[0],0))
-            self.player.render(self.display)
+            self.tilemap.render(self.display) #render background
+
+            self.player.update((self.movements[1] - self.movements[0],0)) 
+            self.player.render(self.display) #render player
 
 
             for event in pygame.event.get():
