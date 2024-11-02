@@ -248,7 +248,7 @@ EOF
 
 
 nmap <F5> :CopilotChatToggle<CR>
-nmap <F6> :CopilotChatExplain<CR>
+nmap <F6> :CopilotChatCommitStaged<CR>
 nmap <F7> :CopilotChatDocs<CR>
 ```
 
@@ -276,10 +276,29 @@ Within Nvim,
 3. <kbd>Ctrl</kbd> + <kbd>y</kbd> to replace the code with the ones with docs
 
 * <kbd>F5</kbd>: CopilotChatToggle
-* <kbd>F6</kbd>: CopilotChatExplain - Explain how it works
+* <kbd>F6</kbd>: CopilotChatCommitStaged - Commit the selected code with the generated comment
 * <kbd>F7</kbd>: CopilotChatDocs - Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.
 
 See more prompts in [Link](https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file)
 
 You will see something like this:
 <img width="822" alt="Screen Shot 2024-04-07 at 11 29 02 AM" src="https://github.com/ARG-NCTU/oop-python-nycu/assets/16217256/6109c880-ffe1-44c2-a387-8a482051d17b">
+
+## Git Commit With GitHub Copilot
+
+1. Add neovim as default editor
+```
+git config --global core.editor nvim
+```
+
+2. Do the regular `git add`;
+```
+git commit
+```
+Now you will use neovim as editor.
+Within nvim call CopilotChat by
+```
+:CopilotChatCommitStaged
+```
+Press Ctrl + y to accept diff.
+
