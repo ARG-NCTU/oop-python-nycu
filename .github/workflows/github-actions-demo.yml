@@ -25,6 +25,7 @@ jobs:
   Pull-Docker-Image:
     runs-on: ubuntu-latest
     container: argnctu/oop:latest
+    options: --user root
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
