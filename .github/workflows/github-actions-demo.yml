@@ -17,6 +17,22 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
+  # Define the job to use a Docker container
+  # The job is named Pull-Docker-Image
+  # The job runs on argnctu/oop:latest Docker container
+  # The job executes the following steps:
+  # Pull the Docker image
+  Pull-Docker-Image:
+    runs-on: ubuntu-latest
+    container: argnctu/oop:latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Pull Docker image
+        run: docker pull argnctu/oop:latest
+      - name: List Docker images
+        run: docker images
+
   Run-Pytest-Tests:
     runs-on: ubuntu-latest
     steps:
