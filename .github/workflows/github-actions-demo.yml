@@ -34,7 +34,11 @@ jobs:
       - name: Run G3 tests
         run: |
           pytest
-        working-directory: tests/group3  
+        working-directory: tests/group3 
+      - name: Run G4 tests
+        run: |
+          pytest
+        working-directory: tests/group4
       - name: Run tests
         run: |
           pytest
