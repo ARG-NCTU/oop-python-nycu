@@ -1,4 +1,5 @@
 import pygame
+import pygame.joystick
 import sys
 import os
 import time
@@ -69,6 +70,21 @@ class main_game:
                         self.movements[0] = False
                     if event.key == pygame.K_RIGHT:
                         self.movements[1] = False
+
+                #joystick control
+                if event.type == pygame.JOYAXISMOTION:
+                    if event.axis == 0:
+                        if event.value < -0.5:
+                            self.movements[0] = True
+                        elif event.value > 0.5:
+                            self.movements[1] = True
+                        else:
+                            self.movements[0] = False
+                            self.movements[1] = False
+
+                if event.type == pygame.JOYBUTTONDOWN:
+                    if event.button == 0:
+                        self.player.velocity[1] = -3
 
 
             self.screen.blit(pygame.transform.scale(self.display, (SCREEN_Width, SCREEN_HEIGHT)), (0,0))
