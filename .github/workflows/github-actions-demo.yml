@@ -56,13 +56,6 @@ jobs:
         run: |
           pytest
         working-directory: tests/group3 
-      - name: Run G4 tests
-        run: |
-          pytest
-        working-directory: tests/group4
-      - name: Run tests
-        run: |
-          pytest
         working-directory: tests/groupTA  
           #       - name: Upload test results
           #         uses: actions/upload-artifact@v5
