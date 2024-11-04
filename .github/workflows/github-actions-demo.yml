@@ -17,6 +17,26 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
+  # Define the job to use a Docker container
+  # The job is named Pull-Docker-Image
+  # The job runs on argnctu/oop:latest Docker container
+  # The job executes the following steps:
+  # Pull the Docker image
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1
+    steps:
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+
   Run-Pytest-Tests:
     runs-on: ubuntu-latest
     steps:
@@ -31,11 +51,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest
           pip install pytest-skip-slow
+          pip install matplotlib numpy
       - name: Run G3 tests
         run: |
           pip install -r requirements.txt
           pytest
         working-directory: tests/group3  
+      - name: Run G8 tests
+        run: |
+          pytest
+        working-directory: tests/group8
       - name: Run tests
         run: |
           pytest
