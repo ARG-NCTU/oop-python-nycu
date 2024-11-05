@@ -179,6 +179,10 @@ RUN pip install mkdocs-mermaid2-plugin
 
 ################################# llama #####################################
 RUN pip3 install llama-cpp-python
+
+################################# git commit #####################################
+RUN pip3 install xlsxwriter
+
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
