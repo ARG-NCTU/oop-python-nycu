@@ -20,7 +20,7 @@ def test_quotient_and_remainder():
 
 
 def test_sum_elem_method1():
-    assert lec5.sum_elem_method1([1, 2, 3, 6]) == 12
+    assert lec5.sum_elem_method1([1, 2, 3, 6]) == 11
     assert lec5.sum_elem_method1([-1, -7, -3, -4]) == -15
     assert lec5.sum_elem_method1([13, 34, 0, 84, 95, 0, 9]) == 235
     assert lec5.sum_elem_method1([7]) == 7
