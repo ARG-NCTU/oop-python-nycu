@@ -20,13 +20,19 @@ pylab.rcParams['ytick.major.size'] = 7
 pylab.rcParams['lines.markersize'] = 10
 
 def variance(X):
+    if len(X) == 0:
+        print("Error: The input list can not be empty.")
+        return 0
     mean = float(sum(X))/len(X)
     diffs = 0.0
     for x in X:
         diffs += (x - mean)**2
-    return diffs/len(X)
+    return diffs / (len(X))  # 使用母體變異數公式
 
 def stdDev(X):
+    if len(X) == 0:
+        print("Error: The input list be empty.")
+        return 0
     return variance(X)**0.5
  
 def minkowskiDist(v1, v2, p):
