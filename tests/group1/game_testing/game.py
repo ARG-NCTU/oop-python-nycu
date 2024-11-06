@@ -18,6 +18,12 @@ FPS = 60
 class main_game:
     def __init__(self):
         pygame.init()
+        pygame.joystick.init()
+        self.joystick = None
+        if pygame.joystick.get_count() > 0:
+            self.joystick = pygame.joystick.Joystick(0)
+            self.joystick.init()
+
         pygame.display.set_caption("Koakuma's Adventure")
         self.screen = pygame.display.set_mode((SCREEN_Width, SCREEN_HEIGHT))
         #放大兩倍
@@ -39,15 +45,21 @@ class main_game:
 
         self.tilemap = Tilemap(self)
 
+        self.camera = [0,0] #camera position = offset of everything
+
 
     def run(self):
         while True:
             self.display.fill((14,219,248))
 
-            self.tilemap.render(self.display) #render background
+            self.camera[0] += (self.player.rect().centerx - self.display.get_width()/2 -self.camera[0])/20 #camera follow player x
+            self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y
+            render_camera = [int(self.camera[0]), int(self.camera[1])]
+
+            self.tilemap.render(self.display,offset=render_camera) #render background
 
             self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
-            self.player.render(self.display) #render player
+            self.player.render(self.display,offset=render_camera) #render player
 
 
             self.max_jump_height = -3  # Maximum jump velocity

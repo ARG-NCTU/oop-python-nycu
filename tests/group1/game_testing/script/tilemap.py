@@ -1,6 +1,6 @@
 import pygame
 
-NEIGHBORS = [(0,1), (0,-1), (1,0), (-1,0), (1,1), (-1,-1), (1,-1), (-1,1)]
+NEIGHBORS = [(0,0),(0,1), (0,-1), (1,0), (-1,0), (1,1), (-1,-1), (1,-1), (-1,1)]
 HAVE_COLLISION = {'stone', 'grass'}
 
 class small_tile:
@@ -27,14 +27,14 @@ class Tilemap:
             self.offgrid_tiles.append(small_tile('decor', 2, (i*16, 32)))
             self.offgrid_tiles.append(small_tile('decor', 3, (i*16, 48)))
 
-    def render(self, surface):
+    def render(self, surface, offset = [0,0]):
 
         for tile in self.offgrid_tiles:
-            surface.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0], tile.pos[1]))
+            surface.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0]-offset[0], tile.pos[1]-offset[1]))
 
         for location in self.tilemap:
             tile = self.tilemap[location]
-            surface.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0]*self.tile_size, tile.pos[1]*self.tile_size))
+            surface.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0]*self.tile_size - offset[0], tile.pos[1]*self.tile_size-offset[1]))
 
     def tiles_around(self, pos):
         tiles = []
