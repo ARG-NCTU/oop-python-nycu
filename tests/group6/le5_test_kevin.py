@@ -7,7 +7,7 @@ import pytest
 def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(27, 6) == (4, 1)
     assert lec5.quotient_and_remainder(20, 7) == (2, 6)
-    assert lec5.quotient_and_remainder(25, 8) == (3, 1)
+    assert lec5.quotient_and_remainder(25, 8) == (5, 1)
     assert lec5.quotient_and_remainder(27, 9) == (3, 0)
     assert lec5.quotient_and_remainder(22, 10) == (2, 2)
     assert lec5.quotient_and_remainder(28, 11) == (2, 6)
