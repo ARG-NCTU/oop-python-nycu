@@ -3,9 +3,11 @@ import pygame.joystick
 import sys
 import os
 import time
-from script.entity import physics_entity
+from script.entity import physics_entity, Player
 from script.utils import load_image
 from script.utils import load_tile
+from script.utils import load_images
+from script.utils import Animation
 from script.tilemap import Tilemap
 
 #constants
@@ -31,8 +33,6 @@ class main_game:
 
         self.clock = pygame.time.Clock()
 
-        self.player = physics_entity(self, "player", (100,100), (8,15))
-
         self.movements = [False,False]
 
         self.assets = {
@@ -41,8 +41,16 @@ class main_game:
             "grass" : load_tile("tiles/grass"),
             "large_decor" : load_tile("tiles/large_decor"),
             "player": load_image("entities/player.png"),
-            "background": load_image("background.png")
+            "background": load_image("background.png"),
+            "player/idle" : Animation(load_images("entities/player/idle"),duration=6,loop=True),
+            "player/run" : Animation(load_images("entities/player/run"),duration=4,loop=True),
+            "player/jump" : Animation(load_images("entities/player/jump"),duration=5,loop=True),
+            "player/slide" : Animation(load_images("entities/player/slide"),duration=5,loop=True),
+            "player/wall_slide" : Animation(load_images("entities/player/wall_slide"),duration=5,loop=True)
+
         }
+
+        self.player = Player(self, (100,100), (8,15))
 
         self.tilemap = Tilemap(self)
 
