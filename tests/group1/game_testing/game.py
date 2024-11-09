@@ -40,7 +40,8 @@ class main_game:
             "stone" : load_tile("tiles/stone"),
             "grass" : load_tile("tiles/grass"),
             "large_decor" : load_tile("tiles/large_decor"),
-            "player": load_image("entities/player.png")
+            "player": load_image("entities/player.png"),
+            "background": load_image("background.png")
         }
 
         self.tilemap = Tilemap(self)
@@ -50,7 +51,7 @@ class main_game:
 
     def run(self):
         while True:
-            self.display.fill((14,219,248))
+            self.display.blit(self.assets['background'], (0,0))
 
             self.camera[0] += (self.player.rect().centerx - self.display.get_width()/2 -self.camera[0])/20 #camera follow player x
             self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y

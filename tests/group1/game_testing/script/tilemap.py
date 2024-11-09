@@ -29,12 +29,18 @@ class Tilemap:
 
     def render(self, surface, offset = [0,0]):
 
+        for x in range(offset[0]//self.tile_size, (offset[0]+surface.get_width())//self.tile_size + 1):
+            for y in range(offset[1]//self.tile_size, (offset[1]+surface.get_height())//self.tile_size + 1):
+                if str(x) + ";" + str(y) in self.tilemap:
+                    tile = self.tilemap[str(x) + ";" + str(y)]
+                    surface.blit(self.game.assets[tile.type][tile.variant], (x*self.tile_size - offset[0], y*self.tile_size-offset[1]))
+
         for tile in self.offgrid_tiles:
             surface.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0]-offset[0], tile.pos[1]-offset[1]))
 
-        for location in self.tilemap:
-            tile = self.tilemap[location]
-            surface.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0]*self.tile_size - offset[0], tile.pos[1]*self.tile_size-offset[1]))
+        #for location in self.tilemap:
+        #    tile = self.tilemap[location]
+        #    surface.blit(self.game.assets[tile.type][tile.variant], (tile.pos[0]*self.tile_size - offset[0], tile.pos[1]*self.tile_size-offset[1]))
 
     def tiles_around(self, pos):
         tiles = []
