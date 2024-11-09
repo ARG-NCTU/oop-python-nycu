@@ -8,7 +8,7 @@ from script.utils import load_image
 from script.utils import load_tile
 from script.utils import load_images
 from script.utils import Animation
-from script.tilemap import Tilemap
+from script.tilemap import Tilemap, small_tile
 
 #constants
 SCREEN_Width = 640
