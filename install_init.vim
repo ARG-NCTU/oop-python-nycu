@@ -13,6 +13,9 @@ Plug 'preservim/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'majutsushi/tagbar'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
 call plug#end()
 
 set number
@@ -35,16 +38,13 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 :nnoremap <S-Tab> :bprevious!<CR>
 :nnoremap <C-X> :bp<bar>sp<bar>bn<bar>bd<CR>
 
-nmap <F8> :TagbarToggle<CR>
+nmap <F7> :CopilotChatDocs<CR>
+nmap <F8> :CopilotChatCommitStaged<CR>
+nmap <F9> :CopilotChatToggle<CR>
+
+nmap <F10> :TagbarToggle<CR>
 autocmd vimEnter *.py nmap <F9> <Esc>:w<CR>:!clear;python3 %<CR>
 autocmd vimEnter *.cpp map <F9> :w <CR> :!clear ; g++ --std=c++17 %; if [ -f a.out ]; then time ./a.out; rm a.out; fi <CR>
-:vnoremap <f10> :!python3<CR>
-
-call plug#begin()
-Plug 'zbirenbaum/copilot.lua'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
-call plug#end()
 
 lua << EOF
 require("CopilotChat").setup {
@@ -57,6 +57,3 @@ require("CopilotChat").setup {
 EOF
 
 
-nmap <F5> :CopilotChatToggle<CR>
-nmap <F6> :CopilotChatCommitStaged<CR>
-nmap <F7> :CopilotChatDocs<CR>

@@ -1,6 +1,7 @@
 sudo add-apt-repository ppa:neovim-ppa/stable  -y
 sudo apt update -y
 sudo apt install neovim  -y
+sudo apt install ctags -y
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 source ~/.bashrc
