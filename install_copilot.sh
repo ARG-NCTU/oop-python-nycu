@@ -16,3 +16,4 @@ sudo apt-get install neovim  -y
 git config --global core.editor nvim
 cp ./install_init.vim ~/.config/nvim/init.vim
 nvim --headless +PlugInstall +qall
+echo "Install Complete!" 
