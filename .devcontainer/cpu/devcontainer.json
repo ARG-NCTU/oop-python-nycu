@@ -2,7 +2,7 @@
     "name": "Custom Python Development Container",
     "build": {
       "dockerfile": "Docker/cpu/Dockerfile",
-      "context": "../.."
+      "context": ".."
     },
     "settings": {
       "editor.fontSize": 14,
@@ -32,7 +32,6 @@
     "forwardPorts": [22],
     "remoteUser": "arg",
     "mounts": [
-      "source=${localWorkspaceFolder},target=/workspace,type=bind",
       "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
       "source=/etc/localtime,target=/etc/localtime,type=bind",
       "source=/dev,target=/dev,type=bind",
