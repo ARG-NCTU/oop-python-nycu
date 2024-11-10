@@ -1,3 +1,5 @@
+import pytest
+
 def couting_sort(arr):
     n = len(arr)
     output = [0] * n
