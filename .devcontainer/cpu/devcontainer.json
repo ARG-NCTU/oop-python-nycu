@@ -2,7 +2,7 @@
     "name": "Custom Python Development Container",
     "build": {
       "dockerfile": "Dockerfile",
-      "context": "."
+      "context": "../../Docker/cpu/"
     },
     "settings": {
       "editor.fontSize": 14,
@@ -26,7 +26,8 @@
     "containerEnv": {
       "DEBIAN_FRONTEND": "noninteractive",
       "LANG": "C.UTF-8",
-      "LC_ALL": "C.UTF-8"
+      "LC_ALL": "C.UTF-8",
+      "DEVCONTAINER_TYPE": "cpu"
     },
     "forwardPorts": [22],
     "remoteUser": "arg",
@@ -53,7 +54,7 @@
       "-v", "/var/run/docker.sock:/var/run/docker.sock",
       "-w", "/home/arg/oop-python-nycu"
     ],
-    "postStartCommand": "echo 'Welcome to the custom devcontainer!'",
+    "postStartCommand": "echo 'Starting $DEVCONTAINER_TYPE DevContainer...'",
     "remoteUser": "arg"
   }
   
