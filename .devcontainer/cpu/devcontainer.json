@@ -2,7 +2,7 @@
     "name": "Custom Python Development Container",
     "build": {
       "dockerfile": "Dockerfile",
-      "context": "../../Docker/cpu/"
+      "context": "../../Docker/cpu"
     },
     "settings": {
       "editor.fontSize": 14,
