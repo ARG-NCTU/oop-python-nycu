@@ -1,8 +1,9 @@
 {
     "name": "Custom Python Development Container",
-    "build": {
-      "dockerfile": "../../Docker/cpu/Dockerfile"
-    },
+    // "build": {
+    //   "dockerfile": "../../Docker/cpu/Dockerfile"
+    // },
+    "image": "argnctu/oop:latest",
     "settings": {
       "editor.fontSize": 14,
       "python.pythonPath": "/usr/bin/python3",
