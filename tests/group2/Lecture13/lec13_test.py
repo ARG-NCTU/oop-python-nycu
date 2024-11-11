@@ -3,7 +3,7 @@ import add_path
 import random
 from mit_ocw_data_science.lec12.cluster import *
 import numpy as np
-from mit_ocw_data_science.lec12 import TitanicPassengers.txt
+from mit_ocw_data_science.lec13 import TitanicPassengers.txt
 
 def test_minkowski_dist():
     assert minkowski_dist([0,0], [3,4], 2) == 5.0
