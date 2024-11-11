@@ -31,7 +31,7 @@ jobs:
       ports:
         - 80
       volumes:
-        - argnctu/oop:latest
+        - my_docker_volume:/volume_mount
       options: --cpus 1
     steps:
       - name: Check for dockerenv file
