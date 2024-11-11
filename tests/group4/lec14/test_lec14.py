@@ -20,13 +20,15 @@ def test_passenger_distance():
 
 def test_titanic_data_loading():
     # Test Titanic data loading function
-    examples = buildTitanicExamples('TitanicPassengers.txt')
+    file_path = os.path.join(os.path.dirname(__file__), '../../../src/mit_ocw_data_science/lec13/TitanicPassengers.txt')
+    examples = buildTitanicExamples(file_path)
     assert len(examples) > 0, "Failed to load Titanic data"
     print("Titanic data loading test passed.")
     
 def test_knn_classification():
     # Run a basic KNN classification
-    examples = buildTitanicExamples('TitanicPassengers.txt')
+    file_path = os.path.join(os.path.dirname(__file__), '../../../src/mit_ocw_data_science/lec13/TitanicPassengers.txt')
+    examples = buildTitanicExamples(file_path)
     trainingSet, testSet = split80_20(examples)
     truePos, falsePos, trueNeg, falseNeg = KNearestClassify(trainingSet, testSet, 'Survived', k=3)
     
