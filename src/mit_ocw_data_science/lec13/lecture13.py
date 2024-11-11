@@ -8,6 +8,7 @@ Created on Mon Sep 19 11:45:20 2016
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 #set line width
 plt.rcParams['lines.linewidth'] = 4
@@ -147,7 +148,8 @@ def getTitanicData(fname):
     data = {}
     data['class'], data['survived'], data['age'] = [], [], []
     data['gender'], data['name'] = [], []
-    f = open(fname)
+    fpath = os.path.join(os.path.dirname(__file__), fname)
+    f = open(fpath)
     line = f.readline()
     while line != '':
         split = line.split(',')

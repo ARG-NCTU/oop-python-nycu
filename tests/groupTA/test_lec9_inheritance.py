@@ -3,8 +3,19 @@ import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
 
 
-
 def test_animal_5A():
+    """
+    Test case for the Animal class.
+
+    This test case performs the following steps:
+    1. Creates an instance of the Animal class with age 4.
+    2. Prints the Animal instance.
+    3. Prints the age of the Animal instance.
+    4. Sets the name of the Animal instance to "fluffy".
+    5. Prints the Animal instance again.
+    6. Asserts that the name of the Animal instance is "fluffy".
+    7. Asserts that the age of the Animal instance is 4.
+    """
     a = inh.Animal(4)
     print(a)
     print(a.get_age())
