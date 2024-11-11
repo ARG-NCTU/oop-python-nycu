@@ -1,45 +1,42 @@
-import pytest
-import add_path
-import random
-from mit_ocw_data_science.lec12.cluster import *
-import numpy as np
+ef test_minkowski_dist():
+    assert minkowski_dist([0,0], [3,4], 2) == 5.0
+    assert minkowski_dist([1,2,3], [4,5,6], 1) == 9.0
+    assert minkowski_dist([1,2,3], [4,5,6], 2) == 5.196152422706632
+    assert minkowski_dist([1,2,3], [4,5,6], 3) == 4.3267487109222245
+    
+def test_Example():
+    example = Example('test', [1,2,3], 'test')
+    assert example.name == 'test'
+    assert example.features == [1,2,3]
+    assert example.label == 'test'
+    assert example.dimensionality() == 3
+    assert example.getFeatures() == [1,2,3]
+    assert example.getLabel() == 'test'
+    assert example.getName() == 'test'
+    assert example.distance(Example('test', [4,5,6], 'test')) == 5.196152422706632
+    assert str(example) == 'test:[1, 2, 3]:test'
+    
+def test_Cluster():
+    #[age, tale, gender], gender: 1:male, 0:female
+    e1 = Example('Normal', [39,0,1], 'human')
+    e2 = Example('Boy', [19,0,0], 'human')
+    e3 = Example('John', [9,0,1], 'human')
+    e4 = Example('Howard', [26,0,1], 'human')
+    e5 = Example('Bunny', [4,1,1], 'rabbit')
+    e6 = Example('Coco', [8,1,0], 'rabbit')
+    cluster1 = Cluster([e1, e2, e3, e4])
+    cluster2 = Cluster([e5, e6])
+    assert e1 in list(cluster1.members())
+    assert e2 in list(cluster1.members())
+    assert e3 in list(cluster1.members())
+    assert e4 in list(cluster1.members())
+    assert e5 in list(cluster2.members())
+    assert e6 in list(cluster2.members())
 
-def test_euclidean_dist():
-    assert euclidean_dist([0,0], [3,4]) == 5.0
-    assert euclidean_dist([1,2,3], [4,5,6]) == 5.196152422706632
-    assert euclidean_dist([1,1], [4,5]) == 5.0
-    assert euclidean_dist([2,3,4], [5,6,7]) == 5.196152422706632
+    np.testing.assert_almost_equal(cluster1.getCentroid().features, [23.25, 0, 0.75], decimal=2)
+    np.testing.assert_almost_equal(cluster1.variability(), 477.5, decimal=1)
 
-def test_Point():
-    point = Point('test_point', [1,2,3])
-    assert point.name == 'test_point'
-    assert point.coords == [1,2,3]
-    assert point.dimension() == 3
-    assert point.getCoords() == [1,2,3]
-    assert point.getName() == 'test_point'
-    assert point.distance(Point('other_point', [4,5,6])) == 5.196152422706632
-    assert str(point) == 'test_point:[1, 2, 3]'
+    np.testing.assert_almost_equal(cluster2.getCentroid().features, [6, 1, 0.5], decimal=2)
+    np.testing.assert_almost_equal(cluster2.variability(), 8.5, decimal=1)
 
-def test_Group():
-    p1 = Point('Alice', [30,1,1])
-    p2 = Point('Bob', [25,0,1])
-    p3 = Point('Charlie', [20,0,1])
-    p4 = Point('Diana', [35,1,0])
-    p5 = Point('Eve', [40,1,0])
-    p6 = Point('Frank', [45,0,1])
-    group1 = Group([p1, p2, p3, p4])
-    group2 = Group([p5, p6])
-    assert p1 in list(group1.members())
-    assert p2 in list(group1.members())
-    assert p3 in list(group1.members())
-    assert p4 in list(group1.members())
-    assert p5 in list(group2.members())
-    assert p6 in list(group2.members())
-
-    np.testing.assert_almost_equal(group1.getCentroid().coords, [27.5, 0.5, 0.75], decimal=2)
-    np.testing.assert_almost_equal(group1.variability(), 250.0, decimal=1)
-
-    np.testing.assert_almost_equal(group2.getCentroid().coords, [42.5, 1, 0.5], decimal=2)
-    np.testing.assert_almost_equal(group2.variability(), 12.5, decimal=1)
-
-    assert dissimilarity([group1, group2]) == 262.5
+    assert dissimilarity([cluster1, cluster2]) == 486.0
