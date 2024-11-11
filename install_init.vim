@@ -45,15 +45,3 @@ nmap <F9> :CopilotChatToggle<CR>
 nmap <F10> :TagbarToggle<CR>
 autocmd vimEnter *.py nmap <F9> <Esc>:w<CR>:!clear;python3 %<CR>
 autocmd vimEnter *.cpp map <F9> :w <CR> :!clear ; g++ --std=c++17 %; if [ -f a.out ]; then time ./a.out; rm a.out; fi <CR>
-
-lua << EOF
-require("CopilotChat").setup {
-  debug = true, -- Enable debugging
-  -- See Configuration section for rest
-  window = {
-    layout = 'float',
-  }
-}
-EOF
-
-

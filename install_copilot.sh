@@ -16,4 +16,15 @@ sudo apt-get install neovim  -y
 git config --global core.editor nvim
 cp ./install_init.vim ~/.config/nvim/init.vim
 nvim --headless +PlugInstall +qall
+cat >> ~/.config/nvim/init.vim<< REALEND
+lua << EOF
+require("CopilotChat").setup {
+  debug = true, -- Enable debugging
+  -- See Configuration section for rest
+  window = {
+    layout = 'float',
+  }
+}
+EOF
+REALEND
 echo "Install Complete!" 
