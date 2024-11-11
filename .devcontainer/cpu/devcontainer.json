@@ -1,9 +1,6 @@
 {
-    "name": "Custom Python Development Container",
-    "build": {
-      "dockerfile": "Dockerfile",
-      "context": "."
-    },
+    "name": "argnctu/oop Development Container",
+    "image": "argnctu/oop:latest",
     "settings": {
       "editor.fontSize": 14,
       "python.pythonPath": "/usr/bin/python3",
@@ -26,17 +23,11 @@
     "containerEnv": {
       "DEBIAN_FRONTEND": "noninteractive",
       "LANG": "C.UTF-8",
-      "LC_ALL": "C.UTF-8"
+      "LC_ALL": "C.UTF-8",
+      "DEVCONTAINER_TYPE": "cpu"
     },
     "forwardPorts": [22],
     "remoteUser": "arg",
-    "mounts": [
-      "source=${localWorkspaceFolder},target=/workspace,type=bind",
-      "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
-      "source=/etc/localtime,target=/etc/localtime,type=bind",
-      "source=/dev,target=/dev,type=bind",
-      "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-    ],
     "runArgs": [
       "--user", "root:root",
       "--network", "host",
@@ -53,7 +44,6 @@
       "-v", "/var/run/docker.sock:/var/run/docker.sock",
       "-w", "/home/arg/oop-python-nycu"
     ],
-    "postStartCommand": "echo 'Welcome to the custom devcontainer!'",
-    "remoteUser": "arg"
+    "postStartCommand": "echo 'Starting $DEVCONTAINER_TYPE DevContainer...'",
   }
   
