@@ -7,6 +7,7 @@ class physics_entity:
         self.position = list(position)  
         self.size = size
         self.velocity = [0,0]
+        self.dashing = 0
 
         #Animation
         self.action = ''
@@ -72,12 +73,14 @@ class Player(physics_entity):
     def __init__(self,main_game,position,size):     
         super().__init__(main_game,'player',position,size)
         self.air_time = 0
+        self.jump_count = 2
 
     def update(self, movement=(0,0),tilemap=None):
         super().update(movement,tilemap)
         self.air_time += 1
         if self.check_collision['down']:
             self.air_time = 0
+            self.jump_count = 2
         if self.air_time > 4:
             self.set_action('jump') 
         elif movement[0] != 0:
@@ -85,6 +88,37 @@ class Player(physics_entity):
         else:
             self.set_action('idle')
 
+        if self.dashing > 0:
+            self.dashing = max(0,self.dashing-1)
+        if self.dashing < 0:
+            self.dashing = min(0,self.dashing+1)
+        if abs(self.dashing) > 50:
+            self.velocity[0] = abs(self.dashing) / self.dashing * 8
+        if abs(self.dashing) < 50:
+            self.velocity[0] *= 0.1
+        if self.velocity[0] > 0:
+            self.velocity[0] = max(0,self.velocity[0]-0.1)
+        if self.velocity[0] < 0:
+            self.velocity[0] = min(0,self.velocity[0]+0.1)   
+
     def render(self,surface,offset=[0,0]):
         super().render(surface,offset)
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
+    def jump(self):
+        if self.jump_count > 0:
+            self.velocity[1] = -3
+            self.jump_count -= 1
+            self.air_time = 5
+            self.set_action('jump')
+
+    def dash(self):
+        if not self.dashing:
+            self.velocity[0] = -60 if self.fllp else 60
+            self.dashing = True
+            self.set_action('slide')
+
+    def render(self,surface,offset=[0,0]):
+        if abs(self.dashing) <= 50:
+            super().render(surface,offset)
+        else:
+            pass

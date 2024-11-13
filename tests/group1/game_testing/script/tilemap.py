@@ -1,4 +1,5 @@
 import pygame
+import pickle
 
 NEIGHBORS = [(0,0),(0,1), (0,-1), (1,0), (-1,0), (1,1), (-1,-1), (1,-1), (-1,1)]
 HAVE_COLLISION = {'stone', 'grass'}
@@ -8,6 +9,8 @@ class small_tile:
         self.type = type
         self.variant = variant
         self.pos = pos
+    def copy(self):
+        return small_tile(self.type, self.variant, self.pos)
 class Tilemap:
     def __init__(self, game, size=16):
         self.game = game
@@ -26,6 +29,24 @@ class Tilemap:
             self.offgrid_tiles.append(small_tile('decor', 1, (i*16, 16)))
             self.offgrid_tiles.append(small_tile('decor', 2, (i*16, 32)))
             self.offgrid_tiles.append(small_tile('decor', 3, (i*16, 48)))
+
+    def extract(self,id_pairs,keep=False):
+        matchs = []
+        for tile in self.offgrid_tiles.copy():
+            if (tile.type, tile.variant) in id_pairs:
+                matchs.append(tile.copy())
+                if not keep:
+                    self.offgrid_tiles.remove(tile)
+        for loc in self.tilemap.copy():
+            tile = self.tilemap[loc]
+            if (tile.type, tile.variant) in id_pairs:
+                matchs.append(tile.copy())
+                matchs[-1].pos = matchs[-1].pos.copy()
+                matchs[-1].pos[0] *= self.tile_size
+                matchs[-1].pos[1] *= self.tile_size
+                if not keep:
+                    del self.tilemap[loc]   
+        return matchs
 
     def render(self, surface, offset = [0,0]):
 
@@ -57,3 +78,14 @@ class Tilemap:
             if tile.type in HAVE_COLLISION:
                 rects.append(pygame.Rect(tile.pos[0]*self.tile_size, tile.pos[1]*self.tile_size, self.tile_size, self.tile_size))
         return rects
+    
+    def save(self, path):
+        with open(path, 'wb') as f:
+            #save tilemap and offgrid tiles
+            pickle.dump(self.tilemap, f)
+            pickle.dump(self.offgrid_tiles, f)
+
+    def load(self, path):
+        with open(path, 'rb') as f:
+            self.tilemap = pickle.load(f)
+            self.offgrid_tiles = pickle.load(f)

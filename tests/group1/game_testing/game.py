@@ -3,12 +3,15 @@ import pygame.joystick
 import sys
 import os
 import time
+import random
+import math
 from script.entity import physics_entity, Player
 from script.utils import load_image
 from script.utils import load_tile
 from script.utils import load_images
 from script.utils import Animation
 from script.tilemap import Tilemap, small_tile
+from script.particle import Particle
 
 #constants
 SCREEN_Width = 640
@@ -46,7 +49,8 @@ class main_game:
             "player/run" : Animation(load_images("entities/player/run"),duration=4,loop=True),
             "player/jump" : Animation(load_images("entities/player/jump"),duration=5,loop=True),
             "player/slide" : Animation(load_images("entities/player/slide"),duration=5,loop=True),
-            "player/wall_slide" : Animation(load_images("entities/player/wall_slide"),duration=5,loop=True)
+            "player/wall_slide" : Animation(load_images("entities/player/wall_slide"),duration=5,loop=True),
+            "particle/leaf" : Animation(load_images("particles/leaf"),duration=20,loop=False),
 
         }
 
@@ -54,8 +58,16 @@ class main_game:
 
         self.tilemap = Tilemap(self)
 
+        self.particles = []
+
         self.camera = [0,0] #camera position = offset of everything
 
+        self.tilemap.load("tests/group1/game_testing/tilemap.pickle")
+
+        self.leaf_spawners = []
+        for tree in self.tilemap.extract([('large_decor',2)],keep=True):
+            self.leaf_spawners.append(pygame.Rect(4+tree.pos[0], 4+tree.pos[1], 23, 13))
+        print(self.leaf_spawners)
 
     def run(self):
         while True:
@@ -65,6 +77,10 @@ class main_game:
             self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y
             render_camera = [int(self.camera[0]), int(self.camera[1])]
 
+            for spawner in self.leaf_spawners:
+                if random.random() * 49999 < spawner.width* spawner.height:
+                    pos = (spawner.x + random.random()*spawner.width, spawner.y + random.random()*spawner.height)
+                    self.particles.append(Particle(self,'leaf',pos,velocity=[-0.1,0.3],frame=random.randint(0,20)))
             self.tilemap.render(self.display,offset=render_camera) #render background
 
             self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
@@ -74,6 +90,14 @@ class main_game:
             self.max_jump_height = -3  # Maximum jump velocity
             self.min_jump_height = -1   # Minimum jump velocity
             self.jump_start_time = None
+
+            for particle in self.particles.copy():
+                kill = particle.update()
+                if particle.p_type == 'leaf':
+                    particle.pos[0] += math.sin(particle.animation.frame*0.035)*0.3
+                particle.render(self.display,offset=render_camera)
+                if kill:
+                    self.particles.remove(particle)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -85,7 +109,9 @@ class main_game:
                     if event.key == pygame.K_RIGHT:
                         self.movements[1] = True
                     if event.key == pygame.K_UP:
-                        self.player.velocity[1] = -3
+                        self.player.jump()
+                    if event.key == pygame.K_SPACE:
+                        self.player.dash()
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
                         self.movements[0] = False
