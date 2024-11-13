@@ -5,12 +5,12 @@ NEIGHBORS = [(0,0),(0,1), (0,-1), (1,0), (-1,0), (1,1), (-1,-1), (1,-1), (-1,1)]
 HAVE_COLLISION = {'stone', 'grass'}
 
 class small_tile:
-    def __init__(self, type, variant, pos=(0,0)):
+    def __init__(self, type, variant, pos=[0,0]):
         self.type = type
         self.variant = variant
-        self.pos = pos
+        self.pos = list(pos)
     def copy(self):
-        return small_tile(self.type, self.variant, self.pos)
+        return small_tile(self.type, self.variant, list(self.pos)) 
 class Tilemap:
     def __init__(self, game, size=16):
         self.game = game

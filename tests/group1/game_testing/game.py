@@ -45,12 +45,15 @@ class main_game:
             "large_decor" : load_tile("tiles/large_decor"),
             "player": load_image("entities/player.png"),
             "background": load_image("background.png"),
+            "enemy/idle" : Animation(load_images("entities/enemy/idle"),duration=6,loop=True),
+            "enemy/run" : Animation(load_images("entities/enemy/run"),duration=4,loop=True),
             "player/idle" : Animation(load_images("entities/player/idle"),duration=6,loop=True),
             "player/run" : Animation(load_images("entities/player/run"),duration=4,loop=True),
             "player/jump" : Animation(load_images("entities/player/jump"),duration=5,loop=True),
             "player/slide" : Animation(load_images("entities/player/slide"),duration=5,loop=True),
             "player/wall_slide" : Animation(load_images("entities/player/wall_slide"),duration=5,loop=True),
             "particle/leaf" : Animation(load_images("particles/leaf"),duration=20,loop=False),
+            "particle/particle" : Animation(load_images("particles/particle"),duration=6,loop=False),
 
         }
 
@@ -65,8 +68,17 @@ class main_game:
         self.tilemap.load("tests/group1/game_testing/tilemap.pickle")
 
         self.leaf_spawners = []
+
         for tree in self.tilemap.extract([('large_decor',2)],keep=True):
             self.leaf_spawners.append(pygame.Rect(4+tree.pos[0], 4+tree.pos[1], 23, 13))
+
+        entity_spawners = []
+        for spawner in self.tilemap.extract([('spawners',0),('spawners',1)],keep=False):
+            if spawner.variant == 0:
+                self.player.position = spawner.pos #player start position
+            else:
+                entity_spawners.append(spawner)
+             
         print(self.leaf_spawners)
 
     def run(self):

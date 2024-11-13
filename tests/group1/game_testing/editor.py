@@ -34,6 +34,7 @@ class editor:
             "grass" : load_tile("tiles/grass"),
             "large_decor" : load_tile("tiles/large_decor"),
             "background": load_image("background.png"),
+            "spawners" : load_tile("tiles/spawners"),
         }
 
         self.editor_assets = {
@@ -41,6 +42,7 @@ class editor:
             "stone" : load_tile("tiles/stone"),
             "grass" : load_tile("tiles/grass"),
             "large_decor" : load_tile("tiles/large_decor"),
+            "spawners" : load_tile("tiles/spawners"),
         }
 
         self.movements = [False,False, False, False]

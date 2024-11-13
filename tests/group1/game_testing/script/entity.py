@@ -1,4 +1,7 @@
 import pygame
+from script.particle import Particle
+import math
+import random
 
 class physics_entity:
     def __init__(self,main_game,entity_type,position,size):
@@ -77,6 +80,9 @@ class Player(physics_entity):
 
     def update(self, movement=(0,0),tilemap=None):
         super().update(movement,tilemap)
+        #if player is dashing, do not apply gravity
+        if abs(self.dashing) > 50:
+            self.velocity[1] = 0
         self.air_time += 1
         if self.check_collision['down']:
             self.air_time = 0
@@ -94,8 +100,10 @@ class Player(physics_entity):
             self.dashing = min(0,self.dashing+1)
         if abs(self.dashing) > 50:
             self.velocity[0] = abs(self.dashing) / self.dashing * 8
-        if abs(self.dashing) < 50:
-            self.velocity[0] *= 0.1
+            if abs(self.dashing) == 51:
+                self.velocity[0] *= 0.1
+            pv = [math.cos(random.random()*math.pi*2)*random.random()*0.5+0.5,math.sin(random.random()*math.pi*2)*random.random()*0.5+0.5]
+            self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,pv,frame=random.randint(0,7)))
         if self.velocity[0] > 0:
             self.velocity[0] = max(0,self.velocity[0]-0.1)
         if self.velocity[0] < 0:
@@ -113,12 +121,9 @@ class Player(physics_entity):
 
     def dash(self):
         if not self.dashing:
-            self.velocity[0] = -60 if self.fllp else 60
-            self.dashing = True
-            self.set_action('slide')
+            self.dashing = -60 if self.fllp else 60
 
     def render(self,surface,offset=[0,0]):
         if abs(self.dashing) <= 50:
             super().render(surface,offset)
-        else:
-            pass
+
