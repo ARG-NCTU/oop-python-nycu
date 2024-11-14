@@ -2,7 +2,6 @@ import pygame
 import pygame.joystick
 import sys
 import os
-import time
 import random
 import math
 from script.entity import physics_entity, Player, Enemy
