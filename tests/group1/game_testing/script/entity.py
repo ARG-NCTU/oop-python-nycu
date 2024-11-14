@@ -62,7 +62,6 @@ class physics_entity:
                     self.check_collision['up'] = True
                 self.position[1] = entity_rect.y
 
-        self.velocity[1] = min(5,self.velocity[1]+0.1) #gravity
 
         if self.check_collision['down'] or self.check_collision['up']:
             self.velocity[1] = 0      
@@ -83,8 +82,8 @@ class Player(physics_entity):
     def update(self, movement=(0,0),tilemap=None):
         super().update(movement,tilemap)
         #if player is dashing, do not apply gravity
-        if abs(self.dashing) > 50:
-            self.velocity[1] = 0
+        if not (abs(self.dashing) > 50):
+            self.velocity[1] = min(5,self.velocity[1]+0.1) #gravity
         self.air_time += 1
         if self.check_collision['down']:
             self.air_time = 0
@@ -122,7 +121,9 @@ class Player(physics_entity):
             self.set_action('jump')
 
     def dash(self):
+        #set verticle velocity to 0
         if not self.dashing:
+            self.velocity[1] = 0
             self.dashing = -60 if self.flip else 60
 
     def render(self,surface,offset=[0,0]):
@@ -135,10 +136,26 @@ class Enemy(physics_entity):
         self.flip = True
         self.set_action('idle')
 
+
         self.walking = 0
+        self.jumping = False
+        self.air_dashing = False
+        self.time_counter = 0
+        self.current_counter = 0
+        self.attack_cool_down = 0
+        self.attack_combo = 0
+        #combo 1: jump - dash - drop attack - land shot
 
     def update(self, movement=(0,0),tilemap=None):
-        if self.walking:
+        self.time_counter += 1
+        if self.check_player_pos()[0] > 0:
+            self.flip = False
+        else:
+            self.flip = True
+        self.attack_cool_down = max(0,self.attack_cool_down-1)
+        if not (self.air_dashing):
+            self.velocity[1] = min(5,self.velocity[1]+0.1) #gravity
+        if self.walking and self.attack_combo == 0:
             movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
             self.walking = max(0,self.walking-1)
             if not self.walking:
@@ -152,8 +169,36 @@ class Enemy(physics_entity):
                         self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
                         for i in range(4):
                             self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()-0.5,2+random.random()+2))
-        elif random.random() < 0.01:
-            self.walking = random.randint(30,120)
+        elif (random.random() < 0.01) and self.attack_combo == 0:
+            if random.choice([True,False]):
+                self.walking = random.randint(30,120)
+            elif self.attack_cool_down == 0:
+                self.jump()
+                self.attack_combo = 1
+                self.attack_cool_down = 300
+                self.current_counter = self.time_counter
+
+        if self.attack_combo == 1: #jump - dash - drop attack - land shot
+            if self.jumping and (self.time_counter-self.current_counter) > 50:
+                self.jumping = False
+                self.velocity = [0,0]
+                self.current_counter = self.time_counter
+                self.air_dash()
+            elif self.air_dashing:
+                player_pos = self.check_player_pos()
+                if abs(player_pos[0]) < 8 or self.time_counter - self.current_counter >30:
+                    self.air_dashing = False
+                    self.velocity = [0,0]
+                    self.current_counter = self.time_counter
+                    self.drop_attack()
+            #collide with ground
+            elif self.check_collision['down']:
+                self.attack_combo = 0
+                self.current_counter = self.time_counter
+                self.land_shoot()
+
+            
+
         if movement[0] > 0:
             self.set_action('run')
         else:
@@ -172,9 +217,96 @@ class Enemy(physics_entity):
                 return True
         super().update(movement,tilemap)
 
+    def check_player_pos(self):
+        return (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
+
+    def dash(self):
+        #boss will move towards player's direction at a high speed for a short duration
+        distance = self.check_player_pos()  
+        if distance[0] > 0:
+            self.velocity[0] = 5
+        else:
+            self.velocity[0] = -5
+    def air_dash(self):
+        #boss will move towards player's direction at a high speed for a short duration
+        distance = self.check_player_pos()
+        if distance[0] > 0:
+            self.velocity[0] = 5
+        else:
+            self.velocity[0] = -5
+        self.air_dashing = True
+    def land_shoot(self):
+        #boss will shoot five projectiole to the left, up left, up, up right, right
+        self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
+        self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery-7],-1.5,-1.5])
+        self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery-7],1.5,1.5])
+        self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
+        for i in range(4):
+            self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()-0.5,2+random.random()+2))
+    def jump(self):
+        #boss will jump and dash towards player's direction after a short delay
+        self.velocity[1] = -5
+        self.jumping = True
+    def drop_attack(self):
+        #boss will drop down and land, dealing damage to player if player is below
+        self.velocity[1] = 5
+        #spark effect
+        self.main_game.sparks.append(Spark(self.rect().center, 0, 5+random.random()))
+        self.main_game.sparks.append(Spark(self.rect().center, math.pi, 5+random.random()))
+
     def render(self,surface,offset=[0,0]):
         super().render(surface,offset)
         if self.flip:
             surface.blit(pygame.transform.flip(self.main_game.assets['gun'],True,False),(self.rect().centerx-4-self.main_game.assets['gun'].get_width() - offset[0],self.rect().centery - offset[1]))
         else:
             surface.blit(self.main_game.assets['gun'],(self.rect().centerx + 4 - offset[0],self.rect().centery - offset[1]))
+
+
+
+
+
+
+
+
+
+
+class Boss(physics_entity):
+    def __init__(self,main_game,position,size):
+        super().__init__(main_game,"boss",position,size)
+        self.HP = 10
+        self.set_action('idle')
+    def update(self, movement=(0,0),tilemap=None):
+        super().update(movement,tilemap)
+        pass
+    def render(self,surface,offset=[0,0]):
+        super().render(surface,offset)
+    def dash(self):
+        #boss will move towards player's direction at a high speed for a short duration
+        distance = (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
+        if distance[0] > 0:
+            self.velocity[0] = 5
+        else:
+            self.velocity[0] = -5
+    def shoot(self):
+        #boss will shoot a projectile towards player's direction
+        distance = (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
+        if distance[0] > 0:
+            self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
+        else:
+            self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
+        for i in range(4):
+            self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()-0.5,2+random.random()+2))
+    def jump(self):
+        #boss will jump and dash towards player's direction
+        self.velocity[1] = -5
+        self.set_action('jump')
+        self.dash()
+        self.drop_attack()
+    def drop_attack(self):
+        #boss will drop down and land, dealing damage to player if player is below
+        self.velocity[1] = 5
+        self.set_action('jump')
+        #spark effect
+        self.main_game.sparks.append(Spark(self.rect().center, 0, 5+random.random()))
+        self.main_game.sparks.append(Spark(self.rect().center, math.pi, 5+random.random()))
+        
