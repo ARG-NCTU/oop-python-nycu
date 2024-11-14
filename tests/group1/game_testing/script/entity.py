@@ -79,6 +79,7 @@ class Player(physics_entity):
         self.jump_count = 2
         self.HP = HP
         self.attack_cool_down = 0    
+        self.inv_time = 0
 
     def update(self, movement=(0,0),tilemap=None):
         super().update(movement,tilemap)
@@ -88,6 +89,7 @@ class Player(physics_entity):
         self.air_time += 1
 
         self.attack_cool_down = max(0,self.attack_cool_down-1)
+        self.inv_time = max(0,self.inv_time-1)
 
         if self.check_collision['down']:
             self.air_time = 0
@@ -126,6 +128,7 @@ class Player(physics_entity):
 
     def attack(self):
         if self.attack_cool_down == 0:
+            self.attack_cool_down = 20
             #attack a rect-space area in front of the player
             if self.flip:
                 hitbox = pygame.Rect(self.position[0]-28,self.position[1],20,16)
@@ -148,6 +151,28 @@ class Player(physics_entity):
         if not self.dashing:
             self.velocity[1] = 0
             self.dashing = -60 if self.flip else 60
+
+    def take_damage(self,damage=1,relative_pos=[0,0]):
+        if self.inv_time == 0:
+            self.relative_pos = relative_pos
+            if self.relative_pos[0] > 0:
+                self.flip = True
+                self.velocity[0] = 2
+                self.velocity[1] = -2   
+            else:
+                self.flip = False
+                self.velocity[0] = -2
+                self.velocity[1] = -2
+            #if player takes damage, lose 1 HP and got knockback to the opposite direction of the enemy
+            self.HP -= damage
+            self.inv_time = 60
+            for i in range(30):
+                angle = random.random()*math.pi*2
+                speed = random.random() *5
+                self.main_game.sparks.append(Spark(self.rect().center,angle,2+random.random()))  
+                self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))
+            if self.HP <= 0:
+                self.main_game.dead += 1    
 
     def render(self,surface,offset=[0,0]):
         if abs(self.dashing) <= 50:
@@ -220,6 +245,10 @@ class Enemy(physics_entity):
                 self.attack_combo = 0
                 self.current_counter = self.time_counter
                 self.land_shoot()
+
+        #if player collides with enemy, player takes damage
+        if self.rect().colliderect(self.main_game.player.rect()) and abs(self.main_game.player.dashing) < 50: 
+            self.main_game.player.take_damage(1,self.check_player_pos())
 
             
 

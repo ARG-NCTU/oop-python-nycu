@@ -137,14 +137,15 @@ class main_game:
                 elif abs(self.player.dashing) < 50:
                     if self.player.rect().collidepoint(projectile[0]):
                         self.projectiles.remove(projectile)
-                        for i in range(30):
-                            angle = random.random()*math.pi*2
-                            speed = random.random() *5
-                            self.sparks.append(Spark(self.player.rect().center,angle,2+random.random()))  
-                            self.particles.append(Particle(self,'particle',self.player.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
-                        self.player.HP -= 1
-                        if self.player.HP <= 0:
-                            self.dead += 1                  
+                        self.player.take_damage(1,(list(self.player.rect().center).copy()[0]-projectile[0][0],0))
+                        #for i in range(30):
+                        #    angle = random.random()*math.pi*2
+                        #    speed = random.random() *5
+                        #    self.sparks.append(Spark(self.player.rect().center,angle,2+random.random()))  
+                        #    self.particles.append(Particle(self,'particle',self.player.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
+                        #self.player.HP -= 1
+                        #if self.player.HP <= 0:
+                        #    self.dead += 1                  
             for spark in self.sparks.copy():
                 kill = spark.update()
                 spark.render(self.display,offset=render_camera)
