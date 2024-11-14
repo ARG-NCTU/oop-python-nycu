@@ -59,8 +59,11 @@ class main_game:
             "projectile" : load_image("projectile.png"),
 
         }
+        self.load_level()
 
-        self.player = Player(self, (100,100), (8,15))
+    def load_level(self):
+
+        self.player = Player(self, (100,100), (8,15) , HP = 5)
 
         self.tilemap = Tilemap(self)
 
@@ -69,6 +72,7 @@ class main_game:
         self.sparks = []
 
         self.camera = [0,0] #camera position = offset of everything
+        self.dead = 0 #dead animation
 
         self.tilemap.load("tests/group1/game_testing/tilemap.pickle")
 
@@ -90,6 +94,11 @@ class main_game:
         while True:
             self.display.blit(self.assets['background'], (0,0))
 
+            if self.dead > 0:
+                self.dead += 1
+                if self.dead > 40:
+                    self.load_level()
+
             self.camera[0] += (self.player.rect().centerx - self.display.get_width()/2 -self.camera[0])/20 #camera follow player x
             self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y
             render_camera = [int(self.camera[0]), int(self.camera[1])]
@@ -101,11 +110,13 @@ class main_game:
             self.tilemap.render(self.display,offset=render_camera) #render background
 
             for enemy in self.enemy_spawners.copy():
-                enemy.update((0,0),self.tilemap)
+                kill = enemy.update((0,0),self.tilemap)
                 enemy.render(self.display,offset=render_camera)
-
-            self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
-            self.player.render(self.display,offset=render_camera) #render player
+                if kill:
+                    self.enemy_spawners.remove(enemy)
+            if not self.dead:
+                self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
+                self.player.render(self.display,offset=render_camera) #render player
 
 
             self.max_jump_height = -3  # Maximum jump velocity
@@ -132,8 +143,9 @@ class main_game:
                             speed = random.random() *5
                             self.sparks.append(Spark(self.player.rect().center,angle,2+random.random()))  
                             self.particles.append(Particle(self,'particle',self.player.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
-
-
+                        self.player.HP -= 1
+                        if self.player.HP <= 0:
+                            self.dead += 1                  
             for spark in self.sparks.copy():
                 kill = spark.update()
                 spark.render(self.display,offset=render_camera)

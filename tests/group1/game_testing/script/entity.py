@@ -74,10 +74,11 @@ class physics_entity:
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
 
 class Player(physics_entity):
-    def __init__(self,main_game,position,size):     
+    def __init__(self,main_game,position,size,HP):     
         super().__init__(main_game,'player',position,size)
         self.air_time = 0
         self.jump_count = 2
+        self.HP = HP    
 
     def update(self, movement=(0,0),tilemap=None):
         super().update(movement,tilemap)
@@ -157,6 +158,18 @@ class Enemy(physics_entity):
             self.set_action('run')
         else:
             self.set_action('idle') 
+
+        if abs(self.main_game.player.dashing) >=50:
+            if self.rect().colliderect(self.main_game.player.rect()):
+                for i in range(30):
+                    angle = random.random()*math.pi*2
+                    speed = random.random() *5
+                    self.main_game.sparks.append(Spark(self.rect().center,angle,2+random.random()))  
+                    self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
+                self.main_game.sparks.append(Spark(self.rect().center, 0, 5+random.random()))
+                self.main_game.sparks.append(Spark(self.rect().center, math.pi, 5+random.random()))
+
+                return True
         super().update(movement,tilemap)
 
     def render(self,surface,offset=[0,0]):
