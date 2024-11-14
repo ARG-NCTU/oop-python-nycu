@@ -5,7 +5,7 @@ import os
 import time
 import random
 import math
-from script.entity import physics_entity, Player
+from script.entity import physics_entity, Player, Enemy
 from script.utils import load_image
 from script.utils import load_tile
 from script.utils import load_images
@@ -54,6 +54,7 @@ class main_game:
             "player/wall_slide" : Animation(load_images("entities/player/wall_slide"),duration=5,loop=True),
             "particle/leaf" : Animation(load_images("particles/leaf"),duration=20,loop=False),
             "particle/particle" : Animation(load_images("particles/particle"),duration=6,loop=False),
+            "gun" : load_image("gun.png"),
 
         }
 
@@ -72,14 +73,14 @@ class main_game:
         for tree in self.tilemap.extract([('large_decor',2)],keep=True):
             self.leaf_spawners.append(pygame.Rect(4+tree.pos[0], 4+tree.pos[1], 23, 13))
 
-        entity_spawners = []
+        self.enemy_spawners = []
         for spawner in self.tilemap.extract([('spawners',0),('spawners',1)],keep=False):
             if spawner.variant == 0:
                 self.player.position = spawner.pos #player start position
             else:
-                entity_spawners.append(spawner)
+                self.enemy_spawners.append(Enemy(self,spawner.pos,(8,15)))
              
-        print(self.leaf_spawners)
+        
 
     def run(self):
         while True:
@@ -94,6 +95,10 @@ class main_game:
                     pos = (spawner.x + random.random()*spawner.width, spawner.y + random.random()*spawner.height)
                     self.particles.append(Particle(self,'leaf',pos,velocity=[-0.1,0.3],frame=random.randint(0,20)))
             self.tilemap.render(self.display,offset=render_camera) #render background
+
+            for enemy in self.enemy_spawners.copy():
+                enemy.update((0,0),self.tilemap)
+                enemy.render(self.display,offset=render_camera)
 
             self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
             self.player.render(self.display,offset=render_camera) #render player

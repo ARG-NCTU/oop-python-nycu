@@ -15,7 +15,7 @@ class physics_entity:
         #Animation
         self.action = ''
         self.anim_offset = (-3,-3) #避免動畫比原本圖片大所以預留空間
-        self.fllp = False
+        self.flip = False
         self.set_action('idle')
 
     def set_action(self,action):
@@ -44,9 +44,9 @@ class physics_entity:
                 self.position[0] = entity_rect.x
 
         if movement[0] > 0:
-            self.fllp = False
+            self.flip = False
         if movement[0] < 0:
-            self.fllp = True
+            self.flip = True
 
         self.position[1] += frame_movement[1]
         entity_rect = self.rect()
@@ -69,7 +69,7 @@ class physics_entity:
         self.anim.update()  
 
     def render(self,surface,offset=[0,0]):
-        surface.blit(pygame.transform.flip(self.anim.img(),self.fllp,False),(self.position[0]-offset[0]+self.anim_offset[0],self.position[1]-offset[1]+self.anim_offset[1]))
+        surface.blit(pygame.transform.flip(self.anim.img(),self.flip,False),(self.position[0]-offset[0]+self.anim_offset[0],self.position[1]-offset[1]+self.anim_offset[1]))
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
 
 class Player(physics_entity):
@@ -121,9 +121,34 @@ class Player(physics_entity):
 
     def dash(self):
         if not self.dashing:
-            self.dashing = -60 if self.fllp else 60
+            self.dashing = -60 if self.flip else 60
 
     def render(self,surface,offset=[0,0]):
         if abs(self.dashing) <= 50:
             super().render(surface,offset)
 
+class Enemy(physics_entity):
+    def __init__(self,main_game,position,size):
+        super().__init__(main_game,'enemy',position,size)
+        self.set_action('idle')
+
+        self.walking = 0
+
+    def update(self, movement=(0,0),tilemap=None):
+        if self.walking:
+            movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
+            self.walking = max(0,self.walking-1)
+        elif random.random() < 0.01:
+            self.walking = random.randint(30,120)
+        if movement[0] > 0:
+            self.set_action('run')
+        else:
+            self.set_action('idle') 
+        super().update(movement,tilemap)
+
+    def render(self,surface,offset=[0,0]):
+        super().render(surface,offset)
+        if self.flip:
+            surface.blit(pygame.transform.flip(self.main_game.assets['gun'],True,False),(self.rect().centerx-4-self.main_game.assets['gun'].get_width() - offset[0],self.rect().centery - offset[1]))
+        else:
+            surface.blit(self.main_game.assets['gun'],(self.rect().centerx + 4 - offset[0],self.rect().centery - offset[1]))
