@@ -48,7 +48,7 @@ class editor:
         self.movements = [False,False, False, False]
 
         self.tilemap = Tilemap(self)
-
+        self.tilemap.load("tests/group1/game_testing/tilemap.pickle")
         self.camera = [0,0] #camera position = offset of everything
 
         self.tile_list = list(self.editor_assets)

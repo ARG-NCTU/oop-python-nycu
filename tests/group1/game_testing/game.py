@@ -12,6 +12,7 @@ from script.utils import load_images
 from script.utils import Animation
 from script.tilemap import Tilemap, small_tile
 from script.particle import Particle
+from script.spark import Spark
 
 #constants
 SCREEN_Width = 640
@@ -55,6 +56,7 @@ class main_game:
             "particle/leaf" : Animation(load_images("particles/leaf"),duration=20,loop=False),
             "particle/particle" : Animation(load_images("particles/particle"),duration=6,loop=False),
             "gun" : load_image("gun.png"),
+            "projectile" : load_image("projectile.png"),
 
         }
 
@@ -62,7 +64,9 @@ class main_game:
 
         self.tilemap = Tilemap(self)
 
+        self.projectiles = []
         self.particles = []
+        self.sparks = []
 
         self.camera = [0,0] #camera position = offset of everything
 
@@ -108,6 +112,34 @@ class main_game:
             self.min_jump_height = -1   # Minimum jump velocity
             self.jump_start_time = None
 
+            #[[x,y],direction,timer]
+            for projectile in self.projectiles.copy():
+                projectile[0][0] += projectile[1]
+                projectile[2] += 1
+                img = self.assets['projectile']
+                self.display.blit(img,(projectile[0][0]-img.get_width()/2 -render_camera[0],projectile[0][1]-img.get_height()/2-render_camera[1]))
+                if self.tilemap.solid_check(projectile[0]):
+                    self.projectiles.remove(projectile) 
+                    for i in range(4):
+                        self.sparks.append(Spark(projectile[0],random.random()*math.pi*2,2+random.random()))
+                elif projectile[2] > 360:
+                    self.projectiles.remove(projectile)
+                elif abs(self.player.dashing) < 50:
+                    if self.player.rect().collidepoint(projectile[0]):
+                        self.projectiles.remove(projectile)
+                        for i in range(30):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *5
+                            self.sparks.append(Spark(self.player.rect().center,angle,2+random.random()))  
+                            self.particles.append(Particle(self,'particle',self.player.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
+
+
+            for spark in self.sparks.copy():
+                kill = spark.update()
+                spark.render(self.display,offset=render_camera)
+                if kill:
+                    self.sparks.remove(spark)   
+
             for particle in self.particles.copy():
                 kill = particle.update()
                 if particle.p_type == 'leaf':
@@ -148,7 +180,9 @@ class main_game:
 
                 if event.type == pygame.JOYBUTTONDOWN:
                     if event.button == 0:
-                        self.player.velocity[1] = -3
+                        self.player.jump()
+                    if event.button == 7:
+                        self.player.dash()
 
 
             self.screen.blit(pygame.transform.scale(self.display, (SCREEN_Width, SCREEN_HEIGHT)), (0,0))

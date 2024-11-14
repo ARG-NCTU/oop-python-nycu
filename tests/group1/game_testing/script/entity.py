@@ -1,5 +1,6 @@
 import pygame
 from script.particle import Particle
+from script.spark import Spark
 import math
 import random
 
@@ -130,6 +131,7 @@ class Player(physics_entity):
 class Enemy(physics_entity):
     def __init__(self,main_game,position,size):
         super().__init__(main_game,'enemy',position,size)
+        self.flip = True
         self.set_action('idle')
 
         self.walking = 0
@@ -138,6 +140,17 @@ class Enemy(physics_entity):
         if self.walking:
             movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
             self.walking = max(0,self.walking-1)
+            if not self.walking:
+                distance = (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
+                if abs(distance[1]) < 16:
+                    if(self.flip and distance[0] < 0): #player is to the left and enemy is facing left
+                        self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
+                        for i in range(4):
+                            self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()+math.pi-0.5,2+random.random()))
+                    elif(not self.flip and distance[0] > 0): #player is to the right and enemy is facing right
+                        self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
+                        for i in range(4):
+                            self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()-0.5,2+random.random()+2))
         elif random.random() < 0.01:
             self.walking = random.randint(30,120)
         if movement[0] > 0:
