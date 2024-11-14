@@ -192,7 +192,7 @@ class main_game:
                             self.movements[0] = False
                             self.movements[1] = False
 
-                if event.type == pygame.JOYBUTTONDOWN:
+                if event.type == pygame.JOYBUTTONDOWN   :
                     if event.button == 0:
                         self.player.jump()
                     if event.button == 7:

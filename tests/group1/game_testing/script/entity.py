@@ -90,6 +90,8 @@ class Player(physics_entity):
 
         self.attack_cool_down = max(0,self.attack_cool_down-1)
         self.inv_time = max(0,self.inv_time-1)
+        if abs(self.dashing)<20:
+            self.dashing = 0
 
         if self.check_collision['down']:
             self.air_time = 0
@@ -131,9 +133,9 @@ class Player(physics_entity):
             self.attack_cool_down = 20
             #attack a rect-space area in front of the player
             if self.flip:
-                hitbox = pygame.Rect(self.position[0]-28,self.position[1],20,16)
+                hitbox = pygame.Rect(self.position[0]-36,self.position[1],28,16)
             else:
-                hitbox = pygame.Rect(self.position[0]+8,self.position[1],20,16)   
+                hitbox = pygame.Rect(self.position[0]+8,self.position[1],28,16)   
             for enemy in self.main_game.enemy_spawners:
                 if hitbox.colliderect(enemy.rect()):
                     enemy.HP -= 1
@@ -151,6 +153,7 @@ class Player(physics_entity):
         if not self.dashing:
             self.velocity[1] = 0
             self.dashing = -60 if self.flip else 60
+            self.inv_time = 15 #extra 5 frams of invincibility
 
     def take_damage(self,damage=1,relative_pos=[0,0]):
         if self.inv_time == 0:
@@ -184,7 +187,7 @@ class Enemy(physics_entity):
         self.flip = True
         self.set_action('idle')
 
-
+        self.idle_time = 0 #time that enemy do nothing
         self.walking = 0
         self.jumping = False
         self.air_dashing = False
@@ -194,6 +197,7 @@ class Enemy(physics_entity):
         self.HP = 30
         self.attack_combo = 0
         #combo 1: jump - dash - drop attack - land shot
+        #combo 2: dash forward and shoot 3 bullets
 
     def update(self, movement=(0,0),tilemap=None):
         self.time_counter += 1
@@ -205,27 +209,39 @@ class Enemy(physics_entity):
         if not (self.air_dashing):
             self.velocity[1] = min(7,self.velocity[1]+0.1) #gravity
         if self.walking and self.attack_combo == 0:
+            self.idle_time = 0
             movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
             self.walking = max(0,self.walking-1)
             if not self.walking:
-                distance = (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
-                if abs(distance[1]) < 16:
-                    if(self.flip and distance[0] < 0): #player is to the left and enemy is facing left
-                        self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
-                        for i in range(4):
-                            self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()+math.pi-0.5,2+random.random()))
-                    elif(not self.flip and distance[0] > 0): #player is to the right and enemy is facing right
-                        self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
-                        for i in range(4):
-                            self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()-0.5,2+random.random()+2))
-        elif (random.random() < 0.01) and self.attack_combo == 0:
+                self.normal_shoot()
+        elif (random.random() < 0.02) and self.attack_combo == 0:
+            self.idle_time = 0
             if random.choice([True,False]):
-                self.walking = random.randint(30,120)
+                self.walking = random.randint(30,90)
             elif self.attack_cool_down == 0:
+                self.attack_combo = random.choice([1,2])
+                if self.attack_combo == 1:
+                    self.jump()
+                    self.attack_combo = 1
+                    self.attack_cool_down = 300
+                    self.current_counter = self.time_counter
+                elif self.attack_combo == 2:
+                    self.dash()
+                    self.attack_cool_down = 180
+                    self.current_counter = self.time_counter
+        else:
+            self.idle_time += 1
+
+        if self.idle_time > 180:
+            self.idle_time = 0
+            if random.choice([True,False]):
+                self.walking = random.randint(30,90)
+            else:
                 self.jump()
                 self.attack_combo = 1
                 self.attack_cool_down = 300
                 self.current_counter = self.time_counter
+
 
         if self.attack_combo == 1: #jump - dash - drop attack - land shot
             if self.jumping and (self.time_counter-self.current_counter) > 30:
@@ -245,6 +261,19 @@ class Enemy(physics_entity):
                 self.attack_combo = 0
                 self.current_counter = self.time_counter
                 self.land_shoot()
+        elif self.attack_combo == 2: #dash forward and shoot 3 bullets
+            if self.time_counter-self.current_counter == 10:
+                self.velocity[0] = 0
+                self.normal_shoot()
+            elif self.time_counter-self.current_counter == 30:
+                self.normal_shoot()
+            elif self.time_counter-self.current_counter == 50:
+                self.normal_shoot()
+            elif self.time_counter-self.current_counter == 70:
+                self.normal_shoot()
+                self.attack_combo = 0
+                self.current_counter = 0
+
 
         #if player collides with enemy, player takes damage
         if self.rect().colliderect(self.main_game.player.rect()) and abs(self.main_game.player.dashing) < 50: 
@@ -257,17 +286,6 @@ class Enemy(physics_entity):
         else:
             self.set_action('idle') 
 
-        if abs(self.main_game.player.dashing) >=50:
-            if self.rect().colliderect(self.main_game.player.rect()):
-                for i in range(20):
-                    angle = random.random()*math.pi*2
-                    speed = random.random() *3
-                    self.main_game.sparks.append(Gold_Flame(self.rect().center,angle,2+random.random()))  
-                    self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
-                self.main_game.sparks.append(Gold_Flame(self.rect().center, 0, 5+random.random()))
-                self.main_game.sparks.append(Gold_Flame(self.rect().center, math.pi, 5+random.random()))
-
-                self.HP -= 1
         if self.HP <= 0:
             return True
         super().update(movement,tilemap)
@@ -300,11 +318,23 @@ class Enemy(physics_entity):
             angle = random.random()*math.pi*2
             speed = random.random() *3
             self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))  
+
+    def normal_shoot(self):
+        distance = (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
+        if abs(distance[1]) < 16:
+            if(self.flip and distance[0] < 0): #player is to the left and enemy is facing left
+                self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
+                for i in range(4):
+                    self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()+math.pi-0.5,2+random.random()))
+            elif(not self.flip and distance[0] > 0): #player is to the right and enemy is facing right
+                self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
+                for i in range(4):
+                    self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()-0.5,2+random.random()+2))
             
                         
     def jump(self):
         #boss will jump and dash towards player's direction after a short delay
-        self.velocity[1] = -5
+        self.velocity[1] = -4
         self.jumping = True
     def drop_attack(self):
         #boss will drop down and land, dealing damage to player if player is below
