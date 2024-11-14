@@ -1,6 +1,6 @@
 import pygame
 from script.particle import Particle
-from script.spark import Spark
+from script.spark import Spark, Flame, Gold_Flame
 import math
 import random
 
@@ -77,7 +77,8 @@ class Player(physics_entity):
         super().__init__(main_game,'player',position,size)
         self.air_time = 0
         self.jump_count = 2
-        self.HP = HP    
+        self.HP = HP
+        self.attack_cool_down = 0    
 
     def update(self, movement=(0,0),tilemap=None):
         super().update(movement,tilemap)
@@ -85,6 +86,9 @@ class Player(physics_entity):
         if not (abs(self.dashing) > 50):
             self.velocity[1] = min(5,self.velocity[1]+0.1) #gravity
         self.air_time += 1
+
+        self.attack_cool_down = max(0,self.attack_cool_down-1)
+
         if self.check_collision['down']:
             self.air_time = 0
             self.jump_count = 2
@@ -115,10 +119,29 @@ class Player(physics_entity):
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
     def jump(self):
         if self.jump_count > 0:
-            self.velocity[1] = -3
+            self.velocity[1] = -2.5
             self.jump_count -= 1
             self.air_time = 5
             self.set_action('jump')
+
+    def attack(self):
+        if self.attack_cool_down == 0:
+            #attack a rect-space area in front of the player
+            if self.flip:
+                hitbox = pygame.Rect(self.position[0]-28,self.position[1],20,16)
+            else:
+                hitbox = pygame.Rect(self.position[0]+8,self.position[1],20,16)   
+            for enemy in self.main_game.enemy_spawners:
+                if hitbox.colliderect(enemy.rect()):
+                    enemy.HP -= 1
+                    for i in range(30):
+                        angle = random.random()*math.pi*2
+                        speed = random.random() *5
+                        self.main_game.sparks.append(Gold_Flame(enemy.rect().center,angle,2+random.random()))  
+                        self.main_game.particles.append(Particle(self.main_game,'particle',enemy.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
+                    self.main_game.sparks.append(Gold_Flame(enemy.rect().center, 0, 5+random.random()))
+                    self.main_game.sparks.append(Gold_Flame(enemy.rect().center, math.pi, 5+random.random()))
+
 
     def dash(self):
         #set verticle velocity to 0
@@ -143,6 +166,7 @@ class Enemy(physics_entity):
         self.time_counter = 0
         self.current_counter = 0
         self.attack_cool_down = 0
+        self.HP = 30
         self.attack_combo = 0
         #combo 1: jump - dash - drop attack - land shot
 
@@ -154,7 +178,7 @@ class Enemy(physics_entity):
             self.flip = True
         self.attack_cool_down = max(0,self.attack_cool_down-1)
         if not (self.air_dashing):
-            self.velocity[1] = min(5,self.velocity[1]+0.1) #gravity
+            self.velocity[1] = min(7,self.velocity[1]+0.1) #gravity
         if self.walking and self.attack_combo == 0:
             movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
             self.walking = max(0,self.walking-1)
@@ -179,7 +203,7 @@ class Enemy(physics_entity):
                 self.current_counter = self.time_counter
 
         if self.attack_combo == 1: #jump - dash - drop attack - land shot
-            if self.jumping and (self.time_counter-self.current_counter) > 50:
+            if self.jumping and (self.time_counter-self.current_counter) > 30:
                 self.jumping = False
                 self.velocity = [0,0]
                 self.current_counter = self.time_counter
@@ -192,7 +216,7 @@ class Enemy(physics_entity):
                     self.current_counter = self.time_counter
                     self.drop_attack()
             #collide with ground
-            elif self.check_collision['down']:
+            elif self.check_collision['down'] and not self.jumping:
                 self.attack_combo = 0
                 self.current_counter = self.time_counter
                 self.land_shoot()
@@ -206,15 +230,17 @@ class Enemy(physics_entity):
 
         if abs(self.main_game.player.dashing) >=50:
             if self.rect().colliderect(self.main_game.player.rect()):
-                for i in range(30):
+                for i in range(20):
                     angle = random.random()*math.pi*2
-                    speed = random.random() *5
-                    self.main_game.sparks.append(Spark(self.rect().center,angle,2+random.random()))  
+                    speed = random.random() *3
+                    self.main_game.sparks.append(Gold_Flame(self.rect().center,angle,2+random.random()))  
                     self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
-                self.main_game.sparks.append(Spark(self.rect().center, 0, 5+random.random()))
-                self.main_game.sparks.append(Spark(self.rect().center, math.pi, 5+random.random()))
+                self.main_game.sparks.append(Gold_Flame(self.rect().center, 0, 5+random.random()))
+                self.main_game.sparks.append(Gold_Flame(self.rect().center, math.pi, 5+random.random()))
 
-                return True
+                self.HP -= 1
+        if self.HP <= 0:
+            return True
         super().update(movement,tilemap)
 
     def check_player_pos(self):
@@ -241,18 +267,20 @@ class Enemy(physics_entity):
         self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery-7],-1.5,-1.5])
         self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery-7],1.5,1.5])
         self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
-        for i in range(4):
-            self.main_game.sparks.append(Spark(self.main_game.projectiles[-1][0],random.random()-0.5,2+random.random()+2))
+        for i in range(30):
+            angle = random.random()*math.pi*2
+            speed = random.random() *3
+            self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))  
+            
+                        
     def jump(self):
         #boss will jump and dash towards player's direction after a short delay
         self.velocity[1] = -5
         self.jumping = True
     def drop_attack(self):
         #boss will drop down and land, dealing damage to player if player is below
-        self.velocity[1] = 5
-        #spark effect
-        self.main_game.sparks.append(Spark(self.rect().center, 0, 5+random.random()))
-        self.main_game.sparks.append(Spark(self.rect().center, math.pi, 5+random.random()))
+        self.velocity[1] = 7
+        self.main_game.sparks.append(Spark(self.rect().center, 1.5*math.pi, 5+random.random()))
 
     def render(self,surface,offset=[0,0]):
         super().render(surface,offset)

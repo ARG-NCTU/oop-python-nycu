@@ -99,7 +99,7 @@ class main_game:
                     self.load_level()
 
             self.camera[0] += (self.player.rect().centerx - self.display.get_width()/2 -self.camera[0])/20 #camera follow player x
-            self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y
+            #self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y
             render_camera = [int(self.camera[0]), int(self.camera[1])]
 
             for spawner in self.leaf_spawners:
@@ -172,6 +172,8 @@ class main_game:
                         self.player.jump()
                     if event.key == pygame.K_SPACE:
                         self.player.dash()
+                    if event.key == pygame.K_z: 
+                        self.player.attack()
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
                         self.movements[0] = False
@@ -194,6 +196,8 @@ class main_game:
                         self.player.jump()
                     if event.button == 7:
                         self.player.dash()
+                    if event.button == 3:
+                        self.player.attack()
 
 
             self.screen.blit(pygame.transform.scale(self.display, (SCREEN_Width, SCREEN_HEIGHT)), (0,0))
