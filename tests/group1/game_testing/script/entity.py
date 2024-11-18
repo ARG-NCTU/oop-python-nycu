@@ -138,7 +138,7 @@ class Player(physics_entity):
                 hitbox = pygame.Rect(self.position[0]+8,self.position[1],28,16)   
             for enemy in self.main_game.enemy_spawners:
                 if hitbox.colliderect(enemy.rect()):
-                    enemy.HP -= 1
+                    enemy.HP -= 2
                     for i in range(30):
                         angle = random.random()*math.pi*2
                         speed = random.random() *5
