@@ -3,7 +3,6 @@ import add_path
 import random
 from mit_ocw_data_science.lec12.cluster import *
 import numpy as np
-from mit_ocw_data_science.lec13 import TitanicPassengers
 from mit_ocw_data_science.lec13.lecture13 import *
 
 def test_minkowski_dist():
@@ -48,3 +47,8 @@ def test_Cluster():
     np.testing.assert_almost_equal(cluster2.variability(), 8.5, decimal=1)
 
     assert dissimilarity([cluster1, cluster2]) == 486.0
+
+
+# Run tests
+if __name__ == "__main__":
+    pytest.main()
