@@ -90,11 +90,13 @@ RUN pip3 install \
     cython \
     pandas \
     image \
+    pytest-skip-slow \
     Pillow \
     matplotlib \
     tensorflow \
     tensorboard \
-    pygwidgets
+    pygwidgets \
+    xlsxwriter
 
 # RUN pip install \
 #     torch==1.10 \
@@ -107,7 +109,7 @@ RUN pip3 install swig
 RUN pip3 install gymnasium[all]==0.26.2
 RUN pip install gymnasium[box2d]
 ##################################### codon #####################################
-RUN /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+RUN curl -v -fsSL https://exaloop.io/install.sh | bash -x
 RUN export PATH=/home/${USER}/.codon/bin:$PATH
 
 ##################################### vim-python-ide ######################################
@@ -132,7 +134,8 @@ RUN apt install ccache
 
 ############################### pydot & grapghviz ###################################
 RUN apt update
-RUN apt install graphviz -y
+RUN apt-get update --fix-missing && \
+    apt-get install graphviz -y --fix-missing
 RUN pip3 install pydot
 ##################################### meld #####################################
 RUN apt-get install meld -y
@@ -176,6 +179,10 @@ RUN pip install mkdocs-mermaid2-plugin
 
 ################################# llama #####################################
 RUN pip3 install llama-cpp-python
+
+################################# git commit #####################################
+RUN pip3 install xlsxwriter
+
 ##################################### setting #####################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
