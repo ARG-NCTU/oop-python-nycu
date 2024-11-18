@@ -39,27 +39,42 @@ jobs:
 
   Run-Pytest-Tests:
     runs-on: ubuntu-latest
+    container:
+      image: argnctu/oop:latest
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1 --user root
+
     steps:
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+
+      - name: Set permissions on temp directory
+        run: chmod -R 777 /__w/_temp/
+
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest
-          pip install pytest-skip-slow
-          pip install matplotlib numpy
+
       - name: Run G3 tests
         run: |
+          pip install -r requirements.txt
           pytest
         working-directory: tests/group3  
+
+      - name: Run G4 tests
+        run: |
+          pytest
+        working-directory: tests/group4
+
       - name: Run G8 tests
         run: |
           pytest
         working-directory: tests/group8
+        
       - name: Run tests
         run: |
           pytest
@@ -68,4 +83,3 @@ jobs:
           #         uses: actions/upload-artifact@v5
           #         with:
           #           name: test-results
-

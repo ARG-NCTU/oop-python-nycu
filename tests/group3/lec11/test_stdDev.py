@@ -11,24 +11,24 @@ Usage:
     Run this module with pytest to execute the tests.
 """
 
-from lec11_intro_to_ML import stdDev
+from lec11_intro_to_ML import stdDev as g3_stdDev
 
 def test_stdDev():
     # Test with an empty list (this should raise an error like ZeroDivisionError)
     with pytest.raises(ValueError, match="The input list is empty"):
-        stdDev([])
+        g3_stdDev([])
 
     # Test with a list of one element, standard deviation should be 0
-    assert stdDev([5]) == 0
+    assert g3_stdDev([5]) == 0
 
     # Test with a list of identical elements, standard deviation should be 0
-    assert stdDev([3, 3, 3, 3, 3]) == 0
+    assert g3_stdDev([3, 3, 3, 3, 3]) == 0
 
     # Test with a list of varying elements, comparing to known result
-    assert isclose(stdDev([1, 2, 3, 4, 5]), 1.41421356237, rel_tol=1e-9)
+    assert isclose(g3_stdDev([1, 2, 3, 4, 5]), 1.41421356237, rel_tol=1e-9)
 
     # Test with negative numbers
-    assert isclose(stdDev([-1, -2, -3, -4, -5]), 1.41421356237, rel_tol=1e-9)
+    assert isclose(g3_stdDev([-1, -2, -3, -4, -5]), 1.41421356237, rel_tol=1e-9)
 
 if __name__ == "__main__":
     pytest.main()
