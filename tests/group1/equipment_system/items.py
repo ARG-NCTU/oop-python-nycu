@@ -42,4 +42,11 @@ accessories.append(accessory("斷線的人偶", "提升魔法傷害和符卡傷�
 accessories.append(accessory("神社的符咒", "符卡可用次數+1", 3, 3))
 accessories.append(accessory("巫女的御幣", "近戰攻擊次數+1", 3, 3))
 
+def get_weapons():
+    return weapons
 
+def get_spell_cards():
+    return spell_cards
+
+def get_accessories():
+    return accessories
