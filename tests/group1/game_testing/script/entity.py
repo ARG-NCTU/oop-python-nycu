@@ -97,7 +97,7 @@ class Player(physics_entity):
         self.spell_card = spell_card.name if spell_card else "none"
         self.accessory = [accessory[i].name for i in range(len(accessory))]
 
-        self.accessory = ["巫女的御幣"]
+        #self.accessory = ["巫女的御幣"]
 
         if "水晶吊墜" in self.accessory:
             self.max_mana += 10
