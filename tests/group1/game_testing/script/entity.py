@@ -73,13 +73,49 @@ class physics_entity:
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
 
 class Player(physics_entity):
-    def __init__(self,main_game,position,size,HP):     
+    def __init__(self,main_game,position,size,HP,weapon=None,spell_card=None,accessory=[]):     
         super().__init__(main_game,'player',position,size)
         self.air_time = 0
         self.jump_count = 2
         self.HP = HP
         self.attack_cool_down = 0    
         self.inv_time = 0
+        self.extra_attack = False
+        self.extra_attack_frame = 0
+        self.max_inv_time = 60
+        self.max_attack_cool_down = 30
+        self.max_mana = 30
+        self.mana = self.max_mana
+        self.weapon = weapon.name if weapon else "none"
+        self.spell_card = spell_card
+        self.accessory = accessory
+        self.damage=2
+        if self.weapon == "貪欲的叉勺":
+            self.damage = 3
+            self.max_attack_cool_down = 20
+
+        self.spell_card = spell_card.name if spell_card else "none"
+        self.accessory = [accessory[i].name for i in range(len(accessory))]
+
+        self.accessory = ["巫女的御幣"]
+
+        if "水晶吊墜" in self.accessory:
+            self.max_mana += 10
+            self.mana = self.max_mana
+        if "心型吊墜" in self.accessory:
+            self.HP += 1
+        if "亡靈提燈" in self.accessory:    
+            self.inv_time += 30
+        #"蝙蝠吊墜" setting in enemy
+        if "銀製匕首" in self.accessory:
+            self.damage += 1
+        if "斷線的人偶" in self.accessory:
+            pass
+        if "神社的符咒" in self.accessory:  
+            pass
+        if "巫女的御幣" in self.accessory:
+            self.extra_attack = True
+
 
     def update(self, movement=(0,0),tilemap=None):
         super().update(movement,tilemap)
@@ -118,6 +154,14 @@ class Player(physics_entity):
         if self.velocity[0] < 0:
             self.velocity[0] = min(0,self.velocity[0]+0.1)   
 
+        self.extra_attack_frame = max(0,self.extra_attack_frame-1)
+        if self.extra_attack_frame == 1:
+            temp=self.attack_cool_down
+            self.attack_cool_down = 0
+            self.attack(self.extra_attack)
+            self.attack_cool_down = temp
+
+
     def render(self,surface,offset=[0,0]):
         super().render(surface,offset)
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
@@ -128,24 +172,51 @@ class Player(physics_entity):
             self.air_time = 5
             self.set_action('jump')
 
-    def attack(self):
+    def attack(self,is_extra=False):
         if self.attack_cool_down == 0:
-            self.attack_cool_down = 20
-            #attack a rect-space area in front of the player
-            if self.flip:
-                hitbox = pygame.Rect(self.position[0]-36,self.position[1],28,16)
-            else:
-                hitbox = pygame.Rect(self.position[0]+8,self.position[1],28,16)   
-            for enemy in self.main_game.enemy_spawners:
-                if hitbox.colliderect(enemy.rect()):
-                    enemy.HP -= 2
-                    for i in range(30):
-                        angle = random.random()*math.pi*2
-                        speed = random.random() *5
-                        self.main_game.sparks.append(Gold_Flame(enemy.rect().center,angle,2+random.random()))  
-                        self.main_game.particles.append(Particle(self.main_game,'particle',enemy.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
-                    self.main_game.sparks.append(Gold_Flame(enemy.rect().center, 0, 5+random.random()))
-                    self.main_game.sparks.append(Gold_Flame(enemy.rect().center, math.pi, 5+random.random()))
+            self.attack_cool_down = self.max_attack_cool_down
+            if self.weapon == "none":
+                #attack a rect-space area in front of the player
+                if self.flip:
+                    hitbox = pygame.Rect(self.position[0]-36,self.position[1],28,16)
+                else:
+                    hitbox = pygame.Rect(self.position[0]+8,self.position[1],28,16)   
+                for enemy in self.main_game.enemy_spawners:
+                    if hitbox.colliderect(enemy.rect()):
+                        enemy.HP -= self.damage
+                        for i in range(30):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *5
+                            self.main_game.sparks.append(Gold_Flame(enemy.rect().center,angle,2+random.random()))  
+                            self.main_game.particles.append(Particle(self.main_game,'particle',enemy.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
+                        self.main_game.sparks.append(Gold_Flame(enemy.rect().center, 0, 5+random.random()))
+                        self.main_game.sparks.append(Gold_Flame(enemy.rect().center, math.pi, 5+random.random()))
+                if self.extra_attack and not is_extra:
+                    self.extra_attack_frame = 11
+            elif self.weapon == "貪欲的叉勺":
+                if self.flip:
+                    hitbox = pygame.Rect(self.position[0]-36,self.position[1],28,22)
+                else:
+                    hitbox = pygame.Rect(self.position[0]+8,self.position[1],28,22)   
+                for enemy in self.main_game.enemy_spawners:
+                    if hitbox.colliderect(enemy.rect()):
+                        enemy.HP -= self.damage
+                        for i in range(30):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *5
+                            self.main_game.sparks.append(Gold_Flame(enemy.rect().center,angle,2+random.random()))  
+                            self.main_game.particles.append(Particle(self.main_game,'particle',enemy.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
+                        self.main_game.sparks.append(Gold_Flame(enemy.rect().center, 0, 5+random.random()))
+                        self.main_game.sparks.append(Gold_Flame(enemy.rect().center, math.pi, 5+random.random()))
+                for bullet in self.main_game.projectiles:
+                    if hitbox.colliderect(pygame.Rect(bullet[0][0]-4,bullet[0][1]-4,8,8)):
+                        self.main_game.projectiles.remove(bullet)
+                        for i in range(10):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *5
+                            self.main_game.sparks.append(Spark(bullet[0],angle,2+random.random()))  
+                if self.extra_attack and not is_extra:
+                    self.extra_attack_frame = 11
 
 
     def dash(self):
@@ -168,7 +239,7 @@ class Player(physics_entity):
                 self.velocity[1] = -2
             #if player takes damage, lose 1 HP and got knockback to the opposite direction of the enemy
             self.HP -= damage
-            self.inv_time = 60
+            self.inv_time = self.max_inv_time
             for i in range(30):
                 angle = random.random()*math.pi*2
                 speed = random.random() *5
@@ -182,10 +253,12 @@ class Player(physics_entity):
             super().render(surface,offset)
 
 class Enemy(physics_entity):
-    def __init__(self,main_game,position,size):
+    def __init__(self,main_game,position,size,phase=1):
         super().__init__(main_game,'enemy',position,size)
         self.flip = True
         self.set_action('idle')
+
+        self.phase = phase
 
         self.idle_time = 0 #time that enemy do nothing
         self.walking = 0
@@ -194,7 +267,10 @@ class Enemy(physics_entity):
         self.time_counter = 0
         self.current_counter = 0
         self.attack_cool_down = 0
-        self.HP = 30
+        if self.phase == 1:
+            self.HP = 30
+        elif self.phase == 2:
+            self.HP = 25
         self.attack_combo = 0
         #combo 1: jump - dash - drop attack - land shot
         #combo 2: dash forward and shoot 3 bullets
@@ -205,79 +281,91 @@ class Enemy(physics_entity):
             self.flip = False
         else:
             self.flip = True
-        self.attack_cool_down = max(0,self.attack_cool_down-1)
-        if not (self.air_dashing):
-            self.velocity[1] = min(7,self.velocity[1]+0.1) #gravity
-        if self.walking and self.attack_combo == 0:
-            self.idle_time = 0
-            movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
-            self.walking = max(0,self.walking-1)
-            if not self.walking:
-                self.normal_shoot()
-        elif (random.random() < 0.02) and self.attack_combo == 0:
-            self.idle_time = 0
-            if random.choice([True,False]):
-                self.walking = random.randint(30,90)
-            elif self.attack_cool_down == 0:
-                self.attack_combo = random.choice([1,2])
-                if self.attack_combo == 1:
+        
+        if self.phase == 1:
+            self.attack_cool_down = max(0,self.attack_cool_down-1)
+            if not (self.air_dashing):
+                self.velocity[1] = min(7,self.velocity[1]+0.1) #gravity
+            if self.walking and self.attack_combo == 0:
+                self.idle_time = 0
+                movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
+                self.walking = max(0,self.walking-1)
+                if not self.walking:
+                    self.normal_shoot()
+            elif (random.random() < 0.02) and self.attack_combo == 0:
+                self.idle_time = 0
+                if random.choice([True,False]):
+                    self.walking = random.randint(30,70)
+                elif self.attack_cool_down == 0:
+                    self.attack_combo = random.choice([1,2])
+                    if self.attack_combo == 1:
+                        self.jump()
+                        self.attack_combo = 1
+                        self.attack_cool_down = 300
+                        self.current_counter = self.time_counter
+                    elif self.attack_combo == 2:
+                        self.dash()
+                        self.attack_cool_down = 180
+                        self.current_counter = self.time_counter
+            else:
+                self.idle_time += 1
+
+            if self.idle_time > 150:
+                self.idle_time = 0
+                if random.choice([True,False]):
+                    self.walking = random.randint(30,90)
+                else:
                     self.jump()
                     self.attack_combo = 1
                     self.attack_cool_down = 300
                     self.current_counter = self.time_counter
-                elif self.attack_combo == 2:
-                    self.dash()
-                    self.attack_cool_down = 180
-                    self.current_counter = self.time_counter
-        else:
-            self.idle_time += 1
-
-        if self.idle_time > 180:
-            self.idle_time = 0
-            if random.choice([True,False]):
-                self.walking = random.randint(30,90)
-            else:
-                self.jump()
-                self.attack_combo = 1
-                self.attack_cool_down = 300
-                self.current_counter = self.time_counter
 
 
-        if self.attack_combo == 1: #jump - dash - drop attack - land shot
-            if self.jumping and (self.time_counter-self.current_counter) > 30:
-                self.jumping = False
-                self.velocity = [0,0]
-                self.current_counter = self.time_counter
-                self.air_dash()
-            elif self.air_dashing:
-                player_pos = self.check_player_pos()
-                if abs(player_pos[0]) < 8 or self.time_counter - self.current_counter >30:
-                    self.air_dashing = False
+            if self.attack_combo == 1: #jump - dash - drop attack - land shot
+                if self.jumping and (self.time_counter-self.current_counter) > 30:
+                    self.jumping = False
                     self.velocity = [0,0]
                     self.current_counter = self.time_counter
-                    self.drop_attack()
-            #collide with ground
-            elif self.check_collision['down'] and not self.jumping:
-                self.attack_combo = 0
-                self.current_counter = self.time_counter
-                self.land_shoot()
-        elif self.attack_combo == 2: #dash forward and shoot 3 bullets
-            if self.time_counter-self.current_counter == 10:
-                self.velocity[0] = 0
-                self.normal_shoot()
-            elif self.time_counter-self.current_counter == 30:
-                self.normal_shoot()
-            elif self.time_counter-self.current_counter == 50:
-                self.normal_shoot()
-            elif self.time_counter-self.current_counter == 70:
-                self.normal_shoot()
-                self.attack_combo = 0
-                self.current_counter = 0
+                    self.air_dash()
+                elif self.air_dashing:
+                    player_pos = self.check_player_pos()
+                    if abs(player_pos[0]) < 8 or self.time_counter - self.current_counter >30:
+                        self.air_dashing = False
+                        self.velocity = [0,0]
+                        self.current_counter = self.time_counter
+                        self.drop_attack()
+                #collide with ground
+                elif self.check_collision['down'] and not self.jumping:
+                    self.attack_combo = 0
+                    self.current_counter = self.time_counter
+                    self.land_shoot()
+            elif self.attack_combo == 2: #dash forward and shoot 3 bullets
+                if self.time_counter-self.current_counter == 10:
+                    self.velocity[0] = 0
+                    self.normal_shoot()
+                elif self.time_counter-self.current_counter == 30:
+                    self.normal_shoot()
+                elif self.time_counter-self.current_counter == 50:
+                    self.normal_shoot()
+                elif self.time_counter-self.current_counter == 70:
+                    self.normal_shoot()
+                    self.attack_combo = 0
+                    self.current_counter = 0
 
 
         #if player collides with enemy, player takes damage
         if self.rect().colliderect(self.main_game.player.rect()) and abs(self.main_game.player.dashing) < 50: 
             self.main_game.player.take_damage(1,self.check_player_pos())
+        elif self.rect().colliderect(self.main_game.player.rect()) and abs(self.main_game.player.dashing) > 50 and "蝙蝠吊墜" in self.main_game.player.accessory:
+            self.HP -= self.main_game.player.damage
+            for i in range(30):
+                angle = random.random()*math.pi*2
+                speed = random.random() *5
+                self.main_game.sparks.append(Gold_Flame(self.rect().center,angle,2+random.random()))  
+                self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
+            if self.HP <= 0:
+                return True
+
 
             
 

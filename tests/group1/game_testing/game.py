@@ -11,7 +11,7 @@ from script.utils import load_images
 from script.utils import Animation
 from script.tilemap import Tilemap, small_tile
 from script.particle import Particle
-from script.spark import Spark
+from script.spark import Spark, Flame, Ice_Flame, Gold_Flame, Dark_Blue_Flame,Flexible_Spark    
 
 #constants
 SCREEN_Width = 640
@@ -85,10 +85,7 @@ class main_game:
             if spawner.variant == 0:
                 self.player.position = spawner.pos #player start position
             else:
-                self.enemy_spawners.append(Enemy(self,spawner.pos,(8,15)))
-             
-        
-
+                self.enemy_spawners.append(Enemy(self,spawner.pos,(8,15),phase=1))
     def run(self):
         while True:
             self.display.blit(self.assets['background'], (0,0))
@@ -113,6 +110,16 @@ class main_game:
                 enemy.render(self.display,offset=render_camera)
                 if kill:
                     self.enemy_spawners.remove(enemy)
+                    for i in range(4):
+                        self.sparks.append(Flame((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 3+random.random()))
+                        self.sparks.append(Flexible_Spark((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 3+random.random(),(255,127,0)))
+                        self.sparks.append(Gold_Flame((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 2+random.random()))
+                        self.sparks.append(Flexible_Spark((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 1+random.random(),(0,255,0)))
+                        self.sparks.append(Ice_Flame((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 5+random.random()))
+                        self.sparks.append(Flexible_Spark((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 4+random.random(),(148,0,211)))
+
+                    self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2))
+                    
             if not self.dead:
                 self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
                 self.player.render(self.display,offset=render_camera) #render player
