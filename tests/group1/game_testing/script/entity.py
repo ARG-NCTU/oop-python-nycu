@@ -266,7 +266,7 @@ class Enemy(physics_entity):
         self.air_dashing = False
         self.time_counter = 0
         self.current_counter = 0
-        self.attack_cool_down = 0
+        self.attack_cool_down = 300 #prevent enemy from spamming attack at the beginning
         if self.phase == 1:
             self.HP = 30
         elif self.phase == 2:
@@ -304,8 +304,7 @@ class Enemy(physics_entity):
                         self.attack_cool_down = 300
                         self.current_counter = self.time_counter
                     elif self.attack_combo == 2:
-                        self.dash()
-                        self.attack_cool_down = 180
+                        self.attack_cool_down = 200
                         self.current_counter = self.time_counter
             else:
                 self.idle_time += 1
@@ -339,18 +338,31 @@ class Enemy(physics_entity):
                     self.attack_combo = 0
                     self.current_counter = self.time_counter
                     self.land_shoot()
+
             elif self.attack_combo == 2: #dash forward and shoot 3 bullets
-                if self.time_counter-self.current_counter == 10:
+                #prepare time
+                if self.time_counter-self.current_counter == (1 or 65): 
+                    self.velocity[0] = 0
+                    for i in range (20):
+                        #flame effect
+                        angle = random.random()*math.pi*2
+                        speed = random.random() *3
+                        self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
+                elif self.time_counter-self.current_counter == 55:
+                    self.dash()
+                elif self.time_counter-self.current_counter == 70:
                     self.velocity[0] = 0
                     self.normal_shoot()
-                elif self.time_counter-self.current_counter == 30:
+                elif self.time_counter-self.current_counter == 90:
                     self.normal_shoot()
-                elif self.time_counter-self.current_counter == 50:
+                elif self.time_counter-self.current_counter == 110:
                     self.normal_shoot()
-                elif self.time_counter-self.current_counter == 70:
+                elif self.time_counter-self.current_counter == 130:
                     self.normal_shoot()
+                elif self.time_counter-self.current_counter == 200:
+                    #opportunity to attack
                     self.attack_combo = 0
-                    self.current_counter = 0
+                    self.current_counter = self.time_counter
 
 
         #if player collides with enemy, player takes damage
@@ -369,7 +381,7 @@ class Enemy(physics_entity):
 
             
 
-        if movement[0] > 0:
+        if abs(movement[0]) > 0:
             self.set_action('run')
         else:
             self.set_action('idle') 
@@ -409,7 +421,7 @@ class Enemy(physics_entity):
 
     def normal_shoot(self):
         distance = (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
-        if abs(distance[1]) < 16:
+        if True:  
             if(self.flip and distance[0] < 0): #player is to the left and enemy is facing left
                 self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
                 for i in range(4):
