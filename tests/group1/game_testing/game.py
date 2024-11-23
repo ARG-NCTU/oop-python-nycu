@@ -4,7 +4,7 @@ import sys
 import os
 import random
 import math
-from script.entity import physics_entity, Player, Enemy, Special_Projectile
+from script.entity import physics_entity, Player, Enemy, Diagnal_Projectile
 from script.utils import load_image
 from script.utils import load_tile
 from script.utils import load_images
@@ -121,7 +121,7 @@ class main_game:
                         self.sparks.append(Ice_Flame((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 5+random.random()))
                         self.sparks.append(Flexible_Spark((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 4+random.random(),(148,0,211)))
 
-                    self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2,action_queue=[100,"jump()",40,"frozen()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,["attack_preview()",30],5,["dash_to()",1]]))
+                    self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2,action_queue=[100,"jump()",40,"frozen_in_air()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
                     
             if not self.dead:
                 self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player

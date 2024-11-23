@@ -1,10 +1,10 @@
 import pygame
 from script.particle import Particle
-from script.spark import Spark, Flame, Gold_Flame
+from script.spark import Spark, Flame, Gold_Flame, Ice_Flame
 import math
 import random
 
-class Special_Projectile:
+class Diagnal_Projectile:
     def __init__(self,pos=[0,0],direction=[1,0],speed=1,img_name=""):
         self.pos = list(pos)
         self.direction = direction
@@ -16,6 +16,29 @@ class Special_Projectile:
         self.pos[0] += self.direction[0] * self.speed / self.length_of_direction
         self.pos[1] += self.direction[1] * self.speed / self.length_of_direction
         self.timer += 1
+
+class Special_Projectile(Diagnal_Projectile):
+    def __init__(self,pos=[0,0],direction=[1,0],speed=1,img_name="",max_timer=180,type="normal",main_game=None):
+        super().__init__(pos,direction,speed,img_name)
+        self.max_timer = max_timer
+        self.type = type
+        self.main_game = main_game
+
+    def update(self):
+        if self.timer == self.max_timer:
+            if self.type == "explode_shoot":
+                self.explode()
+        super().update()
+    
+    def explode(self):
+        #boss will shoot 8 special projectiles in all directions
+        self.velocity = [0,0]
+        for i in range(12):
+            angle = i * math.pi / 6
+            self.main_game.special_projectiles.append(Diagnal_Projectile(self.pos,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+            for i in range(4):
+                self.main_game.sparks.append(Ice_Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,1+random.random()))
+        self.main_game.special_projectiles.remove(self)
 
 
 class physics_entity:
@@ -241,7 +264,6 @@ class Player(physics_entity):
             self.inv_time = 15 #extra 5 frams of invincibility
 
     def take_damage(self,damage=1,relative_pos=[0,0]):
-        self.main_game.screen_shake_timer = max(10,self.main_game.screen_shake_timer)
         if self.inv_time == 0:
             self.relative_pos = relative_pos
             if self.relative_pos[0] > 0:
@@ -254,6 +276,9 @@ class Player(physics_entity):
                 self.velocity[1] = -2
             #if player takes damage, lose 1 HP and got knockback to the opposite direction of the enemy
             self.HP -= damage
+
+            self.main_game.screen_shake_timer = max(10,self.main_game.screen_shake_timer) #shake screen for 10 frames
+
             self.inv_time = self.max_inv_time
             for i in range(30):
                 angle = random.random()*math.pi*2
@@ -280,8 +305,9 @@ class Enemy(physics_entity):
         self.walking = 0
         self.jumping = False
         self.air_dashing = False
+        self.furiously_dashing = False
         self.dashing_towards_player = False
-        self.froze  = False
+        self.froze_in_air  = False
         self.time_counter = 0
         self.current_counter = 0
         self.attack_cool_down = 300 #prevent enemy from spamming attack at the beginning
@@ -290,9 +316,9 @@ class Enemy(physics_entity):
         self.attack_preview_pos_b = None
 
         if self.phase == 1:
-            self.HP = 3
+            self.HP = 16
         elif self.phase == 2:
-            self.HP = 25
+            self.HP = 20
         self.attack_combo = 0
         #combo 1: jump - dash - drop attack - land shot
         #combo 2: dash forward and shoot 3 bullets
@@ -323,10 +349,10 @@ class Enemy(physics_entity):
                     if self.attack_combo == 1:
                         self.jump()
                         self.attack_combo = 1
-                        self.attack_cool_down = 300
+                        self.attack_cool_down = 400
                         self.current_counter = self.time_counter
                     elif self.attack_combo == 2:
-                        self.attack_cool_down = 200
+                        self.attack_cool_down = 400
                         self.current_counter = self.time_counter
             else:
                 self.idle_time += 1
@@ -387,7 +413,7 @@ class Enemy(physics_entity):
                     self.current_counter = self.time_counter
         elif self.phase == 2:
             #apply gravity if not froze
-            if not self.froze:
+            if not self.froze_in_air:
                 self.velocity[1] = min(7,self.velocity[1]+0.1)
             if len(self.action_queue)>0 and isinstance(self.action_queue[0],int):
                 self.action_queue[0] -= 1
@@ -416,6 +442,28 @@ class Enemy(physics_entity):
                             speed = random.random() *3
                             self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
                         self.ground_8_shoot()
+                        self.froze_in_air = False
+                elif self.furiously_dashing:
+                    #horizontal Flame effect
+                    for i in range(5):
+                        self.main_game.sparks.append(Flame((self.rect().centerx,self.rect().centery+random.random()*4),-1*self.velocity[0]*math.pi,2+random.random())) 
+
+                    if self.check_collision['right'] or self.check_collision['left']:
+                        self.furiously_dashing = False
+                        self.velocity = [0,0]
+                        for i in range(20):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *3
+                            self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
+                        if random.choice([True,False]):
+                            self.action_queue=[60,"prepare_attack()",40,"dash()",20,"frozen_in_air()",10,"ground_smash()",5,"screen_shake(20)"]
+                        else:
+                            self.froze_in_air = False
+                            self.action_queue=[60,"jump()",20,"direction_shoot()",40,"direction_shoot()",80]
+
+                else:
+                    self.froze_in_air = False
+                    self.action_queue=[60,"jump()",40,"frozen_in_air()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]
 
 
         #if player collides with enemy, player takes damage
@@ -441,8 +489,13 @@ class Enemy(physics_entity):
         super().update(movement,tilemap)
 
     def check_player_pos(self):
-        return (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
-
+        return list((self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery))
+    
+    def prepare_attack(self):
+        for i in range (20):
+            #flame effect
+            angle = random.random()*math.pi*2
+            self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
     def dash(self):
         #boss will move towards player's direction at a high speed for a short duration
         distance = self.check_player_pos()  
@@ -450,6 +503,15 @@ class Enemy(physics_entity):
             self.velocity[0] = 5
         else:
             self.velocity[0] = -5
+
+    def furiously_dash(self):
+        #boss will move towards player's direction at a high speed for a short duration
+        distance = self.check_player_pos()  
+        self.furiously_dashing = True
+        if distance[0] > 0:
+            self.velocity[0] = 10
+        else:
+            self.velocity[0] = -10
     def air_dash(self):
         #boss will move towards player's direction at a high speed for a short duration
         distance = self.check_player_pos()
@@ -460,9 +522,9 @@ class Enemy(physics_entity):
         self.air_dashing = True
     def land_shoot(self):
         #boss will shoot five projectiole to the left, up left, up, up right, right
-        #self.main_game.special_projectiles.append(Special_Projectile([self.rect().centerx-7,self.rect().centery],[-1,-1],1.5,"projectile"))
-        #self.main_game.special_projectiles.append(Special_Projectile([self.rect().centerx+7,self.rect().centery],[1,-1],1.5,"projectile"))
-        #self.main_game.special_projectiles.append(Special_Projectile([self.rect().centerx,self.rect().centery-7],[0,-1],1.5,"projectile"))
+        #self.main_game.special_projectiles.append(Diagnal_Projectile([self.rect().centerx-7,self.rect().centery],[-1,-1],1.5,"projectile"))
+        #self.main_game.special_projectiles.append(Diagnal_Projectile([self.rect().centerx+7,self.rect().centery],[1,-1],1.5,"projectile"))
+        #self.main_game.special_projectiles.append(Diagnal_Projectile([self.rect().centerx,self.rect().centery-7],[0,-1],1.5,"projectile"))
         self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
         self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery-7],-1.5,-1.5])
         self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery-7],1.5,1.5])
@@ -494,9 +556,12 @@ class Enemy(physics_entity):
         self.velocity[1] = 7
         self.main_game.sparks.append(Spark(self.rect().center, 1.5*math.pi, 5+random.random()))
 
-    def frozen(self):
+    def frozen_in_air(self):
         self.velocity = [0,0]
-        self.froze = True
+        self.froze_in_air = True
+        #if collision with ground, stop the action
+        if self.check_collision['down']:
+            self.froze_in_air = False
 
     def air_8_shoot(self,variant=0):
         #boss will shoot 8 special projectiles in all directions
@@ -504,20 +569,67 @@ class Enemy(physics_entity):
         if variant == 1:
             for i in range(8):
                 angle = i * math.pi / 4
-                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+                self.main_game.special_projectiles.append(Diagnal_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
                 for i in range(4):
                     self.main_game.sparks.append(Spark(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,2+random.random()))
         elif variant == 2: #rotate 22.5 degree
             for i in range(8):
                 angle = i * math.pi / 4 + math.pi/8
-                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+                self.main_game.special_projectiles.append(Diagnal_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
                 for i in range(4):
                     self.main_game.sparks.append(Spark(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,2+random.random()))
     
     def ground_8_shoot(self):
         for i in range(16):
             angle = i * math.pi / 8
-            self.main_game.special_projectiles.append(Special_Projectile((self.rect().centerx,self.rect().centery-7),[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+            self.main_game.special_projectiles.append(Diagnal_Projectile((self.rect().centerx,self.rect().centery-7),[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+        x_pos = self.check_player_pos()[0]
+        self.action_queue = [120,"dash_back("+str(x_pos)+")",15,"frozen_in_air()",20]
+        if random.choice([True,False]):
+            self.action_queue.append("diag_explode_shoot()")
+            self.action_queue.append(40)
+        else:
+            self.action_queue.append("prepare_attack()")
+            self.action_queue.append(40)
+            self.action_queue.append("furiously_dash()")
+
+    def diag_explode_shoot(self):
+        relavtive_pos = self.check_player_pos()
+        relavtive_pos[1] = -60
+        self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[relavtive_pos[0],relavtive_pos[1]],3,"projectile",max_timer=50,type="explode_shoot",main_game=self.main_game))
+        for i in range(4):
+            self.main_game.sparks.append(Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,1+random.random()))
+        if random.choice([True,False]):
+            self.action_queue=[80,"prepare_attack()",40,"dash()",20,"frozen_in_air()",10,"ground_smash()",5,"screen_shake(20)"]
+        else:
+            self.froze_in_air = False
+            self.action_queue=[80,"jump()",20,"direction_shoot()",40,"direction_shoot()",80]
+    
+    def direction_shoot(self,direction=[0,0]):
+        #boss will shoot a projectile towards player's direction
+        if direction==[0,0]:
+            direction = self.check_player_pos()
+        self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,direction,2,"projectile",max_timer=30,type="explode_shoot",main_game=self.main_game))
+        for i in range(4):
+            self.main_game.sparks.append(Spark(self.position,random.random()-0.5,2+random.random()+2))
+
+    def ground_smash(self):
+        for i in range(20):
+            if self.flip:
+                self.main_game.sparks.append(Flame((self.rect().center[0]+random.randint(-6,6)-12,self.rect().center[1]-40), -1.5*math.pi, 3+random.random()))
+                #check if player is hit
+                if self.main_game.player.rect().colliderect(pygame.Rect(self.rect().center[0]-12,self.rect().center[1]-40,24,40)):
+                    self.main_game.player.take_damage(1)
+            else:
+                self.main_game.sparks.append(Flame((self.rect().center[0]+random.randint(-6,6)+12,self.rect().center[1]-40), -1.5*math.pi, 3+random.random()))
+                #check if player is hit
+                if self.main_game.player.rect().colliderect(pygame.Rect(self.rect().center[0]+12,self.rect().center[1]-40,24,40)):
+                    self.main_game.player.take_damage(1)
+        
+        
+    
+    def screen_shake(self,frame):
+        self.main_game.screen_shake_timer = max(frame,self.main_game.screen_shake_timer)
 
     def attack_preview(self,pos_a=(0,0),pos_b=(0,0)):
         #draw a red line from pos_a to pos_b
@@ -535,6 +647,12 @@ class Enemy(physics_entity):
         self.velocity = [direction[0]*10,direction[1]*10]
         self.attack_preview_pos_a,self.attack_preview_pos_b = None,None
 
+    def dash_back(self,relative_pos):
+        #dash away from player
+        if relative_pos > 0:
+            self.velocity = [-4,0]
+        else:
+            self.velocity = [4,0]
 
 
     def render(self,surface,offset=[0,0]):
