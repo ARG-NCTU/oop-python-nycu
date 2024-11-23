@@ -100,17 +100,17 @@ class main_game:
 
             self.camera[0] += (self.player.rect().centerx - self.display.get_width()/2 -self.camera[0])/20 #camera follow player x
             #self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y
-            render_camera = [int(self.camera[0]), int(self.camera[1])]
+            self.render_camera = [int(self.camera[0]), int(self.camera[1])]
 
             for spawner in self.leaf_spawners:
                 if random.random() * 49999 < spawner.width* spawner.height:
                     pos = (spawner.x + random.random()*spawner.width, spawner.y + random.random()*spawner.height)
                     self.particles.append(Particle(self,'leaf',pos,velocity=[-0.1,0.3],frame=random.randint(0,20)))
-            self.tilemap.render(self.display,offset=render_camera) #render background
+            self.tilemap.render(self.display,offset=self.render_camera) #render background
 
             for enemy in self.enemy_spawners.copy():
                 kill = enemy.update((0,0),self.tilemap)
-                enemy.render(self.display,offset=render_camera)
+                enemy.render(self.display,offset=self.render_camera)
                 if kill:
                     self.enemy_spawners.remove(enemy)
                     for i in range(4):
@@ -121,11 +121,11 @@ class main_game:
                         self.sparks.append(Ice_Flame((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 5+random.random()))
                         self.sparks.append(Flexible_Spark((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 4+random.random(),(148,0,211)))
 
-                    self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2))
+                    self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2,action_queue=[100,"jump()",40,"frozen()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,["attack_preview()",30],5,["dash_to()",1]]))
                     
             if not self.dead:
                 self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
-                self.player.render(self.display,offset=render_camera) #render player
+                self.player.render(self.display,offset=self.render_camera) #render player
 
 
             self.max_jump_height = -3  # Maximum jump velocity
@@ -137,7 +137,7 @@ class main_game:
                 projectile[0][0] += projectile[1]
                 projectile[2] += 1
                 img = self.assets['projectile']
-                self.display.blit(img,(projectile[0][0]-img.get_width()/2 -render_camera[0],projectile[0][1]-img.get_height()/2-render_camera[1]))
+                self.display.blit(img,(projectile[0][0]-img.get_width()/2 -self.render_camera[0],projectile[0][1]-img.get_height()/2-self.render_camera[1]))
                 if self.tilemap.solid_check(projectile[0]):
                     self.projectiles.remove(projectile) 
                     for i in range(4):
@@ -151,7 +151,7 @@ class main_game:
             for special_projectile in self.special_projectiles.copy():
                 special_projectile.update()
                 img = self.assets[special_projectile.img_name]
-                self.display.blit(img,(special_projectile.pos[0]-img.get_width()/2 -render_camera[0],special_projectile.pos[1]-img.get_height()/2-render_camera[1]))
+                self.display.blit(img,(special_projectile.pos[0]-img.get_width()/2 -self.render_camera[0],special_projectile.pos[1]-img.get_height()/2-self.render_camera[1]))
                 if self.tilemap.solid_check(special_projectile.pos):
                     self.special_projectiles.remove(special_projectile)
                     for i in range(4):
@@ -165,7 +165,7 @@ class main_game:
 
             for spark in self.sparks.copy():
                 kill = spark.update()
-                spark.render(self.display,offset=render_camera)
+                spark.render(self.display,offset=self.render_camera)
                 if kill:
                     self.sparks.remove(spark)   
 
@@ -173,7 +173,7 @@ class main_game:
                 kill = particle.update()
                 if particle.p_type == 'leaf':
                     particle.pos[0] += math.sin(particle.animation.frame*0.035)*0.3
-                particle.render(self.display,offset=render_camera)
+                particle.render(self.display,offset=self.render_camera)
                 if kill:
                     self.particles.remove(particle)
 

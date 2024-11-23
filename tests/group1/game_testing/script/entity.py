@@ -6,7 +6,7 @@ import random
 
 class Special_Projectile:
     def __init__(self,pos=[0,0],direction=[1,0],speed=1,img_name=""):
-        self.pos = pos
+        self.pos = list(pos)
         self.direction = direction
         self.speed = speed
         self.timer = 0
@@ -268,22 +268,29 @@ class Player(physics_entity):
             super().render(surface,offset)
 
 class Enemy(physics_entity):
-    def __init__(self,main_game,position,size,phase=1):
+    def __init__(self,main_game,position,size,phase=1,action_queue=[]):
         super().__init__(main_game,'enemy',position,size)
         self.flip = True
         self.set_action('idle')
 
         self.phase = phase
+        self.action_queue = action_queue
 
         self.idle_time = 0 #time that enemy do nothing
         self.walking = 0
         self.jumping = False
         self.air_dashing = False
+        self.dashing_towards_player = False
+        self.froze  = False
         self.time_counter = 0
         self.current_counter = 0
         self.attack_cool_down = 300 #prevent enemy from spamming attack at the beginning
+
+        self.attack_preview_pos_a = None    
+        self.attack_preview_pos_b = None
+
         if self.phase == 1:
-            self.HP = 30
+            self.HP = 3
         elif self.phase == 2:
             self.HP = 25
         self.attack_combo = 0
@@ -378,6 +385,37 @@ class Enemy(physics_entity):
                     #opportunity to attack
                     self.attack_combo = 0
                     self.current_counter = self.time_counter
+        elif self.phase == 2:
+            #apply gravity if not froze
+            if not self.froze:
+                self.velocity[1] = min(7,self.velocity[1]+0.1)
+            if len(self.action_queue)>0 and isinstance(self.action_queue[0],int):
+                self.action_queue[0] -= 1
+                if self.action_queue[0] == 0:
+                    self.action_queue.pop(0)
+            elif len(self.action_queue)>0 and isinstance(self.action_queue[0],list):
+                if self.action_queue[0][0] == "attack_preview()":   
+                    if not self.attack_preview_pos_a:
+                        self.attack_preview_pos_a,self.attack_preview_pos_b = self.attack_preview()
+                    else:
+                        self.attack_preview(self.attack_preview_pos_a,self.attack_preview_pos_b)
+                elif self.action_queue[0][0] == "dash_to()":   
+                    self.dash_towards_player(self.attack_preview_pos_b)
+                self.action_queue[0][1] -= 1
+                if self.action_queue[0][1] == 0:
+                    self.action_queue.pop(0) 
+            elif len(self.action_queue)>0:
+                exec("self."+self.action_queue.pop(0))
+            else:
+                if self.dashing_towards_player:
+                    if self.check_collision['down']:
+                        self.dashing_towards_player = False
+                        self.velocity = [0,0]
+                        for i in range(20):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *3
+                            self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
+                        self.ground_8_shoot()
 
 
         #if player collides with enemy, player takes damage
@@ -392,9 +430,6 @@ class Enemy(physics_entity):
                 self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
             if self.HP <= 0:
                 return True
-
-
-            
 
         if abs(movement[0]) > 0:
             self.set_action('run')
@@ -458,6 +493,49 @@ class Enemy(physics_entity):
         #boss will drop down and land, dealing damage to player if player is below
         self.velocity[1] = 7
         self.main_game.sparks.append(Spark(self.rect().center, 1.5*math.pi, 5+random.random()))
+
+    def frozen(self):
+        self.velocity = [0,0]
+        self.froze = True
+
+    def air_8_shoot(self,variant=0):
+        #boss will shoot 8 special projectiles in all directions
+        self.velocity = [0,0]
+        if variant == 1:
+            for i in range(8):
+                angle = i * math.pi / 4
+                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+                for i in range(4):
+                    self.main_game.sparks.append(Spark(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,2+random.random()))
+        elif variant == 2: #rotate 22.5 degree
+            for i in range(8):
+                angle = i * math.pi / 4 + math.pi/8
+                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+                for i in range(4):
+                    self.main_game.sparks.append(Spark(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,2+random.random()))
+    
+    def ground_8_shoot(self):
+        for i in range(16):
+            angle = i * math.pi / 8
+            self.main_game.special_projectiles.append(Special_Projectile((self.rect().centerx,self.rect().centery-7),[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+
+    def attack_preview(self,pos_a=(0,0),pos_b=(0,0)):
+        #draw a red line from pos_a to pos_b
+        if pos_a == (0,0) and pos_b == (0,0):
+            pos_a,pos_b =(self.rect().centerx,self.rect().centery),(self.main_game.player.rect().centerx,self.main_game.player.rect().centery+7)
+        pygame.draw.line(self.main_game.display,(255,0,0),(pos_a[0]-self.main_game.render_camera[0],pos_a[1]-self.main_game.render_camera[1]),(pos_b[0]-self.main_game.render_camera[0],pos_b[1]-self.main_game.render_camera[1]),1)
+        return pos_a,pos_b
+
+    def dash_towards_player(self,end_pos=(0,0)):
+        #dash diagnaly towards end_pos
+        self.dashing_towards_player = True
+        direction = (end_pos[0]-self.rect().centerx,end_pos[1]-self.rect().centery)
+        direction_length = math.sqrt(direction[0]**2 + direction[1]**2)
+        direction = (direction[0]/direction_length,direction[1]/direction_length)   
+        self.velocity = [direction[0]*10,direction[1]*10]
+        self.attack_preview_pos_a,self.attack_preview_pos_b = None,None
+
+
 
     def render(self,surface,offset=[0,0]):
         super().render(surface,offset)
