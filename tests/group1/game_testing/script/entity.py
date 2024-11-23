@@ -4,6 +4,20 @@ from script.spark import Spark, Flame, Gold_Flame
 import math
 import random
 
+class Special_Projectile:
+    def __init__(self,pos=[0,0],direction=[1,0],speed=1,img_name=""):
+        self.pos = pos
+        self.direction = direction
+        self.speed = speed
+        self.timer = 0
+        self.img_name = img_name
+        self.length_of_direction = math.sqrt(self.direction[0]**2 + self.direction[1]**2)
+    def update(self):
+        self.pos[0] += self.direction[0] * self.speed / self.length_of_direction
+        self.pos[1] += self.direction[1] * self.speed / self.length_of_direction
+        self.timer += 1
+
+
 class physics_entity:
     def __init__(self,main_game,entity_type,position,size):
         self.main_game = main_game
@@ -411,6 +425,9 @@ class Enemy(physics_entity):
         self.air_dashing = True
     def land_shoot(self):
         #boss will shoot five projectiole to the left, up left, up, up right, right
+        #self.main_game.special_projectiles.append(Special_Projectile([self.rect().centerx-7,self.rect().centery],[-1,-1],1.5,"projectile"))
+        #self.main_game.special_projectiles.append(Special_Projectile([self.rect().centerx+7,self.rect().centery],[1,-1],1.5,"projectile"))
+        #self.main_game.special_projectiles.append(Special_Projectile([self.rect().centerx,self.rect().centery-7],[0,-1],1.5,"projectile"))
         self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
         self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery-7],-1.5,-1.5])
         self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery-7],1.5,1.5])

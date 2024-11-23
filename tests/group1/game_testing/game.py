@@ -4,7 +4,7 @@ import sys
 import os
 import random
 import math
-from script.entity import physics_entity, Player, Enemy
+from script.entity import physics_entity, Player, Enemy, Special_Projectile
 from script.utils import load_image
 from script.utils import load_tile
 from script.utils import load_images
@@ -67,6 +67,7 @@ class main_game:
         self.tilemap = Tilemap(self)
 
         self.projectiles = []
+        self.special_projectiles = [] #object [pos,direction,speed,timer,img_name]
         self.particles = []
         self.sparks = []
 
@@ -147,14 +148,21 @@ class main_game:
                     if self.player.rect().collidepoint(projectile[0]):
                         self.projectiles.remove(projectile)
                         self.player.take_damage(1,(list(self.player.rect().center).copy()[0]-projectile[0][0],0))
-                        #for i in range(30):
-                        #    angle = random.random()*math.pi*2
-                        #    speed = random.random() *5
-                        #    self.sparks.append(Spark(self.player.rect().center,angle,2+random.random()))  
-                        #    self.particles.append(Particle(self,'particle',self.player.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))  
-                        #self.player.HP -= 1
-                        #if self.player.HP <= 0:
-                        #    self.dead += 1                  
+            for special_projectile in self.special_projectiles.copy():
+                special_projectile.update()
+                img = self.assets[special_projectile.img_name]
+                self.display.blit(img,(special_projectile.pos[0]-img.get_width()/2 -render_camera[0],special_projectile.pos[1]-img.get_height()/2-render_camera[1]))
+                if self.tilemap.solid_check(special_projectile.pos):
+                    self.special_projectiles.remove(special_projectile)
+                    for i in range(4):
+                        self.sparks.append(Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random()))   
+                elif special_projectile.timer > 360:
+                    self.special_projectiles.remove(special_projectile) 
+                elif abs(self.player.dashing) < 50: 
+                    if self.player.rect().collidepoint(special_projectile.pos):
+                        self.special_projectiles.remove(special_projectile)
+                        self.player.take_damage(1,(list(self.player.rect().center).copy()[0]-special_projectile.pos[0],0))
+
             for spark in self.sparks.copy():
                 kill = spark.update()
                 spark.render(self.display,offset=render_camera)
