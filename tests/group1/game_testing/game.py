@@ -71,6 +71,8 @@ class main_game:
         self.sparks = []
 
         self.camera = [0,0] #camera position = offset of everything
+        self.screen_shake_timer = 0
+        self.screen_shake_offset = [0,0]
         self.dead = 0 #dead animation
 
         self.tilemap.load("tests/group1/game_testing/tilemap.pickle")
@@ -207,8 +209,11 @@ class main_game:
                     if event.button == 3:
                         self.player.attack()
 
+            self.screen_shake_timer = max(0,self.screen_shake_timer-1)
+            self.screen_shake_offset = [random.randint(-self.screen_shake_timer,self.screen_shake_timer),random.randint(-self.screen_shake_timer,self.screen_shake_timer)]  
 
-            self.screen.blit(pygame.transform.scale(self.display, (SCREEN_Width, SCREEN_HEIGHT)), (0,0))
+
+            self.screen.blit(pygame.transform.scale(self.display, (SCREEN_Width, SCREEN_HEIGHT)), self.screen_shake_offset) 
             pygame.display.update()
             self.clock.tick(FPS)
 

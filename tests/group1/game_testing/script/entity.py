@@ -227,6 +227,7 @@ class Player(physics_entity):
             self.inv_time = 15 #extra 5 frams of invincibility
 
     def take_damage(self,damage=1,relative_pos=[0,0]):
+        self.main_game.screen_shake_timer = max(10,self.main_game.screen_shake_timer)
         if self.inv_time == 0:
             self.relative_pos = relative_pos
             if self.relative_pos[0] > 0:
