@@ -172,6 +172,11 @@ class Player(physics_entity):
             pass
         if "巫女的御幣" in self.accessory:
             self.extra_attack = True
+        self.testing_stats()
+    
+    def testing_stats(self):
+        #testing stats goes here
+        pass
 
 
     def update(self, movement=(0,0),tilemap=None):
@@ -274,6 +279,13 @@ class Player(physics_entity):
                             angle = random.random()*math.pi*2
                             speed = random.random() *5
                             self.main_game.sparks.append(Spark(bullet[0],angle,2+random.random()))  
+                for bullet in self.main_game.special_projectiles:
+                    if hitbox.colliderect(pygame.Rect(bullet.pos[0]-4,bullet.pos[1]-4,8,8)):
+                        self.main_game.special_projectiles.remove(bullet)
+                        for i in range(10):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *5
+                            self.main_game.sparks.append(Spark(bullet.pos,angle,2+random.random()))
                 if self.extra_attack and not is_extra:
                     self.extra_attack_frame = 11
             return True
@@ -679,8 +691,18 @@ class Enemy(physics_entity):
         relavtive_pos = self.check_player_pos()
         relavtive_pos[1] = -60
         self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[relavtive_pos[0],relavtive_pos[1]],3,"projectile",max_timer=50,type="explode_shoot",main_game=self.main_game))
-        for i in range(4):
-            self.main_game.sparks.append(Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,3+random.random()))
+        relavtive_pos[1] = -40
+        self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[relavtive_pos[0],relavtive_pos[1]],3.5,"projectile",max_timer=50,type="explode_shoot",main_game=self.main_game))
+        relavtive_pos[1] = -20
+        self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[relavtive_pos[0],relavtive_pos[1]],4,"projectile",max_timer=50,type="explode_shoot",main_game=self.main_game))
+        if True:  
+            if(self.flip): #player is to the left and enemy is facing left
+                for i in range(4):
+                    self.main_game.sparks.append(Flame(self.main_game.special_projectiles[-1].pos,random.random()+math.pi-0.5,2+random.random()))
+            else: #player is to the right and enemy is facing right
+                for i in range(4):
+                    self.main_game.sparks.append(Flame(self.main_game.special_projectiles[-1].pos,random.random()-0.5,2+random.random()+2))    
+
         if random.choice([True,False]):
             self.action_queue=[80,"prepare_attack()",40,"dash()",20,"frozen_in_air()",10,"ground_smash()",5,"screen_shake(20)"]
         else:
@@ -740,7 +762,7 @@ class Enemy(physics_entity):
         self.using_spell_card = True
         if count_down_timer <=48:
             for i in range(4):
-                angle = math.pi*2/32*(97-count_down_timer)+math.pi*i/4
+                angle = math.pi*2/32*(97-count_down_timer)+math.pi*i/2
                 self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],3,"projectile",max_timer=40,type="two_stage_spin",main_game=self.main_game))
         else:
             #shoot a completely random direction projectile
