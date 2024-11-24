@@ -303,7 +303,7 @@ class Player(physics_entity):
             for i in range(30):
                 angle = random.random()*math.pi*2
                 speed = random.random() *5
-                self.main_game.sparks.append(Spark(self.rect().center,angle,2+random.random()))  
+                self.main_game.sparks.append(Flexible_Spark(self.rect().center,angle,2+random.random(),(0,0,0)))  
                 self.main_game.particles.append(Particle(self.main_game,'particle',self.rect().center,[math.cos(angle+math.pi)*speed*0.5,math.sin(angle+math.pi)*speed*0.5],frame=random.randint(0,7)))
             if self.HP <= 0:
                 self.main_game.dead += 1    
@@ -412,6 +412,7 @@ class Enemy(physics_entity):
                 elif self.check_collision['down'] and not self.jumping:
                     self.attack_combo = 0
                     self.current_counter = self.time_counter
+                    self.screen_shake(10)
                     self.land_shoot()
 
             elif self.attack_combo == 2: #dash forward and shoot 3 bullets
@@ -464,6 +465,7 @@ class Enemy(physics_entity):
                     if self.check_collision['down']:
                         self.dashing_towards_player = False
                         self.velocity = [0,0]
+                        self.screen_shake(10)
                         for i in range(20):
                             angle = random.random()*math.pi*2
                             speed = random.random() *3
@@ -476,6 +478,7 @@ class Enemy(physics_entity):
                         self.main_game.sparks.append(Flame((self.rect().centerx,self.rect().centery+random.random()*4),-1*self.velocity[0]*math.pi,2+random.random())) 
 
                     if self.check_collision['right'] or self.check_collision['left']:
+                        self.screen_shake(10)
                         self.furiously_dashing = False
                         self.velocity = [0,0]
                         for i in range(20):
@@ -592,10 +595,6 @@ class Enemy(physics_entity):
             self.velocity[0] = -5
         self.air_dashing = True
     def land_shoot(self):
-        #boss will shoot five projectiole to the left, up left, up, up right, right
-        #self.main_game.special_projectiles.append(Diagnal_Projectile([self.rect().centerx-7,self.rect().centery],[-1,-1],1.5,"projectile"))
-        #self.main_game.special_projectiles.append(Diagnal_Projectile([self.rect().centerx+7,self.rect().centery],[1,-1],1.5,"projectile"))
-        #self.main_game.special_projectiles.append(Diagnal_Projectile([self.rect().centerx,self.rect().centery-7],[0,-1],1.5,"projectile"))
         self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery],-1.5,0])
         self.main_game.projectiles.append([[self.rect().centerx-7,self.rect().centery-7],-1.5,-1.5])
         self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery-7],1.5,1.5])
@@ -675,7 +674,7 @@ class Enemy(physics_entity):
         relavtive_pos[1] = -60
         self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[relavtive_pos[0],relavtive_pos[1]],3,"projectile",max_timer=50,type="explode_shoot",main_game=self.main_game))
         for i in range(4):
-            self.main_game.sparks.append(Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,1+random.random()))
+            self.main_game.sparks.append(Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,3+random.random()))
         if random.choice([True,False]):
             self.action_queue=[80,"prepare_attack()",40,"dash()",20,"frozen_in_air()",10,"ground_smash()",5,"screen_shake(20)"]
         else:
