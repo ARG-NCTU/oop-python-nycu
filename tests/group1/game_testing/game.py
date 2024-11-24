@@ -16,6 +16,8 @@ from script.spark import Spark, Flame, Ice_Flame, Gold_Flame, Dark_Blue_Flame,Fl
 #constants
 SCREEN_Width = 640
 SCREEN_HEIGHT = 480
+SCREEN_Width = 1280
+SCREEN_HEIGHT = 960
 HALF_SCREEN_WIDTH = SCREEN_Width // 2
 HALF_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
 FPS = 60
@@ -115,6 +117,8 @@ class main_game:
                 kill = enemy.update((0,0),self.tilemap)
                 enemy.render(self.display,offset=self.render_camera)
                 if kill:
+                    self.projectiles=[] 
+                    self.special_projectiles=[]
                     phase = enemy.phase
                     self.enemy_spawners.remove(enemy)
                     for i in range(4):
@@ -127,7 +131,7 @@ class main_game:
                     if phase == 1:
                         self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2,action_queue=[100,"jump()",40,"frozen_in_air()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
                     elif phase == 2:
-                        self.enemy_spawners.append(Enemy(self,[287,90],(8,15),phase=3,action_queue=[60,"prepare_attack(1)",100,["spell_card()",80],90,"air_dash()",40,"frozen_in_air()",10,["spell_card()",80],90,["spread()",15],90,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
+                        self.enemy_spawners.append(Enemy(self,[287,90],(8,15),phase=3,action_queue=[60,"prepare_attack(1)",60,["spell_card()",80],90,"air_dash()",40,"frozen_in_air()",10,["spell_card()",80],90,["spread()",15],90,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
 
             if not self.dead:
                 self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
@@ -230,7 +234,7 @@ class main_game:
             self.screen_shake_offset = [random.randint(-self.screen_shake_timer,self.screen_shake_timer),random.randint(-self.screen_shake_timer,self.screen_shake_timer)]  
 
 
-            self.screen.blit(pygame.transform.scale(self.display, (SCREEN_Width, SCREEN_HEIGHT)), self.screen_shake_offset) 
+            self.screen.blit(pygame.transform.scale(self.display, (2*SCREEN_Width, 2*SCREEN_HEIGHT)), self.screen_shake_offset) 
             pygame.display.update()
             self.clock.tick(FPS)
 

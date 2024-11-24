@@ -345,7 +345,7 @@ class Enemy(physics_entity):
         elif self.phase == 3:
             self.HP = 24
             self.using_spell_card = True
-            self.timer_HP = 2200
+            self.timer_HP = 2130
         self.attack_combo = 0
         #combo 1: jump - dash - drop attack - land shot
         #combo 2: dash forward and shoot 3 bullets
@@ -668,7 +668,7 @@ class Enemy(physics_entity):
             for i in range(16):
                 angle = i * math.pi / 8
                 self.main_game.special_projectiles.append(Special_Projectile((self.rect().centerx,self.rect().centery-7),[math.cos(angle),math.sin(angle)],1.5,"projectile",max_timer=30,type="small_explode",main_game=self.main_game))
-            self.action_queue=[60,"jump()",20,"frozen_in_air()",10,"prepare_attack(1)",120,["spell_card()",80],90,"air_dash()",25,"frozen_in_air()",10,["spell_card()",80],90,["spread()",15],90,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]
+            self.action_queue=[60,"jump()",20,"frozen_in_air()",10,"prepare_attack(1)",60,["spell_card()",80],90,"air_dash()",25,"frozen_in_air()",10,["spell_card()",80],90,["spread()",15],90,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]
 
     def diag_explode_shoot(self):
         relavtive_pos = self.check_player_pos()
