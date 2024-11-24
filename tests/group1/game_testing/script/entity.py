@@ -1,6 +1,6 @@
 import pygame
 from script.particle import Particle
-from script.spark import Spark, Flame, Gold_Flame, Ice_Flame
+from script.spark import Spark, Flame, Gold_Flame, Ice_Flame, Flexible_Spark
 import math
 import random
 
@@ -25,10 +25,19 @@ class Special_Projectile(Diagnal_Projectile):
         self.main_game = main_game
 
     def update(self):
+        if self.type == "two_stage_spin" and self.timer < self.max_timer:
+            self.speed *= 0.9
         if self.timer == self.max_timer:
             if self.type == "explode_shoot":
                 self.explode()
+            elif self.type == "two_stage_spin" or self.type == "two_stage_random":    
+                self.second_stage()
+            elif self.type == "small_explode":
+                self.small_explode()
         super().update()
+
+    def second_stage(self):
+        self.speed = 3 if self.type == "two_stage_spin" else 2
     
     def explode(self):
         #boss will shoot 8 special projectiles in all directions
@@ -36,6 +45,17 @@ class Special_Projectile(Diagnal_Projectile):
         for i in range(12):
             angle = i * math.pi / 6
             self.main_game.special_projectiles.append(Diagnal_Projectile(self.pos,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+            for i in range(4):
+                self.main_game.sparks.append(Ice_Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,1+random.random()))
+        self.main_game.special_projectiles.remove(self)
+    
+    def small_explode(self):
+        #boss will shoot 8 special projectiles in all directions
+        self.velocity = [0,0]
+        random_angle = random.random()*math.pi*2
+        for i in range(6):
+            angle = i * math.pi / 3 + random_angle
+            self.main_game.special_projectiles.append(Diagnal_Projectile(self.pos,[math.cos(angle),math.sin(angle)],3,"projectile"))
             for i in range(4):
                 self.main_game.sparks.append(Ice_Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,1+random.random()))
         self.main_game.special_projectiles.remove(self)
@@ -308,6 +328,7 @@ class Enemy(physics_entity):
         self.furiously_dashing = False
         self.dashing_towards_player = False
         self.froze_in_air  = False
+        self.using_spell_card = False
         self.time_counter = 0
         self.current_counter = 0
         self.attack_cool_down = 300 #prevent enemy from spamming attack at the beginning
@@ -317,8 +338,14 @@ class Enemy(physics_entity):
 
         if self.phase == 1:
             self.HP = 16
+            #self.HP = 1
         elif self.phase == 2:
             self.HP = 20
+            #self.HP = 1
+        elif self.phase == 3:
+            self.HP = 24
+            self.using_spell_card = True
+            self.timer_HP = 2200
         self.attack_combo = 0
         #combo 1: jump - dash - drop attack - land shot
         #combo 2: dash forward and shoot 3 bullets
@@ -464,7 +491,44 @@ class Enemy(physics_entity):
                 else:
                     self.froze_in_air = False
                     self.action_queue=[60,"jump()",40,"frozen_in_air()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]
-
+        elif self.phase == 3:
+            self.timer_HP -= 1
+            if self.timer_HP == 0:
+                self.HP = 0
+            if not self.using_spell_card and not self.froze_in_air:
+                self.velocity[1] = min(7,self.velocity[1]+0.1)
+            if len(self.action_queue)>0 and isinstance(self.action_queue[0],int):
+                self.action_queue[0] -= 1
+                if self.action_queue[0] == 0:
+                    self.action_queue.pop(0)
+            elif len(self.action_queue)>0 and isinstance(self.action_queue[0],list):
+                if self.action_queue[0][0] == "attack_preview()":   
+                    if not self.attack_preview_pos_a:
+                        self.attack_preview_pos_a,self.attack_preview_pos_b = self.attack_preview()
+                    else:
+                        self.attack_preview(self.attack_preview_pos_a,self.attack_preview_pos_b)
+                elif self.action_queue[0][0] == "dash_to()":   
+                    self.dash_towards_player(self.attack_preview_pos_b)
+                elif self.action_queue[0][0] == "spell_card()":
+                    self.spell_card_spin(self.action_queue[0][1])
+                elif self.action_queue[0][0] == "spread()":
+                    self.spell_card_spread()
+                self.action_queue[0][1] -= 1
+                if self.action_queue[0][1] == 0:
+                    self.action_queue.pop(0) 
+            elif len(self.action_queue)>0:
+                exec("self."+self.action_queue.pop(0))
+            else:
+                if self.dashing_towards_player:
+                    if self.check_collision['down']:
+                        self.dashing_towards_player = False
+                        self.velocity = [0,0]
+                        for i in range(20):
+                            angle = random.random()*math.pi*2
+                            speed = random.random() *3
+                            self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
+                        self.ground_8_shoot()
+                        self.froze_in_air = False
 
         #if player collides with enemy, player takes damage
         if self.rect().colliderect(self.main_game.player.rect()) and abs(self.main_game.player.dashing) < 50: 
@@ -491,11 +555,18 @@ class Enemy(physics_entity):
     def check_player_pos(self):
         return list((self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery))
     
-    def prepare_attack(self):
-        for i in range (20):
-            #flame effect
-            angle = random.random()*math.pi*2
-            self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
+    def prepare_attack(self,variant=0):
+        if variant == 0:
+            for i in range (20):
+                #flame effect
+                angle = random.random()*math.pi*2
+                self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
+        elif variant == 1:
+            for i in range (40):
+                #flame effect
+                angle = random.random()*math.pi*2
+                color_code = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+                self.main_game.sparks.append(Flexible_Spark(self.rect().center,angle,2+random.random(),color_code))
     def dash(self):
         #boss will move towards player's direction at a high speed for a short duration
         distance = self.check_player_pos()  
@@ -580,18 +651,24 @@ class Enemy(physics_entity):
                     self.main_game.sparks.append(Spark(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,2+random.random()))
     
     def ground_8_shoot(self):
-        for i in range(16):
-            angle = i * math.pi / 8
-            self.main_game.special_projectiles.append(Diagnal_Projectile((self.rect().centerx,self.rect().centery-7),[math.cos(angle),math.sin(angle)],1.5,"projectile"))
-        x_pos = self.check_player_pos()[0]
-        self.action_queue = [120,"dash_back("+str(x_pos)+")",15,"frozen_in_air()",20]
-        if random.choice([True,False]):
-            self.action_queue.append("diag_explode_shoot()")
-            self.action_queue.append(40)
+        if self.phase == 2:
+            for i in range(16):
+                angle = i * math.pi / 8
+                self.main_game.special_projectiles.append(Diagnal_Projectile((self.rect().centerx,self.rect().centery-7),[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+            x_pos = self.check_player_pos()[0]
+            self.action_queue = [120,"dash_back("+str(x_pos)+")",15,"frozen_in_air()",20]
+            if random.choice([True,False]):
+                self.action_queue.append("diag_explode_shoot()")
+                self.action_queue.append(40)
+            else:
+                self.action_queue.append("prepare_attack()")
+                self.action_queue.append(40)
+                self.action_queue.append("furiously_dash()")
         else:
-            self.action_queue.append("prepare_attack()")
-            self.action_queue.append(40)
-            self.action_queue.append("furiously_dash()")
+            for i in range(16):
+                angle = i * math.pi / 8
+                self.main_game.special_projectiles.append(Special_Projectile((self.rect().centerx,self.rect().centery-7),[math.cos(angle),math.sin(angle)],1.5,"projectile",max_timer=30,type="small_explode",main_game=self.main_game))
+            self.action_queue=[60,"jump()",20,"frozen_in_air()",10,"prepare_attack(1)",120,["spell_card()",80],90,"air_dash()",25,"frozen_in_air()",10,["spell_card()",80],90,["spread()",15],90,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]
 
     def diag_explode_shoot(self):
         relavtive_pos = self.check_player_pos()
@@ -653,6 +730,22 @@ class Enemy(physics_entity):
             self.velocity = [-4,0]
         else:
             self.velocity = [4,0]
+
+    def spell_card_spin(self,count_down_timer):
+        self.using_spell_card = True
+        if count_down_timer <=48:
+            for i in range(4):
+                angle = math.pi*2/32*(97-count_down_timer)+math.pi*i/4
+                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],3,"projectile",max_timer=40,type="two_stage_spin",main_game=self.main_game))
+        else:
+            #shoot a completely random direction projectile
+            for i in range(2):
+                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[random.random()*2-1,random.random()*2-1],1,"projectile",max_timer=70,type="two_stage_random",main_game=self.main_game))
+
+    def spell_card_spread(self):
+        for i in range(3):
+            self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[random.random()*2-1,random.random()*2-1],1,"projectile",max_timer=30,type="small_explode",main_game=self.main_game))
+
 
 
     def render(self,surface,offset=[0,0]):

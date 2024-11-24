@@ -72,6 +72,7 @@ class main_game:
         self.sparks = []
 
         self.camera = [0,0] #camera position = offset of everything
+        self.min_max_camera = [0,0] #min and max camera x position
         self.screen_shake_timer = 0
         self.screen_shake_offset = [0,0]
         self.dead = 0 #dead animation
@@ -99,6 +100,8 @@ class main_game:
                     self.load_level()
 
             self.camera[0] += (self.player.rect().centerx - self.display.get_width()/2 -self.camera[0])/20 #camera follow player x
+            self.camera[0] = min(self.min_max_camera[0],self.camera[0])
+            self.camera[0] = max(self.min_max_camera[1],self.camera[0])
             #self.camera[1] += (self.player.rect().centery - self.display.get_height()/2 - self.camera[1])/20 #camera follow player y
             self.render_camera = [int(self.camera[0]), int(self.camera[1])]
 
@@ -112,6 +115,7 @@ class main_game:
                 kill = enemy.update((0,0),self.tilemap)
                 enemy.render(self.display,offset=self.render_camera)
                 if kill:
+                    phase = enemy.phase
                     self.enemy_spawners.remove(enemy)
                     for i in range(4):
                         self.sparks.append(Flame((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 3+random.random()))
@@ -120,9 +124,11 @@ class main_game:
                         self.sparks.append(Flexible_Spark((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 1+random.random(),(0,255,0)))
                         self.sparks.append(Ice_Flame((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 5+random.random()))
                         self.sparks.append(Flexible_Spark((enemy.rect().center[0]+random.randint(-8,8),enemy.rect().center[1]), 1.5*math.pi, 4+random.random(),(148,0,211)))
+                    if phase == 1:
+                        self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2,action_queue=[100,"jump()",40,"frozen_in_air()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
+                    elif phase == 2:
+                        self.enemy_spawners.append(Enemy(self,[287,90],(8,15),phase=3,action_queue=[60,"prepare_attack(1)",100,["spell_card()",80],90,"air_dash()",40,"frozen_in_air()",10,["spell_card()",80],90,["spread()",15],90,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
 
-                    self.enemy_spawners.append(Enemy(self,[287,145],(8,15),phase=2,action_queue=[100,"jump()",40,"frozen_in_air()",10,"air_8_shoot(1)",30,"air_8_shoot(2)",30,"air_8_shoot(1)",30,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
-                    
             if not self.dead:
                 self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
                 self.player.render(self.display,offset=self.render_camera) #render player
@@ -153,7 +159,10 @@ class main_game:
                 img = self.assets[special_projectile.img_name]
                 self.display.blit(img,(special_projectile.pos[0]-img.get_width()/2 -self.render_camera[0],special_projectile.pos[1]-img.get_height()/2-self.render_camera[1]))
                 if self.tilemap.solid_check(special_projectile.pos):
-                    self.special_projectiles.remove(special_projectile)
+                    try:
+                        self.special_projectiles.remove(special_projectile)
+                    except:
+                        pass
                     for i in range(4):
                         self.sparks.append(Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random()))   
                 elif special_projectile.timer > 360:
