@@ -228,6 +228,8 @@ class Player(physics_entity):
             self.jump_count -= 1
             self.air_time = 5
             self.set_action('jump')
+            return True
+        return False
 
     def attack(self,is_extra=False):
         if self.attack_cool_down == 0:
@@ -274,6 +276,8 @@ class Player(physics_entity):
                             self.main_game.sparks.append(Spark(bullet[0],angle,2+random.random()))  
                 if self.extra_attack and not is_extra:
                     self.extra_attack_frame = 11
+            return True
+        return False
 
 
     def dash(self):
@@ -282,6 +286,8 @@ class Player(physics_entity):
             self.velocity[1] = 0
             self.dashing = -60 if self.flip else 60
             self.inv_time = 15 #extra 5 frams of invincibility
+            return True 
+        return False
 
     def take_damage(self,damage=1,relative_pos=[0,0]):
         if self.inv_time == 0:

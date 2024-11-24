@@ -72,6 +72,7 @@ class main_game:
         self.special_projectiles = [] #object [pos,direction,speed,timer,img_name]
         self.particles = []
         self.sparks = []
+        self.buffer = []    
 
         self.camera = [0,0] #camera position = offset of everything
         self.min_max_camera = [0,0] #min and max camera x position
@@ -224,11 +225,36 @@ class main_game:
 
                 if event.type == pygame.JOYBUTTONDOWN   :
                     if event.button == 0:
-                        self.player.jump()
+                        if not self.player.jump():
+                            self.buffer=["jump",6]
                     if event.button == 7:
-                        self.player.dash()
+                        if not self.player.dash():
+                            self.buffer=["dash",6]
                     if event.button == 3:
-                        self.player.attack()
+                        if not self.player.attack():
+                            self.buffer=["attack",6]
+                if event.type == pygame.JOYBUTTONUP:
+                    if event.button == 0 and "jump" in self.buffer:
+                        self.buffer=[]
+                    if event.button == 7 and "dash" in self.buffer:
+                        self.buffer=[]
+                    if event.button == 3 and "attack" in self.buffer:
+                        self.buffer=[]
+
+            if self.buffer:
+                self.buffer[1] -= 1
+                if self.buffer[1] == 0:
+                    self.buffer=[]
+                elif self.buffer[0] == "jump":
+                    if self.player.jump():
+                        self.buffer=[]
+                elif self.buffer[0] == "dash":
+                    if self.player.dash():
+                        self.buffer=[]
+                elif self.buffer[0] == "attack":
+                    if self.player.attack():
+                        self.buffer=[]
+                    
 
             self.screen_shake_timer = max(0,self.screen_shake_timer-1)
             self.screen_shake_offset = [random.randint(-self.screen_shake_timer,self.screen_shake_timer),random.randint(-self.screen_shake_timer,self.screen_shake_timer)]  
