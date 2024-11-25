@@ -26,12 +26,12 @@ def merge_sort(arr):
 
 def sorting(sort_func):
     arr = [random.randint(0, 100) for _ in range(random.randint(5, 10))]
-    print(f"Sorting with: {sort_func.__name__}")
+    print("Sorting with: {}".format(sort_func.__name__))
     print("Before:", arr)
     start = time.time()
     sort_func(arr)
     print("After:", arr)
-    print(f"Time taken: {time.time() - start:.6f} seconds\n")
+    print("Time taken: {:.6f} seconds\n".format(time.time() - start))
 
 if __name__ == "__main__":
     for sort_func in [merge_sort, insertion_sort, bubble_sort]:
