@@ -44,7 +44,7 @@ class Special_Projectile(Diagnal_Projectile):
         self.velocity = [0,0]
         for i in range(12):
             angle = i * math.pi / 6
-            self.main_game.special_projectiles.append(Diagnal_Projectile(self.pos,[math.cos(angle),math.sin(angle)],1.5,"projectile"))
+            self.main_game.special_projectiles.append(Diagnal_Projectile(self.pos,[math.cos(angle),math.sin(angle)],1.5,"projectile_"+str(random.randint(1,7))))
             for i in range(4):
                 self.main_game.sparks.append(Ice_Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,1+random.random()))
         self.main_game.special_projectiles.remove(self)
@@ -54,8 +54,8 @@ class Special_Projectile(Diagnal_Projectile):
         self.velocity = [0,0]
         random_angle = random.random()*math.pi*2
         for i in range(6):
-            angle = i * math.pi / 3 + random_angle
-            self.main_game.special_projectiles.append(Diagnal_Projectile(self.pos,[math.cos(angle),math.sin(angle)],3,"projectile"))
+            angle = i * math.pi / 3 + random_angle  
+            self.main_game.special_projectiles.append(Diagnal_Projectile(self.pos,[math.cos(angle),math.sin(angle)],3,"projectile_"+str(random.randint(1,7))))
             for i in range(4):
                 self.main_game.sparks.append(Ice_Flame(self.main_game.special_projectiles[-1].pos,random.random()*math.pi*2,1+random.random()))
         self.main_game.special_projectiles.remove(self)
@@ -176,6 +176,7 @@ class Player(physics_entity):
     
     def testing_stats(self):
         #testing stats goes here
+        self.damage = 100
         pass
 
 
@@ -229,6 +230,7 @@ class Player(physics_entity):
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
     def jump(self):
         if self.jump_count > 0:
+            self.main_game.sfx['jump'].play()
             self.velocity[1] = -2.5
             self.jump_count -= 1
             self.air_time = 5
@@ -248,6 +250,7 @@ class Player(physics_entity):
                 for enemy in self.main_game.enemy_spawners:
                     if hitbox.colliderect(enemy.rect()):
                         enemy.HP -= self.damage
+                        self.main_game.sfx['hit'].play()
                         for i in range(30):
                             angle = random.random()*math.pi*2
                             speed = random.random() *5
@@ -295,6 +298,7 @@ class Player(physics_entity):
     def dash(self):
         #set verticle velocity to 0
         if not self.dashing:
+            self.main_game.sfx['dash'].play()
             self.velocity[1] = 0
             self.dashing = -60 if self.flip else 60
             self.inv_time = 15 #extra 5 frams of invincibility
@@ -314,6 +318,7 @@ class Player(physics_entity):
                 self.velocity[1] = -2
             #if player takes damage, lose 1 HP and got knockback to the opposite direction of the enemy
             self.HP -= damage
+            self.main_game.sfx['hit'].play()
 
             self.main_game.screen_shake_timer = max(10,self.main_game.screen_shake_timer) #shake screen for 10 frames
 
@@ -504,7 +509,7 @@ class Enemy(physics_entity):
                             speed = random.random() *3
                             self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))
                         if random.choice([True,False]):
-                            self.action_queue=[60,"prepare_attack()",40,"dash()",20,"frozen_in_air()",10,"ground_smash()",5,"screen_shake(20)"]
+                            self.action_queue=[60,"prepare_attack()",40,"dash()",20,"frozen_in_air()",3,"ground_smash()",5,"screen_shake(20)"]
                         else:
                             self.froze_in_air = False
                             self.action_queue=[60,"jump()",20,"direction_shoot()",40,"direction_shoot()",80]
@@ -556,6 +561,7 @@ class Enemy(physics_entity):
             self.main_game.player.take_damage(1,self.check_player_pos())
         elif self.rect().colliderect(self.main_game.player.rect()) and abs(self.main_game.player.dashing) > 50 and "蝙蝠吊墜" in self.main_game.player.accessory:
             self.HP -= self.main_game.player.damage
+            self.main_game.sfx['hit'].play()
             for i in range(30):
                 angle = random.random()*math.pi*2
                 speed = random.random() *5
@@ -619,10 +625,10 @@ class Enemy(physics_entity):
         self.main_game.projectiles.append([[self.rect().centerx+7,self.rect().centery],1.5,0])
         for i in range(30):
             angle = random.random()*math.pi*2
-            speed = random.random() *3
             self.main_game.sparks.append(Flame(self.rect().center,angle,2+random.random()))  
 
     def normal_shoot(self):
+        self.main_game.sfx['shoot'].play()
         distance = (self.main_game.player.rect().centerx - self.rect().centerx, self.main_game.player.rect().centery - self.rect().centery)
         if True:  
             if(self.flip and distance[0] < 0): #player is to the left and enemy is facing left
@@ -763,11 +769,11 @@ class Enemy(physics_entity):
         if count_down_timer <=48:
             for i in range(4):
                 angle = math.pi*2/32*(97-count_down_timer)+math.pi*i/2
-                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],3,"projectile",max_timer=40,type="two_stage_spin",main_game=self.main_game))
+                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[math.cos(angle),math.sin(angle)],3,"projectile_"+str(count_down_timer%7+1),max_timer=40,type="two_stage_spin",main_game=self.main_game))
         else:
             #shoot a completely random direction projectile
             for i in range(2):
-                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[random.random()*2-1,random.random()*2-1],1,"projectile",max_timer=70,type="two_stage_random",main_game=self.main_game))
+                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[random.random()*2-1,random.random()*2-1],1,"projectile_"+str(count_down_timer%7+1),max_timer=70,type="two_stage_random",main_game=self.main_game))
 
     def spell_card_spread(self):
         for i in range(3):

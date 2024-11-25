@@ -2,6 +2,10 @@ import pygame
 import os
 
 BASE_IMAGE_PATH = "tests/group1/game_testing/data/images/"
+BASE_SFX_PATH = "tests/group1/game_testing/data/sfx/"
+
+def load_sfx(path):
+    return pygame.mixer.Sound(BASE_SFX_PATH + path)
 
 def load_image(path):
     img = pygame.image.load(BASE_IMAGE_PATH + path).convert()
