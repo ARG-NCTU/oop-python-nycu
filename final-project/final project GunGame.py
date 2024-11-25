@@ -52,11 +52,11 @@ def draw_text(screen, text, size, x, y):
 
 def draw_init():
     screen = pygame.display.set_mode(WINDOW_SIZE)
-    initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
-    intro_img = pygame.image.load('./oop-python-nycu/final-project/intro.png')  
-    player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
-    player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
-    #tips = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png')  # 載入提示圖片
+    initial_screen = pygame.image.load('./initial.png')  # 載入背景圖片
+    intro_img = pygame.image.load('./intro.png')  
+    player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
+    player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
+    #tips = pygame.image.load('./tap_any_bottom.png')  # 載入提示圖片
     player1_img = pygame.transform.scale(player1_img, (120, 165))
     player2_img = pygame.transform.scale(player2_img, (120, 165))
     Player1 = Player(0, 0, player1_img, 1)
@@ -143,14 +143,14 @@ def draw_end(who_win):
     screen = pygame.display.set_mode(WINDOW_SIZE)
     
     # 載入圖片
-    initial_screen = pygame.image.load('./oop-python-nycu/final-project/initial.png')  # 載入背景圖片
-    player1_img = pygame.image.load('./oop-python-nycu/final-project/1_player.png')  # 載入玩家1圖片
-    player2_img = pygame.image.load('./oop-python-nycu/final-project/2_player.png')  # 載入玩家2圖片
-    player_win = pygame.image.load('./oop-python-nycu/final-project/player_win.png')  # 載入玩家勝利圖片
-    space_img = pygame.image.load('./oop-python-nycu/final-project/space.jpg')  # 載入背景圖片
-    crown_img = pygame.image.load('./oop-python-nycu/final-project/crown.png')
-    player_1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png')  # 載入玩家1圖片
-    player_2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png')  # 載入玩家2圖片
+    initial_screen = pygame.image.load('./initial.png')  # 載入背景圖片
+    player1_img = pygame.image.load('./1_player.png')  # 載入玩家1圖片
+    player2_img = pygame.image.load('./2_player.png')  # 載入玩家2圖片
+    player_win = pygame.image.load('./player_win.png')  # 載入玩家勝利圖片
+    space_img = pygame.image.load('./space.jpg')  # 載入背景圖片
+    crown_img = pygame.image.load('./crown.png')
+    player_1_img = pygame.image.load('./player_1.png')  # 載入玩家1圖片
+    player_2_img = pygame.image.load('./player_2.png')  # 載入玩家2圖片
     player_1_img = pygame.transform.scale(player_1_img, (240, 330))
     player_2_img = pygame.transform.scale(player_2_img, (240, 330))
     crown_img = pygame.transform.scale(crown_img, (100, 100))
@@ -215,23 +215,23 @@ class Game():
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         pygame.display.set_caption("GunGame")
         self.clock = pygame.time.Clock()
-        self.background_img = pygame.image.load('./oop-python-nycu/final-project/background.jpg') # 載入背景圖片
-        self.initial_img = pygame.image.load('./oop-python-nycu/final-project/initial.png') # 載入初始畫面
-        self.tap_img = pygame.image.load('./oop-python-nycu/final-project/tap_any_bottom.png') # 載入提示
-        self.player1_img = pygame.image.load('./oop-python-nycu/final-project/player_1.png') # 載入玩家圖片
-        self.player2_img = pygame.image.load('./oop-python-nycu/final-project/player_2.png') # 載入玩家圖片
-        self.bomb_img = pygame.image.load('./oop-python-nycu/final-project/bomb.png') # 載入炸彈圖片
-        self.bomb_effect_img = pygame.image.load('./oop-python-nycu/final-project/bomb_effect.png') # 載入爆炸特效
-        self.smallgun1_img = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png') # 載入小槍圖片
-        self.smallgun2_img = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
-        self.shotgun1_img = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
-        self.shotgun2_img = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
-        self.sniper1_img = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
-        self.sniper2_img = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
-        self.bullet_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/bullet.png'), (35,35))
-        self.space_img = pygame.image.load('./oop-python-nycu/final-project/space.jpg')
-        self.box_img = pygame.image.load('./oop-python-nycu/final-project/box.png')
-        self.heart_img = pygame.transform.scale(pygame.image.load('./oop-python-nycu/final-project/heart.png'), (40, 40))
+        self.background_img = pygame.image.load('./background.jpg') # 載入背景圖片
+        self.initial_img = pygame.image.load('./initial.png') # 載入初始畫面
+        self.tap_img = pygame.image.load('./tap_any_bottom.png') # 載入提示
+        self.player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
+        self.player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
+        self.bomb_img = pygame.image.load('./bomb.png') # 載入炸彈圖片
+        self.bomb_effect_img = pygame.image.load('./bomb_effect.png') # 載入爆炸特效
+        self.smallgun1_img = pygame.image.load('./smallgun1.png') # 載入小槍圖片
+        self.smallgun2_img = pygame.image.load('./smallgun2.png')
+        self.shotgun1_img = pygame.image.load('./shotgun1.png')
+        self.shotgun2_img = pygame.image.load('./shotgun2.png')
+        self.sniper1_img = pygame.image.load('./sniper1.png')
+        self.sniper2_img = pygame.image.load('./sniper2.png')
+        self.bullet_img = pygame.transform.scale(pygame.image.load('./bullet.png'), (35,35))
+        self.space_img = pygame.image.load('./space.jpg')
+        self.box_img = pygame.image.load('./box.png')
+        self.heart_img = pygame.transform.scale(pygame.image.load('./heart.png'), (40, 40))
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
         self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img, 2)
         self.players = [self.player1, self.player2]
@@ -519,7 +519,7 @@ class Game():
         }
 
         # 定义文件路径
-        file_path = './oop-python-nycu/final-project/player_data.json'
+        file_path = './player_data.json'
 
         # 检查文件是否存在
         if os.path.exists(file_path):
@@ -758,8 +758,8 @@ class smallgun(Gun):
     def __init__(self):
         super().__init__(5, 2, 100000, 1)
         self.gun_name = "smallgun"
-        self.img1_right = pygame.image.load('./oop-python-nycu/final-project/smallgun1.png')
-        self.img2_right = pygame.image.load('./oop-python-nycu/final-project/smallgun2.png')
+        self.img1_right = pygame.image.load('./smallgun1.png')
+        self.img2_right = pygame.image.load('./smallgun2.png')
         self.img1_left = pygame.transform.flip(self.img1_right, True, False)
         self.img2_left = pygame.transform.flip(self.img2_right, True, False)
         self.correction_xleft = -50    # 設定槍的位置
@@ -772,8 +772,8 @@ class shotgun(Gun):
     def __init__(self):
         super().__init__(40, 8, 12, 30)
         self.gun_name = "shotgun"
-        self.img1_right = pygame.image.load('./oop-python-nycu/final-project/shotgun1.png')
-        self.img2_right = pygame.image.load('./oop-python-nycu/final-project/shotgun2.png')
+        self.img1_right = pygame.image.load('./shotgun1.png')
+        self.img2_right = pygame.image.load('./shotgun2.png')
         self.img1_left = pygame.transform.flip(self.img1_right, True, False)
         self.img2_left= pygame.transform.flip(self.img2_right, True, False)
         self.correction_xleft = -70       # 設定槍的位置    
@@ -785,8 +785,8 @@ class sniper(Gun):
     def __init__(self):
         super().__init__(30, 12, 8, 100)
         self.gun_name = "sniper"
-        self.img1_right = pygame.image.load('./oop-python-nycu/final-project/sniper1.png')
-        self.img2_right = pygame.image.load('./oop-python-nycu/final-project/sniper2.png')
+        self.img1_right = pygame.image.load('./sniper1.png')
+        self.img2_right = pygame.image.load('./sniper2.png')
         self.img1_left = pygame.transform.flip(self.img1_right, True, False)
         self.img2_left = pygame.transform.flip(self.img2_right, True, False)
         self.correction_xleft = -80         # 設定槍的位置
