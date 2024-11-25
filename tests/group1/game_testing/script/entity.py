@@ -25,7 +25,7 @@ class Special_Projectile(Diagnal_Projectile):
         self.main_game = main_game
 
     def update(self):
-        if self.type == "two_stage_spin" and self.timer < self.max_timer:
+        if self.type == ("two_stage_spin" or "two_stage_random") and self.timer < self.max_timer:
             self.speed *= 0.9
         if self.timer == self.max_timer:
             if self.type == "explode_shoot":
@@ -176,7 +176,7 @@ class Player(physics_entity):
     
     def testing_stats(self):
         #testing stats goes here
-        #self.damage = 100
+        self.damage = 100
         pass
 
 
@@ -773,7 +773,7 @@ class Enemy(physics_entity):
         else:
             #shoot a completely random direction projectile
             for i in range(2):
-                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[random.random()*2-1,random.random()*2-1],1,"projectile_"+str(count_down_timer%7+1),max_timer=70,type="two_stage_random",main_game=self.main_game))
+                self.main_game.special_projectiles.append(Special_Projectile(self.rect().center,[random.random()*2-1,random.random()*2-1],1,"projectile_"+str(count_down_timer%7+1),max_timer=70,type="two_stage_",main_game=self.main_game))
 
     def spell_card_spread(self):
         for i in range(3):

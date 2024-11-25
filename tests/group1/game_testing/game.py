@@ -92,9 +92,9 @@ class main_game:
 
 
         self.level = 0
-        self.load_level(self.level)
+        self.load_level()
 
-    def load_level(self,level=0):
+    def load_level(self,new_level=True):
 
         self.player = Player(self, (100,100), (8,15) , HP = 5)
 
@@ -127,12 +127,22 @@ class main_game:
                 self.enemy_spawners.append(Enemy(self,spawner.pos,(8,15),phase=1))
 
         self.transition = -30
-        self.win = False
+        self.win = 0
+
+        if self.level == 0:
+            if new_level:
+                pygame.mixer.music.load("tests/group1/game_testing/data/sfx/music_1.wav")
+                pygame.mixer.music.set_volume(0.3)
+                pygame.mixer.music.play(-1)
+
+            
+        elif self.level == 1:
+            if new_level:
+                pygame.mixer.music.load("tests/group1/game_testing/data/sfx/music.wav")
+                pygame.mixer.music.set_volume(0.4)
+                pygame.mixer.music.play(-1)
 
     def run(self):
-        pygame.mixer.music.load("tests/group1/game_testing/data/sfx/music_1.wav")
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)
 
         #self.sfx["ambience"].play(-1)
         while True:
@@ -144,6 +154,7 @@ class main_game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_p:
                             self.pause = False
+                            pygame.mixer.music.set_volume(0.3)
                         if event.key == pygame.K_UP and self.pause_select_cd == 0:
                             self.pause_select = max(0,self.pause_select-1)
                             self.pause_select_cd = 1
@@ -153,9 +164,32 @@ class main_game:
                         if event.key == pygame.K_SPACE:
                             if self.pause_select == 0:
                                 self.pause = False
+                                pygame.mixer.music.set_volume(0.3)
                             else:
                                 self.pause = False
-                                self.load_level(self.level)
+                                pygame.mixer.music.set_volume(0.3)
+                                self.load_level(False)
+                    if event.type == pygame.JOYBUTTONDOWN:
+                        if event.button == 11:
+                            self.pause = False
+                            pygame.mixer.music.set_volume(0.3)
+                        if event.button == 0:
+                            if self.pause_select == 0:
+                                self.pause = False
+                                pygame.mixer.music.set_volume(0.3)  
+                            else:
+                                self.pause = False
+                                self.load_level(False)
+                                pygame.mixer.music.set_volume(0.3)
+                    if event.type == pygame.JOYAXISMOTION:
+                        if event.axis == 1:
+                            if event.value < -0.5 and self.pause_select_cd == 0:
+                                self.pause_select = max(0,self.pause_select-1)
+                                self.pause_select_cd = 1
+                            elif event.value > 0.5 and self.pause_select_cd == 0:
+                                self.pause_select = min(1,self.pause_select+1)
+                                self.pause_select_cd = 1
+                
                 #make self.display_pause a transparent screen
                 self.pause_select_cd = max(0,self.pause_select_cd-1)
                 self.display_pause.fill((0, 0, 0, 0))   
@@ -177,18 +211,21 @@ class main_game:
 
             if self.transition < 0:
                 self.transition += 1
-            if self.win:
-                self.transition += 1
-                if self.transition > 30:
-                    self.level += 1
-                    self.load_level(self.level)
+            if self.win>0:
+                self.win += 1
+                pygame.mixer.music.set_volume(0.3*(90-self.win)/90)
+                if self.win > 90:
+                    self.transition += 1
+                    if self.transition > 30:
+                        self.level += 1
+                        self.load_level()
 
             if self.dead > 0:
                 self.dead += 1
                 if self.dead >=10:
                     self.transition = min(30,self.transition+1)
                 if self.dead > 40:
-                    self.load_level(self.level)
+                    self.load_level(False)
 
             self.camera[0] += (self.player.rect().centerx - self.display.get_width()/2 -self.camera[0])/20 #camera follow player x
             self.camera[0] = min(self.min_max_camera[0],self.camera[0])
@@ -223,7 +260,7 @@ class main_game:
                         self.enemy_spawners.append(Enemy(self,[287,90],(8,15),phase=3,action_queue=[60,"prepare_attack(1)",60,["spell_card()",80],90,"air_dash()",40,"frozen_in_air()",10,["spell_card()",80],90,["spread()",15],90,"prepare_attack()",["attack_preview()",30],5,["dash_to()",1]]))
                     elif phase == 3:
                         self.first_phase_cutscene()
-                        self.win = True
+                        self.win = 1
             if not self.dead:
                 self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
                 self.player.render(self.display,offset=self.render_camera) #render player
@@ -341,7 +378,7 @@ class main_game:
                             self.movements[0] = False
                             self.movements[1] = False
 
-                if event.type == pygame.JOYBUTTONDOWN   :
+                if event.type == pygame.JOYBUTTONDOWN:
                     if event.button == 0:
                         if not self.player.jump():
                             self.buffer=["jump",6]
@@ -351,6 +388,9 @@ class main_game:
                     if event.button == 3:
                         if not self.player.attack():
                             self.buffer=["attack",6]
+                    if event.button == 11:
+                        self.pause = True
+                        self.movements = [False,False]  
                 if event.type == pygame.JOYBUTTONUP:
                     if event.button == 0 and "jump" in self.buffer:
                         self.buffer=[]
@@ -398,6 +438,7 @@ class main_game:
                 pause_screen.fill((0, 0, 0, 128))  # RGBA: (0, 0, 0, 128) for half transparency
                 self.screen.blit(pause_screen, (0, 0))
                 self.pause_select = 0
+                pygame.mixer.music.set_volume(0.1)
 
             
             pygame.display.update()
