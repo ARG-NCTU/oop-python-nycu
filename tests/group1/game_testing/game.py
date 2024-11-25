@@ -71,6 +71,7 @@ class main_game:
             "projectile_5": load_image("projectile_aqua.png"),  
             "projectile_6": load_image("projectile_blue.png"),
             "projectile_7": load_image("projectile_purple.png"),
+            "HP" : load_image("HP.png"),
             "retry" : load_image("buttons/retry_1.png"),  
             "pressed_retry" : load_image("buttons/retry_2.png"),
 
@@ -130,7 +131,7 @@ class main_game:
 
     def run(self):
         pygame.mixer.music.load("tests/group1/game_testing/data/sfx/music_1.wav")
-        pygame.mixer.music.set_volume(0)
+        pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)
 
         #self.sfx["ambience"].play(-1)
@@ -261,7 +262,23 @@ class main_game:
                     except:
                         pass
                     for i in range(4):
-                        self.sparks.append(Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random()))   
+                        #match the spark's color with the projectile
+                        if special_projectile.img_name == 'projectile_1':
+                            self.sparks.append(Flame(special_projectile.pos,random.random()*math.pi*2,2+random.random()))
+                        elif special_projectile.img_name == 'projectile_2':
+                            self.sparks.append(Flexible_Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random(),(255,127,0)))
+                        elif special_projectile.img_name == 'projectile_3':
+                            self.sparks.append(Gold_Flame(special_projectile.pos,random.random()*math.pi*2,2+random.random()))
+                        elif special_projectile.img_name == 'projectile_4':
+                            self.sparks.append(Flexible_Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random(),(0,255,0)))
+                        elif special_projectile.img_name == 'projectile_5':
+                            self.sparks.append(Ice_Flame(special_projectile.pos,random.random()*math.pi*2,2+random.random()))
+                        elif special_projectile.img_name == 'projectile_6':
+                            self.sparks.append(Flexible_Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random(),(148,0,211)))
+                        elif special_projectile.img_name == 'projectile_7':
+                            self.sparks.append(Flexible_Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random(),(255,0,255)))
+                        else:
+                            self.sparks.append(Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random()))   
                 elif special_projectile.timer > 360:
                     self.special_projectiles.remove(special_projectile) 
                 elif abs(self.player.dashing) < 50: 
@@ -369,6 +386,11 @@ class main_game:
 
             self.display_for_outline.blit(self.display, (0,0))
 
+            #redering HP acording to player's HP
+            for i in range(self.player.HP):
+                self.display_for_outline.blit(self.assets['HP'],(i*18,15))
+                
+
             self.screen.blit(pygame.transform.scale(self.display_for_outline, (2*SCREEN_Width, 2*SCREEN_HEIGHT)), self.screen_shake_offset) 
             if self.pause:
                 #pause screen: blit a half transparent black screen
@@ -376,6 +398,8 @@ class main_game:
                 pause_screen.fill((0, 0, 0, 128))  # RGBA: (0, 0, 0, 128) for half transparency
                 self.screen.blit(pause_screen, (0, 0))
                 self.pause_select = 0
+
+            
             pygame.display.update()
             self.clock.tick(FPS)
 

@@ -176,7 +176,7 @@ class Player(physics_entity):
     
     def testing_stats(self):
         #testing stats goes here
-        self.damage = 100
+        #self.damage = 100
         pass
 
 
