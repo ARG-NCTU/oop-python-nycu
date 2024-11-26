@@ -128,6 +128,8 @@ class physics_entity:
     def render(self,surface,offset=[0,0]):
         surface.blit(pygame.transform.flip(self.anim.img(),self.flip,False),(self.position[0]-offset[0]+self.anim_offset[0],self.position[1]-offset[1]+self.anim_offset[1]))
         #surface.blit(self.main_game.assets['player'],(self.position[0]-offset[0],self.position[1]-offset[1])    )
+    def render_new(self,surface,offset=[0,0]):
+        surface.blit(pygame.transform.scale(pygame.transform.flip(self.anim.img(),not self.flip,False),(64,80)),(4*int(self.position[0]-offset[0]+self.anim_offset[0]),4*int(self.position[1]-offset[1]+self.anim_offset[1])))
 
 class Player(physics_entity):
     def __init__(self,main_game,position,size,HP,weapon=None,spell_card=None,accessory=[]):     
@@ -176,7 +178,7 @@ class Player(physics_entity):
     
     def testing_stats(self):
         #testing stats goes here
-        #self.damage = 100
+        self.damage = 100
         #self.weapon = "貪欲的叉勺"
         pass
 

@@ -8,6 +8,7 @@ from script.entity import physics_entity, Player, Enemy, Diagnal_Projectile
 from script.utils import load_image
 from script.utils import load_tile
 from script.utils import load_images
+from script.utils import load_trans_images,load_trans_image
 from script.utils import load_sfx
 from script.utils import Animation
 from script.tilemap import Tilemap, small_tile
@@ -33,7 +34,7 @@ class main_game:
             self.joystick.init()
 
         pygame.display.set_caption("Koakuma's Adventure")
-        self.screen = pygame.display.set_mode((SCREEN_Width, SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((SCREEN_Width, SCREEN_HEIGHT),pygame.SRCALPHA)
         #放大兩倍
         self.display = pygame.Surface((HALF_SCREEN_WIDTH, HALF_SCREEN_HEIGHT), pygame.SRCALPHA)
         self.display_for_outline = pygame.Surface((HALF_SCREEN_WIDTH, HALF_SCREEN_HEIGHT))
@@ -55,11 +56,9 @@ class main_game:
             "background": load_image("background.png"),
             "enemy/idle" : Animation(load_images("entities/enemy/idle"),duration=6,loop=True),
             "enemy/run" : Animation(load_images("entities/enemy/run"),duration=4,loop=True),
-            "player/idle" : Animation(load_images("entities/player/idle"),duration=6,loop=True),
-            "player/run" : Animation(load_images("entities/player/run"),duration=4,loop=True),
-            "player/jump" : Animation(load_images("entities/player/jump"),duration=5,loop=True),
-            "player/slide" : Animation(load_images("entities/player/slide"),duration=5,loop=True),
-            "player/wall_slide" : Animation(load_images("entities/player/wall_slide"),duration=5,loop=True),
+            "player/idle" : Animation(load_trans_images("entities/player/idle"),duration=60,loop=True),
+            "player/run" : Animation(load_trans_images("entities/player/run"),duration=4,loop=True),
+            "player/jump" : Animation(load_trans_images("entities/player/jump"),duration=5,loop=True),
             "particle/leaf" : Animation(load_images("particles/leaf"),duration=20,loop=False),
             "particle/particle" : Animation(load_images("particles/particle"),duration=6,loop=False),
             "gun" : load_image("gun.png"),
@@ -266,7 +265,8 @@ class main_game:
                         self.win = 1
             if not self.dead:
                 self.player.update((self.movements[1] - self.movements[0],0),self.tilemap) #update player
-                self.player.render(self.display,offset=self.render_camera) #render player
+                #self.player.render(self.display,offset=self.render_camera) #render player
+                
 
 
             self.max_jump_height = -3  # Maximum jump velocity
@@ -435,6 +435,9 @@ class main_game:
                 
 
             self.screen.blit(pygame.transform.scale(self.display_for_outline, (2*SCREEN_Width, 2*SCREEN_HEIGHT)), self.screen_shake_offset) 
+            #blit self.display_entity to screen without scaling
+            self.player.render_new(self.screen,offset=self.render_camera) #render player
+
             if self.pause:
                 #pause screen: blit a half transparent black screen
                 pause_screen = pygame.Surface((SCREEN_Width, SCREEN_HEIGHT), pygame.SRCALPHA)
