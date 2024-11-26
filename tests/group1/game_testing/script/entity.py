@@ -176,7 +176,8 @@ class Player(physics_entity):
     
     def testing_stats(self):
         #testing stats goes here
-        self.damage = 100
+        #self.damage = 100
+        #self.weapon = "貪欲的叉勺"
         pass
 
 
@@ -268,6 +269,7 @@ class Player(physics_entity):
                 for enemy in self.main_game.enemy_spawners:
                     if hitbox.colliderect(enemy.rect()):
                         enemy.HP -= self.damage
+                        self.main_game.sfx['hit'].play()
                         for i in range(30):
                             angle = random.random()*math.pi*2
                             speed = random.random() *5
@@ -278,6 +280,7 @@ class Player(physics_entity):
                 for bullet in self.main_game.projectiles:
                     if hitbox.colliderect(pygame.Rect(bullet[0][0]-4,bullet[0][1]-4,8,8)):
                         self.main_game.projectiles.remove(bullet)
+                        self.attack_cool_down = 1
                         for i in range(10):
                             angle = random.random()*math.pi*2
                             speed = random.random() *5

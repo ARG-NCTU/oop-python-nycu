@@ -126,7 +126,10 @@ class main_game:
             else:
                 self.enemy_spawners.append(Enemy(self,spawner.pos,(8,15),phase=1))
 
-        self.transition = -30
+        if self.level == 0:
+            self.transition = -30
+        elif self.level == 1:
+            self.transition = -50
         self.win = 0
 
         if self.level == 0:
