@@ -178,7 +178,7 @@ class Player(physics_entity):
     
     def testing_stats(self):
         #testing stats goes here
-        #self.damage = 100
+        self.damage = 100
         #self.weapon = "貪欲的叉勺"
         pass
 
@@ -365,16 +365,18 @@ class Enemy(physics_entity):
         self.attack_preview_pos_b = None
 
         if self.phase == 1:
-            self.HP = 1
+            self.HP = 16
             #self.HP = 1
         elif self.phase == 2:
             self.HP = 20
             #self.HP = 1
         elif self.phase == 3:
-            self.HP = 24
+            self.HP = 2130
             self.using_spell_card = True
             self.timer_HP = 2130
+            self.max_HP = 2130
         self.attack_combo = 0
+        self.max_HP = self.HP
         #combo 1: jump - dash - drop attack - land shot
         #combo 2: dash forward and shoot 3 bullets
 

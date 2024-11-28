@@ -56,7 +56,7 @@ class main_game:
             "background": load_image("background.png"),
             "enemy/idle" : Animation(load_images("entities/enemy/idle"),duration=6,loop=True),
             "enemy/run" : Animation(load_images("entities/enemy/run"),duration=4,loop=True),
-            "player/idle" : Animation(load_trans_images("entities/player/idle"),duration=60,loop=True),
+            "player/idle" : Animation(load_trans_images("entities/player/idle"),duration=10,loop=True),
             "player/run" : Animation(load_trans_images("entities/player/run"),duration=4,loop=True),
             "player/jump" : Animation(load_trans_images("entities/player/jump"),duration=5,loop=True),
             "particle/leaf" : Animation(load_images("particles/leaf"),duration=20,loop=False),
@@ -70,7 +70,9 @@ class main_game:
             "projectile_5": load_image("projectile_aqua.png"),  
             "projectile_6": load_image("projectile_blue.png"),
             "projectile_7": load_image("projectile_purple.png"),
-            "HP" : load_image("HP.png"),
+            "HP" : load_trans_image("HP.png"),
+            "Boss_full" : load_trans_image("max_HP_bar.png"),
+            "Boss_empty" : load_trans_image("empty_HP_bar.png"),
             "retry" : load_image("buttons/retry_1.png"),  
             "pressed_retry" : load_image("buttons/retry_2.png"),
 
@@ -170,7 +172,7 @@ class main_game:
                             else:
                                 self.pause = False
                                 pygame.mixer.music.set_volume(0.3)
-                                self.load_level(False)
+                                self.dead = 10
                     if event.type == pygame.JOYBUTTONDOWN:
                         if event.button == 11:
                             self.pause = False
@@ -181,7 +183,7 @@ class main_game:
                                 pygame.mixer.music.set_volume(0.3)  
                             else:
                                 self.pause = False
-                                self.load_level(False)
+                                self.dead = 10
                                 pygame.mixer.music.set_volume(0.3)
                     if event.type == pygame.JOYAXISMOTION:
                         if event.axis == 1:
@@ -280,14 +282,23 @@ class main_game:
                 img = self.assets['projectile']
                 self.display.blit(img,(projectile[0][0]-img.get_width()/2 -self.render_camera[0],projectile[0][1]-img.get_height()/2-self.render_camera[1]))
                 if self.tilemap.solid_check(projectile[0]):
-                    self.projectiles.remove(projectile) 
+                    try:
+                        self.projectiles.remove(projectile) 
+                    except:
+                        pass
                     for i in range(4):
                         self.sparks.append(Spark(projectile[0],random.random()*math.pi*2,2+random.random()))
                 elif projectile[2] > 360:
-                    self.projectiles.remove(projectile)
+                    try:
+                        self.projectiles.remove(projectile)
+                    except:
+                        pass
                 elif abs(self.player.dashing) < 50:
                     if self.player.rect().collidepoint(projectile[0]):
-                        self.projectiles.remove(projectile)
+                        try:
+                            self.projectiles.remove(projectile)
+                        except:
+                            pass
                         self.player.take_damage(1,(list(self.player.rect().center).copy()[0]-projectile[0][0],0))
             for special_projectile in self.special_projectiles.copy():
                 special_projectile.update()
@@ -320,10 +331,16 @@ class main_game:
                         else:
                             self.sparks.append(Spark(special_projectile.pos,random.random()*math.pi*2,2+random.random()))   
                 elif special_projectile.timer > 360:
-                    self.special_projectiles.remove(special_projectile) 
+                    try:
+                        self.special_projectiles.remove(special_projectile) 
+                    except:
+                        pass    
                 elif abs(self.player.dashing) < 50: 
                     if self.player.rect().collidepoint(special_projectile.pos):
-                        self.special_projectiles.remove(special_projectile)
+                        try:
+                            self.special_projectiles.remove(special_projectile)
+                        except:
+                            pass
                         self.player.take_damage(1,(list(self.player.rect().center).copy()[0]-special_projectile.pos[0],0))
 
             for spark in self.sparks.copy():
@@ -417,26 +434,44 @@ class main_game:
                         self.buffer=[]
                     
 
+ 
+
+            self.screen_shake_timer = max(0,self.screen_shake_timer-1)
+            self.screen_shake_offset = [random.randint(-self.screen_shake_timer,self.screen_shake_timer),random.randint(-self.screen_shake_timer,self.screen_shake_timer)]  
+
+
+            #redering HP acording to player's HP
+            for i in range(self.player.HP):
+                self.display_for_outline.blit(self.assets['HP'],(i*18,15))
+            #rendering boss HP, scale the horizontal to 58
+            for enemy in self.enemy_spawners:
+                if enemy.phase != 3 and enemy.HP < enemy.max_HP:
+                    ratio = enemy.HP/enemy.max_HP
+                    pygame.draw.rect(self.display_for_outline,(255,0,0),(233+55*(1-ratio),34,55*ratio,4))
+                    self.display_for_outline.blit(pygame.transform.scale(self.assets['Boss_empty'],(58,12)),(230,30))
+                elif enemy.phase == 3 and enemy.timer_HP < enemy.max_HP:
+                    ratio = enemy.timer_HP/enemy.max_HP
+                    #orange
+                    pygame.draw.rect(self.display_for_outline,(255,127,0),(233+55*(1-ratio),34,55*ratio,4))
+                    self.display_for_outline.blit(pygame.transform.scale(self.assets['Boss_empty'],(58,12)),(230,30))
+                else:
+                    self.display_for_outline.blit(pygame.transform.scale(self.assets['Boss_full'],(58,12)),(230,30))
+            
+                
+                      
+            self.display_for_outline.blit(self.display, (0,0))
+            self.screen.blit(pygame.transform.scale(self.display_for_outline, (2*SCREEN_Width, 2*SCREEN_HEIGHT)), self.screen_shake_offset) 
+            #blit self.display_entity to screen without scaling
+            if not self.dead:
+                self.player.render_new(self.screen,offset=self.render_camera) #render player
 
             if self.transition:
                 tran_surf=pygame.Surface(self.display.get_size())
                 pygame.draw.circle(tran_surf,(255,255,255),(self.display.get_width()//4,self.display.get_height()//4),(30-abs(self.transition))*8)
                 tran_surf.set_colorkey((255,255,255))
-                self.display.blit(tran_surf,(0,0))  
+                self.display.blit(tran_surf,(0,0)) 
+                self.screen.blit(pygame.transform.scale(self.display, (2*SCREEN_Width, 2*SCREEN_HEIGHT)), (0,0)) 
 
-            self.screen_shake_timer = max(0,self.screen_shake_timer-1)
-            self.screen_shake_offset = [random.randint(-self.screen_shake_timer,self.screen_shake_timer),random.randint(-self.screen_shake_timer,self.screen_shake_timer)]  
-
-            self.display_for_outline.blit(self.display, (0,0))
-
-            #redering HP acording to player's HP
-            for i in range(self.player.HP):
-                self.display_for_outline.blit(self.assets['HP'],(i*18,15))
-                
-
-            self.screen.blit(pygame.transform.scale(self.display_for_outline, (2*SCREEN_Width, 2*SCREEN_HEIGHT)), self.screen_shake_offset) 
-            #blit self.display_entity to screen without scaling
-            self.player.render_new(self.screen,offset=self.render_camera) #render player
 
             if self.pause:
                 #pause screen: blit a half transparent black screen
