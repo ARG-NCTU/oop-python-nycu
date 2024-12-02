@@ -83,13 +83,17 @@ class main_game:
             "dash" : load_sfx("dash.wav"),
             "shoot" : load_sfx("shoot.wav"),
             "hit" : load_sfx("hit.wav"),
+            "got_hit" : load_sfx("player_take_damage.wav"),
             "ambience" : load_sfx("ambience.wav"),
+            "swing" : load_sfx("swing.wav"),
         }   
         self.sfx["ambience"].set_volume(0.2)
-        self.sfx["shoot"].set_volume(0.4)
+        self.sfx["shoot"].set_volume(0.5)
         self.sfx["jump"].set_volume(0.7)
-        self.sfx["dash"].set_volume(0.3)
+        self.sfx["dash"].set_volume(0.7)
+        self.sfx["swing"].set_volume(0.7)
         self.sfx["hit"].set_volume(0.8) 
+        self.sfx["got_hit"].set_volume(1)
 
 
         self.level = 0
@@ -136,7 +140,7 @@ class main_game:
         if self.level == 0:
             if new_level:
                 pygame.mixer.music.load("tests/group1/game_testing/data/sfx/music_1.wav")
-                pygame.mixer.music.set_volume(0.3)
+                pygame.mixer.music.set_volume(0.2)
                 pygame.mixer.music.play(-1)
 
             
@@ -158,7 +162,7 @@ class main_game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_p:
                             self.pause = False
-                            pygame.mixer.music.set_volume(0.3)
+                            pygame.mixer.music.set_volume(0.2)
                         if event.key == pygame.K_UP and self.pause_select_cd == 0:
                             self.pause_select = max(0,self.pause_select-1)
                             self.pause_select_cd = 1
@@ -168,23 +172,23 @@ class main_game:
                         if event.key == pygame.K_SPACE:
                             if self.pause_select == 0:
                                 self.pause = False
-                                pygame.mixer.music.set_volume(0.3)
+                                pygame.mixer.music.set_volume(0.2)
                             else:
                                 self.pause = False
-                                pygame.mixer.music.set_volume(0.3)
+                                pygame.mixer.music.set_volume(0.2)
                                 self.dead = 10
                     if event.type == pygame.JOYBUTTONDOWN:
                         if event.button == 11:
                             self.pause = False
-                            pygame.mixer.music.set_volume(0.3)
+                            pygame.mixer.music.set_volume(0.2)
                         if event.button == 0:
                             if self.pause_select == 0:
                                 self.pause = False
-                                pygame.mixer.music.set_volume(0.3)  
+                                pygame.mixer.music.set_volume(0.2)  
                             else:
                                 self.pause = False
                                 self.dead = 10
-                                pygame.mixer.music.set_volume(0.3)
+                                pygame.mixer.music.set_volume(0.2)
                     if event.type == pygame.JOYAXISMOTION:
                         if event.axis == 1:
                             if event.value < -0.5 and self.pause_select_cd == 0:
@@ -217,7 +221,7 @@ class main_game:
                 self.transition += 1
             if self.win>0:
                 self.win += 1
-                pygame.mixer.music.set_volume(0.3*(90-self.win)/90)
+                pygame.mixer.music.set_volume(0.2*(90-self.win)/90)
                 if self.win > 90:
                     self.transition += 1
                     if self.transition > 30:
@@ -390,10 +394,12 @@ class main_game:
                 #joystick control
                 if event.type == pygame.JOYAXISMOTION:
                     if event.axis == 0:
-                        if event.value < -0.5:
+                        if event.value < -0.3:
                             self.movements[0] = True
-                        elif event.value > 0.5:
+                            self.movements[1] = False
+                        elif event.value > 0.3:
                             self.movements[1] = True
+                            self.movements[0] = False
                         else:
                             self.movements[0] = False
                             self.movements[1] = False
@@ -408,16 +414,21 @@ class main_game:
                     if event.button == 3:
                         if not self.player.attack():
                             self.buffer=["attack",6]
+                    if event.button == 4:
+                        self.player.charge_attack()
                     if event.button == 11:
                         self.pause = True
                         self.movements = [False,False]  
                 if event.type == pygame.JOYBUTTONUP:
                     if event.button == 0 and "jump" in self.buffer:
                         self.buffer=[]
+                        pass
                     if event.button == 7 and "dash" in self.buffer:
                         self.buffer=[]
+                        pass
                     if event.button == 3 and "attack" in self.buffer:
                         self.buffer=[]
+                        pass
 
             if self.buffer:
                 self.buffer[1] -= 1

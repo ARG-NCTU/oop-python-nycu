@@ -143,15 +143,24 @@ class Player(physics_entity):
         self.extra_attack_frame = 0
         self.max_inv_time = 60
         self.max_attack_cool_down = 30
-        self.max_mana = 30
-        self.mana = self.max_mana
         self.weapon = weapon.name if weapon else "none"
         self.spell_card = spell_card
         self.accessory = accessory
         self.damage=2
+        self.charge_effect = False
         if self.weapon == "貪欲的叉勺":
             self.damage = 3
             self.max_attack_cool_down = 20
+            self.max_charge = 100
+            self.charge_per_hit = 10
+            self.charge = 0
+        elif self.weapon == "七耀魔法書":
+            self.max_mana = 30
+            self.mana = self.max_mana
+        else:
+            self.max_charge = 60
+            self.charge_per_hit = 10
+            self.charge = 0
 
         self.spell_card = spell_card.name if spell_card else "none"
         self.accessory = [accessory[i].name for i in range(len(accessory))]
@@ -178,7 +187,7 @@ class Player(physics_entity):
     
     def testing_stats(self):
         #testing stats goes here
-        self.damage = 100
+        #self.damage = 100
         #self.weapon = "貪欲的叉勺"
         pass
 
@@ -243,6 +252,7 @@ class Player(physics_entity):
 
     def attack(self,is_extra=False):
         if self.attack_cool_down == 0:
+            self.main_game.sfx['swing'].play()
             self.attack_cool_down = self.max_attack_cool_down
             if self.weapon == "none":
                 #attack a rect-space area in front of the player
@@ -253,6 +263,7 @@ class Player(physics_entity):
                 for enemy in self.main_game.enemy_spawners:
                     if hitbox.colliderect(enemy.rect()):
                         enemy.HP -= self.damage
+                        self.charge = min(self.charge+self.charge_per_hit,self.max_charge)
                         self.main_game.sfx['hit'].play()
                         for i in range(30):
                             angle = random.random()*math.pi*2
@@ -263,6 +274,13 @@ class Player(physics_entity):
                         self.main_game.sparks.append(Gold_Flame(enemy.rect().center, math.pi, 5+random.random()))
                 if self.extra_attack and not is_extra:
                     self.extra_attack_frame = 11
+                if self.charge == self.max_charge and not self.charge_effect:
+                    #green spark effect
+                    for i in range(30):
+                        angle = random.random()*math.pi*2
+                        speed = random.random() *5
+                        self.main_game.sparks.append(Flexible_Spark(self.rect().center,angle,2+random.random(),(0,255,0)))
+                    self.charge_effect = True
             elif self.weapon == "貪欲的叉勺":
                 if self.flip:
                     hitbox = pygame.Rect(self.position[0]-36,self.position[1],28,22)
@@ -281,6 +299,7 @@ class Player(physics_entity):
                         self.main_game.sparks.append(Gold_Flame(enemy.rect().center, math.pi, 5+random.random()))
                 for bullet in self.main_game.projectiles:
                     if hitbox.colliderect(pygame.Rect(bullet[0][0]-4,bullet[0][1]-4,8,8)):
+                        self.charge = min(self.charge+self.charge_per_hit,self.max_charge)
                         self.main_game.projectiles.remove(bullet)
                         self.attack_cool_down = 1
                         for i in range(10):
@@ -289,6 +308,7 @@ class Player(physics_entity):
                             self.main_game.sparks.append(Spark(bullet[0],angle,2+random.random()))  
                 for bullet in self.main_game.special_projectiles:
                     if hitbox.colliderect(pygame.Rect(bullet.pos[0]-4,bullet.pos[1]-4,8,8)):
+                        self.charge = min(self.charge+self.charge_per_hit,self.max_charge)
                         self.main_game.special_projectiles.remove(bullet)
                         for i in range(10):
                             angle = random.random()*math.pi*2
@@ -298,6 +318,23 @@ class Player(physics_entity):
                     self.extra_attack_frame = 11
             return True
         return False
+    
+    def charge_attack(self):
+        self.charge_effect = False
+        if self.weapon == "貪欲的叉勺":
+            pass
+        elif self.weapon == "七耀魔法書":
+            pass
+        else:
+            #heal
+            if self.charge == 60:
+                for i in range(30):
+                    self.main_game.sparks.append(Flexible_Spark((self.rect().center[0]+random.randint(-8,8),self.rect().center[1]), 1.5*math.pi, 2.5+random.random(),(0,255,0)))
+                #self.main_game.sfx['heal'].play()
+                self.HP = min(self.HP+1,6)
+                self.charge = 0
+                return True
+
 
 
     def dash(self):
@@ -323,7 +360,7 @@ class Player(physics_entity):
                 self.velocity[1] = -2
             #if player takes damage, lose 1 HP and got knockback to the opposite direction of the enemy
             self.HP -= damage
-            self.main_game.sfx['hit'].play()
+            self.main_game.sfx['got_hit'].play()
 
             self.main_game.screen_shake_timer = max(10,self.main_game.screen_shake_timer) #shake screen for 10 frames
 
