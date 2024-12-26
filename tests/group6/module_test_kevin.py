@@ -7,45 +7,45 @@ import time
 
 
 def test_variance():  #with denomiator = n
-    assert variance([2, 4, 6, 8, 10]) == 8.0
+    assert variance([1, 2, 3, 4, 5]) == 2.0
     assert variance([1, 2, 3, 4, 5, 6]) == 2.9166666666666665
-    assert variance([10, 20, 30, 40, 50, 60, 70]) == 466.6666666666667
-    assert variance([5, 10, 15, 20, 25, 30, 35, 40]) == 122.5
-    assert variance([7, 14, 21, 28, 35, 42, 49, 56, 63]) == 322.6666666666667
-    assert variance([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]) == 33.0
-    assert variance([2, 3, 5, 7, 11, 13, 17]) == 26.693877551020407
+    assert variance([1, 2, 3, 4, 5, 6, 7]) == 4.0
+    assert variance([1, 2, 3, 4, 5, 6, 7, 8]) == 5.25
+    assert variance([1, 2, 3, 4, 5, 6, 7, 8, 9]) == 6.666666666666667 
+    assert variance([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) == 8.25
+    assert variance([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 10.0
     
 def test_variance_negative():  #with denomiator = n
-   assert variance([-2, -4, -6, -8, -10]) == 8.0
-    assert variance([-3, -6, -9, -12, -15, -18]) == 21.0
-    assert variance([-10, -20, -30, -40, -50, -60, -70]) == 466.6666666666667
-    assert variance([-5, -10, -15, -20, -25, -30, -35, -40]) == 122.5
-    assert variance([-7, -14, -21, -28, -35, -42, -49, -56, -63]) == 322.6666666666667
-    assert variance([-1, -3, -5, -7, -9, -11, -13, -15, -17, -19]) == 33.0
-    assert variance([-2, -3, -5, -7, -11, -13, -17]) == 26.693877551020407
+    assert variance([-1,-2,-3,-4,-5]) == 2.0
+    assert variance([-1,-2,-3,-4,-5,-6]) == 2.9166666666666665
+    assert variance([-1,-2,-3,-4,-5,-6,-7]) == 4.0
+    assert variance([-1,-2,-3,-4,-5,-6,-7,-8]) == 5.25
+    assert variance([-1,-2,-3,-4,-5,-6,-7,-8,-9]) == 6.666666666666667 
+    assert variance([-1,-2,-3,-4,-5,-6,-7,-8,-9,-10]) == 8.25
+    assert variance([-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11]) == 10.0
     
 def test_variance_random(): #with denomiator = n
-    for i in range(1000)
+    for i in range(1000):
         n = random.randint(1,100)
         X = [random.randint(0,100) for i in range(n)]
         assert variance(X) == sum([(x - sum(X)/n)**2 for x in X])/n
 
 # Test variance with single element
 def test_variance_single_element():
-    assert variance([10]) == 0.0
-    assert variance([-10]) == 0.0
+    assert variance([1]) == 0.0
+    assert variance([-1]) == 0.0
     assert variance([0]) == 0.0
-    assert variance([50]) == 0.0
+    assert variance([100]) == 0.0
 
 # Test variance with all same elements
 def test_variance_all_same_elements():
-    assert variance([8, 8, 8, 8, 8]) == 0.0
-    assert variance([-8, -8, -8, -8, -8]) == 0.0
+    assert variance([2, 2, 2, 2, 2]) == 0.0
+    assert variance([-2, -2, -2, -2, -2]) == 0.0
     assert variance([0, 0, 0, 0, 0]) == 0.0
     
 def test_minkowskiDist_p(): #v1 = [1,2,3] v2 = [4,5,6] p = 1~10
-    v1 = [3, 6, 9]
-    v2 = [12, 15, 18]
+    v1 = [1,2,3]
+    v2 = [4,5,6]
     for i in range(1,11):
         assert minkowskiDist(v1, v2, i) == pytest.approx(np.linalg.norm(np.array(v1) - np.array(v2), ord=i))
     
