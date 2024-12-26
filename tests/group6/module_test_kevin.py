@@ -25,7 +25,7 @@ def test_variance_negative():  #with denomiator = n
     assert variance([-2, -3, -5, -7, -11, -13, -17]) == 26.693877551020407
     
 def test_variance_random(): #with denomiator = n
-    for i in range(1000):
+    for i in range(1000)
         n = random.randint(1,100)
         X = [random.randint(0,100) for i in range(n)]
         assert variance(X) == sum([(x - sum(X)/n)**2 for x in X])/n
