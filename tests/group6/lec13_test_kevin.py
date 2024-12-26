@@ -5,7 +5,7 @@ import sklearn.linear_model
 import pytest
 
 def test_minkowskiDist():   
-    assert minkowskiDist([1,2,3], [4,5,6], 1) == 7
+    assert minkowskiDist([1,2,3], [4,5,6], 1) == 9
     assert minkowskiDist([1,2,3], [4,5,6], 2) == 5.196152422706632
     assert minkowskiDist([1,2,3], [4,5,6], 3) == 4.3267487109222245
     assert minkowskiDist([1,2,3], [4,5,6], 4) == 4.06201920231798
