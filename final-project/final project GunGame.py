@@ -262,8 +262,8 @@ class Game():
         self.fireballs = pygame.sprite.Group()
         self.fireball_mode = False
         self.fireball_timer = 0
-        self.fireball_duration = 30 * 60  # 30 秒（按 60fps 計算）
-        self.fireball_cooldown = 60 * 0  # 1 分鐘（按 60fps 計算）
+        self.fireball_duration = 20 * 60  # 30 秒（按 60fps 計算）
+        self.fireball_cooldown = 60 * 60  # 1 分鐘（按 60fps 計算）
         self.fireball_spawn_rate = 50 # 每秒生成一次火球
 
     def spawn_treasure_box(self):
@@ -896,7 +896,6 @@ class Lagtime_back_Image(pygame.sprite.Sprite):
         self.rect.x = player.rect.x + player.gun.correction_xleft
         self.rect.y = player.rect.y -35
 
-
     def update(self):
         self.rect.x = self.player.rect.x
         self.rect.y = self.player.rect.y -35
@@ -976,8 +975,7 @@ class Bullet(pygame.sprite.Sprite):
 class Fireball(pygame.sprite.Sprite):
     def __init__(self, x, y, size):
         super().__init__()
-        self.image = pygame.Surface((size, size))
-        self.image.fill((255, 0, 0))  # 紅色方塊
+        self.image = pygame.image.load('./oop-python-nycu/final-project/fireball.png')
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.speed_y = FIREBALL_FALL_SPEED
