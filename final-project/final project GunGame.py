@@ -34,6 +34,8 @@ PLAYER_WIDTH = 50
 PLAYER_HEIGHT = 50
 PLAYER_SPEED = 10
 PLAYER_ACCERATION = 0.5
+FIREBALL_SIZE = 30
+FIREBALL_FALL_SPEED = 0
 JUMP_HEIGHT = 13  # 跳躍高度適中
 RELIVE_X  = [250, 970]
 RELIVE_Y = 0
@@ -62,6 +64,11 @@ def draw_init():
     Player1 = Player(0, 0, player1_img, 1)
     Player2 = Player(WINDOW_WIDTH, 0, player2_img, 2)
     player1_img = pygame.transform.scale(player1_img, (192, 264))
+    player1_img = pygame.transform.scale(player1_img, (192, 264))
+    player2_img = pygame.transform.scale(player2_img, (192, 264))
+    player1_img = pygame.transform.scale(player1_img, (192, 264))
+    player2_img = pygame.transform.scale(player2_img, (192, 264))
+    player1_img = pygame.transform.scale(player1_img, (192, 264))
     player2_img = pygame.transform.scale(player2_img, (192, 264))
     all_players = pygame.sprite.Group()
     all_players.add(Player1, Player2)
@@ -70,19 +77,19 @@ def draw_init():
     
     # 計算圖片縮放比例
     scale = min(WINDOW_WIDTH / img_width, WINDOW_HEIGHT / img_height)
-    
+
     # 計算縮放後的大小
     new_size = (int(img_width * scale), int(img_height * scale))
     
-    # 等比例縮小圖片
+    # 調整背景圖片大小
     initial_screen = pygame.transform.scale(initial_screen, new_size)
     intro_img = pygame.transform.scale(intro_img, new_size)
-    
-    # 計算圖片在視窗中的位置，使其居中
+
+    # 等比例縮小圖片
     pos_x = (WINDOW_WIDTH - new_size[0]) // 2
     pos_y = (WINDOW_HEIGHT - new_size[1]) // 2
     screen.blit(initial_screen, (pos_x, pos_y))
-    
+
     pygame.display.set_caption("GunGame")
     state = 0  # 0: 顯示標題, 1: 顯示說明, 2: 開始遊戲
     counttime = 0
@@ -252,10 +259,22 @@ class Game():
         self.lagtime_back2 = Lagtime_back_Image(self.player2)
         self.player1_draw.add(self.player1, self.gun_images1, self.lagtime_back1, self.lagtime_images1)
         self.player2_draw.add(self.player2, self.gun_images2, self.lagtime_back2, self.lagtime_images2)
+        self.fireballs = pygame.sprite.Group()
+        self.fireball_mode = False
+        self.fireball_timer = 0
+        self.fireball_duration = 30 * 60  # 30 秒（按 60fps 計算）
+        self.fireball_cooldown = 60 * 0  # 1 分鐘（按 60fps 計算）
+        self.fireball_spawn_rate = 50 # 每秒生成一次火球
+
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.player1_draw.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
+
+    def spawn_fireball(self):
+        x = random.randint(0, WINDOW_WIDTH)
+        fireball = Fireball(x, 0, 30)
+        self.fireballs.add(fireball)
         
     def run(self):
         running = True
@@ -273,6 +292,19 @@ class Game():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+            if not self.fireball_mode:
+                self.fireball_timer += 1
+                if self.fireball_timer >= self.fireball_cooldown:
+                    self.fireball_mode = True
+                    self.fireball_timer = 0
+            else:
+                if self.fireball_timer % self.fireball_spawn_rate == 0:
+                    self.spawn_fireball()  # 不斷生成火球
+                self.fireball_timer += 1
+                if self.fireball_timer >= self.fireball_duration:
+                    self.fireball_mode = False
+                    self.fireball_timer = 0
 
             if self.player1.live == 0 and show_end_screen:
                 assert self.player1.remain_life + self.player1.death_count == 5
@@ -372,8 +404,17 @@ class Game():
             self.player2_draw.update()
             self.bullets.update()
             self.bombs.update()
-            
+            self.fireballs.update()
+
             # 碰撞檢測
+            for fireball in self.fireballs:
+                if fireball.rect.colliderect(self.player1.rect):
+                    fireball.explosion(self.player1)
+                    fireball.kill()
+                if fireball.rect.colliderect(self.player2.rect):
+                    fireball.explosion(self.player2)
+                    fireball.kill()
+
             for bullet in self.bullets:
                 if bullet.leave_check():
                     if bullet.rect.colliderect(self.player1.rect):
@@ -431,6 +472,7 @@ class Game():
             self.player1_draw.draw(self.screen)
             self.player2_draw.draw(self.screen)
             self.bombs.draw(self.screen) 
+            self.fireballs.draw(self.screen)
             self.draw_object(self.player1, self.player2)
 
             self.screen.blit(self.bullet_img , (WINDOW_WIDTH - 135 , 93))
@@ -496,7 +538,6 @@ class Game():
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (10 + 45 * i, 50))
         for i in range(player2.bomb_num):
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (WINDOW_WIDTH - 45 * (i + 1), 50))
-
 
 
     def export_player_data(self, player1, player2):
@@ -932,6 +973,35 @@ class Bullet(pygame.sprite.Sprite):
     def out(self):
         return self.out_check
     
+class Fireball(pygame.sprite.Sprite):
+    def __init__(self, x, y, size):
+        super().__init__()
+        self.image = pygame.Surface((size, size))
+        self.image.fill((255, 0, 0))  # 紅色方塊
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.speed_y = FIREBALL_FALL_SPEED
+
+    def update(self):
+        self.speed_y += GRAVITY-0.5
+        self.rect.y += self.speed_y
+        if self.rect.top > WINDOW_HEIGHT:
+            self.kill()  # 移除出屏幕的火球
+    
+    def force(self, x1, y1, player, F):
+        if player.rect.centerx - x1 < 0:
+            player.speed_x -= 20
+        else:
+            player.speed_x += 20
+        if (player.rect.centery - y1) < 0:
+            if F * (player.rect.centery - y1) / 100 <- 30:
+                player.speed_y += -30
+            else:
+                player.speed_y += F * (player.rect.centery - y1) / 100
+
+    def explosion(self, player): # 爆炸
+        self.force(self.rect.centerx, self.rect.centery, player, 50)
+
 # 建立炸彈類別
 class Bomb(pygame.sprite.Sprite, Physics):
     def __init__(self, x, y, img, direction):
