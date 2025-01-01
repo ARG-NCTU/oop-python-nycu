@@ -299,6 +299,10 @@ class Game():
                 if event.type == pygame.QUIT:
                     running = False
 
+            if random.randint(1, 1000) <= 5:  # 0.5% 機率生成加速道具
+                self.spawn_speed_boost()
+
+
             if not self.fireball_mode:
                 self.fireball_timer += 1
                 if self.fireball_timer >= self.fireball_cooldown:
@@ -692,6 +696,8 @@ class Player(pygame.sprite.Sprite, Physics):
         self.pickup_count = 0
         self.hit_count = 0
         self.remain_life = 5
+        self.speed_boost_timer = 0
+
                  
     def change_gunlag(self):
         self.gunlag = self.gun.lagtime
