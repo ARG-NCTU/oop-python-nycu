@@ -1,4 +1,3 @@
-
 import pygame
 import sys
 import math
@@ -265,12 +264,14 @@ class Game():
         self.fireball_duration = 20 * 60  # 30 秒（按 60fps 計算）
         self.fireball_cooldown = 0 * 60  # 1 分鐘（按 60fps 計算）
         self.fireball_spawn_rate = 50 # 每秒生成一次火球
-
+        self.fog = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))  # 建立霧氣表面
+        self.fog.set_alpha(100)  # 設定霧氣的透明度
+        self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
+        self.fog_active = False  # 初始狀態下霧氣為停用
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.player1_draw.add(treasure_box)
         self.treasure_boxes.add(treasure_box)    
-
     def spawn_fireball(self):
         x = random.randint(0, WINDOW_WIDTH)
         fireball = Fireball(x, 0, 30)
@@ -471,6 +472,15 @@ class Game():
             text_player2_ammo = self.font.render(str(self.player2.gun.numofbullet), True, (255, 255, 255))
             text_multiple = self.font.render("x", True, (255, 255, 255))
             self.screen.blit(self.background_img, (0, 0))  #    背景圖片
+            self.random_fog()  # 每次循環隨機檢查是否啟用霧氣
+    
+           # 清空畫面並繪製背景
+            self.screen.fill((0, 0, 0))  # 清空畫面
+            self.screen.blit(self.background_img, (0, 0))  # 繪製背景
+    
+           # 如果霧氣啟用，繪製霧氣
+            if self.fog_active:
+                self.screen.blit(self.fog, (0, 0))
             self.bomb_effects.draw(self.screen)
             self.bullets.draw(self.screen)
             self.player1_draw.draw(self.screen)
@@ -494,9 +504,7 @@ class Game():
             self.lagtime_back1.update()
             self.lagtime_back2.update()
             self.lagtime_images1.update()
-            self.lagtime_images2.update()
-
-
+            self.lagtime_images2.update() 
             pygame.display.flip()
 
             self.clock.tick(60)
@@ -514,7 +522,13 @@ class Game():
             #顯示玩家一的子彈數量
             text_bullet1 = self.font.render(str(self.player1.gun.numofbullet), True, (255, 255, 255))
             self.screen.blit(text_bullet1, (10, 10))
-
+    def random_fog(self):
+        """隨機決定是否出現霧氣"""
+        # 每次循環有 5% 的機率觸發霧氣（可以調整機率）
+        if random.randint(1, 100) <= 5:
+            self.fog_active = True
+        else:
+            self.fog_active = False
     # 發射子彈 
     def fire_bullet(self, player, direction, color, gun_name, which_player):
         if player.get_value("gunlag") <= 0:
