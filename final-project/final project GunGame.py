@@ -296,7 +296,7 @@ class Game():
         show_start_screen = True       # 顯示開始畫面
         show_end_screen = True         # 顯示結束畫面
         while running:
-            print self.player1.is_speed_boosted
+            print(self.player1.is_speed_boosted)
 
             if show_start_screen:
                 draw_init()
