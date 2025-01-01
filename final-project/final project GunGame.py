@@ -226,6 +226,7 @@ class Game():
         self.tap_img = pygame.image.load('./tap_any_bottom.png') # 載入提示
         self.player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
         self.player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
+        self.fog_timer = 0
         self.bomb_img = pygame.image.load('./bomb.png') # 載入炸彈圖片
         self.bomb_effect_img = pygame.image.load('./bomb_effect.png') # 載入爆炸特效
         self.smallgun1_img = pygame.image.load('./smallgun1.png') # 載入小槍圖片
@@ -523,12 +524,14 @@ class Game():
             text_bullet1 = self.font.render(str(self.player1.gun.numofbullet), True, (255, 255, 255))
             self.screen.blit(text_bullet1, (10, 10))
     def random_fog(self):
-        """隨機決定是否出現霧氣"""
-        # 每次循環有 5% 的機率觸發霧氣（可以調整機率）
-        if random.randint(1, 100) <= 5:
-            self.fog_active = True
+        if self.fog_active:
+            self.fog_timer -= 1  # 霧氣計時器倒數
+            if self.fog_timer <= 0:  # 計時結束，停用霧氣
+                self.fog_active = False
         else:
-            self.fog_active = False
+            if random.randint(1, 1000) <= 5:  # 0.5% 機率啟用霧氣
+                self.fog_active = True
+                self.fog_timer = 30 * 60  # 設定霧氣持續時間為 30 秒（60 FPS 計算）
     # 發射子彈 
     def fire_bullet(self, player, direction, color, gun_name, which_player):
         if player.get_value("gunlag") <= 0:
