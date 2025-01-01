@@ -865,6 +865,19 @@ class sniper(Gun):
         self.correction_xright = 0
         self.correction_yright = 30
 
+#建立SpeedBoost 類別
+class SpeedBoost(pygame.sprite.Sprite, Physics):
+    def __init__(self, x, y, image):
+        super().__init__()
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.speed_x = 0  # 水平速度
+        self.speed_y = 0  # 垂直速度
+
+    def update(self):
+        Physics.update(self)
 
 
 class GunImage(pygame.sprite.Sprite):
