@@ -423,14 +423,14 @@ class Game():
             # 碰撞檢測
             for speed_boost in self.speed_boosts:
                 if pygame.sprite.collide_rect(self.player1, speed_boost):
-                    self.player1.speed_x *= 10  # 加倍速度
-                    self.player1.speed_boost_timer = pygame.time.get_ticks()  # 記錄加速開始時間
-                    speed_boost.kill()
-                if pygame.sprite.collide_rect(self.player2, speed_boost):
-                    self.player2.speed_x *= 10
-                    self.player2.speed_boost_timer = pygame.time.get_ticks()
+                    self.player1.is_speed_boosted = True
+                    self.player1.speed_boost_timer = pygame.time.get_ticks()
                     speed_boost.kill()
 
+                if pygame.sprite.collide_rect(self.player1, speed_boost):
+                    self.player1.is_speed_boosted = True
+                    self.player1.speed_boost_timer = pygame.time.get_ticks()
+                    speed_boost.kill()
 
             for fireball in self.fireballs:
                 collisions = pygame.sprite.spritecollide(fireball, self.bullets, True)
@@ -716,6 +716,7 @@ class Player(pygame.sprite.Sprite, Physics):
         self.hit_count = 0
         self.remain_life = 5
         self.speed_boost_timer = 0
+        self.is_speed_boosted = False  # 初始化加速狀態
 
                  
     def change_gunlag(self):
@@ -755,9 +756,10 @@ class Player(pygame.sprite.Sprite, Physics):
     def update(self): # 繼承update
         Physics.update(self)
         self.gunlag -= 1
-        if self.speed_boost_timer > 0 and pygame.time.get_ticks() - self.speed_boost_timer > 100000:
-            self.speed_x = PLAYER_SPEED
-            self.speed_boost_timer = 0
+        if self.is_speed_boosted:
+            if pygame.time.get_ticks() - self.speed_boost_timer > 5000:  # 加速持續 5 秒
+                self.is_speed_boosted = False
+
 
 
     def check_ground(self): # 繼承check_ground
@@ -765,11 +767,11 @@ class Player(pygame.sprite.Sprite, Physics):
 
     def move_x(self, direction):
         if direction == "left":
-            if self.speed_x >= -PLAYER_SPEED:
+            if self.speed_x >= -PLAYER_SPEED * (2 if self.is_speed_boosted else 1):
                 self.speed_x -= PLAYER_ACCERATION
             self.turn_img("left")
         elif direction == "right":
-            if self.speed_x <= PLAYER_SPEED:
+            if self.speed_x <= PLAYER_SPEED * (2 if self.is_speed_boosted else 1):
                 self.speed_x += PLAYER_ACCERATION
             self.turn_img("right")
 
