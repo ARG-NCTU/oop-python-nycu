@@ -755,7 +755,7 @@ class Player(pygame.sprite.Sprite, Physics):
     def update(self): # 繼承update
         Physics.update(self)
         self.gunlag -= 1
-        if self.speed_boost_timer > 0 and pygame.time.get_ticks() - self.speed_boost_timer > 5000:
+        if self.speed_boost_timer > 0 and pygame.time.get_ticks() - self.speed_boost_timer > 100000:
             self.speed_x = PLAYER_SPEED
             self.speed_boost_timer = 0
 
