@@ -263,7 +263,7 @@ class Game():
         self.fireball_mode = False
         self.fireball_timer = 0
         self.fireball_duration = 20 * 60  # 30 秒（按 60fps 計算）
-        self.fireball_cooldown = 60 * 60  # 1 分鐘（按 60fps 計算）
+        self.fireball_cooldown = 0 * 60  # 1 分鐘（按 60fps 計算）
         self.fireball_spawn_rate = 50 # 每秒生成一次火球
 
     def spawn_treasure_box(self):
@@ -975,7 +975,7 @@ class Bullet(pygame.sprite.Sprite):
 class Fireball(pygame.sprite.Sprite):
     def __init__(self, x, y, size):
         super().__init__()
-        self.image = pygame.image.load('./oop-python-nycu/final-project/fireball.png')
+        self.image = pygame.image.load('./fireball.png')
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.speed_y = FIREBALL_FALL_SPEED
