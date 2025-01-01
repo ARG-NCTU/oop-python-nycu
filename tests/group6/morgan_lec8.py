@@ -1,5 +1,5 @@
 import add_path
-#import mit_ocw_exercises.lec8_classes as lc
+import mit_ocw_exercises.lec8_classes as lc
 import pytest
 
 
