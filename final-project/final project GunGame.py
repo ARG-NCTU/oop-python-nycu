@@ -767,11 +767,11 @@ class Player(pygame.sprite.Sprite, Physics):
 
     def move_x(self, direction):
         if direction == "left":
-            if self.speed_x >= -PLAYER_SPEED * (2 if self.is_speed_boosted else 1):
+            if self.speed_x >= -PLAYER_SPEED * (5 if self.is_speed_boosted else 1):
                 self.speed_x -= PLAYER_ACCERATION
             self.turn_img("left")
         elif direction == "right":
-            if self.speed_x <= PLAYER_SPEED * (2 if self.is_speed_boosted else 1):
+            if self.speed_x <= PLAYER_SPEED * (5 if self.is_speed_boosted else 1):
                 self.speed_x += PLAYER_ACCERATION
             self.turn_img("right")
 
