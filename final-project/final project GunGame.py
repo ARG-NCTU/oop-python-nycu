@@ -496,6 +496,10 @@ class Game():
            # 清空畫面並繪製背景
             self.screen.fill((0, 0, 0))  # 清空畫面
             self.screen.blit(self.background_img, (0, 0))  # 繪製背景
+
+           # 繪製Speed Boost
+            self.speed_boosts.draw(self.screen)
+            self.speed_boosts.update()
     
            # 如果霧氣啟用，繪製霧氣
             if self.fog_active:
@@ -746,6 +750,10 @@ class Player(pygame.sprite.Sprite, Physics):
     def update(self): # 繼承update
         Physics.update(self)
         self.gunlag -= 1
+        if self.speed_boost_timer > 0 and pygame.time.get_ticks() - self.speed_boost_timer > 5000:
+            self.speed_x = PLAYER_SPEED
+            self.speed_boost_timer = 0
+
 
     def check_ground(self): # 繼承check_ground
         super().check_ground()
