@@ -1,5 +1,5 @@
 import pytest
-#import lecture13
+#mport lecture13
 import random
 import sklearn.linear_model
 import pytest
