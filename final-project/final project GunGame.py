@@ -296,6 +296,8 @@ class Game():
         show_start_screen = True       # 顯示開始畫面
         show_end_screen = True         # 顯示結束畫面
         while running:
+            print self.player1.is_speed_boosted
+
             if show_start_screen:
                 draw_init()
                 show_start_screen = False
@@ -627,9 +629,6 @@ class Game():
         # 将整个数据集写回文件
         with open(file_path, 'w') as f:
             json.dump(data, f, indent=4)
-
-
-
 
 
 class Physics(object):
