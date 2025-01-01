@@ -427,9 +427,9 @@ class Game():
                     self.player1.speed_boost_timer = pygame.time.get_ticks()
                     speed_boost.kill()
 
-                if pygame.sprite.collide_rect(self.player1, speed_boost):
-                    self.player1.is_speed_boosted = True
-                    self.player1.speed_boost_timer = pygame.time.get_ticks()
+                if pygame.sprite.collide_rect(self.player2, speed_boost):
+                    self.player2.is_speed_boosted = True
+                    self.player2.speed_boost_timer = pygame.time.get_ticks()
                     speed_boost.kill()
 
             for fireball in self.fireballs:
