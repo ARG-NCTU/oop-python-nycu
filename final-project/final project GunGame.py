@@ -302,7 +302,6 @@ class Game():
             if random.randint(1, 1000) <= 5:  # 0.5% 機率生成加速道具
                 self.spawn_speed_boost()
 
-
             if not self.fireball_mode:
                 self.fireball_timer += 1
                 if self.fireball_timer >= self.fireball_cooldown:
@@ -417,6 +416,17 @@ class Game():
             self.fireballs.update()
 
             # 碰撞檢測
+            for speed_boost in self.speed_boosts:
+                if pygame.sprite.collide_rect(self.player1, speed_boost):
+                    self.player1.speed_x *= 2  # 加倍速度
+                    self.player1.speed_boost_timer = pygame.time.get_ticks()  # 記錄加速開始時間
+                    speed_boost.kill()
+                if pygame.sprite.collide_rect(self.player2, speed_boost):
+                    self.player2.speed_x *= 2
+                    self.player2.speed_boost_timer = pygame.time.get_ticks()
+                    speed_boost.kill()
+
+
             for fireball in self.fireballs:
                 collisions = pygame.sprite.spritecollide(fireball, self.bullets, True)
                 if collisions:
