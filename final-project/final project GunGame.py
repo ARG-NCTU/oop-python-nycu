@@ -234,7 +234,7 @@ class Game():
 
         self.speed_boost_img = pygame.image.load('./speed_boost.png')  # 加載加速道具圖片
         self.speed_boosts = pygame.sprite.Group()  # 初始化加速道具群組
-        
+
         self.shotgun1_img = pygame.image.load('./shotgun1.png')
         self.shotgun2_img = pygame.image.load('./shotgun2.png')
         self.sniper1_img = pygame.image.load('./sniper1.png')
@@ -768,6 +768,11 @@ class Player(pygame.sprite.Sprite, Physics):
             return False
         else:
             return True
+
+    def spawn_speed_boost(self):
+        speed_boost = SpeedBoost(random.randint(95, 1000), -100, self.speed_boost_img)
+        self.speed_boosts.add(speed_boost)
+
 
     def relive(self, num):
         #玩家復活
