@@ -423,11 +423,11 @@ class Game():
             # 碰撞檢測
             for speed_boost in self.speed_boosts:
                 if pygame.sprite.collide_rect(self.player1, speed_boost):
-                    self.player1.speed_x *= 2  # 加倍速度
+                    self.player1.speed_x *= 10  # 加倍速度
                     self.player1.speed_boost_timer = pygame.time.get_ticks()  # 記錄加速開始時間
                     speed_boost.kill()
                 if pygame.sprite.collide_rect(self.player2, speed_boost):
-                    self.player2.speed_x *= 2
+                    self.player2.speed_x *= 10
                     self.player2.speed_boost_timer = pygame.time.get_ticks()
                     speed_boost.kill()
 
