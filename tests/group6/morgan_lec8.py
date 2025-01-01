@@ -2,7 +2,6 @@ import add_path
 import mit_ocw_exercises.lec8_classes as lc
 import pytest
 
-
 def test_coordinate():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0,0)
