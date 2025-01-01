@@ -408,12 +408,16 @@ class Game():
 
             # 碰撞檢測
             for fireball in self.fireballs:
+                collisions = pygame.sprite.spritecollide(fireball, self.bullets, True)
+                if collisions:
+                   fireball.destroy()
                 if fireball.rect.colliderect(self.player1.rect):
                     fireball.explosion(self.player1)
                     fireball.kill()
                 if fireball.rect.colliderect(self.player2.rect):
                     fireball.explosion(self.player2)
                     fireball.kill()
+                    
 
             for bullet in self.bullets:
                 if bullet.leave_check():
@@ -999,6 +1003,8 @@ class Fireball(pygame.sprite.Sprite):
 
     def explosion(self, player): # 爆炸
         self.force(self.rect.centerx, self.rect.centery, player, 50)
+    def destroy(self):  # New method to destroy fireball
+        self.kill()  # Remove fireball from the game    
 
 # 建立炸彈類別
 class Bomb(pygame.sprite.Sprite, Physics):
