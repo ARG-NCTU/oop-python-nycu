@@ -273,6 +273,7 @@ class Game():
         self.fog.set_alpha(100)  # 設定霧氣的透明度
         self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
         self.fog_active = False  # 初始狀態下霧氣為停用
+    
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.player1_draw.add(treasure_box)
@@ -281,7 +282,11 @@ class Game():
         x = random.randint(0, WINDOW_WIDTH)
         fireball = Fireball(x, 0, 30)
         self.fireballs.add(fireball)
-        
+    
+    def spawn_speed_boost(self):
+        speed_boost = SpeedBoost(random.randint(95, 1000), -100, self.speed_boost_img)
+        self.speed_boosts.add(speed_boost)
+    
     def run(self):
         running = True
         self.player1_press_jump = 0  # 玩家1是否按跳躍鍵
