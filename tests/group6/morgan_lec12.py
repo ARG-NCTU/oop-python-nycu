@@ -1,5 +1,3 @@
-# bubble_sort_test.py
-
 def bubble_sort(arr):
     n = len(arr)  # Get the length of the list
     for i in range(n):
