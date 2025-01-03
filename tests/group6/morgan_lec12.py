@@ -1,5 +1,5 @@
 def bubble_sort(arr):
-    n = len(arr)  # Get the length of the list
+    n = len(arr) 
     for i in range(n):
         for j in range(n-1):
             if arr[j] > arr[j+1]:
@@ -32,4 +32,3 @@ def test_list_with_negatives():
 # Test single element list
 def test_single_element_list():
     assert bubble_sort([1]) == [1]
-
