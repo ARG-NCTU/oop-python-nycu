@@ -800,6 +800,7 @@ class Player(pygame.sprite.Sprite, Physics):
     def check_ground(self): # 繼承check_ground
         super().check_ground()
 
+
     def move_x(self, direction):
         speed_multiplier = 3 if self.speed_boost_active else 1
         if direction == "left":
