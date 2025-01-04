@@ -1176,8 +1176,8 @@ class Bomb_effect(pygame.sprite.Sprite):
             return True
         else:
             return False
-
-#寶箱掉落
+        
+#寶箱會掉落
 class TreasureBox(pygame.sprite.Sprite, Physics):
     def __init__(self, x, y, box_images):
         super().__init__()
