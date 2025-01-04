@@ -1229,5 +1229,53 @@
         "player2_hit_count": 0,
         "player2_pickup_count": 13,
         "player2_remain_life": 1
+    },
+    {
+        "player1_jump_count": 42,
+        "player1_shoot_count": 0,
+        "player1_bomb_count": 0,
+        "player1_death_count": 0,
+        "player1_hit_count": 0,
+        "player1_pickup_count": 4,
+        "player1_remain_life": 5,
+        "player2_jump_count": 39,
+        "player2_shoot_count": 0,
+        "player2_bomb_count": 0,
+        "player2_death_count": 5,
+        "player2_hit_count": 0,
+        "player2_pickup_count": 3,
+        "player2_remain_life": 0
+    },
+    {
+        "player1_jump_count": 22,
+        "player1_shoot_count": 78,
+        "player1_bomb_count": 2,
+        "player1_death_count": 5,
+        "player1_hit_count": 35,
+        "player1_pickup_count": 3,
+        "player1_remain_life": 0,
+        "player2_jump_count": 19,
+        "player2_shoot_count": 72,
+        "player2_bomb_count": 0,
+        "player2_death_count": 3,
+        "player2_hit_count": 24,
+        "player2_pickup_count": 1,
+        "player2_remain_life": 2
+    },
+    {
+        "player1_jump_count": 0,
+        "player1_shoot_count": 0,
+        "player1_bomb_count": 0,
+        "player1_death_count": 1,
+        "player1_hit_count": 0,
+        "player1_pickup_count": 2,
+        "player1_remain_life": 4,
+        "player2_jump_count": 9,
+        "player2_shoot_count": 0,
+        "player2_bomb_count": 0,
+        "player2_death_count": 5,
+        "player2_hit_count": 0,
+        "player2_pickup_count": 0,
+        "player2_remain_life": 0
     }
 ]
