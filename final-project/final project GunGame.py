@@ -227,6 +227,9 @@ class Game():
         self.player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
         self.player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
         self.fog_timer = 0
+        self.speed_boost_img = pygame.transform.scale(pygame.image.load('./speed_boost.png'), (40, 40))
+        self.speed_boosts = pygame.sprite.Group()
+        self.speed_boost_timer = 0
         self.fog_img= pygame.image.load('./cloud.png')
         self.fog_img = pygame.transform.scale(self.fog_img, (450, 330))
         self.bomb_img = pygame.image.load('./bomb.png') # 載入炸彈圖片
@@ -282,6 +285,11 @@ class Game():
         x = random.randint(0, WINDOW_WIDTH)
         fireball = Fireball(x, 0, 30)
         self.fireballs.add(fireball)
+
+    def spawn_speed_boost(self):
+        x = random.randint(95, WINDOW_WIDTH - 95)
+        speed_boost = SpeedBoost(x, -50, self.speed_boost_img)
+        self.speed_boosts.add(speed_boost)
         
     def run(self):
         running = True
@@ -292,6 +300,15 @@ class Game():
         show_start_screen = True       # 顯示開始畫面
         show_end_screen = True         # 顯示結束畫面
         while running:
+            # 處理加速配件生成
+            self.speed_boost_timer += 1
+            if self.speed_boost_timer >= 600:  # 每 10 秒生成一次
+                self.spawn_speed_boost()
+                self.speed_boost_timer = 0
+
+            # 更新加速配件
+            self.speed_boosts.update()
+
             if show_start_screen:
                 draw_init()
                 show_start_screen = False
@@ -414,6 +431,14 @@ class Game():
             self.fireballs.update()
 
             # 碰撞檢測
+            for speed_boost in self.speed_boosts:
+                if pygame.sprite.collide_rect(self.player1, speed_boost):
+                    self.player1.activate_speed_boost()
+                    speed_boost.kill()
+                if pygame.sprite.collide_rect(self.player2, speed_boost):
+                    self.player2.activate_speed_boost()
+                    speed_boost.kill()
+
             for fireball in self.fireballs:
                 collisions = pygame.sprite.spritecollide(fireball, self.bullets, True)
                 if collisions:
@@ -507,11 +532,17 @@ class Game():
             self.lagtime_back2.update()
             self.lagtime_images1.update()
             self.lagtime_images2.update() 
+            
+            # 更新玩家
+            self.player1.update()
+            self.player2.update()
             # 如果霧氣啟用，繪製霧氣
             if self.fog_active:
                 self.fog_x += self.fog_speed_x
                 self.fog_y += self.fog_speed_y
                 self.screen.blit(self.fog_img, (self.fog_x, self.fog_y))
+            
+            self.speed_boosts.draw(self.screen)
             pygame.display.flip()
             self.clock.tick(60)
 
@@ -695,6 +726,8 @@ class Player(pygame.sprite.Sprite, Physics):
     def __init__(self, x, y, img, playernumber):
         super().__init__()
         Physics.__init__(self, x, y, img)
+        self.speed_boost_active = False
+        self.speed_boost_timer = 0
         self.right_img = img
         self.left_img = pygame.transform.flip(img, True, False)
         self.on_ground = True
@@ -714,7 +747,9 @@ class Player(pygame.sprite.Sprite, Physics):
         self.pickup_count = 0
         self.hit_count = 0
         self.remain_life = 5
-                 
+
+
+              
     def change_gunlag(self):
         self.gunlag = self.gun.lagtime
 
@@ -732,7 +767,10 @@ class Player(pygame.sprite.Sprite, Physics):
             return self.gunlag
         if sub == "live":
             return self.live
-        
+
+    def activate_speed_boost(self):
+        self.speed_boost_active = True
+        self.speed_boost_timer = 600  # 加速效果持續 10 秒（60fps 計算）     
     
     def on_ground(self): # 回傳on_ground值
         return self.on_ground
@@ -750,20 +788,27 @@ class Player(pygame.sprite.Sprite, Physics):
             return 1
     
     def update(self): # 繼承update
+        super().update()
         Physics.update(self)
         self.gunlag -= 1
+        # 處理加速效果倒計時
+        if self.speed_boost_active:
+            self.speed_boost_timer -= 1
+            if self.speed_boost_timer <= 0:
+                self.speed_boost_active = False
 
     def check_ground(self): # 繼承check_ground
         super().check_ground()
 
     def move_x(self, direction):
+        speed_multiplier = 3 if self.speed_boost_active else 1
         if direction == "left":
-            if self.speed_x >= -PLAYER_SPEED:
-                self.speed_x -= PLAYER_ACCERATION
+            if self.speed_x >= -PLAYER_SPEED * speed_multiplier:
+                self.speed_x -= PLAYER_ACCERATION * speed_multiplier
             self.turn_img("left")
         elif direction == "right":
-            if self.speed_x <= PLAYER_SPEED:
-                self.speed_x += PLAYER_ACCERATION
+            if self.speed_x <= PLAYER_SPEED * speed_multiplier:
+                self.speed_x += PLAYER_ACCERATION * speed_multiplier
             self.turn_img("right")
 
     def jump(self, check):
@@ -824,6 +869,20 @@ class Player(pygame.sprite.Sprite, Physics):
     def now_gun(self):
         return self.gun.gun_name
         
+
+class SpeedBoost(pygame.sprite.Sprite, Physics):
+    def __init__(self, x, y, img):
+        super().__init__()
+        self.image = img  # 加速配件的圖片
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.speed_x = 0
+        self.speed_y = 0
+
+    def update(self):
+        Physics.update(self)
+
 
 # 建立槍類別
 class Gun():
