@@ -227,15 +227,12 @@ class Game():
         self.player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
         self.player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
         self.fog_timer = 0
-        self.fog_img = pygame.image.load('./cloud.png')
+        self.fog_img= pygame.image.load('./cloud.png')
+        self.fog_img = pygame.transform.scale(self.fog_img, (450, 330))
         self.bomb_img = pygame.image.load('./bomb.png') # 載入炸彈圖片
         self.bomb_effect_img = pygame.image.load('./bomb_effect.png') # 載入爆炸特效
         self.smallgun1_img = pygame.image.load('./smallgun1.png') # 載入小槍圖片
         self.smallgun2_img = pygame.image.load('./smallgun2.png')
-
-        self.speed_boost_img = pygame.image.load('./speed_boost.png')  # 加載加速道具圖片
-        self.speed_boosts = pygame.sprite.Group()  # 初始化加速道具群組
-
         self.shotgun1_img = pygame.image.load('./shotgun1.png')
         self.shotgun2_img = pygame.image.load('./shotgun2.png')
         self.sniper1_img = pygame.image.load('./sniper1.png')
@@ -270,15 +267,13 @@ class Game():
         self.fireball_duration = 20 * 60  # 30 秒（按 60fps 計算）
         self.fireball_cooldown = 0 * 60  # 1 分鐘（按 60fps 計算）
         self.fireball_spawn_rate = 50 # 每秒生成一次火球
-        self.fog = pygame.Surface((WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))  # 建立霧氣表面
-        self.fog.set_alpha(400)  # 設定霧氣的透明度
+        self.fog = pygame.Surface((WINDOW_WIDTH //2, WINDOW_HEIGHT//2 ))  # 建立霧氣表面
+        self.fog.set_alpha(1000)  # 設定霧氣的透明度
         self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
         self.fog_x = -WINDOW_WIDTH * 2
         self.fog_speed = 3
         self.fog_active = False  # 初始狀態下霧氣為停用
-
         self.fog_timer = 0
-
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.player1_draw.add(treasure_box)
@@ -287,11 +282,7 @@ class Game():
         x = random.randint(0, WINDOW_WIDTH)
         fireball = Fireball(x, 0, 30)
         self.fireballs.add(fireball)
-    
-    def spawn_speed_boost(self):
-        speed_boost = SpeedBoost(random.randint(95, 1000), -100, self.speed_boost_img)
-        self.speed_boosts.add(speed_boost)
-    
+        
     def run(self):
         running = True
         self.player1_press_jump = 0  # 玩家1是否按跳躍鍵
@@ -308,9 +299,6 @@ class Game():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-
-            if random.randint(1, 1000) <= 5:  # 0.5% 機率生成加速道具
-                self.spawn_speed_boost()
 
             if not self.fireball_mode:
                 self.fireball_timer += 1
@@ -426,17 +414,6 @@ class Game():
             self.fireballs.update()
 
             # 碰撞檢測
-            for speed_boost in self.speed_boosts:
-                if pygame.sprite.collide_rect(self.player1, speed_boost):
-                    self.player1.is_speed_boosted = True
-                    self.player1.speed_boost_timer = pygame.time.get_ticks()
-                    speed_boost.kill()
-
-                if pygame.sprite.collide_rect(self.player2, speed_boost):
-                    self.player2.is_speed_boosted = True
-                    self.player2.speed_boost_timer = pygame.time.get_ticks()
-                    speed_boost.kill()
-
             for fireball in self.fireballs:
                 collisions = pygame.sprite.spritecollide(fireball, self.bullets, True)
                 if collisions:
@@ -506,15 +483,6 @@ class Game():
            # 清空畫面並繪製背景
             self.screen.fill((0, 0, 0))  # 清空畫面
             self.screen.blit(self.background_img, (0, 0))  # 繪製背景
-           
-           # 繪製Speed Boost
-            self.speed_boosts.draw(self.screen)
-            self.speed_boosts.update()
-    
-           # 如果霧氣啟用，繪製霧氣
-            if self.fog_active:
-                self.screen.blit(self.fog, (0, 0))
-
             self.bomb_effects.draw(self.screen)
             self.bullets.draw(self.screen)
             self.player1_draw.draw(self.screen)
@@ -543,7 +511,7 @@ class Game():
             if self.fog_active:
                 self.fog_x += self.fog_speed_x
                 self.fog_y += self.fog_speed_y
-                self.screen.blit(self.fog, (self.fog_x, self.fog_y))
+                self.screen.blit(self.fog_img, (self.fog_x, self.fog_y))
             pygame.display.flip()
             self.clock.tick(60)
 
@@ -569,7 +537,7 @@ class Game():
             if random.randint(1, 100) <= 5:  # 0.5% 機率啟用霧氣
                 self.fog_active = True
                 self.fog_timer = 30 * 60  # 設定霧氣持續時間為 30 秒（60 FPS 計算）
-                self.fog_direction = random.choice(["left", "right", "up", "down"])
+                self.fog_direction = random.choice(["left", "right"])
                 if self.fog_direction == "left":
                     self.fog_x = -self.fog.get_width()  # 左邊界外
                     self.fog_y = random.randint(0, WINDOW_HEIGHT - self.fog.get_height())
@@ -660,6 +628,9 @@ class Game():
             json.dump(data, f, indent=4)
 
 
+
+
+
 class Physics(object):
         def __init__(self, x, y, img):
             self.image = img
@@ -743,9 +714,6 @@ class Player(pygame.sprite.Sprite, Physics):
         self.pickup_count = 0
         self.hit_count = 0
         self.remain_life = 5
-        self.speed_boost_timer = 0
-        self.is_speed_boosted = False  # 初始化加速狀態
-
                  
     def change_gunlag(self):
         self.gunlag = self.gun.lagtime
@@ -784,22 +752,17 @@ class Player(pygame.sprite.Sprite, Physics):
     def update(self): # 繼承update
         Physics.update(self)
         self.gunlag -= 1
-        if self.is_speed_boosted:
-            if pygame.time.get_ticks() - self.speed_boost_timer > 5000:  # 加速持續 5 秒
-                self.is_speed_boosted = False
-
-
 
     def check_ground(self): # 繼承check_ground
         super().check_ground()
 
     def move_x(self, direction):
         if direction == "left":
-            if self.speed_x >= -PLAYER_SPEED * (5 if self.is_speed_boosted else 1):
+            if self.speed_x >= -PLAYER_SPEED:
                 self.speed_x -= PLAYER_ACCERATION
             self.turn_img("left")
         elif direction == "right":
-            if self.speed_x <= PLAYER_SPEED * (5 if self.is_speed_boosted else 1):
+            if self.speed_x <= PLAYER_SPEED:
                 self.speed_x += PLAYER_ACCERATION
             self.turn_img("right")
 
@@ -827,11 +790,6 @@ class Player(pygame.sprite.Sprite, Physics):
             return False
         else:
             return True
-
-    def spawn_speed_boost(self):
-        speed_boost = SpeedBoost(random.randint(95, 1000), -100, self.speed_boost_img)
-        self.speed_boosts.add(speed_boost)
-
 
     def relive(self, num):
         #玩家復活
@@ -924,19 +882,6 @@ class sniper(Gun):
         self.correction_xright = 0
         self.correction_yright = 30
 
-#建立SpeedBoost 類別
-class SpeedBoost(pygame.sprite.Sprite, Physics):
-    def __init__(self, x, y, image):
-        super().__init__()
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.speed_x = 0  # 水平速度
-        self.speed_y = 0  # 垂直速度
-
-    def update(self):
-        Physics.update(self)
 
 
 class GunImage(pygame.sprite.Sprite):
