@@ -159,7 +159,7 @@ def draw_end(who_win):
     player_2_img = pygame.image.load('./player_2.png')  # 載入玩家2圖片
     player_1_img = pygame.transform.scale(player_1_img, (240, 330))
     player_2_img = pygame.transform.scale(player_2_img, (240, 330))
-    crown_img = pygame.transform.scale(crown_img, (100, 100))
+    crown_img = pygame.transform.scale(crown_img, (200, 200))
 
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
