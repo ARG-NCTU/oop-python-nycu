@@ -802,6 +802,8 @@ class Player(pygame.sprite.Sprite, Physics):
 
     def move_x(self, direction):
         speed_multiplier = 3 if self.speed_boost_active else 1
+        base_speed = PLAYER_SPEED
+        base_acceleration = PLAYER_ACCERATION
         if direction == "left":
             if self.speed_x >= -PLAYER_SPEED * speed_multiplier:
                 self.speed_x -= PLAYER_ACCERATION * speed_multiplier
