@@ -159,7 +159,7 @@ def draw_end(who_win):
     player_2_img = pygame.image.load('./player_2.png')  # 載入玩家2圖片
     player_1_img = pygame.transform.scale(player_1_img, (240, 330))
     player_2_img = pygame.transform.scale(player_2_img, (240, 330))
-    crown_img = pygame.transform.scale(crown_img, (200, 200))
+    crown_img = pygame.transform.scale(crown_img, (100, 100))
 
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
@@ -231,7 +231,7 @@ class Game():
         self.speed_boosts = pygame.sprite.Group()
         self.speed_boost_timer = 0
         self.fog_img= pygame.image.load('./cloud.png')
-        self.fog_img = pygame.transform.scale(self.fog_img, (450, 330))
+        self.fog_img = pygame.transform.scale(self.fog_img, (900, 660))
         self.bomb_img = pygame.image.load('./bomb.png') # 載入炸彈圖片
         self.bomb_effect_img = pygame.image.load('./bomb_effect.png') # 載入爆炸特效
         self.smallgun1_img = pygame.image.load('./smallgun1.png') # 載入小槍圖片
@@ -680,7 +680,7 @@ class Physics(object):
         
         def update(self):
             # 應用重力
-            self.speed_y += GRAVITY
+            self.speed_y += GRAVITY-0.12
 
             # 移動
             self.rect.x += self.speed_x
@@ -801,7 +801,7 @@ class Player(pygame.sprite.Sprite, Physics):
         super().check_ground()
 
     def move_x(self, direction):
-        speed_multiplier = 3 if self.speed_boost_active else 1
+        speed_multiplier = 2 if self.speed_boost_active else 1
         base_speed = PLAYER_SPEED
         base_acceleration = PLAYER_ACCERATION
         if direction == "left":
