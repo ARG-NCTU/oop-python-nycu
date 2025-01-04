@@ -8,7 +8,13 @@ import os
 # 初始化 Pygame
 pygame.init()
 
+# 初始化音频模块
+pygame.mixer.init()
 
+# 加载背景音乐
+pygame.mixer.music.load('background_music.mp3')  # 替换为你的背景音乐文件路径
+pygame.mixer.music.set_volume(0.5)  # 可选：设置音量
+pygame.mixer.music.play(-1)  # -1 表示循环播放
 # 設定視窗大小
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
