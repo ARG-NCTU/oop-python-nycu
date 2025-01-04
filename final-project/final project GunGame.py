@@ -811,6 +811,7 @@ class Player(pygame.sprite.Sprite, Physics):
                 self.speed_x += PLAYER_ACCERATION * speed_multiplier
             self.turn_img("right")
 
+
     def jump(self, check):
         if self.on_ground:  # 只有在地面上才能跳
             self.speed_y = -JUMP_HEIGHT
