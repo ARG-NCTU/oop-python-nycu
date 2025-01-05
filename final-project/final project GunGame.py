@@ -234,7 +234,7 @@ class Game():
         # self.player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
         # self.player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
         # self.fog_timer = 0
-        self.speed_boost_img = pygame.transform.scale(pygame.image.load('./speed_boost.png'), (40, 40))
+        # self.speed_boost_img = pygame.transform.scale(pygame.image.load('./speed_boost.png'), (40, 40))
         self.speed_boosts = pygame.sprite.Group()
         self.speed_boost_timer = 0
         self.fog_img= pygame.image.load('./cloud.png')
