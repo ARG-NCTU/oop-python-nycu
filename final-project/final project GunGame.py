@@ -249,7 +249,7 @@ class Game():
         # self.sniper2_img = pygame.image.load('./sniper2.png')
         # self.bullet_img = pygame.transform.scale(pygame.image.load('./bullet.png'), (35,35))
         # self.space_img = pygame.image.load('./space.jpg')
-        self.box_img = pygame.image.load('./box.png')
+        # self.box_img = pygame.image.load('./box.png')
         self.heart_img = pygame.transform.scale(pygame.image.load('./heart.png'), (40, 40))
         self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
         self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img, 2)
