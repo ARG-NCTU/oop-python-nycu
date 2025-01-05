@@ -788,7 +788,7 @@ class Player(pygame.sprite.Sprite, Physics):
         # self.walk_distance = 0
         # self.death_count = 0
         # self.pickup_count = 0
-        self.hit_count = 0
+        # self.hit_count = 0
         self.remain_life = 5
         self.shield_active = False
         self.shield_timer = 0
