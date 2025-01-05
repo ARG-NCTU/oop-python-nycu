@@ -20,7 +20,10 @@ WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 # 設定顏色
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -29,7 +32,10 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 FONT = 50
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 # 重力加速度
 GRAVITY = 0.6
 
@@ -220,7 +226,10 @@ def draw_end(who_win):
     pygame.quit()
     sys.exit()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 # 建立遊戲場景類別
 class Game():
     def __init__(self):
