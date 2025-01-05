@@ -464,7 +464,6 @@ class Game():
                     fireball.explosion(self.player2)
                     fireball.kill()
                     
-
             for bullet in self.bullets:
                 hit_sound = pygame.mixer.Sound('hit_sound.wav')
                 if bullet.leave_check():
