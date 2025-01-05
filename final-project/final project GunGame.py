@@ -945,8 +945,8 @@ class Shield(pygame.sprite.Sprite, Physics):
         self.speed_x = 0
         self.speed_y = 0
 
-    # def update(self):
-    #     Physics.update(self)
+    def update(self):
+        Physics.update(self)
 
 # 建立槍類別
 class Gun():
