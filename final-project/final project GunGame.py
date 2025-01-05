@@ -780,7 +780,7 @@ class Player(pygame.sprite.Sprite, Physics):
         # self.gunlag = 0
         # self.playernumber = playernumber
         # self.live = 5
-        self.gun = smallgun()
+        # self.gun = smallgun()
         self.jump_count = 0
         self.double_jump_count = 0
         self.shoot_count = 0
