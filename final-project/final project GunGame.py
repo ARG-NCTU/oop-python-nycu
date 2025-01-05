@@ -1130,7 +1130,7 @@ class Bullet(pygame.sprite.Sprite):
         return False
 
     def out(self):
-        #return self.out_check
+        return self.out_check
     
 class Fireball(pygame.sprite.Sprite):
     def __init__(self, x, y, size):
