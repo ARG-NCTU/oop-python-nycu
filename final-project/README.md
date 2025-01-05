@@ -37,14 +37,22 @@
 
 ## Controls
 
+<<<<<<< HEAD
+### ![Player 1](Player1_.png)
+=======
 ### Player 1
+>>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 - **Move:** `A` (left) / `D` (right)
 - **Jump:** `W`
 - **Move Down:** `S`
 - **Shoot:** `V`
 - **Throw Bomb:** `B`
 
+<<<<<<< HEAD
+### ![Player 2](Player2_.png)
+=======
 ### Player 2
+>>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 - **Move:** `Left Arrow` (left) / `Right Arrow` (right)
 - **Jump:** `Up Arrow`
 - **Move Down:** `Down Arrow`
