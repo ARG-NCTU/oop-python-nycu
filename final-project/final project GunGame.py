@@ -5,6 +5,7 @@ import time
 import random
 import json
 import os
+
 # 初始化 Pygame
 pygame.init()
 
@@ -30,7 +31,6 @@ FONT = 50
 
 # 重力加速度
 GRAVITY = 0.6
-
 
 # 設定玩家初始位置和速度
 PLAYER_WIDTH = 50
@@ -955,6 +955,7 @@ class Gun():
         self.correction_xright = 0
         self.correction_yright = 0
 
+
 class smallgun(Gun):
     def __init__(self):
         super().__init__(5, 2, 100000, 1)
@@ -994,7 +995,6 @@ class sniper(Gun):
         self.correction_yleft = 30
         self.correction_xright = 0
         self.correction_yright = 30
-
 
 
 class GunImage(pygame.sprite.Sprite):
@@ -1145,7 +1145,7 @@ class Fireball(pygame.sprite.Sprite):
         self.rect.y += self.speed_y
         if self.rect.top > WINDOW_HEIGHT:
             self.kill()  # 移除出屏幕的火球
-    
+
     def force(self, x1, y1, player, F):
         if player.rect.centerx - x1 < 0:
             player.speed_x -= 20
