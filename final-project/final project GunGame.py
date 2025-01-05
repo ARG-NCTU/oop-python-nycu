@@ -275,7 +275,7 @@ class Game():
         # self.fireball_mode = False
         # self.fireball_timer = 0
         # self.fireball_duration = 20 * 60  # 30 秒（按 60fps 計算）
-        self.fireball_cooldown = 0 * 60  # 1 分鐘（按 60fps 計算）
+        # self.fireball_cooldown = 0 * 60  # 1 分鐘（按 60fps 計算）
         self.fireball_spawn_rate = 50 # 每秒生成一次火球
         self.fog = pygame.Surface((WINDOW_WIDTH //2, WINDOW_HEIGHT//2 ))  # 建立霧氣表面
         self.fog.set_alpha(1000)  # 設定霧氣的透明度
