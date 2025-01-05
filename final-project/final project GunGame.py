@@ -279,7 +279,7 @@ class Game():
         # self.fireball_spawn_rate = 50 # 每秒生成一次火球
         # self.fog = pygame.Surface((WINDOW_WIDTH //2, WINDOW_HEIGHT//2 ))  # 建立霧氣表面
         # self.fog.set_alpha(1000)  # 設定霧氣的透明度
-        self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
+        # self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
         self.fog_x = -WINDOW_WIDTH * 2
         self.fog_speed = 3
         self.fog_active = False  # 初始狀態下霧氣為停用
