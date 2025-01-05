@@ -5,6 +5,7 @@ import time
 import random
 import json
 import os
+
 # 初始化 Pygame
 pygame.init()
 
