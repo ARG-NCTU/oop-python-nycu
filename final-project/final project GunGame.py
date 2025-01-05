@@ -271,7 +271,7 @@ class Game():
         # self.lagtime_back2 = Lagtime_back_Image(self.player2)
         # self.player1_draw.add(self.player1, self.gun_images1, self.lagtime_back1, self.lagtime_images1)
         # self.player2_draw.add(self.player2, self.gun_images2, self.lagtime_back2, self.lagtime_images2)
-        self.fireballs = pygame.sprite.Group()
+        # self.fireballs = pygame.sprite.Group()
         self.fireball_mode = False
         self.fireball_timer = 0
         self.fireball_duration = 20 * 60  # 30 秒（按 60fps 計算）
