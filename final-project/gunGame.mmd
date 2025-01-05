@@ -1,0 +1,30 @@
+graph TD
+    A[主程式入口 if __name__ == "__main__"] --> B[初始化 Game 類別]
+    B --> C[執行 game.run()]
+    
+    C --> D[Game.run]
+    D --> D1[顯示開始畫面 draw_init]
+    D --> D2[遊戲主循環]
+    D --> D3[檢查火球模式]
+    D --> D4[檢查玩家勝利狀態]
+    D --> D5[更新道具、火球、子彈等]
+    D --> D6[處理玩家碰撞與行為]
+    D --> D7[畫面更新與顯示]
+    
+    D2 -->|按下 QUIT| E[結束遊戲 pygame.quit()]
+    D3 --> F[生成火球 Game.spawn_fireball]
+    D4 --> G[玩家勝利畫面 draw_end]
+    D5 --> H[檢查道具碰撞]
+    H --> H1[加速道具觸發效果]
+    H --> H2[護盾道具觸發效果]
+    D6 --> I[檢查子彈碰撞]
+    I --> I1[傷害計算]
+    I --> I2[移除出界子彈]
+    D7 --> J[畫面刷新 pygame.display.flip()]
+    
+    G --> E
+    F --> D2
+    H --> D2
+    I --> D2
+    J --> D2
+
