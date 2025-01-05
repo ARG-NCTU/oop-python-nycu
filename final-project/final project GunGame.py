@@ -269,7 +269,7 @@ class Game():
         # self.lagtime_images2 = Lagtime_Image(self.player2)
         # self.lagtime_back1 = Lagtime_back_Image(self.player1)
         # self.lagtime_back2 = Lagtime_back_Image(self.player2)
-        # self.player1_draw.add(self.player1, self.gun_images1, self.lagtime_back1, self.lagtime_images1)
+        self.player1_draw.add(self.player1, self.gun_images1, self.lagtime_back1, self.lagtime_images1)
         # self.player2_draw.add(self.player2, self.gun_images2, self.lagtime_back2, self.lagtime_images2)
         # self.fireballs = pygame.sprite.Group()
         # self.fireball_mode = False
@@ -278,12 +278,12 @@ class Game():
         # self.fireball_cooldown = 0 * 60  # 1 分鐘（按 60fps 計算）
         # self.fireball_spawn_rate = 50 # 每秒生成一次火球
         # self.fog = pygame.Surface((WINDOW_WIDTH //2, WINDOW_HEIGHT//2 ))  # 建立霧氣表面
-        # self.fog.set_alpha(1000)  # 設定霧氣的透明度
-        # self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
-        # self.fog_x = -WINDOW_WIDTH * 2
-        # self.fog_speed = 3
-        # self.fog_active = False  # 初始狀態下霧氣為停用
-        # self.fog_timer = 0
+        self.fog.set_alpha(1000)  # 設定霧氣的透明度
+        self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
+        self.fog_x = -WINDOW_WIDTH * 2
+        self.fog_speed = 3
+        self.fog_active = False  # 初始狀態下霧氣為停用
+        self.fog_timer = 0
     def spawn_treasure_box(self):
         treasure_box = TreasureBox(random.randint(95, 1000),-100, self.box_img)
         self.player1_draw.add(treasure_box)
