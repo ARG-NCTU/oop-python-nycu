@@ -446,13 +446,16 @@ class Game():
                     speed_boost.kill()
 
             for fireball in self.fireballs:
+                hit_sound = pygame.mixer.Sound('fire.wav')
                 collisions = pygame.sprite.spritecollide(fireball, self.bullets, True)
                 if collisions:
                    fireball.destroy()
                 if fireball.rect.colliderect(self.player1.rect):
+                    hit_sound.play()
                     fireball.explosion(self.player1)
                     fireball.kill()
                 if fireball.rect.colliderect(self.player2.rect):
+                    hit_sound.play()
                     fireball.explosion(self.player2)
                     fireball.kill()
                     
