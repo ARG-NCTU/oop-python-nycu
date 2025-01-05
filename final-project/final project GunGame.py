@@ -628,15 +628,15 @@ class Game():
                     self.fog_speed_x = 0
                     self.fog_speed_y = -3
     # 發射子彈 
-    # def fire_bullet(self, player, direction, color, gun_name, which_player):
-    #     if player.get_value("gunlag") <= 0:
-    #         bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun_name, which_player)
-    #         self.bullets.add(bullet)
-    #         player.change_gunlag()
-    #         gun_name = player.now_gun()
-    #         player.speed_x -= player.gun.recoil * direction
-    #         player.gun.numofbullet -= 1
-    #         player.shoot_count += 1
+    def fire_bullet(self, player, direction, color, gun_name, which_player):
+        if player.get_value("gunlag") <= 0:
+            bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun_name, which_player)
+            self.bullets.add(bullet)
+            player.change_gunlag()
+            gun_name = player.now_gun()
+            player.speed_x -= player.gun.recoil * direction
+            player.gun.numofbullet -= 1
+            player.shoot_count += 1
           
 
     def drop_bomb(self, player, img):
@@ -715,10 +715,10 @@ class Physics(object):
             self.speed_y = 0
             self.on_ground = False
 
-        def gravity(self):
-            self.speed_y += GRAVITY
-            self.rect.x += self.speed_x
-            self.rect.y += self.speed_y
+        # def gravity(self):
+        #     self.speed_y += GRAVITY
+        #     self.rect.x += self.speed_x
+        #     self.rect.y += self.speed_y
 
         
         def update(self):
