@@ -827,11 +827,11 @@ class Player(pygame.sprite.Sprite, Physics):
         elif direction == "right":
             self.image = self.right_img
 
-    # def get_direction(self):
-    #     if self.image == self.left_img:
-    #         return -1
-    #     else:
-    #         return 1
+    def get_direction(self):
+        if self.image == self.left_img:
+            return -1
+        else:
+            return 1
     
     def update(self): # 繼承update
         super().update()
@@ -863,16 +863,16 @@ class Player(pygame.sprite.Sprite, Physics):
                 self.speed_x += PLAYER_ACCERATION * speed_multiplier
             self.turn_img("right")
 
-    def jump(self, check):
-        if self.on_ground:  # 只有在地面上才能跳
-            self.speed_y = -JUMP_HEIGHT
-            self.double_jump = 1
-            self.jump_count += 1
-            self.on_ground = False
-        elif self.double_jump == 1 and check == 0: # 二段跳
-            self.speed_y = -10
-            self.double_jump_count += 1
-            self.double_jump = 0
+    # def jump(self, check):
+    #     if self.on_ground:  # 只有在地面上才能跳
+    #         self.speed_y = -JUMP_HEIGHT
+    #         self.double_jump = 1
+    #         self.jump_count += 1
+    #         self.on_ground = False
+    #     elif self.double_jump == 1 and check == 0: # 二段跳
+    #         self.speed_y = -10
+    #         self.double_jump_count += 1
+    #         self.double_jump = 0
 
     def move_down(self):
         # 玩家要在地板上才能往下移動
