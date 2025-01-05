@@ -458,12 +458,15 @@ class Game():
                     
 
             for bullet in self.bullets:
+                hit_sound = pygame.mixer.Sound('hit_sound.wav')
                 if bullet.leave_check():
                     if bullet.rect.colliderect(self.player1.rect):
+                        hit_sound.play() 
                         self.player1.speed_x += 2 * bullet.speed
                         self.player2.hit_count += 1
                         bullet.kill()
                     if bullet.rect.colliderect(self.player2.rect):
+                        hit_sound.play() 
                         self.player2.speed_x += 2 * bullet.speed
                         self.player1.hit_count += 1
                         bullet.kill()
@@ -1163,6 +1166,9 @@ class Bomb(pygame.sprite.Sprite, Physics):
                 player.speed_y += F * (player.rect.centery - y1) / self.D
 
     def explosion(self, player): # 爆炸
+        hit_sound = pygame.mixer.Sound('hit_sound.wav')  # 替换为你的音效文件路径
+        hit_sound.play()  # 播放音效
+        self.force(self.rect.centerx, self.rect.centery, player, 50)
         self.D = distance_2D(self.rect.centerx, self.rect.centery, player.rect.centerx, player.rect.centery)
         if self.D < 60:
             self.force(self.rect.centerx, self.rect.centery, player, 80)
