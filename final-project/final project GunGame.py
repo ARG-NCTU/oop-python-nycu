@@ -955,6 +955,7 @@ class Gun():
         self.correction_xright = 0
         self.correction_yright = 0
 
+
 class smallgun(Gun):
     def __init__(self):
         super().__init__(5, 2, 100000, 1)
