@@ -220,7 +220,6 @@ def draw_end(who_win):
     pygame.quit()
     sys.exit()
 
-
 # 建立遊戲場景類別
 class Game():
     def __init__(self):
