@@ -37,7 +37,6 @@
 
 ## Controls
 
-<<<<<<< HEAD
 ### ![Player 1](Player1_.png)
 =======
 ### Player 1
