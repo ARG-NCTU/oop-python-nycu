@@ -255,7 +255,7 @@ class Game():
         # self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img, 2)
         # self.players = [self.player1, self.player2]
         # self.player2.turn_img("left")
-        self.player1_draw = pygame.sprite.Group()
+        # self.player1_draw = pygame.sprite.Group()
         self.player2_draw = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.bombs = pygame.sprite.Group()
