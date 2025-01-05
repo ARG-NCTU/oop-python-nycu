@@ -899,23 +899,23 @@ class Player(pygame.sprite.Sprite, Physics):
         self.gun = smallgun()
         self.live -= 1
 
-    # def restart(self, num):
-    #     self.rect.x = RELIVE_X[num]
-    #     self.rect.y = RELIVE_Y
-    #     self.on_ground = True
-    #     self.speed_x = 0
-    #     self.speed_y = 0
-    #     self.bomb_num = 3
-    #     self.gun  = smallgun()
-    #     self.live = 3
+    def restart(self, num):
+        self.rect.x = RELIVE_X[num]
+        self.rect.y = RELIVE_Y
+        self.on_ground = True
+        self.speed_x = 0
+        self.speed_y = 0
+        self.bomb_num = 3
+        self.gun  = smallgun()
+        self.live = 3
 
-    def change_gun(self, gun_name):
-        if gun_name == "smallgun":
-            self.gun  = smallgun()
-        elif gun_name == "shotgun":
-            self.gun = shotgun()
-        elif gun_name == "sniper":
-            self.gun  = sniper()
+    # def change_gun(self, gun_name):
+    #     if gun_name == "smallgun":
+    #         self.gun  = smallgun()
+    #     elif gun_name == "shotgun":
+    #         self.gun = shotgun()
+    #     elif gun_name == "sniper":
+    #         self.gun  = sniper()
 
 
     def now_gun(self):
