@@ -50,12 +50,12 @@ GROUND_LEVELS = [300, 410, 525, 615]  # 示例地板高度，可以根据实际�
 def distance_2D(x1, y1, x2, y2):
     return math.pow(math.pow(abs(x2-x1), 2) + math.pow(abs(y1-y2), 2), 0.5)
 
-def draw_text(screen, text, size, x, y):
-    font = pygame.font.Font(None, size)
-    text_surface = font.render(text, True, WHITE)
-    text_rect = text_surface.get_rect()
-    text_rect.midtop = (x, y)
-    screen.blit(text_surface, text_rect)
+# def draw_text(screen, text, size, x, y):
+#     font = pygame.font.Font(None, size)
+#     text_surface = font.render(text, True, WHITE)
+#     text_rect = text_surface.get_rect()
+#     text_rect.midtop = (x, y)
+#     screen.blit(text_surface, text_rect)
 
 def draw_init():
     screen = pygame.display.set_mode(WINDOW_SIZE)
