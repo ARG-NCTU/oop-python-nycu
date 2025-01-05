@@ -261,7 +261,7 @@ class Game():
         # self.bombs = pygame.sprite.Group()
         # self.bomb_effects = pygame.sprite.Group()
         # self.font = pygame.font.Font(None, FONT)
-        self.font_i = pygame.font.SysFont('Arial', 60)
+        # self.font_i = pygame.font.SysFont('Arial', 60)
         self.treasure_boxes = pygame.sprite.Group() 
         self.gun_images1 = GunImage(self.player1)
         self.gun_images2 = GunImage(self.player2)
