@@ -814,18 +814,18 @@ class Player(pygame.sprite.Sprite, Physics):
         if sub == "live":
             return self.live
 
-    # def activate_speed_boost(self):
-    #     self.speed_boost_active = True
-    #     self.speed_boost_timer = 600  # 加速效果持續 10 秒（60fps 計算）     
+    def activate_speed_boost(self):
+        self.speed_boost_active = True
+        self.speed_boost_timer = 600  # 加速效果持續 10 秒（60fps 計算）     
     
     def on_ground(self): # 回傳on_ground值
         return self.on_ground
 
-    def turn_img(self, direction):
-        if direction == "left":
-            self.image = self.left_img
-        elif direction == "right":
-            self.image = self.right_img
+    # def turn_img(self, direction):
+    #     if direction == "left":
+    #         self.image = self.left_img
+    #     elif direction == "right":
+    #         self.image = self.right_img
 
     def get_direction(self):
         if self.image == self.left_img:
