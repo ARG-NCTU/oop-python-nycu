@@ -675,9 +675,9 @@ class Game():
             # 'player2_shoot_count': player2.shoot_count,
             # 'player2_bomb_count': player2.bomb_count,
             # 'player2_death_count': player2.death_count,
-            # 'player2_hit_count': player2.hit_count,
-            # 'player2_pickup_count': player2.pickup_count,
-            # 'player2_remain_life': player2.remain_life,
+            'player2_hit_count': player2.hit_count,
+            'player2_pickup_count': player2.pickup_count,
+            'player2_remain_life': player2.remain_life,
         }
 
         # 定义文件路径
