@@ -640,7 +640,6 @@ class Game():
         self.bombs.add(bomb)
         player.bomb_count += 1
 
-
     def draw_object(self, player1, player2):
         if player1.shield_active:
             pygame.draw.circle(self.screen, (0, 255, 255), player1.rect.center, 50, 3)
