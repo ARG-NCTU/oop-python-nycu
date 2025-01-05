@@ -514,20 +514,20 @@ class Game():
             for treasure_box in self.treasure_boxes:
                 if pygame.sprite.collide_rect(self.player1, treasure_box):
                     gun_name = treasure_box.open_box()
-                    if gun_game == "shield":
+                    if gun_name == "shield":
                         self.player1.activate_shield()  # 啟用護盾
                     else:
-                        self.player1.change_gun(gun_game)
+                        self.player1.change_gun(gun_name)
                     self.player1.pickup_count += 1
                     self.player1.change_gunlag_to_zero()
                     treasure_box.kill()
                     self.box_check = 0
                 if pygame.sprite.collide_rect(self.player2, treasure_box):
                     gun_name = treasure_box.open_box()
-                    if gun_game == "shield":
+                    if gun_name == "shield":
                         self.player2.activate_shield()  # 啟用護盾
                     else:
-                        self.player2.change_gun(gun_game)
+                        self.player2.change_gun(gun_name)
                     self.player2.pickup_count += 1
                     self.player2.change_gunlag_to_zero()
                     treasure_box.kill()
