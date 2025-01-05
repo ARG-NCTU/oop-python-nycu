@@ -474,13 +474,15 @@ class Game():
                 if bullet.leave_check():
                     if bullet.rect.colliderect(self.player1.rect):
                         hit_sound.play() 
-                        self.player1.speed_x += 2 * bullet.speed
-                        self.player2.hit_count += 1
+                        if not self.player1.shield_active:
+                            self.player1.speed_x += 2 * bullet.speed
+                            self.player2.hit_count += 1
                         bullet.kill()
                     if bullet.rect.colliderect(self.player2.rect):
                         hit_sound.play() 
-                        self.player2.speed_x += 2 * bullet.speed
-                        self.player1.hit_count += 1
+                        if not self.player2.shield_active: 
+                            self.player2.speed_x += 2 * bullet.speed
+                            self.player1.hit_count += 1
                         bullet.kill()
                 if ((not bullet.rect.colliderect(self.player1.rect)) and bullet.which_player() == 1) or ((not bullet.rect.colliderect(self.player2.rect)) and bullet.which_player() == 2):
                     bullet.turn_check()
@@ -499,8 +501,10 @@ class Game():
                     self.bomb_effects.add(bomb_effect)
                     hit_sound = pygame.mixer.Sound('bomb.wav')
                     hit_sound.play()
-                    bomb.explosion(self.player1)
-                    bomb.explosion(self.player2)
+                    if not self.player1.shield_active:
+                        bomb.explosion(self.player1)
+                    if not self.player2.shield_active:
+                        bomb.explosion(self.player2)
                     bomb.kill()
             
             for bomb_effect in self.bomb_effects:
@@ -643,6 +647,11 @@ class Game():
 
 
     def draw_object(self, player1, player2):
+        if player1.shield_active:
+            pygame.draw.circle(self.screen, (0, 255, 255), player1.rect.center, 50, 3)
+        # 玩家2的護盾效果
+        if player2.shield_active:
+            pygame.draw.circle(self.screen, (0, 255, 255), player2.rect.center, 50, 3)
         for i in range(player1.live):
             self.screen.blit(self.heart_img, (7 + 45 * i, 10))
         for i in range(player2.live):
