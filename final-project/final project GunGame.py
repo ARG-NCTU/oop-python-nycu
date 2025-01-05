@@ -666,9 +666,9 @@ class Game():
         player_data = {
             # 'player1_jump_count': player1.jump_count,
             # 'player1_shoot_count': player1.shoot_count,
-            # 'player1_bomb_count': player1.bomb_count,
-            # 'player1_death_count': player1.death_count,
-            # 'player1_hit_count': player1.hit_count,
+            'player1_bomb_count': player1.bomb_count,
+            'player1_death_count': player1.death_count,
+            'player1_hit_count': player1.hit_count,
             'player1_pickup_count': player1.pickup_count,
             'player1_remain_life': player1.remain_life,
             'player2_jump_count': player2.jump_count,
