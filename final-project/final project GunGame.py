@@ -441,7 +441,6 @@ class Game():
             self.bombs.update()
             self.fireballs.update()
             
-
             # 碰撞檢測
             for speed_boost in self.speed_boosts:
                 if pygame.sprite.collide_rect(self.player1, speed_boost):
