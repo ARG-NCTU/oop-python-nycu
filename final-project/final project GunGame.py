@@ -482,6 +482,8 @@ class Game():
                 if bomb.countdown():
                     bomb_effect = Bomb_effect(bomb.rect.centerx, bomb.rect.bottom, self.bomb_effect_img)
                     self.bomb_effects.add(bomb_effect)
+                    hit_sound = pygame.mixer.Sound('bomb.wav')
+                    hit_sound.play()
                     bomb.explosion(self.player1)
                     bomb.explosion(self.player2)
                     bomb.kill()
@@ -1161,22 +1163,27 @@ class Bomb(pygame.sprite.Sprite, Physics):
         super().check_ground()
 
     def force(self, x1, y1, player, F):
+        if not hasattr(self, 'D') or self.D == 0:
+            self.D = 1  # 避免除以零
         player.speed_x += F * (player.rect.centerx - x1) / self.D
         if (player.rect.centery - y1) < 0:
-            if F * (player.rect.centery - y1) / self.D <- 30:
+            if F * (player.rect.centery - y1) / self.D < -30:
                 player.speed_y += -30
             else:
                 player.speed_y += F * (player.rect.centery - y1) / self.D
 
     def explosion(self, player): # 爆炸
-        hit_sound = pygame.mixer.Sound('hit_sound.wav')  # 替换为你的音效文件路径
-        hit_sound.play()  # 播放音效
-        self.force(self.rect.centerx, self.rect.centery, player, 50)
+        hit_sound = pygame.mixer.Sound('hit_sound.wav')  # 播放爆炸音效
+        hit_sound.play()
+    # 计算距离 D
         self.D = distance_2D(self.rect.centerx, self.rect.centery, player.rect.centerx, player.rect.centery)
+    
+    # 根据距离施加作用力
         if self.D < 60:
             self.force(self.rect.centerx, self.rect.centery, player, 80)
         elif self.D < 200:
-            self.force(self.rect.centerx, self.rect.centery, player, 288000/math.pow(self.D, 2))
+            self.force(self.rect.centerx, self.rect.centery, player, 288000 / math.pow(self.D, 2))
+
 
 class Bomb_effect(pygame.sprite.Sprite):
     def __init__(self, x, y, img):
