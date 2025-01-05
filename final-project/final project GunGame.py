@@ -273,7 +273,7 @@ class Game():
         # self.player2_draw.add(self.player2, self.gun_images2, self.lagtime_back2, self.lagtime_images2)
         # self.fireballs = pygame.sprite.Group()
         # self.fireball_mode = False
-        self.fireball_timer = 0
+        # self.fireball_timer = 0
         self.fireball_duration = 20 * 60  # 30 秒（按 60fps 計算）
         self.fireball_cooldown = 0 * 60  # 1 分鐘（按 60fps 計算）
         self.fireball_spawn_rate = 50 # 每秒生成一次火球
