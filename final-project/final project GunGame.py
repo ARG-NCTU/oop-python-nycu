@@ -1146,7 +1146,6 @@ class Fireball(pygame.sprite.Sprite):
         if self.rect.top > WINDOW_HEIGHT:
             self.kill()  # 移除出屏幕的火球
 
-
     def force(self, x1, y1, player, F):
         if player.rect.centerx - x1 < 0:
             player.speed_x -= 20
