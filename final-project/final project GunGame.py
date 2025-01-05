@@ -623,6 +623,7 @@ class Game():
                     self.fog_y = WINDOW_HEIGHT  # 下邊界外
                     self.fog_speed_x = 0
                     self.fog_speed_y = -3
+    
     # 發射子彈 
     def fire_bullet(self, player, direction, color, gun_name, which_player):
         if player.get_value("gunlag") <= 0:
@@ -634,7 +635,6 @@ class Game():
             player.gun.numofbullet -= 1
             player.shoot_count += 1
           
-
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
         self.bombs.add(bomb)
