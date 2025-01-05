@@ -291,7 +291,6 @@ class Game():
         fireball = Fireball(x, 0, 30)
         self.fireballs.add(fireball)
 
-
     def spawn_speed_boost(self):
         x = random.randint(95, WINDOW_WIDTH - 95)
         speed_boost = SpeedBoost(x, -50, self.speed_boost_img)
