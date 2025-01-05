@@ -20,10 +20,6 @@ WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 # 設定顏色
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -32,10 +28,6 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 FONT = 50
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 # 重力加速度
 GRAVITY = 0.6
 
@@ -226,10 +218,6 @@ def draw_end(who_win):
     pygame.quit()
     sys.exit()
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 40fcb566d9ad45cb4375da8e15cd121175f7f513
 # 建立遊戲場景類別
 class Game():
     def __init__(self):
@@ -453,7 +441,6 @@ class Game():
             self.bombs.update()
             self.fireballs.update()
             
-
             # 碰撞檢測
             for speed_boost in self.speed_boosts:
                 if pygame.sprite.collide_rect(self.player1, speed_boost):
@@ -477,7 +464,6 @@ class Game():
                     fireball.explosion(self.player2)
                     fireball.kill()
                     
-
             for bullet in self.bullets:
                 hit_sound = pygame.mixer.Sound('hit_sound.wav')
                 if bullet.leave_check():
@@ -637,6 +623,7 @@ class Game():
                     self.fog_y = WINDOW_HEIGHT  # 下邊界外
                     self.fog_speed_x = 0
                     self.fog_speed_y = -3
+    
     # 發射子彈 
     def fire_bullet(self, player, direction, color, gun_name, which_player):
         if player.get_value("gunlag") <= 0:
@@ -648,12 +635,10 @@ class Game():
             player.gun.numofbullet -= 1
             player.shoot_count += 1
           
-
     def drop_bomb(self, player, img):
         bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
         self.bombs.add(bomb)
         player.bomb_count += 1
-
 
     def draw_object(self, player1, player2):
         if player1.shield_active:
@@ -669,7 +654,6 @@ class Game():
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (10 + 45 * i, 50))
         for i in range(player2.bomb_num):
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (WINDOW_WIDTH - 45 * (i + 1), 50))
-
 
     def export_player_data(self, player1, player2):
         # 创建新的数据条目
@@ -713,8 +697,6 @@ class Game():
 
 
 
-
-
 class Physics(object):
         def __init__(self, x, y, img):
             self.image = img
@@ -729,8 +711,7 @@ class Physics(object):
             self.speed_y += GRAVITY
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
-
-        
+       
         def update(self):
             # 應用重力
             self.speed_y += GRAVITY-0.12
@@ -744,7 +725,6 @@ class Physics(object):
 
             #讓角色滑行
             self.speed_x = self.speed_x * 0.93
-
 
         def check_ground(self):
             # 找到距離玩家最近的地板
