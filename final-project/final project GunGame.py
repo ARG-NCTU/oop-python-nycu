@@ -802,21 +802,21 @@ class Player(pygame.sprite.Sprite, Physics):
     def change_gunlag_to_zero(self):
         self.gunlag = 0
 
-    # def get_value(self, sub): # 拿來取要的值
-    #     if sub == "x":
-    #         return self.rect.x
-    #     if sub == "y":
-    #         return self.rect.y
-    #     if sub == "bottom":
-    #         return self.rect.bottom
-    #     if sub == "gunlag":
-    #         return self.gunlag
-    #     if sub == "live":
-    #         return self.live
+    def get_value(self, sub): # 拿來取要的值
+        if sub == "x":
+            return self.rect.x
+        if sub == "y":
+            return self.rect.y
+        if sub == "bottom":
+            return self.rect.bottom
+        if sub == "gunlag":
+            return self.gunlag
+        if sub == "live":
+            return self.live
 
-    def activate_speed_boost(self):
-        self.speed_boost_active = True
-        self.speed_boost_timer = 600  # 加速效果持續 10 秒（60fps 計算）     
+    # def activate_speed_boost(self):
+    #     self.speed_boost_active = True
+    #     self.speed_boost_timer = 600  # 加速效果持續 10 秒（60fps 計算）     
     
     def on_ground(self): # 回傳on_ground值
         return self.on_ground
