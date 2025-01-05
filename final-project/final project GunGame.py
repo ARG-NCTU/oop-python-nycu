@@ -224,6 +224,8 @@ def draw_end(who_win):
 # 建立遊戲場景類別
 class Game():
     def __init__(self):
+        self.shield_img = pygame.transform.scale(pygame.image.load('./shield.png'), (40, 40))
+        self.shields = pygame.sprite.Group()
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         pygame.display.set_caption("GunGame")
         self.clock = pygame.time.Clock()
@@ -296,6 +298,10 @@ class Game():
         x = random.randint(95, WINDOW_WIDTH - 95)
         speed_boost = SpeedBoost(x, -50, self.speed_boost_img)
         self.speed_boosts.add(speed_boost)
+    def spawn_shield(self):
+        x = random.randint(95, WINDOW_WIDTH - 95)
+        shield = Shield(x, -50, self.shield_img)
+        self.shields.add(shield)
         
     def run(self):
         running = True
@@ -366,7 +372,9 @@ class Game():
                 #ㄊself.player2.restavckrt(1)
                 #draw_init()vdbddddsv
             #按下任意鍵回到開始畫面
-                
+            if random.randint(1, 600) == 1:  # 每約10秒生成一次護盾
+                self.spawn_shield()
+                self.shields.update()
             if self.box_check == 0:# 生成寶箱
                 self.box_time -= 1
                 if self.box_time == 0:
@@ -435,6 +443,7 @@ class Game():
             self.bullets.update()
             self.bombs.update()
             self.fireballs.update()
+            
 
             # 碰撞檢測
             for speed_boost in self.speed_boosts:
@@ -477,7 +486,13 @@ class Game():
                     bullet.turn_check()
                 if bullet.out() or bullet.update():
                     bullet.kill()
-
+            for shield in self.shields:
+                if pygame.sprite.collide_rect(self.player1, shield):
+                    self.player1.activate_shield()
+                    shield.kill()
+                if pygame.sprite.collide_rect(self.player2, shield):
+                    self.player2.activate_shield()
+                    shield.kill()
             for bomb in self.bombs:
                 if bomb.countdown():
                     bomb_effect = Bomb_effect(bomb.rect.centerx, bomb.rect.bottom, self.bomb_effect_img)
@@ -495,15 +510,21 @@ class Game():
             for treasure_box in self.treasure_boxes:
                 if pygame.sprite.collide_rect(self.player1, treasure_box):
                     gun_name = treasure_box.open_box()
+                    if gun_game == "shield":
+                        self.player1.activate_shield()  # 啟用護盾
+                    else:
+                        self.player1.change_gun(gun_game)
                     self.player1.pickup_count += 1
-                    self.player1.change_gun(gun_name)
                     self.player1.change_gunlag_to_zero()
                     treasure_box.kill()
                     self.box_check = 0
                 if pygame.sprite.collide_rect(self.player2, treasure_box):
                     gun_name = treasure_box.open_box()
+                    if gun_game == "shield":
+                        self.player2.activate_shield()  # 啟用護盾
+                    else:
+                        self.player2.change_gun(gun_game)
                     self.player2.pickup_count += 1
-                    self.player2.change_gun(gun_name)
                     self.player2.change_gunlag_to_zero()
                     treasure_box.kill()
                     self.box_check = 0
@@ -1221,7 +1242,7 @@ class TreasureBox(pygame.sprite.Sprite, Physics):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.guns =  ["shotgun", "sniper"]  # 槍的圖片列表
+        self.guns =  ["shotgun", "sniper","shield"]  # 槍的圖片列表
         self.speed_x = 0  # 寶箱水平速度
         self.speed_y = 0 # 寶箱下落速度
 
