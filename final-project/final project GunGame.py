@@ -163,7 +163,7 @@ def draw_end(who_win):
     crown_img = pygame.image.load('./crown.png')
     player_1_img = pygame.image.load('./player_1.png')  # 載入玩家1圖片
     player_2_img = pygame.image.load('./player_2.png')  # 載入玩家2圖片
-    player_1_img = pygame.transform.scale(player_1_img, (240, 330))
+    # player_1_img = pygame.transform.scale(player_1_img, (240, 330))
     player_2_img = pygame.transform.scale(player_2_img, (240, 330))
     crown_img = pygame.transform.scale(crown_img, (100, 100))
 
