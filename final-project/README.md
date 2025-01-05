@@ -37,14 +37,14 @@
 
 ## Controls
 
-### Player 1
+### ![Player 1](Player1_.png)
 - **Move:** `A` (left) / `D` (right)
 - **Jump:** `W`
 - **Move Down:** `S`
 - **Shoot:** `V`
 - **Throw Bomb:** `B`
 
-### Player 2
+### ![Player 2](Player2_.png)
 - **Move:** `Left Arrow` (left) / `Right Arrow` (right)
 - **Jump:** `Up Arrow`
 - **Move Down:** `Down Arrow`
