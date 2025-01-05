@@ -697,8 +697,6 @@ class Game():
 
 
 
-
-
 class Physics(object):
         def __init__(self, x, y, img):
             self.image = img
