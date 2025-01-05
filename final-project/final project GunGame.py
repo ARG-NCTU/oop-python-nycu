@@ -790,8 +790,8 @@ class Player(pygame.sprite.Sprite, Physics):
         # self.pickup_count = 0
         # self.hit_count = 0
         # self.remain_life = 5
-        self.shield_active = False
-        self.shield_timer = 0
+        # self.shield_active = False
+        # self.shield_timer = 0
 
     def activate_shield(self):
         self.shield_active = True
