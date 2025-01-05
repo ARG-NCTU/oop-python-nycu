@@ -9,6 +9,7 @@ import os
 # 初始化 Pygame
 pygame.init()
 
+
 # 初始化音频模块
 pygame.mixer.init()
 
