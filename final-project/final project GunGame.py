@@ -269,7 +269,7 @@ class Game():
         # self.lagtime_images2 = Lagtime_Image(self.player2)
         # self.lagtime_back1 = Lagtime_back_Image(self.player1)
         # self.lagtime_back2 = Lagtime_back_Image(self.player2)
-        self.player1_draw.add(self.player1, self.gun_images1, self.lagtime_back1, self.lagtime_images1)
+        # self.player1_draw.add(self.player1, self.gun_images1, self.lagtime_back1, self.lagtime_images1)
         self.player2_draw.add(self.player2, self.gun_images2, self.lagtime_back2, self.lagtime_images2)
         self.fireballs = pygame.sprite.Group()
         self.fireball_mode = False
