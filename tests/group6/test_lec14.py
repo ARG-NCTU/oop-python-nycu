@@ -2,7 +2,7 @@ import pytest
 import add_path
 import random
 
-#from mit_ocw_data_science.lec13.lecture13 import *
+from mit_ocw_data_science.lec13.lecture13 import *
 
 def test_minkowskiDist():
     assert minkowskiDist([0,0], [3,4], 2) == 5.0
