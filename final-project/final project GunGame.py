@@ -665,7 +665,7 @@ class Game():
         # 创建新的数据条目
         player_data = {
             'player1_jump_count': player1.jump_count,
-            # 'player1_shoot_count': player1.shoot_count,
+                # 'player1_shoot_count': player1.shoot_count,
             # 'player1_bomb_count': player1.bomb_count,
             # 'player1_death_count': player1.death_count,
             # 'player1_hit_count': player1.hit_count,
@@ -675,7 +675,7 @@ class Game():
             # 'player2_shoot_count': player2.shoot_count,
             # 'player2_bomb_count': player2.bomb_count,
             # 'player2_death_count': player2.death_count,
-            'player2_hit_count': player2.hit_count,
+            # 'player2_hit_count': player2.hit_count,
             'player2_pickup_count': player2.pickup_count,
             'player2_remain_life': player2.remain_life,
         }
