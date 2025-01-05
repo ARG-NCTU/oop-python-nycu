@@ -223,7 +223,7 @@ def draw_end(who_win):
 # 建立遊戲場景類別
 class Game():
     def __init__(self):
-        self.shield_img = pygame.transform.scale(pygame.image.load('./shield.png'), (40, 40))
+        self.shield_img = pygame.transform.scale(pygame.image.load('./shield.png'), (100, 100))
         self.shields = pygame.sprite.Group()
         self.screen = pygame.display.set_mode(WINDOW_SIZE)
         pygame.display.set_caption("GunGame")
@@ -231,8 +231,8 @@ class Game():
         self.background_img = pygame.image.load('./background.jpg') # 載入背景圖片
         self.initial_img = pygame.image.load('./initial.png') # 載入初始畫面
         self.tap_img = pygame.image.load('./tap_any_bottom.png') # 載入提示
-        self.player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
-        self.player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
+        # self.player1_img = pygame.image.load('./player_1.png') # 載入玩家圖片
+        # self.player2_img = pygame.image.load('./player_2.png') # 載入玩家圖片
         self.fog_timer = 0
         self.speed_boost_img = pygame.transform.scale(pygame.image.load('./speed_boost.png'), (40, 40))
         self.speed_boosts = pygame.sprite.Group()
