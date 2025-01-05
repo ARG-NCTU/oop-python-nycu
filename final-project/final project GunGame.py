@@ -27,7 +27,7 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
-FONT = 50
+FONT = 50.0
 
 # 重力加速度
 GRAVITY = 0.6
