@@ -247,7 +247,7 @@ class Game():
         # self.shotgun2_img = pygame.image.load('./shotgun2.png')
         # self.sniper1_img = pygame.image.load('./sniper1.png')
         # self.sniper2_img = pygame.image.load('./sniper2.png')
-        self.bullet_img = pygame.transform.scale(pygame.image.load('./bullet.png'), (35,35))
+        # self.bullet_img = pygame.transform.scale(pygame.image.load('./bullet.png'), (35,35))
         self.space_img = pygame.image.load('./space.jpg')
         self.box_img = pygame.image.load('./box.png')
         self.heart_img = pygame.transform.scale(pygame.image.load('./heart.png'), (40, 40))
