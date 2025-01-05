@@ -936,17 +936,17 @@ class SpeedBoost(pygame.sprite.Sprite, Physics):
         Physics.update(self)
 
 class Shield(pygame.sprite.Sprite, Physics):
-    # def __init__(self, x, y, img):
-    #     super().__init__()
-    #     self.image = img  # 護盾的圖片
-    #     self.rect = self.image.get_rect()
-    #     self.rect.x = x
-    #     self.rect.y = y
-    #     self.speed_x = 0
-    #     self.speed_y = 0
+    def __init__(self, x, y, img):
+        super().__init__()
+        self.image = img  # 護盾的圖片
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.speed_x = 0
+        self.speed_y = 0
 
-    def update(self):
-        Physics.update(self)
+    # def update(self):
+    #     Physics.update(self)
 
 # 建立槍類別
 class Gun():
