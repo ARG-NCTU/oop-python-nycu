@@ -30,7 +30,7 @@ YELLOW = (255, 255, 0)
 FONT = 50
 
 # 重力加速度
-GRAVITY = 0.61
+GRAVITY = 0.6
 
 # 設定玩家初始位置和速度
 PLAYER_WIDTH = 50
