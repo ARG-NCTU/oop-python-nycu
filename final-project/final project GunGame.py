@@ -711,8 +711,7 @@ class Physics(object):
             self.speed_y += GRAVITY
             self.rect.x += self.speed_x
             self.rect.y += self.speed_y
-
-        
+       
         def update(self):
             # 應用重力
             self.speed_y += GRAVITY-0.12
@@ -726,7 +725,6 @@ class Physics(object):
 
             #讓角色滑行
             self.speed_x = self.speed_x * 0.93
-
 
         def check_ground(self):
             # 找到距離玩家最近的地板
