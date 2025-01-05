@@ -1127,7 +1127,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.x += self.speed
         if self.rect.left > WINDOW_WIDTH + 100 or self.rect.right < -100:
             self.out_check = True
-        return False
+        #return False
 
     def out(self):
         return self.out_check
