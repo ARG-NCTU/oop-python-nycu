@@ -821,17 +821,17 @@ class Player(pygame.sprite.Sprite, Physics):
     def on_ground(self): # 回傳on_ground值
         return self.on_ground
 
-    # def turn_img(self, direction):
-    #     if direction == "left":
-    #         self.image = self.left_img
-    #     elif direction == "right":
-    #         self.image = self.right_img
+    def turn_img(self, direction):
+        if direction == "left":
+            self.image = self.left_img
+        elif direction == "right":
+            self.image = self.right_img
 
-    def get_direction(self):
-        if self.image == self.left_img:
-            return -1
-        else:
-            return 1
+    # def get_direction(self):
+    #     if self.image == self.left_img:
+    #         return -1
+    #     else:
+    #         return 1
     
     def update(self): # 繼承update
         super().update()
