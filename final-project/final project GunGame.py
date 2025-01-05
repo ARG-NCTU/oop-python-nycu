@@ -997,7 +997,6 @@ class sniper(Gun):
         self.correction_yright = 30
 
 
-
 class GunImage(pygame.sprite.Sprite):
     def __init__(self, player):
         super().__init__()
