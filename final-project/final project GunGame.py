@@ -258,7 +258,7 @@ class Game():
         # self.player1_draw = pygame.sprite.Group()
         # self.player2_draw = pygame.sprite.Group()
         # self.bullets = pygame.sprite.Group()
-        self.bombs = pygame.sprite.Group()
+        # self.bombs = pygame.sprite.Group()
         self.bomb_effects = pygame.sprite.Group()
         self.font = pygame.font.Font(None, FONT)
         self.font_i = pygame.font.SysFont('Arial', 60)
