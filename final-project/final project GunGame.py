@@ -655,7 +655,6 @@ class Game():
         for i in range(player2.bomb_num):
             self.screen.blit(pygame.transform.scale(self.bomb_img, [35,35]), (WINDOW_WIDTH - 45 * (i + 1), 50))
 
-
     def export_player_data(self, player1, player2):
         # 创建新的数据条目
         player_data = {
