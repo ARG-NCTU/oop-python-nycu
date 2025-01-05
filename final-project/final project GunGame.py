@@ -715,10 +715,10 @@ class Physics(object):
             self.speed_y = 0
             self.on_ground = False
 
-        # def gravity(self):
-        #     self.speed_y += GRAVITY
-        #     self.rect.x += self.speed_x
-        #     self.rect.y += self.speed_y
+        def gravity(self):
+            self.speed_y += GRAVITY
+            self.rect.x += self.speed_x
+            self.rect.y += self.speed_y
 
         
         def update(self):
@@ -802,17 +802,17 @@ class Player(pygame.sprite.Sprite, Physics):
     def change_gunlag_to_zero(self):
         self.gunlag = 0
 
-    def get_value(self, sub): # 拿來取要的值
-        if sub == "x":
-            return self.rect.x
-        if sub == "y":
-            return self.rect.y
-        if sub == "bottom":
-            return self.rect.bottom
-        if sub == "gunlag":
-            return self.gunlag
-        if sub == "live":
-            return self.live
+    # def get_value(self, sub): # 拿來取要的值
+    #     if sub == "x":
+    #         return self.rect.x
+    #     if sub == "y":
+    #         return self.rect.y
+    #     if sub == "bottom":
+    #         return self.rect.bottom
+    #     if sub == "gunlag":
+    #         return self.gunlag
+    #     if sub == "live":
+    #         return self.live
 
     def activate_speed_boost(self):
         self.speed_boost_active = True
