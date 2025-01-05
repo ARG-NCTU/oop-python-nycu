@@ -909,17 +909,17 @@ class Player(pygame.sprite.Sprite, Physics):
         self.gun  = smallgun()
         self.live = 3
 
-    # def change_gun(self, gun_name):
-    #     if gun_name == "smallgun":
-    #         self.gun  = smallgun()
-    #     elif gun_name == "shotgun":
-    #         self.gun = shotgun()
-    #     elif gun_name == "sniper":
-    #         self.gun  = sniper()
+    def change_gun(self, gun_name):
+        if gun_name == "smallgun":
+            self.gun  = smallgun()
+        elif gun_name == "shotgun":
+            self.gun = shotgun()
+        elif gun_name == "sniper":
+            self.gun  = sniper()
 
 
-    def now_gun(self):
-        return self.gun.gun_name
+    # def now_gun(self):
+    #     return self.gun.gun_name
         
 
 class SpeedBoost(pygame.sprite.Sprite, Physics):
