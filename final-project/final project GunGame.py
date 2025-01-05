@@ -628,21 +628,21 @@ class Game():
                     self.fog_speed_x = 0
                     self.fog_speed_y = -3
     # 發射子彈 
-    # def fire_bullet(self, player, direction, color, gun_name, which_player):
-    #     if player.get_value("gunlag") <= 0:
-    #         bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun_name, which_player)
-    #         self.bullets.add(bullet)
-    #         player.change_gunlag()
-    #         gun_name = player.now_gun()
-    #         player.speed_x -= player.gun.recoil * direction
-    #         player.gun.numofbullet -= 1
-    #         player.shoot_count += 1
+    def fire_bullet(self, player, direction, color, gun_name, which_player):
+        if player.get_value("gunlag") <= 0:
+            bullet = Bullet(color, player.rect.centerx, player.rect.centery, direction, gun_name, which_player)
+            self.bullets.add(bullet)
+            player.change_gunlag()
+            gun_name = player.now_gun()
+            player.speed_x -= player.gun.recoil * direction
+            player.gun.numofbullet -= 1
+            player.shoot_count += 1
           
 
-    def drop_bomb(self, player, img):
-        bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
-        self.bombs.add(bomb)
-        player.bomb_count += 1
+    # def drop_bomb(self, player, img):
+    #     bomb = Bomb(player.rect.centerx, player.rect.centery - 65, img, player.get_direction())
+    #     self.bombs.add(bomb)
+    #     player.bomb_count += 1
 
 
     def draw_object(self, player1, player2):
