@@ -265,7 +265,7 @@ class Game():
         # self.treasure_boxes = pygame.sprite.Group() 
         # self.gun_images1 = GunImage(self.player1)
         # self.gun_images2 = GunImage(self.player2)
-        self.lagtime_images1 = Lagtime_Image(self.player1)
+        # self.lagtime_images1 = Lagtime_Image(self.player1)
         self.lagtime_images2 = Lagtime_Image(self.player2)
         self.lagtime_back1 = Lagtime_back_Image(self.player1)
         self.lagtime_back2 = Lagtime_back_Image(self.player2)
