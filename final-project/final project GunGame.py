@@ -155,17 +155,17 @@ def draw_end(who_win):
     screen = pygame.display.set_mode(WINDOW_SIZE)
     
     # 載入圖片
-    initial_screen = pygame.image.load('./initial.png')  # 載入背景圖片
-    player1_img = pygame.image.load('./1_player.png')  # 載入玩家1圖片
-    player2_img = pygame.image.load('./2_player.png')  # 載入玩家2圖片
-    player_win = pygame.image.load('./player_win.png')  # 載入玩家勝利圖片
-    space_img = pygame.image.load('./space.jpg')  # 載入背景圖片
-    crown_img = pygame.image.load('./crown.png')
-    player_1_img = pygame.image.load('./player_1.png')  # 載入玩家1圖片
-    player_2_img = pygame.image.load('./player_2.png')  # 載入玩家2圖片
-    player_1_img = pygame.transform.scale(player_1_img, (240, 330))
-    player_2_img = pygame.transform.scale(player_2_img, (240, 330))
-    crown_img = pygame.transform.scale(crown_img, (100, 100))
+    # initial_screen = pygame.image.load('./initial.png')  # 載入背景圖片
+    # player1_img = pygame.image.load('./1_player.png')  # 載入玩家1圖片
+    # player2_img = pygame.image.load('./2_player.png')  # 載入玩家2圖片
+    # player_win = pygame.image.load('./player_win.png')  # 載入玩家勝利圖片
+    # space_img = pygame.image.load('./space.jpg')  # 載入背景圖片
+    # crown_img = pygame.image.load('./crown.png')
+    # player_1_img = pygame.image.load('./player_1.png')  # 載入玩家1圖片
+    # player_2_img = pygame.image.load('./player_2.png')  # 載入玩家2圖片
+    # player_1_img = pygame.transform.scale(player_1_img, (240, 330))
+    # player_2_img = pygame.transform.scale(player_2_img, (240, 330))
+    # crown_img = pygame.transform.scale(crown_img, (100, 100))
 
     # 獲取圖片的原始大小
     img_width, img_height = initial_screen.get_size()
