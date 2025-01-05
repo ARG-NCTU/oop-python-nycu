@@ -253,7 +253,7 @@ class Game():
         # self.heart_img = pygame.transform.scale(pygame.image.load('./heart.png'), (40, 40))
         # self.player1 = Player(RELIVE_X[0] , RELIVE_Y, self.player1_img, 1)
         # self.player2 = Player(RELIVE_X[1] , RELIVE_Y, self.player2_img, 2)
-        self.players = [self.player1, self.player2]
+        # self.players = [self.player1, self.player2]
         self.player2.turn_img("left")
         self.player1_draw = pygame.sprite.Group()
         self.player2_draw = pygame.sprite.Group()
