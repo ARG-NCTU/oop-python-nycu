@@ -777,7 +777,7 @@ class Player(pygame.sprite.Sprite, Physics):
         # self.ground_level = None  #玩家所在的地板高度
         # self.bomb_num = 3
         # self.double_jump = 1
-        self.gunlag = 0
+        # self.gunlag = 0
         self.playernumber = playernumber
         self.live = 5
         self.gun = smallgun()
