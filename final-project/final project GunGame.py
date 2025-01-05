@@ -782,9 +782,12 @@ class Player(pygame.sprite.Sprite, Physics):
         self.pickup_count = 0
         self.hit_count = 0
         self.remain_life = 5
+        self.shield_active = False
+        self.shield_timer = 0
 
-
-              
+    def activate_shield(self):
+        self.shield_active = True
+        self.shield_timer = 600  # 持續10秒（60 FPS          
     def change_gunlag(self):
         self.gunlag = self.gun.lagtime
 
@@ -831,6 +834,10 @@ class Player(pygame.sprite.Sprite, Physics):
             self.speed_boost_timer -= 1
             if self.speed_boost_timer <= 0:
                 self.speed_boost_active = False
+        if self.shield_active:
+            self.shield_timer -= 1
+            if self.shield_timer <= 0:
+                self.shield_active = False        
 
     def check_ground(self): # 繼承check_ground
         super().check_ground()
