@@ -1138,7 +1138,7 @@ class Fireball(pygame.sprite.Sprite):
         self.image = pygame.image.load('./fireball.png')
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.speed_y = FIREBALL_FALL_SPEED
+        #self.speed_y = FIREBALL_FALL_SPEED
 
     def update(self):
         self.speed_y += GRAVITY-0.5
