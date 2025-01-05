@@ -237,7 +237,7 @@ class Game():
         # self.speed_boost_img = pygame.transform.scale(pygame.image.load('./speed_boost.png'), (40, 40))
         # self.speed_boosts = pygame.sprite.Group()
         # self.speed_boost_timer = 0
-        self.fog_img= pygame.image.load('./cloud.png')
+        # self.fog_img= pygame.image.load('./cloud.png')
         self.fog_img = pygame.transform.scale(self.fog_img, (900, 660))
         self.bomb_img = pygame.image.load('./bomb.png') # 載入炸彈圖片
         self.bomb_effect_img = pygame.image.load('./bomb_effect.png') # 載入爆炸特效
