@@ -281,7 +281,7 @@ class Game():
         # self.fog.set_alpha(1000)  # 設定霧氣的透明度
         # self.fog.fill((200, 200, 200))  # 設定霧氣顏色（灰色）
         # self.fog_x = -WINDOW_WIDTH * 2
-        self.fog_speed = 3
+        # self.fog_speed = 3
         self.fog_active = False  # 初始狀態下霧氣為停用
         self.fog_timer = 0
     def spawn_treasure_box(self):
