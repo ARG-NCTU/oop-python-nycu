@@ -1,4 +1,5 @@
 # GunGame
+![Game Outlook](1.png)
 
 **GunGame** is a multiplayer competitive game developed using Python and Pygame. Players control characters to jump, shoot, throw bombs, and collect weapons and items to gain an advantage and defeat their opponents.
 
