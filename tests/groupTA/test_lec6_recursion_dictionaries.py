@@ -295,7 +295,7 @@ def test_most_common_words():
     assert lec6.is_palindrome('cookieliileikooc') == True
 
 
-# temp
+# mytemp
 import add_path
 import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
 import pytest
