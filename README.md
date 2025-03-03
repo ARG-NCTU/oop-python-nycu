@@ -1,6 +1,6 @@
 # oop-python-nycu
 
-This repo is used for OOP class in NYCU.
+This repo is used for OOP and Advanced OOP courses in NYCU.
 
 ## Docker
 

@@ -1,0 +1,52 @@
+{
+    "name": "argnctu/oop:gpu Development Container",
+    "image": "argnctu/oop:gpu",
+    "settings": {
+      "editor.fontSize": 14,
+      "python.pythonPath": "/usr/bin/python3",
+      "terminal.integrated.shell.linux": "/bin/bash",
+      "files.eol": "\n",
+      "files.trimTrailingWhitespace": true
+    },
+    "postCreateCommand": [
+      "pip3 install --upgrade pip setuptools",
+      "echo 'Setup complete!'"
+    ],
+    "extensions": [
+      "ms-python.python",
+      "ms-toolsai.jupyter",
+      "ms-vscode.cpptools",
+      "redhat.vscode-yaml",
+      "esbenp.prettier-vscode",
+      "visualstudioexptteam.vscodeintellicode"
+    ],
+    "containerEnv": {
+      "DEBIAN_FRONTEND": "noninteractive",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "DEVCONTAINER_TYPE": "gpu"
+    },
+    "forwardPorts": [22],
+    "remoteUser": "arg",
+    "runArgs": [
+      "--user", "root:root",
+      "--name", "argmm",
+      "--network", "host",
+      "--privileged",
+      "--security-opt", "seccomp=unconfined",
+      "-e", "DISPLAY=${localEnv:DISPLAY}",
+      "-e", "QT_X11_NO_MITSHM=1",
+      "-e", "XAUTHORITY=/tmp/.docker.xauth",
+      "-e", "ROS_MASTER_URI=$ROS_MASTER_URI",
+      "-e", "ROS_IP=$ROS_IP",
+      "-v", "/tmp/.docker.xauth:/tmp/.docker.xauth",
+      "-v", "/home/arg/oop-python-nycu:/home/arg/oop-python-nycu",
+      "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+      "-v", "/etc/localtime:/etc/localtime:ro",
+      "-v", "/dev:/dev",
+      "-v", "/var/run/docker.sock:/var/run/docker.sock",
+      "-w", "/home/arg/oop-python-nycu"
+    ],
+    "postStartCommand": "echo 'Starting $DEVCONTAINER_TYPE DevContainer...'",
+  }
+  

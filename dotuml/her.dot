@@ -1,0 +1,67 @@
+ClassDiagram{
+    class enum{}
+    class GoalSelectionStrategy{}
+    class HerReplayBuffer{
+        __init__(observation_space: spaces.Dict,
+                action_space: spaces.Space,
+                env: VecEnv,
+                goal_selection_strategy: GoalSelectionStrategy): None
+
+        add(): None
+        sample(): DictReplayBufferSamples
+        _get_real_samples(): DictReplayBufferSamples
+        _get_virtual_samples(): DictReplayBufferSamples
+        truncate_last_trajectory(): None
+    }
+    class DictReplayBuffer{
+        __init__(): None
+        add(): None
+        sample(): DictReplayBufferSamples
+    }
+    class ReplayBuffer{
+        __init__(): None
+        add(): None
+        sample(): ReplayBufferSamples
+    }
+    class BaseBuffer{
+        __init__(): None
+        size(): int
+        add(): None
+        extend(): None
+        reset(): None
+        sample(): None
+    }
+    class ReplayBufferSamples{
+        observations: th.Tensor
+        actions: th.Tensor
+        next_observations: th.Tensor
+        dones: th.Tensor
+        rewards: th.Tensor
+    }
+
+    class NamedTuple{}
+
+    class DictReplayBufferSamples{
+        observations: TensorDict
+        actions: th.Tensor
+        next_observations: TensorDict
+        dones: th.Tensor
+        rewards: th.Tensor
+    }
+
+    class ABC{}
+
+    GoalSelectionStrategy -g-> enum;
+    HerReplayBuffer -g-> DictReplayBuffer;
+    GoalSelectionStrategy --> "0..*" HerReplayBuffer;
+    DictReplayBuffer --> "0..*" HerReplayBuffer;
+
+    BaseBuffer -g-> ABC;
+    DictReplayBuffer -g-> ReplayBuffer;
+    ReplayBuffer -g-> BaseBuffer;
+    ReplayBufferSamples -->"0..*" ReplayBuffer;
+    
+    DictReplayBufferSamples -g-> NamedTuple;
+    ReplayBufferSamples -g-> NamedTuple;
+    DictReplayBufferSamples --> "0..*" HerReplayBuffer;
+}

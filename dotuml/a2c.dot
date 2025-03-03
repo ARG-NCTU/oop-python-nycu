@@ -1,0 +1,114 @@
+ClassDiagram{
+    class A2C{
+        MlpPolicy: ActorCriticPolicy
+        CnnPolicy: ActorCriticPolicy
+        MlpLstmPolicy: MultiInputActorCriticPolicy
+
+        __init__(policy: ActorCriticPolicy,
+                env: GymEnv,
+                rollout_buffer_class: RolloutBuffer): None
+        train(): None
+        learn(): SelfA2C
+    }
+    
+
+    class ActorCriticPolicy{
+        __init__(observation_space: spaces.Space,
+                action_space: spaces.Space,
+                features_extractor_class: BaseFeaturesExtractor)
+        forward(): Tuple
+        extract_features(features_extractor: BaseFeaturesExtractor): th.Tensor
+        evaluate_actions(): Tuple
+        get_distribution(): Distribution
+        predict_value(): th.Tensor
+    }
+    
+
+    class BasePolicy{
+        features_extractor: BaseFeaturesExtractor
+        __init__()
+        init_weights(module: nn.Module, gain: float): None
+        _predict(observation: th.Tensor, deterministic: bool): th.Tensor
+        scale_action(action: np.ndarray): np.ndarray
+        unscale_action(scled_action: np.ndarray): np.ndarray
+    }
+    
+
+    class BaseModel{}
+
+    class BaseFeaturesExtractor{
+        __init__(bservation_space: gym.Space, features_dim: int): None
+    }
+    
+    class OnPolicyAlgorithm{
+        __init__(policy: ActorCriticPolicy,
+                rollout_buffer_class: RolloutBuffer)
+        collect_rollouts(env: VecEnv,
+                        callback: BaseCallback,
+                        rollout_buffer: RolloutBuffer): bool
+        train(): None
+        learn(): SelfOnPolicyAlgorithm
+    }
+    
+
+    class BaseAlgorithm{
+        __init__(policy: BasePolicy, env: GymEnv): None
+    }
+
+    class BaseCallback{
+        __init__()
+        training_env(): VecEnv
+    }
+    
+
+    class RolloutBuffer{
+        __init__(observation_space: spaces.Space,
+                action_space: spaces.Space)
+        reset(): None
+        compute_returns_and_advantage(): None
+        add(): None
+        get(): RolloutBufferSamples
+    }
+    
+
+    class BaseBuffer{
+        __init__(): None
+        size(): int
+        add(): None
+        extend(): None
+        reset(): None
+        sample(): None
+    }
+
+    class RolloutBufferSamples{
+        observations: th.Tensor
+        actions: th.Tensor
+        old_values: th.Tensor
+        old_log_prob: th.Tensor
+        advantages: th.Tensor
+        returns: th.Tensor
+    }
+
+    class NamedTuple{}
+    class nnModule{}
+    class ABC{}
+
+
+    BaseAlgorithm -g-> ABC;
+    BaseCallback -g-> ABC;
+    A2C -g-> OnPolicyAlgorithm;
+    ActorCriticPolicy -g-> BasePolicy;
+    ActorCriticPolicy --> "0..*" A2C;
+    BasePolicy -g-> BaseModel;
+    BaseModel -g-> nnModule
+    BaseFeaturesExtractor -g-> nnModule;
+    BaseFeaturesExtractor --> "0..*" BasePolicy;
+    BaseFeaturesExtractor --> "0..*" BaseModel;
+    BaseFeaturesExtractor --> "0..*" ActorCriticPolicy;
+    OnPolicyAlgorithm -g-> BaseAlgorithm;
+    BaseCallback --> "0..*" OnPolicyAlgorithm;
+    RolloutBuffer --> "0..*" OnPolicyAlgorithm;
+    RolloutBuffer -g-> BaseBuffer;
+    RolloutBufferSamples --> "0..*" A2C;
+    RolloutBufferSamples -g-> NamedTuple;
+}
