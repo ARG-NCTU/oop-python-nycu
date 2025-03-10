@@ -8,3 +8,9 @@ def test_reverse_list():
   lec7.rev_list(L);
   assert U[:] == L[:]
   
+def test_primes_list():
+  A = [2];  
+  assert lec7.primes_list(2) == A;
+
+def test_get_ratios():
+  assert (2 - lec7.get_ratios(2,1) < 1e-9);
