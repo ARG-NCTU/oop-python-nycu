@@ -1,4 +1,5 @@
 {
+    "cmake.sourceDirectory": "G:/其他電腦/我的筆記型電腦/NYCU/AOOP/oop-python-nycu/cpplabs/pybind11"
     "cmake.sourceDirectory": "G:/其他電腦/我的筆記型電腦/NYCU/AOOP/oop-python-nycu/cpplabs/pybind11",
     "python.testing.pytestArgs": [
         "tests"
