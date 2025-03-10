@@ -16,9 +16,9 @@ def Towers(n, fr, to, spare):
     if n == 1:
         printMove(fr, to)
     else:
-        Towers(n-1, fr, spare, to)
-        Towers(1, fr, to, spare)
-        Towers(n-1, spare, to, fr)
+        Towers(n-1, fr, spare, to) 
+        Towers(1, fr, to, spare) 
+        Towers(n-1, spare, to, fr) 
 
 #print(Towers(4, 'P1', 'P2', 'P3'))
 
@@ -35,16 +35,16 @@ def fib(x):
         return fib(x-1) + fib(x-2)
         
 #####################################
-# EXAMPLE:  testing for palindromes
+# EXAMPLE:  testing for palindrome 回文
 #####################################
         
-def is_palindrome(s):
+def is_palindrome(s): 
 
     def to_chars(s):
         s = s.lower()
         ans = ''
         for c in s:
-            if c in 'abcdefghijklmnopqrstuvwxyz':
+            if c in 'abcdefghijklmnopqrstuvwxyz': 
                 ans = ans + c
         return ans
 
@@ -52,7 +52,7 @@ def is_palindrome(s):
         if len(s) <= 1:
             return True
         else:
-            return s[0] == s[-1] and is_pal(s[1:-1])
+            return s[0] == s[-1] and is_pal(s[1:-1]) 
 
     return is_pal(to_chars(s))
 
@@ -148,7 +148,7 @@ def words_often(freqs, minTimes):
         if temp[1] >= minTimes:
             result.append(temp)
             for w in temp[0]:
-                del(freqs[w])  #remove word from dict
+                del(freqs[w])  
         else:
             done = True
     return result
