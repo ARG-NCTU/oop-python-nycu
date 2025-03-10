@@ -1,14 +1,15 @@
 import numpy as np
 
 class Mat:
-    __data: np.ndarray    # 
+    __data: np.ndarray
 
     def __init__(self,
-                 mat: list[list] = []):
+                 mat: list[list] = None):
         data = np.array(mat)
-        assert len(data.shape) == 2, 'Warning: shape format wrong'
+        assert len(data.shape) == 2 or mat == None, 'Warning: shape format wrong'
         self.__data = data
     
+    """ Set matrix by the input matrix """
     def set(self, mat):
         data = np.array(mat)
         assert data.shape == self.shape(), 'Warning: input data shape wrong'
@@ -18,25 +19,52 @@ class Mat:
     def shape(self)-> tuple:
         return self.__data.shape
     
-    """ Matrix  """
-    def __iadd__(self, other):
-        assert self.shape() == other.shape(), 'Warning: shape of matrices vary'
-        self.__data = np.vectorize(lambda a, b: a + b)(self.__data, other.__data)
-        return self
-    
+    # operator overridings
+    ########################################################################
+
     """ Matrix addition """
     def __add__(self, other):
         M = self.copy()
         M += other
         return M
     
+    """ Matrix subtract """
+    def __sub__(self, other):
+        M = self.copy()
+        M -= other
+        return M
+    
+    """ Matrix multiplication """
+    def __mul__(self, other):
+        assert self.__data.shape[1] == other.__data.shape[0], 'Warning: matrices shape not fit'
+        k = self.__data.shape[1]
+        M = np.vectorize()(self.__data, other.__data)
+        return 
+    
+    """ Get element """
+    def __getitem__(self, key: tuple):
+        return self.__data[key[0], key[1]]
+    
+    ########################################################################
+    
+    """ Get copy of matrix """
     def copy(self):
-        return Mat(self.shape(), self.__data)
+        return Mat(self.__data)
+    
+    """ Print matrix """
+    def print(self):
+        print(self.__data)
 
-m1 = Mat([[1, 2, 3]])
-m2 = Mat([[1, 1, 1]])
+m1 = Mat([[1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9]])
+m2 = Mat([[1, 1, 1],
+          [1, 1, 1],
+          [1, 1, 1]])
 m3 = Mat()
+m3.print()
 m3 = m1 + m2
+print(m3[1, 2])
 
-print(m1.shape())
+m3.print()
 print(0)
