@@ -4,9 +4,9 @@ class Mat:
     __data: np.ndarray
 
     def __init__(self,
-                 mat: list = []):
+                 mat: list = None):
         data = np.array(mat)
-        assert len(data.shape) == 2 or mat == [], 'Warning: shape format wrong'
+        assert len(data.shape) == 2 or mat == None, 'Warning: shape format wrong'
         self.__data = data
 
     """ Set matrix by the input matrix """
@@ -35,19 +35,13 @@ class Mat:
     """ Matrix multiplication """
     def __mul__(self, other):
         assert self.__data.shape[1] == other.__data.shape[0], 'Warning: matrices shape not fit'
-
-        data = []
-        K = self.__data.shape[1]
-        for i in range(self.__data.shape[0]):
-            for j in range(other.__data.shape[1]):
-                data[i].append(self.__data[i][0] * other.__data[0][j])
-                for k in range(1, K):
-                    data[i][j] += self.__data[i][k] * other.__data[k][j]
-        return Mat(data)
+        return Mat(np.matmul(self.__data, other.__data))
 
     """ Get element """
     def __getitem__(self, key: tuple):
-        return self.__data[key[0], key[1]]
+        assert len(key) == 2, 'Error: key values invalid'
+        assert key[:1] < self.__data.shape[:1], 'Error: key value overflow'
+        return self.__data[key]
 
     ########################################################################
 
@@ -55,12 +49,9 @@ class Mat:
     def copy(self):
         return Mat(self.__data)
     
+    """ Get transpose of matrix """
     def transpose(self):
-        mat = np.zeros_like(self.__data, shape= (self.__data.shape[1], self.__data.shape[0]))
-        for i in np.mgrid[0:self.__data.shape[1]]:
-            for j in np.mgrid[0:self.__data.shape[0]]:
-                mat[i][j] = self.__data[j][i]
-        return Mat(mat)
+        return Mat(self.__data.transpose())
 
     """ Print matrix """
     def print(self):
@@ -75,6 +66,10 @@ m2 = Mat([[1, 1, 1],
 m3 = Mat()
 m3.print()
 m3 = m1 * m2
+m3.transpose().print()
+m3.set([[1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]])
+m3.print()
 
-m3print()
 print(0)
