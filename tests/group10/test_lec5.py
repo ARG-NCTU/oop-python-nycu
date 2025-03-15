@@ -14,5 +14,9 @@ def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(10,9) == (1,1)
     assert lec5.quotient_and_remainder(10,10) == (1,0)
 
-    
+    try:
+        lec5.quotient_and_remainder(10,0)
+        
+    except ZeroDivisionError as e:
+        assert str(e) == "division by zero"
         
