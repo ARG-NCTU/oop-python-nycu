@@ -22,3 +22,15 @@ def test_fraction():
   inverse_frac1 = frac1.inverse();
   assert inverse_frac1.num == 4 and inverse_frac1.denom == 1;
   
+def test_intset():
+  s = lec8.intSet();
+  assert str(s) == "{}";
+  s.insert(1);
+  s.insert(2);
+  s.insert(3);
+  s.insert(1);
+  assert str(s) == "{1,2,3}";
+  assert s.member(3) is True;
+  assert s.member(5) is False;
+  s.remove(3);
+  assert str(s) == "{1,2}";
