@@ -24,6 +24,12 @@ class fraction():
         bott = self.denom*other.denom
         return fraction(top,bott)
     
+    def __sub__(self,other):
+        top = self.num*other.denom - self.denom*other.num
+        bott = self.denom*other.denom
+        return fraction(top,bott)
+    
+    
     
 def coor_main():
     point1=coordinate(3,4)
