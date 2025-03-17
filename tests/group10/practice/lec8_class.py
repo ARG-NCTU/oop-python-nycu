@@ -19,6 +19,10 @@ class fraction():
     def __str__(self):
         return str(self.num) + "/" + str(self.denom)
     
+    def __add__(self,other):
+        top = self.num*other.denom + self.denom*other.num
+        bott = self.denom*other.denom
+        return fraction(top,bott)
     
     
 def coor_main():
