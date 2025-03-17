@@ -32,6 +32,12 @@ class fraction():
         top = self.num*other.num
         bott = self.denom*other.denom
         return fraction(top,bott)
+    def __truediv__(self,other):
+        top = self.num*other.denom
+        bott = self.denom*other.num
+        return fraction(top,bott)
+    
+    
     
     
     
