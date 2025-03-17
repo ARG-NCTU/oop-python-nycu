@@ -1,24 +1,3 @@
-########################################
-### EXAMPLE: Buggy code to reverse a list
-### Try to debug it! (fixes needed are explained below)
-########################################
-##def rev_list_buggy(L):
-##    """
-##    input: L, a list
-##    Modifies L such that its elements are in reverse order
-##    returns: nothing
-##    """
-##    for i in range(len(L)):
-##        j = len(L) - i
-##        L[i] = temp
-##        L[i] = L[j]
-##        L[j] = L[i]
-#
-## FIXES: --------------------------
-## temp unknown
-## list index out of range -> sub 1 to j
-## get same list back -> iterate only over half
-## --------------------------
 def rev_list(L):
     """
     input: L, a list
@@ -31,46 +10,11 @@ def rev_list(L):
         L[i] = L[j]
         L[j] = temp
         
-L = [1,2,3,4]
+L = [10,20,30,40]
 rev_list(L)
 print(L)
-#
-#
-########################################
-### EXAMPLE: Buggy code to get a list of primes
-### Try to debug it! (fixes needed are explained below)
-########################################
-##def primes_list_buggy(n):
-##    """
-##    input: n an integer > 1
-##    returns: list of all the primes up to and including n
-##    """
-##    # initialize primes list
-##    if i == 2:
-##        primes.append(2)
-##    # go through each elem of primes list
-##    for i in range(len(primes)):
-##        # go through each of 2...n
-##        for j in range(len(n)):
-##            # check if not divisible by elem of list
-##            if i%j != 0:
-##                primes.append(i)
-#
-#
-## FIXES: --------------------------
-## = invalid syntax, variable i unknown, variable primes unknown
-## can't apply 'len' to an int
-## division by zero -> iterate through elems not indices
-##                  -> iterate from 2 not 0
-## forgot to return 
-## primes is empty list for n > 2
-## n = 3 goes through loop once -> range to n+1 not n
-## infinite loop -> append j not i
-##               -> list is getting modified as iterating over it!
-##               -> switch loops around
-## n = 4 adds 4 -> need way to stop going once found a divisible num
-##              -> use a flag
-## --------------------------
+
+
 def primes_list(n):
     """
     input: n an integer > 1
@@ -85,21 +29,15 @@ def primes_list(n):
         for p in primes:
             if j%p == 0:
                 is_div = True
+		break
         if not is_div:
             primes.append(j)
     return primes
 
 print(primes_list(2) )               
-print(primes_list(15)  )              
+print(primes_list(15)  ) 
+print(primes_list(97)  )             
 
-
-######################################
-# EXAMPLE: Exceptions and input
-######################################
-#a = int(input("Tell me one number: "))
-#b = int(input("Tell me another number: "))
-#print("a/b = ", a/b)
-#print("a+b = ", a+b)
 
 try:
     a = int(input("Tell me one number: "))
@@ -122,10 +60,6 @@ except:
     print("Something went very wrong.")
 
 
-
-######################################
-# EXAMPLE: Raising your own exceptions
-######################################
 def get_ratios(L1, L2):
     """ Assumes: L1 and L2 are lists of equal length of numbers
         Returns: a list containing L1[i]/L2[i] """
@@ -146,9 +80,6 @@ def get_ratios(L1, L2):
 print(get_ratios([1, 4], [2, 4]))
 
 
-#######################################
-## EXAMPLE: Exceptions and lists
-#######################################
 def get_stats(class_list):
 	new_stats = []
 	for person in class_list:
@@ -179,4 +110,4 @@ test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
               [['captain', 'america'], [80.0, 70.0, 96.0]],
               [['deadpool'], []]]
 
-#print(get_stats(test_grades))
+print(get_stats(test_grades))
