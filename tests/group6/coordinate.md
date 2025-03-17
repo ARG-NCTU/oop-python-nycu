@@ -1,8 +1,11 @@
+# add mermaid cladd diagram for class coordinate
 ```mermaid
-graph TD;
-    A[开始] --> B{条件判断?};
-    B -- 是 --> C[执行操作1];
-    B -- 否 --> D[执行操作2];
-    C --> E[结束];
-    D --> E;
+classDiagram
+    class coordinate{
+        -x:double
+        -y:double
+        +__init__(x,y):void
+        +__str__():str
+        +distance(other):double
+    }
 ```
