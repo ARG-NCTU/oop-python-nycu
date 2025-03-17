@@ -28,6 +28,10 @@ class fraction():
         top = self.num*other.denom - self.denom*other.num
         bott = self.denom*other.denom
         return fraction(top,bott)
+    def __mul__(self,other):
+        top = self.num*other.num
+        bott = self.denom*other.denom
+        return fraction(top,bott)
     
     
     
