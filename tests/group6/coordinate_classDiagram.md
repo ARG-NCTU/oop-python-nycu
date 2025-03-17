@@ -8,4 +8,12 @@ classDiagram
         +__str__():str
         +distance(other):double
     }
+
+    class extrafunctions{
+        +minus(other):coordinate
+        +plus(other):coordinate
+        +times(double c):coordinate
+    }
+
+coordinate <|-- extrafunctions
 ```
