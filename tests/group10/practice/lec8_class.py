@@ -10,13 +10,35 @@ class coordinate():
         x_diff_sq = (self.x - other.x)**2
         y_diff_sq = (self.y - other.y)**2
         return (x_diff_sq + y_diff_sq)**0.5
+
+class fraction():
+    def __init__(self,num,denom):
+        self.num=num
+        self.denom=denom
+        
+    def __str__(self):
+        return str(self.num) + "/" + str(self.denom)
     
-def main():
+    
+    
+def coor_main():
     point1=coordinate(3,4)
     point2=coordinate(0,0)
     print(point1)
     print(point2)
     print(point1.distance(point2))
     
+def frac_main():
+    f1=fraction(1,4)
+    f2=fraction(1,2)
+    print(f1)
+    print(f2)
+    print(f1+f2)
+    print(f1-f2)
+    print(f1*f2)
+    print(f1/f2)
+    print(float(f1))
+    print(f1.inverse())
+    
 if __name__ == "__main__":
-    main()
+    frac_main()
