@@ -15,6 +15,7 @@ class fraction():
     def __init__(self,num,denom):
         self.num=num
         self.denom=denom
+        self.reduce()
         
     def __str__(self):
         return str(self.num) + "/" + str(self.denom)
