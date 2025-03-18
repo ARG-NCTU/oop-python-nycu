@@ -1,5 +1,5 @@
 all :
-	test
+	pytest
 test:
 	pytest
 clean:
