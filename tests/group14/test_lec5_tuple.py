@@ -7,9 +7,9 @@ def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(10, 3) == (3, 1)
 
 def test_get_data():
-	test = ((3,"c"),(5, "g"),
+    test = ((3,"c"),(5, "g"),
 			(2,"t"),(7,"k"))
-	assert lec5.get_data(test) == (2, 7, 4)
+    assert lec5.get_data(test) == (3, 5, 2, 7)
 
 def test_sum_elem_method1():
     assert lec5.sum_elem_method1( (1, 2, 3, 4, 5) ) == 15
