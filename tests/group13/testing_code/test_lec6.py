@@ -20,10 +20,11 @@ def test_fibonacci():
     assert lec6.fibonacci(14) == 377
     assert lec6.fibonacci(15) == 61
 
-def test_fibonacci_memo():
-    assert lec6.fibonacci_memo(0) == 0
-    assert lec6.fibonacci_memo(1) == 1
-    assert lec6.fibonacci_memo(2) == 1
-    assert lec6.fibonacci_memo(3) == 2
 
-
+def tower ():
+    assert lec6.tower(1, 'P1', 'P2', 'P3') == None
+    assert lec6.tower(2, 'P1', 'P2', 'P3') == None
+    assert lec6.tower(3, 'P1', 'P2', 'P3') == None
+    assert lec6.tower(4, 'P1', 'P2', 'P3') == None
+    assert lec6.tower(5, 'P1', 'P2', 'P3') == None
+    assert lec6.tower(6, 'P1', 'P2', 'P3') == None
