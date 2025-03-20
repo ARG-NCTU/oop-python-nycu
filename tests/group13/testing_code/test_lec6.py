@@ -24,5 +24,5 @@ def is_palindrome():
     assert lec6.is_palindrome('eve') == True
     assert lec6.is_palindrome('Able was I saw Elba') == True
     assert lec6.is_palindrome('Is this a palindrome') == False
-    assert lec6.is_palindrome('
-                   
+    assert lec6.is_palindrome("HeleH") == True
+    assert lec6.is_palindrome("redmeat") == False
