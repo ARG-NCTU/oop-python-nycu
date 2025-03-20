@@ -2,23 +2,30 @@ import add_path
 import pytest
 import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
 
-def test_fibonacci():
-    assert lec6.fibonacci(0) == 0
-    assert lec6.fibonacci(1) == 1
-    assert lec6.fibonacci(2) == 1
-    assert lec6.fibonacci(3) == 2
-    assert lec6.fibonacci(4) == 3
-    assert lec6.fibonacci(5) == 5
-    assert lec6.fibonacci(6) == 8
-    assert lec6.fibonacci(7) == 13
-    assert lec6.fibonacci(8) == 21
-    assert lec6.fibonacci(9) == 34
-    assert lec6.fibonacci(10) == 55
-    assert lec6.fibonacci(11) == 89
-    assert lec6.fibonacci(12) == 144
-    assert lec6.fibonacci(13) == 233
-    assert lec6.fibonacci(14) == 377
-    assert lec6.fibonacci(15) == 61
+def test_fib():
+    assert lec6.fib(0) == 0
+    assert lec6.fib(1) == 1
+    assert lec6.fib(2) == 1 
+    assert lec6.fib(3) == 2
+    assert lec6.fib(4) == 3
+    assert lec6.fib(5) == 5
+    assert lec6.fib(6) == 8
+    assert lec6.fib(7) == 13
+    assert lec6.fib(8) == 21
+    assert lec6.fib(9) == 34
+    assert lec6.fib(10) == 55
+    assert lec6.fib(11) == 89
+    assert lec6.fib(12) == 144
+    assert lec6.fib(13) == 233
+    assert lec6.fib(14) == 377
+    assert lec6.fib(15) == 610
+    assert lec6.fib(16) == 987
+    assert lec6.fib(17) == 1597
+    assert lec6.fib(18) == 2584
+    assert lec6.fib(19) == 4181
+    assert lec6.fib(20) == 6765
+
+
 
 def test_is_palindrome():
     assert lec6.is_palindrome('eve') == True
