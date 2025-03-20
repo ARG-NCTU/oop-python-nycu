@@ -20,3 +20,10 @@ def test_fibonacci():
     assert lec6.fibonacci(14) == 377
     assert lec6.fibonacci(15) == 61
 
+def test_fibonacci_memo():
+    assert lec6.fibonacci_memo(0) == 0
+    assert lec6.fibonacci_memo(1) == 1
+    assert lec6.fibonacci_memo(2) == 1
+    assert lec6.fibonacci_memo(3) == 2
+
+
