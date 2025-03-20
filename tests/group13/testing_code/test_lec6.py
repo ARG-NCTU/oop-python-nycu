@@ -20,11 +20,9 @@ def test_fibonacci():
     assert lec6.fibonacci(14) == 377
     assert lec6.fibonacci(15) == 61
 
-
-def tower ():
-    assert lec6.tower(1, 'P1', 'P2', 'P3') == None
-    assert lec6.tower(2, 'P1', 'P2', 'P3') == None
-    assert lec6.tower(3, 'P1', 'P2', 'P3') == None
-    assert lec6.tower(4, 'P1', 'P2', 'P3') == None
-    assert lec6.tower(5, 'P1', 'P2', 'P3') == None
-    assert lec6.tower(6, 'P1', 'P2', 'P3') == None
+def is_palindrome():
+    assert lec6.is_palindrome('eve') == True
+    assert lec6.is_palindrome('Able was I saw Elba') == True
+    assert lec6.is_palindrome('Is this a palindrome') == False
+    assert lec6.is_palindrome('
+                   
