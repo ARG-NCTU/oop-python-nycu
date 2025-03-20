@@ -20,7 +20,7 @@ def test_fibonacci():
     assert lec6.fibonacci(14) == 377
     assert lec6.fibonacci(15) == 61
 
-def is_palindrome():
+def test_is_palindrome():
     assert lec6.is_palindrome('eve') == True
     assert lec6.is_palindrome('Able was I saw Elba') == True
     assert lec6.is_palindrome('Is this a palindrome') == False
