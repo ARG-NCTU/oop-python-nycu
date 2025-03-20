@@ -19,6 +19,8 @@ def test_sum_elem_method1():
 def test_sum_elem_method2():
     assert lec5.sum_elem_method2( (1, 2, 3, 4, 5) ) == 15
     assert lec5.sum_elem_method2([3, 5, 6, 7, 8]) == 29
+    
+
 
 
 
