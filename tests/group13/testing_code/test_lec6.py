@@ -3,7 +3,7 @@ import pytest
 import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
 
 def test_fib():
-    assert lec6.fib(0) == 0
+    assert lec6.fib(0) == 1
     assert lec6.fib(1) == 1
     assert lec6.fib(2) == 1 
     assert lec6.fib(3) == 2
