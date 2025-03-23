@@ -43,6 +43,10 @@ class Mat:
         assert key[:1] < self.__data.shape[:1], 'Error: key value overflow'
         return self.__data[key]
 
+    """ To string """
+    def __str__(self):
+        return self.__data.__str__()
+
     ########################################################################
 
     """ Get copy of matrix """
@@ -57,19 +61,19 @@ class Mat:
     def print(self):
         print(self.__data)
 
-m1 = Mat([[1, 2, 3],
-          [4, 5, 6],
-          [7, 8, 9]])
-m2 = Mat([[1, 1, 1],
-          [1, 1, 1],
-          [1, 1, 1]])
-m3 = Mat()
-m3.print()
-m3 = m1 * m2
-m3.transpose().print()
-m3.set([[1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]])
-m3.print()
+# # Test
+# m1 = Mat([[1, 2, 3],
+#           [4, 5, 6],
+#           [7, 8, 9]])
+# m2 = Mat([[1, 1, 1],
+#           [1, 1, 1],
+#           [1, 1, 1]])
+# m3 = Mat()
+# m3.print()
+# m3 = m1 * m2
+# m3.transpose().print()
+# m3.set([[1, 2, 3],
+#         [4, 5, 6]])
+# m3.print()
 
-print(0)
+# print(0)
