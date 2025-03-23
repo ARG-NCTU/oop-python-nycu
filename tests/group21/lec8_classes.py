@@ -108,7 +108,8 @@ class intSet(object):
         self.vals.sort()
         return '{' + ','.join([str(e) for e in self.vals]) + '}'
 
-'''
+
+
 s = intSet()
 print(s)
 s.insert(3)
@@ -122,4 +123,4 @@ print(s)
 #s.remove(3)  # leads to an error
 print(s)
 s.remove(3)
-'''
+
