@@ -18,4 +18,6 @@ def test_frac():
     assert a.num == 1 
     assert str(a) == "1/4"
     assert a+b == lec8.Fraction(1,1)
-    
+    print(a-b)
+    prrint(str(a-b))
+test_frac()
