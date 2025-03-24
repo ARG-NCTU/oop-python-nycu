@@ -15,3 +15,5 @@ def test_cor():
 def test_frac():
     a=lec8.Fraction(1,4)
     b=lec8.Fraction(3,4)
+    assert a.num == 1 
+test_frac()
