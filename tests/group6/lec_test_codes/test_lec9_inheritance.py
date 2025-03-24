@@ -1,6 +1,7 @@
 import add_path
 import pytest
-from mit_ocw_exercises.lec9_inheritance import Animal, Cat, Person, Student, Rabbit
+
+import mit_ocw_exercises.lec9_inheritance as Animal, Cat, Person, Student, Rabbit
 
 # class animal test
 def test_animal_init():
