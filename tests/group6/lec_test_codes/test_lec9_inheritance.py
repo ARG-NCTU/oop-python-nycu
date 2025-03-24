@@ -55,5 +55,20 @@ def test_person_str():
 
     
 # student
+def test_student_init():
+    s = Student("A", 200, "A")
+    assert s.get_name() == "A"
+    assert s.get_age() == 200
+    assert s.major == "A"
 
+def test_student_change_major():
+    s = Student("qwer", 7, "A")
+    s.change_major("B")
+    assert s.major == "B"
+
+# def test_student_speak(capsys):
+
+def test_student_str():
+    s = Student("qaq", 21, "C")
+    assert str(s) == "student:qaq:21:C"
 # rabbit
