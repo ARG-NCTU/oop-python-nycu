@@ -24,4 +24,6 @@ def test_frac():
     print(c)
     print(a-b)
     print(str(a-b))
+    print(float(a))
+    print(float(c))
 test_frac()
