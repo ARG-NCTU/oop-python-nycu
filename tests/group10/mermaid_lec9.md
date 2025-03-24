@@ -32,6 +32,7 @@ classDiagram
     }
 
     class Rabbit {
+        ~tag : int
         -parent1: Rabbit
         -parent2: Rabbit
         -rid: int
