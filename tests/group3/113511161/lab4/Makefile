@@ -1,5 +1,4 @@
-all :
-	pytest
+all : test
 test:
 	pytest
 clean:
