@@ -11,10 +11,10 @@ def main():
 
     github_accounts = [
         ["LeeYinWei", "unknown899"],    # Group 1
-        ["ModernHuman0531", "jameshsu1973", "Daniel47725812", "jjjerryc"],  # Group 2
-        ["hac-ohmygod0193", "YunTin0628", "ZachLian"],  # Group 3
-        ["hsuanyo7160", "WoodyLiang", "howard-shi55"],  # Group 4
-        ["TTT426", "chenmax1016", "gdpps1028", "Lin-shao-an"],  # Group 5
+        [],  # Group 2
+        [],  # Group 3
+        [],  # Group 4
+        [],  # Group 5
         ["jui-pixel", "SamTung113511034", "charles691"],  # Group 6
         ["Tony104147"], # Group 7
         ["haleychang0530", "Hazel-1212", "tree1014"],   # Group 8
