@@ -2,7 +2,7 @@ import add_path
 import mit_ocw_exercises.lec9_inheritance as inh
 import pytest
 
-def test_animal1():
+def test_animal():
     a = inh.Animal(10)
     print(a)
     print(a.get_age())
@@ -21,3 +21,18 @@ def test_cat():
     assert c.get_age() == 6
     c.set_age(3)
     assert c.get_age() == 3
+
+def test_person():
+    p1 = inh.Person("Uhhuh", 18)
+    p2 = inh.Person("Yeah", 19)
+    print(p1.get_name())
+    print(p1.get_age())
+    print(p2.get_name())
+    print(p2.get_age())
+    assert p1.get_name() == "Uhhuh"
+    assert p2.get_age() == 19
+    p1.add_friend("friend1")
+    print(p1.get_friend())
+    p2.age_diff(p1)
+    p2.speak()
+    
