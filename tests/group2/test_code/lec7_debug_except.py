@@ -30,10 +30,6 @@ def rev_list(L):
         temp = L[i]
         L[i] = L[j]
         L[j] = temp
-        
-L = [1,2,3,4]
-rev_list(L)
-print(L)
 #
 #
 ########################################
@@ -62,7 +58,7 @@ print(L)
 ## can't apply 'len' to an int
 ## division by zero -> iterate through elems not indices
 ##                  -> iterate from 2 not 0
-## forgot to return 
+## forgot to return
 ## primes is empty list for n > 2
 ## n = 3 goes through loop once -> range to n+1 not n
 ## infinite loop -> append j not i
@@ -89,10 +85,6 @@ def primes_list(n):
             primes.append(j)
     return primes
 
-print(primes_list(2) )               
-print(primes_list(15)  )              
-
-
 ######################################
 # EXAMPLE: Exceptions and input
 ######################################
@@ -100,30 +92,6 @@ print(primes_list(15)  )
 #b = int(input("Tell me another number: "))
 #print("a/b = ", a/b)
 #print("a+b = ", a+b)
-
-try:
-    a = int(input("Tell me one number: "))
-    b = int(input("Tell me another number: "))
-    print("a/b = ", a/b)
-except:
-    print("Bug in user input.")
-
-
-try:
-    a = int(input("Tell me one number: "))
-    b = int(input("Tell me another number: "))
-    print("a/b = ", a/b)
-    print("a+b = ", a+b)
-except ValueError:
-    print("Could not convert to a number.")
-except ZeroDivisionError:
-    print("Can't divide by zero")
-except:
-    print("Something went very wrong.")
-
-
-
-######################################
 # EXAMPLE: Raising your own exceptions
 ######################################
 def get_ratios(L1, L2):
@@ -142,8 +110,6 @@ def get_ratios(L1, L2):
         finally:
             print("executed no matter what!")
     return ratios
-    
-print(get_ratios([1, 4], [2, 4]))
 
 
 #######################################
@@ -153,12 +119,12 @@ def get_stats(class_list):
 	new_stats = []
 	for person in class_list:
 		new_stats.append([person[0], person[1], avg(person[1])])
-	return new_stats 
+	return new_stats
 
 # avg function: version without an exception
 #def avg(grades):
 #    return (sum(grades))/len(grades)
-    
+
 # avg function: version with an exception
 def avg(grades):
     try:
@@ -173,10 +139,5 @@ def avg(grades):
     assert len(grades) != 0, 'warning: no grades data'
     return sum(grades)/len(grades)
 
-    
-test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]], 
-              [['bruce', 'wayne'], [100.0, 80.0, 74.0]],
-              [['captain', 'america'], [80.0, 70.0, 96.0]],
-              [['deadpool'], []]]
 
-#print(get_stats(test_grades))
+
