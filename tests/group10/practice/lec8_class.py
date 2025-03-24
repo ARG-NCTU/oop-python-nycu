@@ -15,6 +15,7 @@ class fraction():
     def __init__(self,num,denom):
         self.num=num
         self.denom=denom
+        self.reduce()
         
     def __str__(self):
         return str(self.num) + "/" + str(self.denom)
@@ -45,6 +46,14 @@ class fraction():
     def inverse(self):
         return fraction(self.denom,self.num)
     
+    def reduce(self):
+        def gcd(a,b):
+            if b==0:
+                return a
+            else:
+                return gcd(b,a%b)
+        common=gcd(self.num,self.denom)
+        return fraction(self.num//common,self.denom//common)
     
     
     
