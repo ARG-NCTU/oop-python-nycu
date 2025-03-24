@@ -179,4 +179,4 @@ test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
               [['captain', 'america'], [80.0, 70.0, 96.0]],
               [['deadpool'], []]]
 
-print(get_stats(test_grades))
+#print(get_stats(test_grades))
