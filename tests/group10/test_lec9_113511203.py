@@ -32,7 +32,7 @@ def test_person():
     assert p1.get_name() == "Uhhuh"
     assert p2.get_age() == 19
     p1.add_friend("friend1")
-    print(p1.get_friend())
+    print(p1.get_friends())
     p2.age_diff(p1)
     p2.speak()
     
