@@ -20,6 +20,7 @@ def parameter_input():
 	return inputPara
 
 #main function
+print("Put yout file in test_code folder.")
 fileName = input("Input the filename in testing_code folder: ")
 funName = input("Input the function name in your file: ")
 fileName = fileName[:-3]
