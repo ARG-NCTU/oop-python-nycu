@@ -73,3 +73,8 @@ def test_student_str():
     s = lec9.Student("qaq", 21, "C")
     assert str(s) == "student:qaq:21:C"
 # rabbit
+
+def test_rabbit_init(): 
+    r = lec9.Rabbit(2)
+    assert r.get_age() == 2
+    assert r.get_name() is None 
