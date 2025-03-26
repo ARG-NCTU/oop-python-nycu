@@ -4,7 +4,7 @@ import importlib
 
 def parameter_input():
 	inputPara=[]
-	inputN=input("Input the numbers of parameters:  \na line of input count as one\na list must input in one line and place a space between each elements\n")
+	inputN=input("Input the numbers of parameters:  \n||a line of input count as one                                         ||\n||a list must input in one line and place a space between each elements||\n")
 	for i in range(int(inputN)):
 		inTem=input()
 		if inTem.isdigit():
