@@ -1,5 +1,13 @@
 
 class Food(object):
+    """A food item with a name, value, and calories
+
+    attributes:
+    value: a number representing the value of the food
+    calories: a number representing the calories of the food
+    name: a string representing the name of the food
+    
+    """
     def __init__(self, n, v, w):
         self.name = n
         self.value = v
