@@ -11,3 +11,21 @@ def test_cor():
     assert c.distance(origin) == math.sqrt(5)
     assert origin.distance(c) == math.sqrt(5)
     assert str(c) == "<1,2>"
+
+def test_frac():
+    a=lec8.Fraction(1,4)
+    b=lec8.Fraction(3,4)
+    c=a+b
+    d=lec8.Fraction(1,1)
+    assert a.num == 1 
+    assert str(a) == "1/4"
+    #assert a+b == c
+    print(a+b)
+    print(c)
+    print(a-b)
+    print(str(a-b))
+    print(float(a))
+    print(float(c))
+    print(a*b)
+    print(a.inverse())
+test_frac()
