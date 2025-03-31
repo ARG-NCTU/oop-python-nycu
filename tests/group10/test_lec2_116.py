@@ -54,3 +54,13 @@ def test_max_val():
     total_value, selected_items = lec2.max_val(menu.get_foods(), 10)
     assert total_value == 25
     assert len(selected_items) == 2
+    
+def test_fast_max_val():
+    names = ["Chips", "Candy", "Instant Noodles"]
+    values = [10, 20, 15]
+    calories = [5, 10, 5]
+    menu = lec2.Menu(names, values, calories)
+    
+    total_value, selected_items = lec2.fast_max_val(menu.get_foods(), 10, memo={})
+    assert total_value == 25
+    assert len(selected_items) == 2
