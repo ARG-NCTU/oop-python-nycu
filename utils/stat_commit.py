@@ -18,7 +18,7 @@ def main():
         ["jui-pixel", "SamTung113511034", "charles691"],  # Group 6
         ["Tony104147"], # Group 7
         ["haleychang0530", "Hazel-1212", "tree1014"],   # Group 8
-        [],  # Group 9
+        ["CHENG-JE", "lwc-ed"],  # Group 9
         ["tpvupu", "xiaotin22", "calistayang"],  # Group 10
         ["Rickycheong0515", "hfchiang", "Samuel11GitHub"],  # Group 11
         ["kufanghua", "yezh0915", "fiesta0217"],  # Group 12
@@ -27,7 +27,7 @@ def main():
         ["gamemode0701", "Tonyyu2403"],  # Group 15
         [],  # Group 16
         ["Miiaow3011", "bonnieliao774", "emmazheng0318"],  # Group 17
-        [],  # Group 18
+        ["ChocomintTW", "TedChueh", "pitinghsu"],  # Group 18
         ["113511080", "max052028"],  # Group 19
         ["houyuankai"],  # Group 20
         ["0u88"]  # Group 21
