@@ -36,3 +36,4 @@ def test_menu():
     assert str(menu) == "apple: <50, 95>; banana: <60, 105>; cherry: <70, 120>; "
 
 
+
