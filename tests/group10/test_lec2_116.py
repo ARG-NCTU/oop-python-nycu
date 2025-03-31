@@ -41,6 +41,16 @@ def test_greedy():
     calories = [5, 10, 5]
     menu = lec2.Menu(names, values, calories)
     
-    result, total_value = greedy(menu.get_foods(), 10, key_function=lambda x: x.get_value())
-    assert total_value == 25  # Should take Chips (10) and Instant Noodles (15)
-    assert len(result) == 2
+    result, total_value = lec2.greedy(menu.get_foods(), 10, key_function=lambda x: x.get_value())
+    assert total_value == 20  # Should take Chips (10) and Instant Noodles (15)
+    assert len(result) == 1
+    
+def test_max_val():
+    names = ["Chips", "Candy", "Instant Noodles"]
+    values = [10, 20, 15]
+    calories = [5, 10, 5]
+    menu = lec2.Menu(names, values, calories)
+    
+    total_value, selected_items = lec2.max_val(menu.get_foods(), 10)
+    assert total_value == 25
+    assert len(selected_items) == 2
