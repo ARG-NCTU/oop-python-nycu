@@ -3,6 +3,7 @@ classDiagram
     class Animal {
         -age: int
         -name: str
+        +init(age:int)
         +get_age(): int
         +get_name(): str
         +set_age(newage: int)
@@ -17,6 +18,7 @@ classDiagram
 
     class Person {
         -friends: list
+        +init(name:str, age:int)
         +get_friends(): list
         +speak()
         +add_friend(fname: str)
@@ -26,6 +28,7 @@ classDiagram
 
     class Student {
         -major: str
+        +init(name: string, age: int, major: string)
         +change_major(major: str)
         +speak()
         +__str__(): str
@@ -36,6 +39,7 @@ classDiagram
         -parent1: Rabbit
         -parent2: Rabbit
         -rid: int
+        +init(age: int, parent1: Rabbit, parent2: Rabbit)
         +get_rid(): str
         +get_parent1(): Rabbit
         +get_parent2(): Rabbit
