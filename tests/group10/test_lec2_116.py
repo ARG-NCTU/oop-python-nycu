@@ -35,5 +35,12 @@ def test_menu():
     # 測試 __str__ 方法
     assert str(menu) == "apple: <50, 95>; banana: <60, 105>; cherry: <70, 120>; "
 
-
-
+def test_greedy():
+    names = ["Chips", "Candy", "Instant Noodles"]
+    values = [10, 20, 15]
+    calories = [5, 10, 5]
+    menu = lec2.Menu(names, values, calories)
+    
+    result, total_value = greedy(menu.get_foods(), 10, key_function=lambda x: x.get_value())
+    assert total_value == 25  # Should take Chips (10) and Instant Noodles (15)
+    assert len(result) == 2
