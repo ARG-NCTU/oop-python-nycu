@@ -34,3 +34,6 @@ def test_intset():
   assert s.member(5) is False;
   s.remove(3);
   assert str(s) == "{1,2}";
+  s.remove(1);
+  assert str(s) == "{2}";
+  

@@ -22,16 +22,14 @@ class Animal(object):
     def __str__(self):
         return "animal:"+str(self.name)+":"+str(self.age)
         
-# print("\n---- animal tests ----")
-# a = Animal(4)
-# print(a)
-# print(a.get_age())
-# a.set_name("fluffy")
-# print(a)
-# a.set_name()
-# print(a)
-
-
+print("\n---- animal tests ----")
+a = Animal(4)
+print(a)
+print(a.get_age())
+a.set_name("fluffy")
+print(a)
+a.set_name()
+print(a)
 
 #################################
 ## Inheritance example 
@@ -48,9 +46,7 @@ c.set_name("fluffy")
 print(c)
 c.speak()
 print(c.get_age())
-#a.speak() # error because there is no speak method for Animal class
 
-    
 #################################
 ## Inheritance example
 #################################
@@ -82,7 +78,6 @@ print(p2.get_age())
 print(p1)
 p1.speak()
 p1.age_diff(p2)
-
 
 #################################
 ## Inheritance example
@@ -116,8 +111,6 @@ s1.speak()
 print(s2.get_name(),"says:", end=" ")
 s2.speak()
 
-
-
 #################################
 ## Use of class variables  
 #################################
@@ -141,9 +134,8 @@ class Rabbit(Animal):
         # returning object of same type as this class
         return Rabbit(0, self, other)
     def __eq__(self, other):
-        # compare the ids of self and other's parents
-        # don't care about the order of the parents
-        # the backslash tells python I want to break up my line
+        if self.parent1 is None or self.parent2 is None or other.parent1 is None or other.parent2 is None:
+            return False
         parents_same = self.parent1.rid == other.parent1.rid \
                        and self.parent2.rid == other.parent2.rid
         parents_opposite = self.parent2.rid == other.parent1.rid \
@@ -184,3 +176,4 @@ print("r6 parent1:", r6.get_parent1())
 print("r6 parent2:", r6.get_parent2())
 print("r5 and r6 have same parents?", r5 == r6)
 print("r4 and r6 have same parents?", r4 == r6)
+
