@@ -122,3 +122,26 @@ def fast_max_val(to_consider, avail, memo={}):
     return result
 
 
+if __name__ == "__main__":
+    names = ["apple", "banana", "cherry"]
+    values = [50, 60, 70]
+    calories = [30, 40, 50]
+    menu = Menu(names, values, calories)
+    foods = menu.get_foods()
+
+    # Test max_val
+    total_value, items = max_val(foods, 100)
+    print(total_value)
+    print(len(items))
+    print(str(items[0]))
+    print(str(items[1]))
+
+
+    # Test fast_max_val
+    total_value, items = fast_max_val(foods, 100)
+    print(total_value)
+    print(len(items))
+    print(str(items[0]))
+    print(str(items[1]))
+
+
