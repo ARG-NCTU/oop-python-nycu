@@ -37,3 +37,23 @@ def towers(n, fr, to, spare, moves=None):
         towers(1, fr, to, spare, moves)
         towers(n-1, spare, to, fr, moves)
     return moves
+
+def test_towers_moves():
+    # 3 盤測試：應該有 7 步
+    result = towers(3, 'A', 'C', 'B')
+    assert len(result) == 7
+    assert result == [
+        ('A', 'C'),
+        ('A', 'B'),
+        ('C', 'B'),
+        ('A', 'C'),
+        ('B', 'A'),
+        ('B', 'C'),
+        ('A', 'C')
+    ]
+
+    # 1 盤測試
+    assert towers(1, 'X', 'Y', 'Z') == [('X', 'Y')]
+
+    # 2 盤測試
+    assert towers(2, 'L', 'R', 'M') == [('L','M'),('L','R'),('M','R')]
