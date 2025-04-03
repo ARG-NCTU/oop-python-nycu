@@ -73,3 +73,10 @@ def test_person_behavior():
     assert p.get_age() == 30
     assert p.speak() == "hello"
     assert str(p) == "person:Jack:30"
+
+def test_add_and_get_friends():
+    p = Person("Alice", 20)
+    p.add_friend("Bob")
+    p.add_friend("Bob")  # 測試不重複
+    p.add_friend("Carol")
+    assert p.get_friends() == ["Bob", "Carol"]
