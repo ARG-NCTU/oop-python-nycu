@@ -80,3 +80,9 @@ def test_add_and_get_friends():
     p.add_friend("Bob")  # 測試不重複
     p.add_friend("Carol")
     assert p.get_friends() == ["Bob", "Carol"]
+
+def test_age_diff():
+    p1 = Person("A", 25)
+    p2 = Person("B", 20)
+    assert p1.age_diff(p2) == 5
+    assert p2.age_diff(p1) == 5
