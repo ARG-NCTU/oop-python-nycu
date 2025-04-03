@@ -44,3 +44,25 @@ def test_cat_behavior():
     c.set_name("Mittens")
     assert str(c) == "cat:Mittens:5"
     assert c.speak() == "meow"
+
+class Person(Animal):
+    def __init__(self, name, age):
+        super().__init__(age)
+        self.set_name(name)
+        self.friends = []
+
+    def get_friends(self):
+        return self.friends
+
+    def speak(self):
+        return "hello"
+
+    def add_friend(self, fname):
+        if fname not in self.friends:
+            self.friends.append(fname)
+
+    def age_diff(self, other):
+        return abs(self.age - other.age)
+
+    def __str__(self):
+        return "person:" + str(self.name) + ":" + str(self.age)
