@@ -101,3 +101,9 @@ def test_student_behavior():
     assert s.get_age() == 21
     assert s.major == "CS"
     assert str(s) == "student:Lily:21:CS"
+
+def test_student_inherits_person():
+    s = Student("Tom", 22)
+    s.add_friend("Jerry")
+    assert s.get_friends() == ["Jerry"]
+    assert s.speak() == "hello"
