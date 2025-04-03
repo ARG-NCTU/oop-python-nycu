@@ -30,3 +30,17 @@ def test_animal_set_name_default():
     a = Animal(1)
     a.set_name()
     assert a.get_name() == ""
+
+class Cat(Animal):
+    def speak(self):
+        return "meow"
+
+    def __str__(self):
+        return "cat:" + str(self.name) + ":" + str(self.age)
+
+
+def test_cat_behavior():
+    c = Cat(5)
+    c.set_name("Mittens")
+    assert str(c) == "cat:Mittens:5"
+    assert c.speak() == "meow"
