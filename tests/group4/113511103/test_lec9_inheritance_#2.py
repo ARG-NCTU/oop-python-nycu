@@ -25,3 +25,8 @@ def test_animal_basic():
     assert a.get_age() == 3
     assert a.get_name() == "Fluffy"
     assert str(a) == "animal:Fluffy:3"
+
+def test_animal_set_name_default():
+    a = Animal(1)
+    a.set_name()
+    assert a.get_name() == ""
