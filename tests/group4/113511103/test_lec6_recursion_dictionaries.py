@@ -47,3 +47,20 @@ def test_lyrics_to_frequencies():
     assert result["she"] == 1
     assert result["yeah"] == 3
     assert result["loves"] == 1
+
+# Part 4: Towers of Hanoi (不 print，改回傳指令)
+def towers(n, fr, to, spare, moves=None):
+    if moves is None:
+        moves = []
+    if n == 1:
+        moves.append((fr, to))
+    else:
+        towers(n-1, fr, spare, to, moves)
+        towers(1, fr, to, spare, moves)
+        towers(n-1, spare, to, fr, moves)
+    return moves
+
+def test_towers_3():
+    moves = towers(3, 'A', 'C', 'B')
+    assert moves == [('A','C'), ('A','B'), ('C','B'), ('A','C'), ('B','A'), ('B','C'), ('A','C')]
+    assert len(moves) == 7  # 2^3 - 1
