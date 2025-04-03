@@ -66,3 +66,10 @@ class Person(Animal):
 
     def __str__(self):
         return "person:" + str(self.name) + ":" + str(self.age)
+
+def test_person_behavior():
+    p = Person("Jack", 30)
+    assert p.get_name() == "Jack"
+    assert p.get_age() == 30
+    assert p.speak() == "hello"
+    assert str(p) == "person:Jack:30"
