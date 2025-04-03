@@ -94,3 +94,10 @@ class Student(Person):
 
     def __str__(self):
         return "student:" + str(self.name) + ":" + str(self.age) + ":" + str(self.major)
+
+def test_student_behavior():
+    s = Student("Lily", 21, "CS")
+    assert s.get_name() == "Lily"
+    assert s.get_age() == 21
+    assert s.major == "CS"
+    assert str(s) == "student:Lily:21:CS"
