@@ -86,3 +86,11 @@ def test_age_diff():
     p2 = Person("B", 20)
     assert p1.age_diff(p2) == 5
     assert p2.age_diff(p1) == 5
+
+class Student(Person):
+    def __init__(self, name, age, major=None):
+        super().__init__(name, age)
+        self.major = major
+
+    def __str__(self):
+        return "student:" + str(self.name) + ":" + str(self.age) + ":" + str(self.major)
