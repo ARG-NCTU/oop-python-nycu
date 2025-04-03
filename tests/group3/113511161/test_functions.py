@@ -1,3 +1,4 @@
+import pytest
 from functions import is_even_with_return, is_even_without_return, is_even, bisection_cuberoot_approx
 
 def test_is_even_with_return():
