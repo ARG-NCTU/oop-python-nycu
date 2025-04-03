@@ -64,3 +64,13 @@ def test_towers_3():
     moves = towers(3, 'A', 'C', 'B')
     assert moves == [('A','C'), ('A','B'), ('C','B'), ('A','C'), ('B','A'), ('B','C'), ('A','C')]
     assert len(moves) == 7  # 2^3 - 1
+
+def test_fib_large():
+    assert fib(10) == 89
+    assert fib(15) == 987
+
+def test_lyrics_empty():
+    assert lyrics_to_frequencies([]) == {}
+
+def test_towers_single():
+    assert towers(1, 'X', 'Y', 'Z') == [('X', 'Y')]
