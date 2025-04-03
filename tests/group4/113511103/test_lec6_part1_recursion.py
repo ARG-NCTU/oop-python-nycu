@@ -23,3 +23,19 @@ def is_palindrome(s):
         else:
             return s[0] == s[-1] and is_pal(s[1:-1])
     return is_pal(to_chars(s))
+
+# Commit 4: 包含 is_palindrome 完整測試組與邊界條件
+def test_is_palindrome_cases():
+    # 一般情境
+    assert is_palindrome("racecar")
+    assert is_palindrome("A man a plan a canal Panama")
+    assert not is_palindrome("banana")
+
+    # 邊界與極簡測試
+    assert is_palindrome("")
+    assert is_palindrome("x")
+    assert not is_palindrome("xyz")
+
+    # 特殊標點與大小寫
+    assert is_palindrome("Was it a car or a cat I saw?")
+    assert is_palindrome("No lemon, no melon")
