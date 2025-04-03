@@ -30,3 +30,20 @@ def test_is_palindrome():
     assert not is_palindrome("python")
     assert is_palindrome("a")
     assert is_palindrome("")
+
+# Part 3: lyrics_to_frequencies
+def lyrics_to_frequencies(lyrics):
+    myDict = {}
+    for word in lyrics:
+        if word in myDict:
+            myDict[word] += 1
+        else:
+            myDict[word] = 1
+    return myDict
+
+def test_lyrics_to_frequencies():
+    lyrics = ["she", "loves", "you", "yeah", "yeah", "yeah"]
+    result = lyrics_to_frequencies(lyrics)
+    assert result["she"] == 1
+    assert result["yeah"] == 3
+    assert result["loves"] == 1
