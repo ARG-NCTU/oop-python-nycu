@@ -1,6 +1,3 @@
-
-
-
 import pytest
 import lec7_debug_except as lec7
 import math
