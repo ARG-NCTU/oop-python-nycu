@@ -1,10 +1,5 @@
 import pytest
 import lec7_debug_except as lec7
-import math
-import add_path
-
-
-#lec7 need to ignore some lines ex ：99 - 122 ....
 
 def test_primes_list():
     assert lec7.primes_list(2) == [2]
