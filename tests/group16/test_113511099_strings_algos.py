@@ -11,6 +11,7 @@ for char in s:
        print("There is an i or u")
 
 
+
 ###################
 # EXAMPLE: while loops and strings
 # CHALLENGE: rewrite while loop with a for loop
