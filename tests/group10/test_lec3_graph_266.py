@@ -96,4 +96,4 @@ def test_build_city_graph():
     assert g.hasNode(g.getNode('Phoenix'))
     assert g.hasNode(g.getNode('Los Angeles'))
 
-
+    
