@@ -40,7 +40,7 @@ def test_sum_elem_method2():
     assert lec5.sum_elem_method2([1,-2,3,-4]) == -2
     assert lec5.sum_elem_method2([1]) == 1
     assert lec5.sum_elem_method2([]) == 0
-    
+
     
     
     
