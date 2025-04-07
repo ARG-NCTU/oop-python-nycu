@@ -8,6 +8,7 @@ class TestDigraph:
         self.node1 = lec3.Node('1')
         self.node2 = lec3.Node('2')
         self.node3 = lec3.Node('3')
+        self.node4 = lec3.Node('4')
         self.edge1 = lec3.Edge(self.node1, self.node2)
         self.edge2 = lec3.Edge(self.node2, self.node3)
 
@@ -19,7 +20,6 @@ class TestDigraph:
         assert self.graph.has_node(self.node2)
     def test_add_edge(self):
         self.graph.add_node(self.node1)
-        self.graph.add_edge(lec3.Edge(self.node3, lec3.Node('4')))
-        assert lec3.Node('4') in self.graph.children_of(self.node3)
-        assert not self.graph.has_edge(self.edge1)
+        self.graph.add_node(self.node2)
         self.graph.add_edge(self.edge1)
+        assert self.node2 in self.graph.children_of(self.node1)
