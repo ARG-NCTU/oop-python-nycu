@@ -1,3 +1,5 @@
+import add_path
+#from mit_ocw_exercises.lec8_classes import *
 import pytest
 from functions import is_even_with_return, is_even_without_return, is_even, bisection_cuberoot_approx
 
