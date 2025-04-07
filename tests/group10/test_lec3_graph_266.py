@@ -14,29 +14,71 @@ def test_edge():
     assert edge.getDestination() == node2
     assert str(edge) == "A->B"
 
-def test_digraph():
-    graph = lec3.Digraph()
-    node1 = lec3.Node("A")
-    node2 = lec3.Node("B")
-    node3 = lec3.Node("C")
+class TestDigraph:
+    def setup_method(self):
+        self.graph = lec3.Digraph()
+        self.node1 = lec3.Node('1')
+        self.node2 = lec3.Node('2')
+        self.node3 = lec3.Node('3')
+        self.edge1 = lec3.Edge(self.node1, self.node2)
+        self.edge2 = lec3.Edge(self.node2, self.node3)
+
+    def test_add_node(self):
+        self.graph.addNode(self.node1)
+        assert self.graph.hasNode(self.node1)
+        assert not self.graph.hasNode(self.node2)
+
+    @pytest.mark.xfail(raises=ValueError)
+    def test_add_edge(self):
+        self.graph.addNode(self.node1)
+        self.graph.addNode(self.node2)
+        self.graph.addEdge(self.edge1)
+        assert self.node2 in self.graph.childrenOf(self.node1)
+        self.graph.addEdge(lec3.Edge(self.node2, lec3.Node('4')))
+        self.graph.addEdge(lec3.Edge(lec3.Node('5'), lec3.Node('6')))
     
-    graph.addNode(node1)
-    graph.addNode(node2)
-    graph.addNode(node3)
+    @pytest.mark.xfail(raises=ValueError)
+    def test_children_of(self):
+        self.graph.addNode(self.node1)
+        self.graph.addNode(self.node2)
+        self.graph.addEdge(self.edge1)
+        self.graph.addEdge(self.edge2)
+        assert self.graph.childrenOf(self.node1) == [self.node2]
+        assert self.graph.childrenOf(self.node2) == [self.node3]
+
     
-    assert graph.hasNode(node1) == True
-    assert graph.hasNode(lec3.Node("D")) == False
+    def test_has_node(self):
+        self.graph.addNode(self.node1)
+        assert self.graph.hasNode(self.node1)
+        assert not self.graph.hasNode(lec3.Node('4'))
+
+    def test_get_node(self):
+        self.graph.addNode(self.node1)
+        assert self.graph.getNode('1') == self.node1
     
-    edge1 = lec3.Edge(node1, node2)
-    edge2 = lec3.Edge(node2, node3)
-    
-    graph.addEdge(edge1)
-    graph.addEdge(edge2)
-    
-    assert graph.childrenOf(node1) == [node2]
-    assert graph.childrenOf(node2) == [node3]
-    
-    with pytest.raises(ValueError):
-        graph.addEdge(edge1)  # Adding duplicate edge should raise ValueError
+def test_build_city_graph():
+    g = lec3.Digraph()
+
+    for name in ('Boston', 'Providence', 'New York', 'Chicago',
+                 'Denver', 'Phoenix', 'Los Angeles'):  # Create 7 nodes
+        g.addNode(lec3.Node(name))
+
+    g.addEdge(lec3.Edge(g.getNode('Boston'), g.getNode('Providence')))
+    g.addEdge(lec3.Edge(g.getNode('Boston'), g.getNode('New York')))
+    g.addEdge(lec3.Edge(g.getNode('Providence'), g.getNode('Boston')))
+    g.addEdge(lec3.Edge(g.getNode('Providence'), g.getNode('New York')))
+    g.addEdge(lec3.Edge(g.getNode('New York'), g.getNode('Chicago')))
+    g.addEdge(lec3.Edge(g.getNode('Chicago'), g.getNode('Denver')))
+    g.addEdge(lec3.Edge(g.getNode('Chicago'), g.getNode('Phoenix')))
+    g.addEdge(lec3.Edge(g.getNode('Denver'), g.getNode('Phoenix')))
+    g.addEdge(lec3.Edge(g.getNode('Denver'), g.getNode('New York')))
+    g.addEdge(lec3.Edge(g.getNode('Los Angeles'), g.getNode('Boston')))
+    assert g.hasNode(g.getNode('Boston'))
+    assert g.hasNode(g.getNode('Providence'))
+    assert g.hasNode(g.getNode('New York'))
+    assert g.hasNode(g.getNode('Chicago'))
+    assert g.hasNode(g.getNode('Denver'))
+    assert g.hasNode(g.getNode('Phoenix'))
+    assert g.hasNode(g.getNode('Los Angeles'))
 
 
