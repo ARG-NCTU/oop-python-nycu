@@ -27,6 +27,11 @@ def test_get_data():
     
 def test_sum_elem_method1():
     assert lec5.sum_elem_method1([1,2,3,4]) == 10
+    assert lec5.sum_elem_method1([0,0,0,0]) == 0
+    assert lec5.sum_elem_method1([-1,-2,-3,-4]) == -10
+    assert lec5.sum_elem_method1([1,-2,3,-4]) == -2
+    assert lec5.sum_elem_method1([1]) == 1
+    assert lec5.sum_elem_method1([]) == 0
     
     
     
