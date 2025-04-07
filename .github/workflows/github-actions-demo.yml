@@ -61,114 +61,92 @@ jobs:
 
       - name: Run G1 tests
         run: pytest
-        working-directory: tests/group1
-        continue-on-error: true  
+        working-directory: tests/group1  
         
       - name: Run G2 tests
         run: pytest
-        working-directory: tests/group2
-        continue-on-error: true   
+        working-directory: tests/group2   
       
       - name: Run G3 tests
         run: pytest
-        working-directory: tests/group3
-        continue-on-error: true   
+        working-directory: tests/group3   
 
       - name: Run G4 tests
         run: pytest
-        working-directory: tests/group4
-        continue-on-error: true 
+        working-directory: tests/group4 
 
       - name: Run G5 tests
         run: pytest
-        working-directory: tests/group5
-        continue-on-error: true 
+        working-directory: tests/group5 
 
       - name: Run G6 tests
         run: pytest
-        working-directory: tests/group6
-        continue-on-error: true 
+        working-directory: tests/group6 
 
       - name: Run G7 tests
         run: pytest
-        working-directory: tests/group7
-        continue-on-error: true 
+        working-directory: tests/group7 
 
       - name: Run G8 tests
         run: pytest
-        working-directory: tests/group8
-        continue-on-error: true 
+        working-directory: tests/group8 
 
       - name: Run G9 tests
         run: pytest
-        working-directory: tests/group9
-        continue-on-error: true  
+        working-directory: tests/group9  
         
       - name: Run G10 tests
         run: pytest
         working-directory: tests/group10
-        continue-on-error: true
 
       - name: Run G11 tests
         run: pytest
         working-directory: tests/group11
-        continue-on-error: true
       
       - name: Run G12 tests
         run: pytest
         working-directory: tests/group12
-        continue-on-error: true
 
       - name: Run G13 tests
         run: pytest
         working-directory: tests/group13
-        continue-on-error: true
 
       - name: Run G14 tests 
         run: pytest
         working-directory: tests/group14
-        continue-on-error: true
 
       - name: Run G15 tests
         run: pytest
         working-directory: tests/group15
-        continue-on-error: true
 
       - name: Run G16 tests
         run: pytest
         working-directory: tests/group16
-        continue-on-error: true
 
       - name: Run G17 tests
         run: pytest
         working-directory: tests/group17
-        continue-on-error: true
 
       - name: Run G18 tests
         run: pytest
         working-directory: tests/group18
-        continue-on-error: true
 
       - name: Run G19 tests
         run: pytest
         working-directory: tests/group19
-        continue-on-error: true
 
       - name: Run G20 tests
         run: pytest
         working-directory: tests/group20
-        continue-on-error: true
         
       - name: Run G21 tests
         run: pytest
         working-directory: tests/group21
-        continue-on-error: true
 
       - name: Run tests
         run: |
           pytest
-        working-directory: tests/groupTA
-        continue-on-error: true  
+        working-directory: tests/groupTA  
       
       # - name: Upload test results
       #   uses: actions/upload-artifact@v5
