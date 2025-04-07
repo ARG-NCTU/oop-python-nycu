@@ -36,6 +36,15 @@ class TestDigraph:
         assert self.node2 in self.graph.childrenOf(self.node1)
         self.graph.addEdge(lec3.Edge(self.node2, lec3.Node('4')))
         self.graph.addEdge(lec3.Edge(lec3.Node('5'), lec3.Node('6')))
+
+    def test_add_edge_without_xfail(self):
+        self.graph.addNode(self.node1)
+        self.graph.addNode(self.node2)
+        self.graph.addEdge(self.edge1)
+        assert self.node2 in self.graph.childrenOf(self.node1)
+        with pytest.raises(ValueError):
+            self.graph.addEdge(lec3.Edge(self.node2, lec3.Node('4')))
+            self.graph.addEdge(lec3.Edge(lec3.Node('5'), lec3.Node('6')))
     
     @pytest.mark.xfail(raises=ValueError)
     def test_children_of(self):
@@ -47,7 +56,6 @@ class TestDigraph:
         assert self.graph.childrenOf(self.node2) == [self.node3]
 
     def test_children_of_without_xfail(self):
-
         self.graph.addNode(self.node1)
         self.graph.addNode(self.node2)
         self.graph.addEdge(self.edge1)
