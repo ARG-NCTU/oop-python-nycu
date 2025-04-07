@@ -17,3 +17,7 @@ class TestDigraph:
         assert not self.graph.has_node(self.node2)
         self.graph.add_node(self.node2)
         assert self.graph.has_node(self.node2)
+    def test_add_edge(self):
+        self.graph.add_node(self.node1)
+        self.graph.add_edge(Edge(self.node3, Node('4')))
+        assert Node('4') in self.graph.children_of(self.node3)
