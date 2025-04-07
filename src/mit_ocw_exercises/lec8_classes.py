@@ -24,7 +24,7 @@ def Coordinate_test():
     assert c1.distance(c2) == 5.0  # (3^2 + 4^2) ** 0.5 = 5
     assert str(c1) == "<3,4>"
 
-Coodinate test()
+# Coodinate test()
 # c = Coordinate(3,4)
 # origin = Coordinate(0,0)
 # print(c.x, origin.x)
@@ -76,11 +76,11 @@ print(float(c))
 print(Fraction.__float__(c))
 print(float(b.inverse()))
 
-try:
-    c = Fraction(3.14,2.7)
-    print(error)
-except AssertionError:
-    print (passed)
+# try:
+#     c = Fraction(3.14,2.7)
+#     print(error)
+# except AssertionError:
+#     print (passed)
 ##c = Fraction(3.14, 2.7) # assertion error
 ##print a*b # error, did not define how to multiply two Fraction objects
 
