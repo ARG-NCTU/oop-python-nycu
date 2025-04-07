@@ -46,6 +46,13 @@ class TestDigraph:
         assert self.graph.childrenOf(self.node1) == [self.node2]
         assert self.graph.childrenOf(self.node2) == [self.node3]
 
+    def test_children_of_without_xfail(self):
+
+        self.graph.addNode(self.node1)
+        self.graph.addNode(self.node2)
+        self.graph.addEdge(self.edge1)
+        with pytest.raises(ValueError):
+            self.graph.addEdge(self.edge2)
     
     def test_has_node(self):
         self.graph.addNode(self.node1)
