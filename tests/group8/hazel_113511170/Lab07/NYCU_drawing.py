@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from pyivp import *
+from tests.group8.hazel_113511170.Lab07.pyivp import *
 
 # Function to plot the letters, returning the x and y coordinates for each letter.
 def plot_letter(letter):
