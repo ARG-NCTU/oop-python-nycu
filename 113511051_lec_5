@@ -1,0 +1,12 @@
+def test_quotient_and_remainder(a,b):
+    if(b == 0)
+        {
+            print("ZeroDivisionError")
+            return 0;
+        }
+        else
+        {
+            q = a / b
+            r = a % b
+            return (q, r)
+        }
