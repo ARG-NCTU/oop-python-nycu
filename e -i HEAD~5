@@ -1,0 +1,21 @@
+[33m6741318[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m 你的 commit 訊息
+[33m7132305[m 你的 commit 訊息
+[33ma670a40[m 你的 commit 訊息
+[33mdd777b2[m Update lec7_piting and add tests/group17/lec10_complexity_part1.py 	tests/group17/lec11_complexity_part2.py 	tests/group17/lec12_sorting.py 	tests/group17/lec3_strings_algos.py 	tests/group17/lec4_functions.py 	tests/group17/lec5_tuples_lists.py 	tests/group17/lec6_recursion_dictionaries.py 	tests/group17/lec7_debug_except copy.py 	tests/group17/lec8_classes.py 	tests/group17/lec9_inheritance copy.py
+[33m9394da3[m Update lec7_piting and add lec7_debug_except
+[33m36e2ca8[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge upstream/main and keep all files
+[33ma324db6[m[33m ([m[1;31mupstream/main[m[33m)[m fix(lec8_classes): 🐛 correct typos in comments
+[33m6b66dac[m feat(vscode): ✨ update commit message guidelines
+[33m8a631be[m Merge branch 'main' of github.com:ARG-NCTU/oop-python-nycu into main
+[33m229e435[m feat(ci): add continue-on-error to all test jobs
+[33m1cea194[m Merge pull request #327 from unknown899/main
+[33m5a3770d[m Merge pull request #328 from Miiaow3011/main
+[33me908bbc[m delete the unneccesary file
+[33m1c6bf0c[m lecture2_testing_code_111514013
+[33m740bd7f[m Merge pull request #326 from Miiaow3011/main
+[33m910e74c[m add testing primes_list in lec7
+[33m170a03d[m test rev_list
+[33m1561d0d[m Merge pull request #325 from peienwu1216/group4/test-lec9-inheritance
+[33m1edf8d0[m group4: 測試 lec9_inheritance 中 Animal/Dog/Cat 類別
+[33m0496851[m Merge branch 'main' of github.com:ARG-NCTU/oop-python-nycu into main
+[33md005f7f[m fix(utils): reorder members in Group 19
