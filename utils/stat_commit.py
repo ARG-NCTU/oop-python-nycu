@@ -28,7 +28,7 @@ def main():
         [],  # Group 16
         ["Miiaow3011", "bonnieliao774", "emmazheng0318"],  # Group 17
         ["ChocomintTW", "TedChueh", "pitinghsu"],  # Group 18
-        ["113511080", "max052028"],  # Group 19
+        ["max052028", "113511080"],  # Group 19
         ["houyuankai"],  # Group 20
         ["0u88"]  # Group 21
     ]
