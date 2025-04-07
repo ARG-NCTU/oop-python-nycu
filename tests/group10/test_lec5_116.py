@@ -25,6 +25,9 @@ def test_get_data():
           (2008,"Joe"))   
     assert lec5.get_data(tswift) == (2008, 2014, 5)
     
+def test_sum_elem_method1():
+    assert lec5.sum_elem_method1([1,2,3,4]) == 10
+    
     
     
     
