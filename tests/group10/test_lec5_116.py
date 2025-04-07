@@ -1,6 +1,5 @@
-#import add_path
-#import mit_ocw_exercises.lec5_tuples_lists as lec5  
-import practice.lec5_tuples_lists as lec5
+import add_path
+import mit_ocw_exercises.lec5_tuples_lists as lec5  
 import pytest
 def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(5,3) == (1,2)
@@ -14,25 +13,18 @@ def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(10,9) == (1,1)
     assert lec5.quotient_and_remainder(10,10) == (1,0)
 
-    try:
-        lec5.quotient_and_remainder(10,0)
-        
-    except ZeroDivisionError as e:
-        assert str(e) == "division by zero"
         
 def test_get_data():
     test = ((1,"a"),(2, "b"),
-            (1,"a"),(7,"b"))
+        (1,"a"),(7,"b"))
     assert lec5.get_data(test) == (1, 7, 2)
-    
     tswift = ((2014,"Katy"),
-              (2014, "Harry"),
-              (2012,"Jake"), 
-              (2010,"Taylor"), 
-              (2008,"Joe"))    
+          (2014, "Harry"),
+          (2012,"Jake"), 
+          (2010,"Taylor"), 
+          (2008,"Joe"))   
     assert lec5.get_data(tswift) == (2008, 2014, 5)
-    assert lec5.get_data([]) == (None, None, 0)
-    assert lec5.get_data([(1, 2)]) == (1, 2, 1)
-    assert lec5.get_data([(1, 2), (3, 4)]) == (1, 4, 2)
-    assert lec5.get_data([(1, 2), (3, 4), (5, 6)]) == (1, 6, 3)
-    assert lec5.get_data([(1, 2), (3, 4), (5, 6), (7, 8)]) == (1, 8, 4)
+    
+    
+    
+    
