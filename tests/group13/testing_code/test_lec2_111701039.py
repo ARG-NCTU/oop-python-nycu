@@ -1,6 +1,6 @@
 import add_path
 import pytest
-import mit_ocw_data_science.lec2.menu as lec2
+import mit_ocw_data_sciencen as lec2
 import random
 
 def test_food():
