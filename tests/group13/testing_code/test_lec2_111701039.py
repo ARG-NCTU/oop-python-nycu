@@ -13,8 +13,8 @@ def test_food():
     
     assert str(food) == "food: <15, 1>"
     
-    food2 = lec2.Food("neko", 1, 105000)
-    assert food2.get_value() == 1
-    assert food2.get_cost() == 105000
-    assert food2.density() == pytest.approx(1 / 105000)
-    assert str(food2) == "neko: <1, 105000>"
+    food_I = lec2.Food("black_tea", 114, 514)
+    assert food_I.get_value() == 114
+    assert food_I.get_cost() == 514
+    assert food_I.density() == pytest.approx(114 / 514)
+    assert str(food_I) == "black_tea: <114, 514>"
