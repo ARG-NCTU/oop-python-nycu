@@ -10,14 +10,27 @@ def main():
     args = parser.parse_args()
 
     github_accounts = [
-        ["lonea2005", "Harry-msi", "mingzi9397", "alan111511237"],
-        ["ModernHuman0531", "jameshsu1973", "Daniel47725812", "jjjerryc"],
-        ["hac-ohmygod0193", "YunTin0628", "ZachLian"],
-        ["hsuanyo7160", "WoodyLiang", "howard-shi55"],
-        ["TTT426", "chenmax1016", "gdpps1028", "Lin-shao-an"],
-        ["Morgan119502", "dakota218", "billwang0517", "kevinrayrayray"],
-        ["bensonchen-del", "someone7414", "lyj87", "TJKAI00"],
-        ["OlafLin24", "rsQ-24", "charlie-ww"]
+        ["LeeYinWei", "unknown899"],    # Group 1
+        ["neoAurora", "Lawrence16428", "howardhung14"],  # Group 2
+        ["yoyo0213", "JonathanYangSW", "GinoChen113511247"],  # Group 3
+        ["JumboZhang1119", "peienwu1216", "chxyuuu"],  # Group 4
+        ["ginny923", "joanna0420", "dua0505"],  # Group 5
+        ["jui-pixel", "SamTung113511034", "charles691"],  # Group 6
+        ["Tony104147"], # Group 7
+        ["haleychang0530", "Hazel-1212", "tree1014"],   # Group 8
+        ["CHENG-JE", "lwc-ed"],  # Group 9
+        ["tpvupu", "xiaotin22", "calistayang"],  # Group 10
+        ["Rickycheong0515", "hfchiang", "Samuel11GitHub"],  # Group 11
+        ["kufanghua", "yezh0915", "fiesta0217"],  # Group 12
+        ["lucasliu0910", "carabapy", "jing1688"],  # Group 13
+        ["weiouo-0817", "NiNialpaca"],  # Group 14
+        ["gamemode0701", "Tonyyu2403"],  # Group 15
+        ["TerryCheese", "junlin27"],  # Group 16
+        ["Miiaow3011", "bonnieliao774", "emmazheng0318"],  # Group 17
+        ["ChocomintTW", "TedChueh", "pitinghsu"],  # Group 18
+        ["max052028", "113511080"],  # Group 19
+        ["houyuankai"],  # Group 20
+        ["0u88"]  # Group 21
     ]
 
     commits_by_users = [[] for _ in range(len(github_accounts))]
