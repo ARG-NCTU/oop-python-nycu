@@ -78,4 +78,50 @@ def test_pass_or_not_pass():
     assert result == 1
     result = pass_or_not(-100)
     assert result == 1
+
+import numpy as np
+from lec4_112704050 import return_book
+
+def test_return_book_fixed_seed_10_returned():
+    result = return_book(0.8,10)
+    assert result == 1 
+    result = return_book(0.78,10)
+    assert result == 1 
+    result = return_book(0.85,10)
+    assert result == 1 
+    result = return_book(0.9,10)
+    assert result == 1 
+
+def test_return_book_fixed_seed_10_nonreturned():
+    result = return_book(0.7,10)
+    assert result == 0
+    result = return_book(0.76,10)
+    assert result == 0 
+    result = return_book(0.15,10)
+    assert result == 0
+    result = return_book(0.1,10)
+    assert result == 0    
+
+def test_return_book_fixed_seed_0_returned():
+    result = return_book(0.56,0)
+    assert result == 1 
+    result = return_book(0.78,0)
+    assert result == 1 
+    result = return_book(0.85,0)
+    assert result == 1 
+    result = return_book(0.9,0)
+    assert result == 1 
+
+def test_return_book_fixed_seed_0_nonreturned():
+    result = return_book(0.5,0)
+    assert result == 0
+    result = return_book(0.53,0)
+    assert result == 0 
+    result = return_book(0.15,0)
+    assert result == 0
+    result = return_book(0.1,0)
+    assert result == 0    
+
+
+
     

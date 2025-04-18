@@ -106,3 +106,22 @@ def generate_score(seed):
 seed = np.random.choice(range(1, 100000))
 total = generate_score(seed)
 pass_or_not(total)
+
+#########################
+## EXAMPLE: Return book
+#########################
+import numpy as np
+
+def return_book(return_rate = 0.8,seed=0):
+    np.random.seed(seed)
+    x = np.random.uniform(0,1)
+    print(x)
+    print(return_rate)
+    if x > return_rate :
+        print("not return")
+        return 0
+    else:
+        print("returned")
+        return 1
+
+return_book()
