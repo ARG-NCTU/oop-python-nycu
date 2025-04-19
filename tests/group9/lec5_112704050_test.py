@@ -125,3 +125,26 @@ def test_alot_list():
     expected1 = [["apple", "banana", "candy"],["red"]]
     expected2 = [["apple", "banana", "candy"],["red", "pink"]]
     assert result == (expected1, expected2)
+
+import pytest
+from lec5_112704050 import present_or_not,present_or_not_new
+
+def test_present_or_not():
+    all = ["Alice" , "Bandy", "Cindy", "Diago", "Edward", "Fred"]
+    absense = ["Alice","Bandy" ,"Diago","Cindy"]     
+    result = ['Bandy', 'Diago', 'Edward', 'Fred']
+    assert result == present_or_not(all,absense) 
+    all = ["1","2","3","4","5","6","7"]  
+    absense = ["1","2","5"]
+    result = ['2', '3', '4', '6', '7']
+    assert result == present_or_not(all,absense) 
+
+def test_present_or_not_new():
+    all = ["Alice" , "Bandy", "Cindy", "Diago", "Edward", "Fred"]
+    absense = ["Alice","Bandy" ,"Diago","Cindy"]     
+    result = ['Edward', 'Fred']
+    assert result == present_or_not_new(all,absense)   
+    all = ["1","2","3","4","5","6","7"]  
+    absense = ["1","2","5"]
+    result = ['3', '4', '6', '7']
+    assert result == present_or_not_new(all,absense)   
