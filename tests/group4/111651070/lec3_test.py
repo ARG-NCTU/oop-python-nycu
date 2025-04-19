@@ -18,13 +18,15 @@ def while_loop_and_strings():
         print(word, "!!!")
 
 def perfect_cube():
-    cube = int(input("Enter a perfect cube: "))
+    #cube = int(input("Enter a perfect cube: "))
+    cube = 27
     for guess in range(cube+1):
        if guess**3 == cube:
            print("Cube root of", cube, "is", guess)
 
 def guess_and_check_cube_root():
-    cube = int(input("Enter an integer for cube: "))
+    # cube = int(input("Enter an integer for cube: "))
+    cube = 25
     for guess in range(abs(cube)+1):
         if guess**3 >= abs(cube):
            break
@@ -35,9 +37,28 @@ def guess_and_check_cube_root():
     else:
         print('Cube root of ' + str(cube) + ' is ' + str(guess))
 
+def approximate_cube_root():
+    # cube = int(input("Enter an integer for cube: "))
+    cube = 8
+    epsilon = 0.1
+    guess = 0.0
+    increment = 0.01
+    num_guesses = 0
+    # look for close enough answer and make sure
+    # didn't accidentally skip the close enough bound
+    while abs(guess**3 - cube) >= epsilon and guess <= cube:
+        guess += increment
+        num_guesses += 1
+    print('num_guesses =', num_guesses)
+    if abs(guess**3 - cube) >= epsilon:
+        print('Failed on cube root of', cube, "with these parameters.")
+    else:
+        print(guess, 'is close to the cube root of', cube)
+
 #################################################
 s = 'hello'
 for_loop_over_string_to_find_e(s)
 while_loop_and_strings()
 perfect_cube()
 guess_and_check_cube_root()
+approximate_cube_root()
