@@ -26,4 +26,4 @@ def test_menu():
 
     pro= lec2.Menu()
     assert len(pro.get_foods()) == 0
-    build_large_menu(10, 100, 1000)
+    pro.build_large_menu(["beef","noodles","water","coffee"], 4,100)
