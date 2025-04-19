@@ -21,3 +21,5 @@ def test_food():
 
 def test_menu():
     jojo=lec2.Menu(["lemon_water", "black_tea"], [15, 114], [1, 514])
+    assert len(jojo.get_foods()) == 2
+    assert str(jojo) == "lemon_water: <15, 1>; black_tea: <114, 514>; "
