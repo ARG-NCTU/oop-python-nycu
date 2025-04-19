@@ -125,3 +125,40 @@ append_use()
 simple_copy()
 sort_use()
 alot_list()
+
+
+###############################
+## EXAMPLE: mutating a list while iterating over it
+###############################
+def present_or_not(all,absense):
+    present = all
+    for i in all:
+        #print(f"Checking:{i}")
+        #print(f"Before: {present}")
+        if i in absense:
+            present.remove(i)
+            #print(f"After: {present}")
+    return present
+
+def present_or_not_new(all,absense):
+    present = all[:]
+    for i in all[:]:
+        #print(f"Checking:{i}")
+        #print(f"Before: {present}")
+        if i in absense:
+            present.remove(i)
+            #print(f"After: {present}")
+    return present
+
+all = ["Alice" , "Bandy", "Cindy", "Diago", "Edward", "Fred"]
+absense = ["Alice","Bandy" ,"Diago","Cindy"]
+print(present_or_not(all, absense))
+
+print("\n")
+
+all = ["Alice" , "Bandy", "Cindy", "Diago", "Edward", "Fred"]
+absense = ["Alice","Bandy" ,"Diago","Cindy"]
+print(present_or_not_new(all, absense))
+
+
+
