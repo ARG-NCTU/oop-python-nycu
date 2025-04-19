@@ -19,7 +19,14 @@ def while_loop_and_strings():
     for i in range(times):
         print(word, "!!!")
 
+def perfect_cube():
+    cube = int(input("Enter a perfect cube: "))
+    for guess in range(cube+1):
+       if guess**3 == cube:
+           print("Cube root of", cube, "is", guess)
+
 #################################################
 s = 'hello'
 for_loop_over_string_to_find_e(s)
 while_loop_and_strings()
+perfect_cube()
