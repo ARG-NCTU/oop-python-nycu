@@ -19,5 +19,5 @@ def test_food():
     assert food_I.density() == pytest.approx(114 / 514)
     assert str(food_I) == "black_tea: <114, 514>"
 
-def test_food():
-    
+def test_menu():
+    jojo=lec2.Menu(["lemon_water", "black_tea"], [15, 114], [1, 514])
