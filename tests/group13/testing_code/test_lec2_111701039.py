@@ -23,3 +23,7 @@ def test_menu():
     jojo=lec2.Menu(["lemon_water", "black_tea"], [15, 114], [1, 514])
     assert len(jojo.get_foods()) == 2
     assert str(jojo) == "lemon_water: <15, 1>; black_tea: <114, 514>; "
+
+    pro= lec2.Menu()
+    assert len(pro.get_foods()) == 0
+    build_large_menu(10, 100, 1000)
