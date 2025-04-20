@@ -45,6 +45,12 @@ def func_c(z):
     print('inside func_c')
     return z()
 
+def f():
+    def x(a, b):
+        return a+b
+    return x
+
+
 #####################################
 print("=====================================")
 print("**              Test1              **")
@@ -74,3 +80,9 @@ print("-------------------------------------")
 print(f"input: 5+func_b(2), output: {5+func_b(2)}")
 print("-------------------------------------")
 print(f"input: func_c(func_a), output: {func_c(func_a)}")
+print("=====================================")
+print("**              Test6              **")
+print("=====================================")
+print(f"input: f()(3, 4), output: {f()(3, 4)}")
+print("-------------------------------------")
+print(f"input: f()(2, 10), output: {f()(2, 10)}")
