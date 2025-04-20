@@ -45,11 +45,44 @@ def func_c(z):
     print('inside func_c')
     return z()
 
-def f():
+def ff():
     def x(a, b):
         return a+b
     return x
 
+def f(y):
+    x = 1
+    x += 1
+    print(f"x = {x}")
+
+def g(y):
+    print(f"x = {x}")
+    print(f"x+1 = {x+1}")
+
+def h(y):
+    pass
+
+def i(x):
+    def h():
+        x = 'abc'
+    x = x + 1
+    print('in i(x): x =', x)
+    h()
+    return x
+
+def j(x):
+   x = x + 1
+   print('in j(x): x =', x)
+   return x
+
+def k(x):
+    def h(x):
+        x = x+1
+        print("in h(x): x = ", x)
+    x = x + 1
+    print('in k(x): x = ', x)
+    h(x)
+    return x
 
 #####################################
 print("=====================================")
@@ -83,6 +116,27 @@ print(f"input: func_c(func_a), output: {func_c(func_a)}")
 print("=====================================")
 print("**              Test6              **")
 print("=====================================")
-print(f"input: f()(3, 4), output: {f()(3, 4)}")
+print(f"input: f()(3, 4), output: {ff()(3, 4)}")
 print("-------------------------------------")
-print(f"input: f()(2, 10), output: {f()(2, 10)}")
+print(f"input: f()(2, 10), output: {ff()(2, 10)}")
+print("=====================================")
+print("**              Test7              **")
+print("=====================================")
+x = 7
+print(f"x = 7")
+print("input: 7")
+f(x)
+print("-------------------------------------")
+g(x)
+print("-------------------------------------")
+h(x)
+print("-------------------------------------")
+i(x)
+print("-------------------------------------")
+z = j(x)
+print('in main program scope: z =', z)
+print('in main program scope: x =', x)
+print("-------------------------------------")
+z = k(x)
+print('in main program scope: z =', z)
+print('in main program scope: x =', x)
