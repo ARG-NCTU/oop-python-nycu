@@ -18,6 +18,23 @@ def is_even_function_test(d):
         else:
             print(i, "odd")
 
+def bisection_cuberoot_approx(x, epsilon):
+    low = 0.0
+    high = x
+    guess = (high + low)/2.0
+    while abs(guess**3 - x) >= epsilon:
+        if guess**3 < x:
+            low = guess
+        else:
+            high = guess
+        guess = (high + low)/2.0
+    return guess
+def bisection_cuberoot_approx_test(num):
+    x = 1
+    while x < num:
+        approx = bisection_cuberoot_approx(x, 0.01)
+        print(approx, "is close to cube root of", x)
+        x *= 10
 
 #####################################
 print("=====================================")
@@ -36,3 +53,7 @@ print("=====================================")
 print("**              Test3              **")
 print("=====================================")
 is_even_function_test(6)
+print("=====================================")
+print("**              Test4              **")
+print("=====================================")
+bisection_cuberoot_approx_test(1000)
