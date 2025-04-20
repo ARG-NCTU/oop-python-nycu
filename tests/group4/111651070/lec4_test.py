@@ -36,6 +36,15 @@ def bisection_cuberoot_approx_test(num):
         print(approx, "is close to cube root of", x)
         x *= 10
 
+def func_a():
+    print('inside func_a')
+def func_b(y):
+    print('inside func_b')
+    return y
+def func_c(z):
+    print('inside func_c')
+    return z()
+
 #####################################
 print("=====================================")
 print("**              Test1              **")
@@ -57,3 +66,11 @@ print("=====================================")
 print("**              Test4              **")
 print("=====================================")
 bisection_cuberoot_approx_test(1000)
+print("=====================================")
+print("**              Test5              **")
+print("=====================================")
+print(f"input: func_a, output: {func_a()}")
+print("-------------------------------------")
+print(f"input: 5+func_b(2), output: {5+func_b(2)}")
+print("-------------------------------------")
+print(f"input: func_c(func_a), output: {func_c(func_a)}")
