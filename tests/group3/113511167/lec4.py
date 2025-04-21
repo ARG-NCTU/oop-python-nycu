@@ -12,7 +12,7 @@ def is_even_with_return( i ):
     return remainder == 0
 
 is_even_with_return(3) 
-print(is_even_with_return(3) )
+print(int(is_even_with_return(3)) )                     #change the bool type value into integer
 
 def is_even_without_return( i ):
     """ 
@@ -23,24 +23,24 @@ def is_even_without_return( i ):
     remainder = i % 2
 
 is_even_without_return(3)
-print(is_even_without_return(3) )
+print(is_even_without_return(3) )                       # none cant be change into integer directly
 
 # Simple is_even function definition
-def is_even( i ):
+def is_even( i ):                                       
     """ 
     Input: i, a positive int
     Returns True if i is even, otherwise False
     """
     remainder = i % 2
-    return remainder == 0
+    return remainder == 0                               
 
 # Use the is_even function later on in the code
 print("All numbers between 0 and 20: even or not")
 for i in range(20):
     if is_even(i):
-        print(i, "even")
+        print(i,"even")
     else:
-        print(i, "odd")
+        print(i,"odd")
 
 #########################
 ## EXAMPLE: applying functions to repeat same task many times
@@ -84,23 +84,27 @@ def func_c(z):
     print('inside func_c')
     return z()
 
-print(func_a())
+print(func_a())                     #run the function func_a first and print the none
 print(5+func_b(2))
-print(func_c(func_a))
+print(func_c(func_a))             #run the function func_a first and print the none
 
+def z():
+    return 555
+print(func_b(z()))               #run the function func_b first and print the 555
+print(func_b(z))               #run the function func_b first and print the position of function z       
 
 #########################
 ## EXAMPLE: returning function objects
 ## Python Tutor link: http://www.pythontutor.com/visualize.html#code=def%20f(%29%3A%0A%20%20%20%20def%20x(a,%20b%29%3A%0A%20%20%20%20%20%20%20%20return%20a%2Bb%0A%20%20%20%20return%20x%0A%20%20%20%20%0Aval%20%3D%20f(%29(3,4%29%0Aprint(val%29%0A&cumulative=false&curInstr=0&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false
 #########################
-def f():
+def f():                            #return a+b to x() and return it to f()
     def x(a, b):
-        return a+b
+        return a+b              
     return x
     
 # the first part, f(), returns a function object
 # then apply that function with parameters 3 and 4
-val = f()(3,4)
+val = f()(3,4)              
 print(val)
 
 
@@ -111,16 +115,16 @@ print(val)
 def f(y):
     x = 1
     x += 1
-    print(x)
+    print(x,"local x")
 x = 5
 f(x)
-print(x)
+print(x,"outside x")
 
 def g(y):
-    print(x)
+    print(x,'global x')         #x had changed to 7 before g(0) called, x is 7 in g(0)
     print(x+1)
-x = 5
-g(x)
+x = 7
+g(0)                
 print(x)
 
 def h(y):
@@ -136,8 +140,9 @@ print(x)
 ## Python Tutor link: http://www.pythontutor.com/visualize.html#code=def%20g(x%29%3A%0A%20%20%20%20def%20h(%29%3A%0A%20%20%20%20%20%20%20%20x%20%3D%20'abc'%0A%20%20%20%20x%20%3D%20x%20%2B%201%0A%20%20%20%20print('in%20g(x%29%3A%20x%20%3D',%20x%29%0A%20%20%20%20h(%29%0A%20%20%20%20return%20x%0A%0Ax%20%3D%203%0Az%20%3D%20g(x%29&cumulative=false&curInstr=0&heapPrimitives=false&mode=display&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false
 #########################
 def g(x):
-    def h():
+    def h():                        #do nothing before h() beened called in g() 
         x = 'abc'
+        print(x)
     x = x + 1
     print('in g(x): x =', x)
     h()
