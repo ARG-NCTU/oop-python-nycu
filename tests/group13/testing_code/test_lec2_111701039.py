@@ -31,5 +31,10 @@ def test_menu():
 
 def test_greedy():
     # 測試 greedy 函數
-    
+    # 建立一組 Food 物件的列表
+    foods = [
+        lec2.Food("apple", 50, 2),    # density = 25
+        lec2.Food("banana", 30, 1),   # density = 30
+        lec2.Food("pear", 40, 4)       # density = 10
+    ]
     
