@@ -28,3 +28,13 @@ def test_menu():
     assert len(pro.get_foods()) == 0
     pro.build_large_menu(["beef","noodles","water","coffee"], 4,100)
     assert len(pro.get_foods()) == 4
+
+def test_greedy():
+    # 測試 greedy 函數
+    menu = lec2.Menu(["lemon_water", "black_tea"], [15, 114], [1, 514])
+    assert menu.greedy(100) == ["black_tea", "lemon_water"]
+    
+    menu2 = lec2.Menu(["beef", "noodles", "water", "coffee"], [4, 100, 1, 10], [100, 4, 1, 10])
+    assert menu2.greedy(100) == ["beef", "water"]
+    
+    
