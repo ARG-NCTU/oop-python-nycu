@@ -8,7 +8,7 @@ def test_coordinate():
   assert coo1.x == 3;
   assert coo1.y == 4;
   assert str(coo1) == "<3,4>";
-  assert coo1.distance(coo2) == 5;
+  assert coo1.distance(o) == 5;
 
 def test_fraction():
   frac1 = lec8.Fraction(1, 4);
@@ -34,3 +34,6 @@ def test_intset():
   assert s.member(5) is False;
   s.remove(3);
   assert str(s) == "{1,2}";
+  s.remove(1);
+  assert str(s) == "{2}";
+  
