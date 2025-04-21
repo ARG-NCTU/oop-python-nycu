@@ -33,7 +33,6 @@ More terminal:
 source docker_join.sh
 ```
 
-# group1_project
-# group1_project
-# group1_project
-# group1_project
+<!--START_SECTION:pytest-->
+
+<!--END_SECTION:pytest-->
