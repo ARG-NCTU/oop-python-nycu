@@ -39,4 +39,9 @@ def test_greedy():
     # 測試隨機生成的菜單
     random.seed(0)
     foods = ["food" + str(i) for i in range(10)]
-    v
+    values = [random.randint(1, 100) for _ in range(10)]
+    costs = [random.randint(1, 100) for _ in range(10)]
+    
+    menu3 = lec2.Menu(foods, values, costs)
+    assert len(menu3.get_foods()) == 10
+    
