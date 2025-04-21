@@ -8,7 +8,7 @@ class Ball:
         self.radius = radius
         self.pos = pos
         self.velocity = velocity
-        self.mass = velocity[0] * radius  # 假設質量與半徑成正比
+        self.mass = 1  # 假設質量為1，實際上質量不影響運動，只影響碰撞計算
 
     def update(self, screen_width, screen_height):
         # 更新位置
