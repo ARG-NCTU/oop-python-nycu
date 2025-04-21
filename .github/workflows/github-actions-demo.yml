@@ -258,7 +258,7 @@ jobs:
 
       - name: Run update script
         run: |
-          python update_readme.py
+          python3 update_readme.py
 
       - name: Commit changes
         run: |
