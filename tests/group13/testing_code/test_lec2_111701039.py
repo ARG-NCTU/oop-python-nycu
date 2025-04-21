@@ -28,3 +28,20 @@ def test_menu():
     assert len(pro.get_foods()) == 0
     pro.build_large_menu(["beef","noodles","water","coffee"], 4,100)
     assert len(pro.get_foods()) == 4
+
+def test_greedy():
+    # 測試 greedy 函數
+    menu = lec2.Menu(["lemon_water", "black_tea"], [15, 114], [1, 514])
+    assert menu.greedy(100) == ["black_tea", "lemon_water"]
+    
+    menu2 = lec2.Menu(["beef", "noodles", "water", "coffee"], [4, 100, 1, 10], [100, 4, 1, 10])
+    assert menu2.greedy(100) == ["beef", "water"]
+    # 測試隨機生成的菜單
+    random.seed(0)
+    foods = ["food" + str(i) for i in range(10)]
+    values = [random.randint(1, 100) for _ in range(10)]
+    costs = [random.randint(1, 100) for _ in range(10)]
+    
+    menu3 = lec2.Menu(foods, values, costs)
+    assert len(menu3.get_foods()) == 10
+    
