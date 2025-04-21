@@ -269,6 +269,7 @@ jobs:
         run: |
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
+          git pull
           git add README.md $GITHUB_WORKSPACE/pytest_results.txt
           git commit -m "chore: update README.md" || echo "No changes to commit"
           git push
