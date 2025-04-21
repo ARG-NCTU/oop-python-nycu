@@ -260,6 +260,10 @@ jobs:
         run: |
           python3 utils/update_readme.py
 
+      - name: Configure git to allow pushing this directory
+        run: |
+          git config --global --add safe.directory ${{ github.workspace }}
+      
       - name: Commit changes
         run: |
           git config --global user.name github-actions
