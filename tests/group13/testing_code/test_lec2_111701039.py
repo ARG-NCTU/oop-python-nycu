@@ -36,5 +36,7 @@ def test_greedy():
     
     menu2 = lec2.Menu(["beef", "noodles", "water", "coffee"], [4, 100, 1, 10], [100, 4, 1, 10])
     assert menu2.greedy(100) == ["beef", "water"]
-    
-    
+    # 測試隨機生成的菜單
+    random.seed(0)
+    foods = ["food" + str(i) for i in range(10)]
+    v
