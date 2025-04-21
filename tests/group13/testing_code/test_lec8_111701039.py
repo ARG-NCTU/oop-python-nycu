@@ -20,12 +20,12 @@ def test_frac():
     assert a.num == 1 
     assert str(a) == "1/4"
     #assert a+b == c
-    print(a+b)
+    '''print(a+b)
     print(c)
     print(a-b)
     print(str(a-b))
     print(float(a))
     print(float(c))
     print(a*b)
-    print(a.inverse())
+    print(a.inverse())'''
 test_frac()
