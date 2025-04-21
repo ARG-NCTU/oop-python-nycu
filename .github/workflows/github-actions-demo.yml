@@ -258,6 +258,7 @@ jobs:
 
       - name: Run update script
         run: |
+          cat pytest_results.txt
           python3 utils/update_readme.py
 
       - name: Configure git to allow pushing this directory
