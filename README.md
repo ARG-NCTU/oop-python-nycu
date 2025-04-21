@@ -34,5 +34,6 @@ source docker_join.sh
 ```
 
 <!--START_SECTION:pytest-->
-
+| Group | Status  |
+|-------|---------|
 <!--END_SECTION:pytest-->
