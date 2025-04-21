@@ -59,6 +59,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Init pytest_results.txt
+        run: echo "" > pytest_results.txt
+
       - name: Run G1 tests
         run: |
           if pytest; then
@@ -248,7 +251,19 @@ jobs:
           fi
         working-directory: tests/group21
 
-      - name: Run tests
+      - name: Run TA tests
         run: |
           pytest
         working-directory: tests/groupTA  
+
+      - name: Run update script
+        run: |
+          python update_readme.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git add README.md pytest_results.txt
+          git commit -m "chore: update README.md" || echo "No changes to commit"
+          git push
