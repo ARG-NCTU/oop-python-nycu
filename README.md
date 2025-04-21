@@ -37,7 +37,7 @@ source docker_join.sh
 | Group | Status  |
 |-------|---------|
 | group1 | ❌ failed |
-| group2 | ✅ success |
+| group2 | ❌ failed |
 | group3 | ❌ failed |
 | group4 | ❌ failed |
 | group5 | ❌ failed |
@@ -45,7 +45,7 @@ source docker_join.sh
 | group7 | ✅ success |
 | group8 | ❌ failed |
 | group9 | ❌ failed |
-| group10 | ✅ success |
+| group10 | ❌ failed |
 | group11 | ❌ failed |
 | group12 | ❌ failed |
 | group13 | ❌ failed |
