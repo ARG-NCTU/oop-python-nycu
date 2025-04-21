@@ -37,4 +37,10 @@ def test_greedy():
         lec2.Food("banana", 30, 1),   # density = 30
         lec2.Food("pear", 40, 4)       # density = 10
     ]
+    # 使用 greedy 函數，依照密度排序，設定最大成本為 3
+    # 預期先選擇 density 最高的 banana (cost=1)，再選擇 apple (cost=2)，總成本為 3，總價值為 30+50=80
+    selected_items, total_value = lec2.greedy(foods, 3, key_function=lambda f: f.density())
+    selected_names = [item.name for item in selected_items]
+    assert selected_names == ["banana", "apple"]
+    assert total_value == pytest.approx(80)
     
