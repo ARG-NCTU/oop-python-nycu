@@ -176,4 +176,77 @@ print("r6 parent1:", r6.get_parent1())
 print("r6 parent2:", r6.get_parent2())
 print("r5 and r6 have same parents?", r5 == r6)
 print("r4 and r6 have same parents?", r4 == r6)
+#################################
+## Additional Testing Code
+#################################
+
+print("\n---- additional tests ----")
+
+# 測試 Animal
+print("\nTesting Animal class:")
+a1 = Animal(2)
+a1.set_name("Bunny")
+print(a1)
+print("Age:", a1.get_age())
+print("Name:", a1.get_name())
+
+# 測試 Cat
+print("\nTesting Cat class:")
+cat1 = Cat(3)
+cat1.set_name("Mittens")
+print(cat1)
+cat1.speak()
+cat1.set_age(4)
+print("Updated Age:", cat1.get_age())
+
+# 測試 Person
+print("\nTesting Person class:")
+p3 = Person("Charlie", 28)
+p4 = Person("Dana", 31)
+p3.add_friend("Dana")
+p3.add_friend("Evan")
+print(p3)
+print("Friends of", p3.get_name(), ":", p3.get_friends())
+p3.speak()
+p3.age_diff(p4)
+
+# 測試 Student
+print("\nTesting Student class:")
+stu1 = Student("Frank", 22, "Math")
+stu2 = Student("Grace", 19)
+print(stu1)
+print(stu2)
+stu1.speak()
+stu2.speak()
+stu2.change_major("Physics")
+print("After major change:", stu2)
+
+# 測試 Rabbit
+print("\nTesting Rabbit class:")
+ra1 = Rabbit(2)
+ra2 = Rabbit(3)
+ra3 = Rabbit(4)
+print(ra1)
+print(ra2)
+print(ra3)
+
+# 測試 Rabbit 的繁殖
+ra4 = ra1 + ra2
+ra5 = ra2 + ra3
+ra6 = ra1 + ra3
+print("Rabbit ra4 (ra1 + ra2):", ra4)
+print("Rabbit ra5 (ra2 + ra3):", ra5)
+print("Rabbit ra6 (ra1 + ra3):", ra6)
+
+# 測試父母關係
+print("ra4's parents:", ra4.get_parent1(), "and", ra4.get_parent2())
+print("ra5's parents:", ra5.get_parent1(), "and", ra5.get_parent2())
+print("ra6's parents:", ra6.get_parent1(), "and", ra6.get_parent2())
+
+# 測試 Rabbit equality
+print("Does ra4 have same parents as ra5?", ra4 == ra5)
+print("Does ra4 have same parents as ra6?", ra4 == ra6)
+
+# 測試 Rabbit ID 是否自動遞增
+print("IDs:", ra1.get_rid(), ra2.get_rid(), ra3.get_rid(), ra4.get_rid(), ra5.get_rid(), ra6.get_rid())
 
