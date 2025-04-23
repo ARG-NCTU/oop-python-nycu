@@ -48,3 +48,7 @@ def test_greedy():
     selected_items, total_value = lec2.greedy(foods, 100, key_function=lambda f: f.density())
     selected_names = [item.name for item in selected_items]
     assert selected_names == ["banana", "apple", "pear"]
+
+test_food()
+test_menu()
+test_greedy()
