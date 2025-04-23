@@ -21,4 +21,5 @@ def test_frac():
     assert a.num == 2
     assert str(a) == "2/5"
 
+test_cor()
 test_frac()
