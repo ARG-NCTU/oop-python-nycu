@@ -156,32 +156,32 @@ def test_lists_of_lists():
     assert hot == ['red', 'pink']
     assert brightcolors == [['yellow', 'orange'], ['red', 'pink']] # 只有改hot但brightcolors一樣會被改
 
+## EXAMPLE: mutating a list while iterating over it
+def remove_dups_in_L1(L1, L2):
+    for e in L1:
+        if e in L2:
+            L1.remove(e) # 第二次迴圈進行時，L1的第一個element已經被刪掉了，因此當前會從3開始檢查，有2的話才會刪除
 
-# ###############################
-# ## EXAMPLE: mutating a list while iterating over it
-# ###############################
-# def remove_dups(L1, L2):
-#     for e in L1:
-#         if e in L2:
-#             L1.remove(e)
+def remove_dups_new(L1, L2):
+    L1_copy = L1[:]
+    for e in L1_copy:
+        if e in L2:
+            L1.remove(e)
 
-# def remove_dups_new(L1, L2):
-#     L1_copy = L1[:]
-#     for e in L1_copy:
-#         if e in L2:
-#             L1.remove(e)
+def test_remove_dups_in_L1():
+    L1 = [1, 2, 3, 4]
+    L2 = [1, 2, 5, 6]
+    remove_dups_in_L1(L1, L2)
+    assert L1 == [2, 3, 4] # 2還在
+    assert L2 == [1, 2, 5, 6]
 
-# L1 = [1, 2, 3, 4]
-# L2 = [1, 2, 5, 6]
-# remove_dups(L1, L2)
-# print(L1, L2)
+def test_remove_dups_new():
+    L1 = [1, 2, 3, 4]
+    L2 = [1, 2, 5, 6]
+    remove_dups_new(L1, L2)
+    assert L1 == [3, 4] # 2被刪掉了
+    assert L2 == [1, 2, 5, 6]
 
-# L1 = [1, 2, 3, 4]
-# L2 = [1, 2, 5, 6]
-# remove_dups_new(L1, L2)
-# print(L1, L2)
-
-# ###############################
 # ## EXERCISE: Test yourself by predicting what the output is and
 # ##           what gets mutated then check with the Python Tutor
 # ###############################
