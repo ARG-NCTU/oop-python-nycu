@@ -7,7 +7,7 @@ class Coordinate(object):
         """ Sets the x and y values """
         self.x = x
         self.y = y
-    def __str__(self):
+    def __str__(self): ## 可以直接呼叫不用先宣告或用class.__str__
         """ Returns a string representation of self """
         return "<" + str(self.x) + "," + str(self.y) + ">"
     def distance(self, other):
@@ -29,51 +29,42 @@ def test_Coordinate():
 ## Try adding more built-in operations like multiply, divide
 ### Try adding a reduce method to reduce the fraction (use gcd)
 #################
-# class Fraction(object):
-#     """
-#     A number represented as a fraction
-#     """
-#     def __init__(self, num, denom):
-#         """ num and denom are integers """
-#         assert type(num) == int and type(denom) == int, "ints not used"
-#         self.num = num
-#         self.denom = denom
-#     def __str__(self):
-#         """ Retunrs a string representation of self """
-#         return str(self.num) + "/" + str(self.denom)
-#     def __add__(self, other):
-#         """ Returns a new fraction representing the addition """
-#         top = self.num*other.denom + self.denom*other.num
-#         bott = self.denom*other.denom
-#         return Fraction(top, bott)
-#     def __sub__(self, other):
-#         """ Returns a new fraction representing the subtraction """
-#         top = self.num*other.denom - self.denom*other.num
-#         bott = self.denom*other.denom
-#         return Fraction(top, bott)
-#     def __float__(self):
-#         """ Returns a float value of the fraction """
-#         return self.num/self.denom
-#     def inverse(self):
-#         """ Returns a new fraction representing 1/self """
-#         return Fraction(self.denom, self.num)
-
-# a = Fraction(1,4)
-# b = Fraction(3,4)
-# c = a + b # c is a Fraction object
-# print(c)
-# print(float(c))
-# print(Fraction.__float__(c))
-# print(float(b.inverse()))
-
-# # try:
-# #     c = Fraction(3.14,2.7)
-# #     print(error)
-# # except AssertionError:
-# #     print (passed)
-# ##c = Fraction(3.14, 2.7) # assertion error
-# ##print a*b # error, did not define how to multiply two Fraction objects
-
+class Fraction(object):
+    """
+    A number represented as a fraction
+    """
+    def __init__(self, num, denom):
+        """ num and denom are integers """
+        assert type(num) == int and type(denom) == int, "ints not used"
+        self.num = num
+        self.denom = denom
+    def __str__(self):
+        """ Retunrs a string representation of self """
+        return str(self.num) + "/" + str(self.denom)
+    def __add__(self, other):
+        """ Returns a new fraction representing the addition """
+        top = self.num*other.denom + self.denom*other.num
+        bott = self.denom*other.denom
+        return Fraction(top, bott)
+    def __sub__(self, other):
+        """ Returns a new fraction representing the subtraction """
+        top = self.num*other.denom - self.denom*other.num
+        bott = self.denom*other.denom
+        return Fraction(top, bott)
+    def __float__(self):
+        """ Returns a float value of the fraction """
+        return self.num/self.denom
+    def inverse(self):
+        """ Returns a new fraction representing 1/self """
+        return Fraction(self.denom, self.num)
+def test_Fraction():
+    a = Fraction(1,4)
+    b = Fraction(3,4)
+    c = a + b  # = __add__
+    assert str(c) == "16/16" # top: 1*4 + 4*3 = 16 / bott: 4*4 = 16
+    assert float(c) == 1.0   # 16/16 = 1.0
+    assert str(Fraction.__float__(c)) == "1.0"
+    assert str(float(b.inverse())) == "1.3333333333333333" # 4/3 = 1.3333...
 
 # ##############
 # ## EXAMPLE: a set of integers as class
@@ -133,7 +124,6 @@ def test_Coordinate():
 # except ValueError as e:
 #     assert str(e) == "3 not found"
 
-# """
 # s = intSet()
 # print(s)
 # s.insert(3)
@@ -147,4 +137,3 @@ def test_Coordinate():
 # #s.remove(3)  # leads to an error
 # print(s)
 # s.remove(3)
-# """
