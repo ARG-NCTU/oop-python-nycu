@@ -117,24 +117,15 @@ def test_sort_and_reverse():
     L.reverse()
     assert L == [9, 6, 3, 0]
 
+## EXAMPLE: aliasing
+def test_append():
+    warm = ['red', 'yellow', 'orange']
+    hot = warm
+    hot.append('pink')
+    assert hot == ['red', 'yellow', 'orange', 'pink']
+    assert warm == ['red', 'yellow', 'orange', 'pink']
 
-# #########################
-# ## EXAMPLE: aliasing
-# #########################
-# a = 1
-# b = a
-# print(a)
-# print(b)
-
-# warm = ['red', 'yellow', 'orange']
-# hot = warm
-# hot.append('pink')
-# print(hot)
-# print(warm)
-
-# #########################
 # ## EXAMPLE: cloning
-# #########################
 # cool = ['blue', 'green', 'grey']
 # chill = cool[:]
 # chill.append('black')
