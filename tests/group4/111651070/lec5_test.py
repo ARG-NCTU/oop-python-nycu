@@ -68,32 +68,54 @@ def test_sum_elem_method2():
     assert sum_elem_method2([0,0,0]) == 0
     assert sum_elem_method2([-1,-2,-3]) == -6
 
-# #########################
-# ## EXAMPLE: various list operations
-# ## put print(L) at different locations to see how it gets mutated
-# #########################
-# L1 = [2,1,3]
-# L2 = [4,5,6]
-# L3 = L1 + L2
-# L1.extend([0,6])
+## EXAMPLE: various list operations
+## put print(L) at different locations to see how it gets mutated
+def list_concatenate(L1, L2):
+    L3 = L1 + L2
+    L1.extend([0,6])
+    return L3, L1
 
-# L = [2,1,3,6,3,7,0]
-# L.remove(2)
-# L.remove(3)
-# del(L[1])
-# print(L.pop())
+def test_list_concatenate():
+    L1 = [2,1,3]
+    L2 = [4,5,6]
+    L3, L1 = list_concatenate(L1, L2)
+    assert L3 == [2, 1, 3, 4, 5, 6]
+    assert L1 == [2, 1, 3, 0, 6]
 
-# s = "I<3 cs"
-# print(list(s))
-# print(s.split('<'))
-# L = ['a', 'b', 'c']
-# print(''.join(L))
-# print('_'.join(L))
+def remove_element(L, n):
+    L.remove(n)
+    return L
 
-# L=[9,6,0,3]
-# print(sorted(L))
-# L.sort()
-# L.reverse()
+def test_remove_element():
+    L = [2, 1, 3, 6, 3, 7, 0]
+    L = remove_element(L, 2)
+    assert L == [1, 3, 6, 3, 7, 0]
+    L = remove_element(L, 3)
+    assert L == [1, 6, 3, 7, 0]   # only removes the first 3
+    L = remove_element(L, 6)
+    assert L == [1, 3, 7, 0]
+    del(L[2])
+    assert L == [1, 3, 0]
+    assert L.pop() == 0
+
+def split_and_join(s, sign, L):
+    s1 = s.split(sign)
+    s2 = sign.join(L)
+    return s1, s2
+
+def test_split_and_join():
+    s = "I<3 cs"
+    assert list(s) == ['I', '<', '3', ' ', 'c', 's']
+    s1, s2 = split_and_join(s, '<', ['a', 'b', 'c'])
+    assert s1 == ['I', '3 cs']
+    assert s2 == 'a<b<c'
+
+def test_sort_and_reverse():
+    L = [9, 6, 0, 3]
+    L.sort()
+    assert L == [0, 3, 6, 9]
+    L.reverse()
+    assert L == [9, 6, 3, 0]
 
 
 # #########################
