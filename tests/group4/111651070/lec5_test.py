@@ -133,18 +133,17 @@ def test_clone():
     assert chill == ['blue', 'green', 'grey', 'black']
     assert cool == ['blue', 'green', 'grey']
 
-# #########################
-# ## EXAMPLE: sorting with/without mutation
-# #########################
-# warm = ['red', 'yellow', 'orange']
-# sortedwarm = warm.sort()
-# print(warm)
-# print(sortedwarm)
-
-# cool = ['grey', 'green', 'blue']
-# sortedcool = sorted(cool)
-# print(cool)
-# print(sortedcool)
+## EXAMPLE: sorting with/without mutation
+def test_string_sort():
+    warm = ['red', 'yellow', 'orange']
+    assert warm == ['red', 'yellow', 'orange']
+    sorted_warm = sorted(warm) # return
+    assert sorted_warm == ['orange', 'red', 'yellow']
+    assert warm == ['red', 'yellow', 'orange']
+    warm = ['red', 'yellow', 'orange']
+    sorted_warm = warm.sort() # change directly
+    assert sorted_warm == None
+    assert warm == ['orange', 'red', 'yellow']
 
 # #########################
 # ## EXAMPLE: lists of lists of lists...
