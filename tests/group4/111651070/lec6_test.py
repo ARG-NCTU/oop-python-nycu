@@ -1,4 +1,6 @@
+#####################################
 # EXAMPLE:  Towers of Hanoi
+#####################################
 def printMove(fr, to):
     print('move from ' + str(fr) + ' to ' + str(to))
 
@@ -34,33 +36,32 @@ def test_fib():
     assert fib(8) == 34
     assert fib(9) == 55
 
-# #####################################
-# # EXAMPLE:  testing for palindrome 回文
-# #####################################
+#####################################
+# EXAMPLE:  testing for palindrome 回文
+#####################################
 
-# def is_palindrome(s):
+def is_palindrome(s):
+    # 把字串全部變小寫＋去掉非字母的字元
+    def to_chars(s):
+        s = s.lower()
+        ans = ''
+        for c in s:
+            if c in 'abcdefghijklmnopqrstuvwxyz':
+                ans = ans + c
+        return ans
+    # 判斷是否為回文
+    def is_pal(s):
+        if len(s) <= 1:
+            return True
+        else:
+            return s[0] == s[-1] and is_pal(s[1:-1]) #
 
-#     def to_chars(s):
-#         s = s.lower()
-#         ans = ''
-#         for c in s:
-#             if c in 'abcdefghijklmnopqrstuvwxyz':
-#                 ans = ans + c
-#         return ans
+    return is_pal(to_chars(s))
 
-#     def is_pal(s):
-#         if len(s) <= 1:
-#             return True
-#         else:
-#             return s[0] == s[-1] and is_pal(s[1:-1])
-
-#     return is_pal(to_chars(s))
-
-# #print(is_palindrome('eve'))
-# #
-# #print(is_palindrome('Able was I, ere I saw Elba'))
-# #
-# #print(is_palindrome('Is this a palindrome'))
+def test_is_palindrome():
+    assert is_palindrome('eve') == True
+    assert is_palindrome('Able was I, ere I saw Elba') == True
+    assert is_palindrome('Is this a palindrome') == False
 
 # #####################################
 # # EXAMPLE: using dictionaries
