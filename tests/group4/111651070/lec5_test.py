@@ -125,12 +125,13 @@ def test_append():
     assert hot == ['red', 'yellow', 'orange', 'pink']
     assert warm == ['red', 'yellow', 'orange', 'pink']
 
-# ## EXAMPLE: cloning
-# cool = ['blue', 'green', 'grey']
-# chill = cool[:]
-# chill.append('black')
-# print(chill)
-# print(cool)
+## EXAMPLE: cloning
+def test_clone():
+    cool = ['blue', 'green', 'grey']
+    chill = cool[:]
+    chill.append('black')
+    assert chill == ['blue', 'green', 'grey', 'black']
+    assert cool == ['blue', 'green', 'grey']
 
 # #########################
 # ## EXAMPLE: sorting with/without mutation
