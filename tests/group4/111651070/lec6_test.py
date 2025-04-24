@@ -170,34 +170,27 @@ def test_words_often():
     assert result[0] == (['you'], 36)
     assert result[1] == (['yeah'], 28)
 
-# #####################################
-# # EXAMPLE: comparing fibonacci using memoization
-# #####################################
+#####################################
+# EXAMPLE: comparing fibonacci using memoization
+#####################################
+def fib_mem(n):
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    else:
+        return fib(n-1) + fib(n-2)
 
+def fib_efficient(n, d):
+    if n in d:
+        return d[n]
+    else:
+        ans = fib_efficient(n-1, d)+fib_efficient(n-2, d)
+        d[n] = ans
+        return ans
 
-# def fib_mem(n):
-#     if n == 1:
-#         return 1
-#     elif n == 2:
-#         return 2
-#     else:
-#         return fib1(n-1) + fib1(n-2)
-
-
-# def fib_efficient(n, d):
-#     if n in d:
-#         return d[n]
-#     else:
-#         ans = fib_efficient(n-1, d)+fib_efficient(n-2, d)
-#         d[n] = ans
-#         return ans
-
-# d = {1:1, 2:2}
-
-# argToUse = 34
-# #print("")
-# #print('using fib')
-# #print(fib(argToUse))
-# #print("")
-# #print('using fib_efficient')
-# #print(fib_efficient(argToUse, d))
+def test_fib():
+    d = {1:1, 2:2} # Key:Value = 1:1, 2:2
+    argToUse = 34
+    assert fib(argToUse) == 9227465
+    assert fib_efficient(argToUse, d) == 9227465
