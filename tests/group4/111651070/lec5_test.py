@@ -182,47 +182,24 @@ def test_remove_dups_new():
     assert L1 == [3, 4] # 2被刪掉了
     assert L2 == [1, 2, 5, 6]
 
-# ## EXERCISE: Test yourself by predicting what the output is and
-# ##           what gets mutated then check with the Python Tutor
-# ###############################
-# cool = ['blue', 'green']
-# warm = ['red', 'yellow', 'orange']
-# print(cool)
-# print(warm)
-
-# colors1 = [cool]
-# print(colors1)
-# colors1.append(warm)
-# print('colors1 = ', colors1)
-
-# colors2 = [['blue', 'green'],
-#           ['red', 'yellow', 'orange']]
-# print('colors2 =', colors2)
-
-# warm.remove('red')
-# print('colors1 = ', colors1)
-# print('colors2 =', colors2)
-
-# for e in colors1:
-#     print('e =', e)
-
-# for e in colors1:
-#     if type(e) == list:
-#         for e1 in e:
-#             print(e1)
-#     else:
-#         print(e)
-
-# flat = cool + warm
-# print('flat =', flat)
-
-# print(flat.sort())
-# print('flat =', flat)
-
-# new_flat = sorted(flat, reverse = True)
-# print('flat =', flat)
-# print('new_flat =', new_flat)
-
-# cool[1] = 'black'
-# print(cool)
-# print(colors1)
+## EXERCISE: Test yourself by predicting what the output is and
+##           what gets mutated then check with the Python Tutor
+def test_exercise():
+    cool = ['blue', 'green']
+    warm = ['red', 'yellow', 'orange']
+    colors1 = [cool]
+    assert colors1 == [['blue', 'green']]
+    colors1.append(warm) # 改warm會連帶改到colors1
+    assert colors1 == [['blue', 'green'], ['red', 'yellow', 'orange']]
+    warm.remove('red')
+    assert warm == ['yellow', 'orange']
+    assert colors1 == [['blue', 'green'], ['yellow', 'orange']]
+    flat = cool + warm # 改warm不會連帶影響到flat
+    assert flat == ['blue', 'green', 'yellow', 'orange']
+    flat.sort()
+    assert flat == ['blue', 'green', 'orange', 'yellow']
+    new_flat = sorted(flat, reverse = True)
+    assert new_flat == ['yellow', 'orange', 'green', 'blue']
+    cool[1] = 'black'
+    assert cool == ['blue', 'black']
+    assert flat == ['blue', 'green', 'orange', 'yellow']
