@@ -145,17 +145,16 @@ def test_string_sort():
     assert sorted_warm == None
     assert warm == ['orange', 'red', 'yellow']
 
-# #########################
-# ## EXAMPLE: lists of lists of lists...
-# #########################
-# warm = ['yellow', 'orange']
-# hot = ['red']
-# brightcolors = [warm]
-# brightcolors.append(hot)
-# print(brightcolors)
-# hot.append('pink')
-# print(hot)
-# print(brightcolors)
+## EXAMPLE: lists of lists of lists...
+def test_lists_of_lists():
+    warm = ['yellow', 'orange']
+    hot = ['red']
+    brightcolors = [warm]
+    brightcolors.append(hot)
+    assert brightcolors == [['yellow', 'orange'], ['red']]
+    hot.append('pink')
+    assert hot == ['red', 'pink']
+    assert brightcolors == [['yellow', 'orange'], ['red', 'pink']] # 只有改hot但brightcolors一樣會被改
 
 
 # ###############################
