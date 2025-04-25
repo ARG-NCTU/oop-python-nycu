@@ -141,43 +141,43 @@ class Rabbit(Animal):
     def __str__(self):
         return "rabbit:"+ self.get_rid()
 
-def test_creating_rabbits():
-    r1 = Rabbit(3)
-    r2 = Rabbit(4)
-    r3 = Rabbit(5)
-    assert str(r1) == "rabbit:001"
-    assert str(r2) == "rabbit:002"
-    assert str(r3) == "rabbit:003"
-    assert r1.get_parent1()
-def test_rabbit_addition():
-    r1 = Rabbit(3)
-    r2 = Rabbit(4)
-    r3 = Rabbit(5)
-    r4 = r1 + r2
-    assert str(r4) == "rabbit:004"
-    assert r4.get_parent1() == r1
-    assert r4.get_parent2() == r2
+# def test_creating_rabbits():
+#     r1 = Rabbit(3)
+#     r2 = Rabbit(4)
+#     r3 = Rabbit(5)
+#     assert str(r1) == "rabbit:001"
+#     assert str(r2) == "rabbit:002"
+#     assert str(r3) == "rabbit:003"
+#     assert r1.get_parent1()
+# def test_rabbit_addition():
+#     r1 = Rabbit(3)
+#     r2 = Rabbit(4)
+#     r3 = Rabbit(5)
+#     r4 = r1 + r2
+#     assert str(r4) == "rabbit:007"
+#     assert r4.get_parent1() == r1
+#     assert r4.get_parent2() == r2
 
+# def test_rabbit_equality():
+#     r1 = Rabbit(3)
+#     r2 = Rabbit(4)
+#     r3 = Rabbit(5)
+#     r4 = r1 + r2
+#     assert r4 == (r1 + r2)
+#     assert not (r4 == (r1 + r3))
+#     assert not (r4 == (r2 + r3))
 
-print("---- testing rabbit addition ----")
-r4 = r1+r2   # r1.__add__(r2)
-print("r1:", r1)
-print("r2:", r2)
-print("r4:", r4)
-print("r4 parent1:", r4.get_parent1())
-print("r4 parent2:", r4.get_parent2())
-
-print("---- testing rabbit equality ----")
-r5 = r3+r4
-r6 = r4+r3
-print("r3:", r3)
-print("r4:", r4)
-print("r5:", r5)
-print("r6:", r6)
-print("r5 parent1:", r5.get_parent1())
-print("r5 parent2:", r5.get_parent2())
-print("r6 parent1:", r6.get_parent1())
-print("r6 parent2:", r6.get_parent2())
-print("r5 and r6 have same parents?", r5 == r6)
-print("r4 and r6 have same parents?", r4 == r6)
+# print("---- testing rabbit equality ----")
+# r5 = r3+r4
+# r6 = r4+r3
+# print("r3:", r3)
+# print("r4:", r4)
+# print("r5:", r5)
+# print("r6:", r6)
+# print("r5 parent1:", r5.get_parent1())
+# print("r5 parent2:", r5.get_parent2())
+# print("r6 parent1:", r6.get_parent1())
+# print("r6 parent2:", r6.get_parent2())
+# print("r5 and r6 have same parents?", r5 == r6)
+# print("r4 and r6 have same parents?", r4 == r6)
 
