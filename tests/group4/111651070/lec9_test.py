@@ -108,79 +108,76 @@ def test_Student():
     s1.speak()
     s2.speak()
 
-print("\n---- student tests ----")
-s1 = Student('alice', 20, "CS")
-s2 = Student('beth', 18)
-print(s1)
-print(s2)
-print(s1.get_name(),"says:", end=" ")
-s1.speak()
-print(s2.get_name(),"says:", end=" ")
-s2.speak()
+#################################
+## Use of class variables
+#################################
+class Rabbit(Animal):
+    # a class variable, tag, shared across all instances
+    tag = 1
+    def __init__(self, age, parent1=None, parent2=None):
+        Animal.__init__(self, age)
+        self.parent1 = parent1
+        self.parent2 = parent2
+        self.rid = Rabbit.tag
+        Rabbit.tag += 1
+    def get_rid(self):
+        # zfill used to add leading zeroes 001 instead of 1
+        return str(self.rid).zfill(3)
+    def get_parent1(self):
+        return self.parent1
+    def get_parent2(self):
+        return self.parent2
+    def __add__(self, other):
+        # returning object of same type as this class
+        return Rabbit(0, self, other)
+    def __eq__(self, other):
+        if self.parent1 is None or self.parent2 is None or other.parent1 is None or other.parent2 is None:
+            return False
+        parents_same = self.parent1.rid == other.parent1.rid \
+                       and self.parent2.rid == other.parent2.rid
+        parents_opposite = self.parent2.rid == other.parent1.rid \
+                           and self.parent1.rid == other.parent2.rid
+        return parents_same or parents_opposite
+    def __str__(self):
+        return "rabbit:"+ self.get_rid()
 
-# #################################
-# ## Use of class variables
-# #################################
-# class Rabbit(Animal):
-#     # a class variable, tag, shared across all instances
-#     tag = 1
-#     def __init__(self, age, parent1=None, parent2=None):
-#         Animal.__init__(self, age)
-#         self.parent1 = parent1
-#         self.parent2 = parent2
-#         self.rid = Rabbit.tag
-#         Rabbit.tag += 1
-#     def get_rid(self):
-#         # zfill used to add leading zeroes 001 instead of 1
-#         return str(self.rid).zfill(3)
-#     def get_parent1(self):
-#         return self.parent1
-#     def get_parent2(self):
-#         return self.parent2
-#     def __add__(self, other):
-#         # returning object of same type as this class
-#         return Rabbit(0, self, other)
-#     def __eq__(self, other):
-#         if self.parent1 is None or self.parent2 is None or other.parent1 is None or other.parent2 is None:
-#             return False
-#         parents_same = self.parent1.rid == other.parent1.rid \
-#                        and self.parent2.rid == other.parent2.rid
-#         parents_opposite = self.parent2.rid == other.parent1.rid \
-#                            and self.parent1.rid == other.parent2.rid
-#         return parents_same or parents_opposite
-#     def __str__(self):
-#         return "rabbit:"+ self.get_rid()
+def test_creating_rabbits():
+    r1 = Rabbit(3)
+    r2 = Rabbit(4)
+    r3 = Rabbit(5)
+    assert str(r1) == "rabbit:001"
+    assert str(r2) == "rabbit:002"
+    assert str(r3) == "rabbit:003"
+    assert r1.get_parent1()
+def test_rabbit_addition():
+    r1 = Rabbit(3)
+    r2 = Rabbit(4)
+    r3 = Rabbit(5)
+    r4 = r1 + r2
+    assert str(r4) == "rabbit:004"
+    assert r4.get_parent1() == r1
+    assert r4.get_parent2() == r2
 
-# print("\n---- rabbit tests ----")
-# print("---- testing creating rabbits ----")
-# r1 = Rabbit(3)
-# r2 = Rabbit(4)
-# r3 = Rabbit(5)
-# print("r1:", r1)
-# print("r2:", r2)
-# print("r3:", r3)
-# print("r1 parent1:", r1.get_parent1())
-# print("r1 parent2:", r1.get_parent2())
 
-# print("---- testing rabbit addition ----")
-# r4 = r1+r2   # r1.__add__(r2)
-# print("r1:", r1)
-# print("r2:", r2)
-# print("r4:", r4)
-# print("r4 parent1:", r4.get_parent1())
-# print("r4 parent2:", r4.get_parent2())
+print("---- testing rabbit addition ----")
+r4 = r1+r2   # r1.__add__(r2)
+print("r1:", r1)
+print("r2:", r2)
+print("r4:", r4)
+print("r4 parent1:", r4.get_parent1())
+print("r4 parent2:", r4.get_parent2())
 
-# print("---- testing rabbit equality ----")
-# r5 = r3+r4
-# r6 = r4+r3
-# print("r3:", r3)
-# print("r4:", r4)
-# print("r5:", r5)
-# print("r6:", r6)
-# print("r5 parent1:", r5.get_parent1())
-# print("r5 parent2:", r5.get_parent2())
-# print("r6 parent1:", r6.get_parent1())
-# print("r6 parent2:", r6.get_parent2())
-# print("r5 and r6 have same parents?", r5 == r6)
-# print("r4 and r6 have same parents?", r4 == r6)
+print("---- testing rabbit equality ----")
+r5 = r3+r4
+r6 = r4+r3
+print("r3:", r3)
+print("r4:", r4)
+print("r5:", r5)
+print("r6:", r6)
+print("r5 parent1:", r5.get_parent1())
+print("r5 parent2:", r5.get_parent2())
+print("r6 parent1:", r6.get_parent1())
+print("r6 parent2:", r6.get_parent2())
+print("r5 and r6 have same parents?", r5 == r6)
+print("r4 and r6 have same parents?", r4 == r6)
 
