@@ -33,7 +33,28 @@ More terminal:
 source docker_join.sh
 ```
 
-# group1_project
-# group1_project
-# group1_project
-# group1_project
+<!--START_SECTION:pytest-->
+| Group | Status  |
+|-------|---------|
+| group1 | ✅ success |
+| group2 | ❌ failed |
+| group3 | ❌ failed |
+| group4 | ✅ success |
+| group5 | ❌ failed |
+| group6 | ✅ success |
+| group7 | ✅ success |
+| group8 | ❌ failed |
+| group9 | ✅ success |
+| group10 | ❌ failed |
+| group11 | ❌ failed |
+| group12 | ❌ failed |
+| group13 | ✅ success |
+| group14 | ✅ success |
+| group15 | ❌ failed |
+| group16 | ❌ failed |
+| group17 | ❌ failed |
+| group18 | ✅ success |
+| group19 | ❌ failed |
+| group20 | ❌ failed |
+| group21 | ✅ success |
+<!--END_SECTION:pytest-->
