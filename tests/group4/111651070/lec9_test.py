@@ -76,37 +76,47 @@ def test_Person():
     assert p2.get_age() == 25
     assert str(p1) == "person:jack:30"
 
-# #################################
-# ## Inheritance example
-# #################################
-# class Student(Person):
-#     def __init__(self, name, age, major=None):
-#         Person.__init__(self, name, age)
-#         self.major = major
-#     def __str__(self):
-#         return "student:"+str(self.name)+":"+str(self.age)+":"+str(self.major)
-#     def change_major(self, major):
-#         self.major = major
-#     def speak(self):
-#         r = random.random()
-#         if r < 0.25:
-#             print("i have homework")
-#         elif 0.25 <= r < 0.5:
-#             print("i need sleep")
-#         elif 0.5 <= r < 0.75:
-#             print("i should eat")
-#         else:
-#             print("i am watching tv")
+#################################
+## Inheritance example
+#################################
+class Student(Person):
+    def __init__(self, name, age, major=None):
+        Person.__init__(self, name, age)
+        self.major = major
+    def __str__(self):
+        return "student:"+str(self.name)+":"+str(self.age)+":"+str(self.major)
+    def change_major(self, major):
+        self.major = major
+    def speak(self):
+        r = random.random()
+        if r < 0.25:
+            print("i have homework")
+        elif 0.25 <= r < 0.5:
+            print("i need sleep")
+        elif 0.5 <= r < 0.75:
+            print("i should eat")
+        else:
+            print("i am watching tv")
 
-# print("\n---- student tests ----")
-# s1 = Student('alice', 20, "CS")
-# s2 = Student('beth', 18)
-# print(s1)
-# print(s2)
-# print(s1.get_name(),"says:", end=" ")
-# s1.speak()
-# print(s2.get_name(),"says:", end=" ")
-# s2.speak()
+def test_Student():
+    s1 = Student("alice", 20, "CS")
+    s2 = Student("bob", 18)
+    assert str(s1) == "student:alice:20:CS"
+    assert str(s2) == "student:bob:18:None"
+    s1.change_major("Math")
+    assert str(s1) == "student:alice:20:Math"
+    s1.speak()
+    s2.speak()
+
+print("\n---- student tests ----")
+s1 = Student('alice', 20, "CS")
+s2 = Student('beth', 18)
+print(s1)
+print(s2)
+print(s1.get_name(),"says:", end=" ")
+s1.speak()
+print(s2.get_name(),"says:", end=" ")
+s2.speak()
 
 # #################################
 # ## Use of class variables
