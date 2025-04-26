@@ -25,13 +25,21 @@ def test_bubble_sort():
 
 
 def selection_sort(L):
+    # 每次處理[suffixSt:len(L)]的範圍
+    # suffixSt會從0逐次遞增到len(L)-1
     suffixSt = 0
     while suffixSt != len(L):
         print('selection sort: ' + str(L))
+        # for迴圈跑遍[suffixSt:len(L)]的範圍，將最小的element放到index = suffixSt的位置上
         for i in range(suffixSt, len(L)):
             if L[i] < L[suffixSt]:
-                L[suffixSt], L[i] = L[i], L[suffixSt]
+                L[suffixSt], L[i] = L[i], L[suffixSt] # 交換
         suffixSt += 1
+
+def test_selection_sort():
+    testList = [3, 1, 2, 6, 5, 4, 10, 8]
+    selection_sort(testList)
+    assert testList == [1, 2, 3, 4, 5, 6, 8, 10]
 
 
 def merge(left, right):
