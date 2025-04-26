@@ -42,6 +42,7 @@ def test_selection_sort():
     assert testList == [1, 2, 3, 4, 5, 6, 8, 10]
 
 
+#將給定的兩個sorted list: left, right合併成一個sorted list
 def merge(left, right):
     result = []
     i,j = 0,0
@@ -70,6 +71,10 @@ def merge_sort(L):
         left = merge_sort(L[:middle])
         right = merge_sort(L[middle:])
         return merge(left, right)
+
+def test_merge_sort():
+    testList = [3, 1, 2, 6, 5, 4, 10, 8]
+    assert merge_sort(testList) == [1, 2, 3, 4, 5, 6, 8, 10]
 
 def bubble_sort_np(L):
     swap = False
