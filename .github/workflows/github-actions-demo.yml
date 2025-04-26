@@ -14,7 +14,7 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
-          ls ${{ github.workspace }}
+          ls $GITHUB_WORKSPACE
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   # Define the job to use a Docker container
@@ -59,27 +59,217 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Init pytest_results.txt
+        run: echo "" > $GITHUB_WORKSPACE/pytest_results.txt
+
+      - name: Run G1 tests
+        run: |
+          if pytest; then
+            echo "group1: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group1: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group1  
+        
+      - name: Run G2 tests
+        run: |
+          if pytest; then
+            echo "group2: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group2: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group2   
+      
       - name: Run G3 tests
         run: |
-          pip install -r requirements.txt
-          pytest
-        working-directory: tests/group3  
+          if pytest; then
+            echo "group3: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group3: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group3   
 
       - name: Run G4 tests
         run: |
-          pytest
-        working-directory: tests/group4
+          if pytest; then
+            echo "group4: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group4: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group4 
+
+      - name: Run G5 tests
+        run: |
+          if pytest; then
+            echo "group5: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group5: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group5 
+
+      - name: Run G6 tests
+        run: |
+          if pytest; then
+            echo "group6: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group6: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group6 
+
+      - name: Run G7 tests
+        run: |
+          if pytest; then
+            echo "group7: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group7: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group7 
 
       - name: Run G8 tests
         run: |
-          pytest
-        working-directory: tests/group8
+          if pytest; then
+            echo "group8: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group8: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group8 
+
+      - name: Run G9 tests
+        run: |
+          if pytest; then
+            echo "group9: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group9: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group9  
         
-      - name: Run tests
+      - name: Run G10 tests
+        run: |
+          if pytest; then
+            echo "group10: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group10: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group10
+
+      - name: Run G11 tests
+        run: |
+          if pytest; then
+            echo "group11: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group11: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group11
+      
+      - name: Run G12 tests
+        run: |
+          if pytest; then
+            echo "group12: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group12: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group12
+
+      - name: Run G13 tests
+        run: |
+          if pytest; then
+            echo "group13: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group13: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group13
+
+      - name: Run G14 tests 
+        run: |
+          if pytest; then
+            echo "group14: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group14: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group14
+
+      - name: Run G15 tests
+        run: |
+          if pytest; then
+            echo "group15: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group15: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group15
+
+      - name: Run G16 tests
+        run: |
+          if pytest; then
+            echo "group16: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group16: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group16
+
+      - name: Run G17 tests
+        run: |
+          if pytest; then
+            echo "group17: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group17: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group17
+
+      - name: Run G18 tests
+        run: |
+          if pytest; then
+            echo "group18: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group18: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group18
+
+      - name: Run G19 tests
+        run: |
+          if pytest; then
+            echo "group19: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group19: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group19
+
+      - name: Run G20 tests
+        run: |
+          if pytest; then
+            echo "group20: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group20: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group20
+        
+      - name: Run G21 tests
+        run: |
+          if pytest; then
+            echo "group21: success" >> $GITHUB_WORKSPACE/pytest_results.txt
+          else
+            echo "group21: failed" >> $GITHUB_WORKSPACE/pytest_results.txt
+          fi
+        working-directory: tests/group21
+
+      - name: Run TA tests
         run: |
           pytest
         working-directory: tests/groupTA  
-          #       - name: Upload test results
-          #         uses: actions/upload-artifact@v5
-          #         with:
-          #           name: test-results
+
+      - name: Run update script
+        run: |
+          cat $GITHUB_WORKSPACE/pytest_results.txt
+          python3 utils/update_readme.py
+
+      - name: Configure git to allow pushing this directory
+        run: |
+          git config --global --add safe.directory /__w/oop-python-nycu/oop-python-nycu
+      
+      - name: Commit changes
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git pull
+          git add README.md $GITHUB_WORKSPACE/pytest_results.txt
+          git commit -m "chore: update README.md" || echo "No changes to commit"
+          git push
