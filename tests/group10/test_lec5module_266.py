@@ -74,6 +74,40 @@ def test_usual_drunk():
     step = drunk.take_step()
     assert step in [(0, 1), (0, -1), (1, 0), (-1, 0)]
 
+def test_walk():
+    # test walk function
+    # test walk function with 10 steps
+    drunk = lec5.UsualDrunk("Drunk1")
+    loc = lec5.Location(0, 0)
+    field = lec5.Field()
+    field.add_drunk(drunk, loc)
+    
+    for _ in range(10):
+        field.move_drunk(drunk)
+    
+    final_loc = field.get_loc(drunk)
+    assert final_loc.dist_from(loc) <= 10
+    # test walk function with 100 steps
+    for _ in range(100):
+        field.move_drunk(drunk)
+    final_loc = field.get_loc(drunk)
+    assert final_loc.dist_from(loc) <= 100
+
+def test_walk_sim():
+    # test sim_walks function
+    # test sim_walks function with 10 steps and 100 tr
+    # ials
+    num_steps = 10
+    num_trials = 100
+    drunk_class = lec5.UsualDrunk
+    result = lec5.sim_walks(num_steps, num_trials, drunk_class)
+    assert isinstance(result, list)
+    assert len(result) == num_trials
+    assert all(isinstance(x, float) for x in result)
+    assert all(x >= 0 for x in result)
+    assert all(x <= num_steps for x in result)
+
+
 
 
 
