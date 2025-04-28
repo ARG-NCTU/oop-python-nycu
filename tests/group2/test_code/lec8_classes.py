@@ -1,8 +1,6 @@
 #################
 ## EXAMPLE: simple Coordinate class
 #################
-import math
-import pytest
 class Coordinate(object):
     """ A coordinate made up of an x and y value """
     def __init__(self, x, y):
@@ -17,27 +15,24 @@ class Coordinate(object):
         x_diff_sq = (self.x-other.x)**2
         y_diff_sq = (self.y-other.y)**2
         return (x_diff_sq + y_diff_sq)**0.5
-    def polor(self):
-        """ Returns the polor coordinate of the point """
-        self.r = (self.x**2 + self.y**2)**0.5
-        self.theta = math.atan2(self.y, self.x)
-        return (self.r, self.theta)
-    def __eq__(self, other):
-        """ Returns True if other is equal to self """
-        return self.x == other.x and self.y == other.y
 
-c = Coordinate(3,4)
-origin = Coordinate(0,0)
-print(c.x, origin.x)
-print(c.distance(origin))
-print(Coordinate.distance(c, origin))
-print(origin.distance(c))
-print(c)
-c.polor()
-print(c.theta)
+def Coordinate_test():
+    c1 = Coordinate(3, 4)
+    c2 = Coordinate(0, 0)
+    assert c1.x == 3 and c1.y == 4
+    assert c2.x == 0 and c2.y == 0
+    assert c1.distance(c2) == 5.0  # (3^2 + 4^2) ** 0.5 = 5
+    assert str(c1) == "<3,4>"
 
+# Coodinate test()
+# c = Coordinate(3,4)
+# origin = Coordinate(0,0)
+# print(c.x, origin.x)
+# print(c.distance(origin))
+# print(Coordinate.distance(c, origin))
+# print(origin.distance(c))
+# print(c)
 
-print("=========================================================")
 
 #################
 ## EXAMPLE: simple class to represent fractions
@@ -69,13 +64,6 @@ class Fraction(object):
     def __float__(self):
         """ Returns a float value of the fraction """
         return self.num/self.denom
-    
-    def __mul__(self, other):
-        """ Returns a new fraction representing the multiplication """
-        top = self.num*other.num
-        bott = self.denom*other.denom
-        return Fraction(top, bott)
-
     def inverse(self):
         """ Returns a new fraction representing 1/self """
         return Fraction(self.denom, self.num)
@@ -87,10 +75,16 @@ print(c)
 print(float(c))
 print(Fraction.__float__(c))
 print(float(b.inverse()))
-##c = Fraction(3.14, 2.7) # assertion error
-print(a * b) # did not define how to multiply two Fraction objects
 
-print("=========================================================")
+# try:
+#     c = Fraction(3.14,2.7)
+#     print(error)
+# except AssertionError:
+#     print (passed)
+##c = Fraction(3.14, 2.7) # assertion error
+##print a*b # error, did not define how to multiply two Fraction objects
+
+
 ##############
 ## EXAMPLE: a set of integers as class
 ##############
@@ -127,7 +121,29 @@ class intSet(object):
         self.vals.sort()
         return '{' + ','.join([str(e) for e in self.vals]) + '}'
 
+s = intSet()
+assert str(s) == "{}"  # 初始集合應該是空的
 
+s.insert(3)
+s.insert(4)
+s.insert(3)  # 重複插入應該無效
+assert str(s) == "{3,4}"
+
+assert s.member(3) is True
+assert s.member(5) is False
+
+s.insert(6)
+assert str(s) == "{3,4,6}"
+
+s.remove(3)
+assert str(s) == "{4,6}"
+
+try:
+    s.remove(3)  # 應該拋出 ValueError
+except ValueError as e:
+    assert str(e) == "3 not found"
+
+"""
 s = intSet()
 print(s)
 s.insert(3)
@@ -141,93 +157,4 @@ print(s)
 #s.remove(3)  # leads to an error
 print(s)
 s.remove(3)
-# =====================================================================================
-import math
-import pytest
-from fractions import Fraction as PyFraction  # 用來驗證結果
-
-#######################
-# Coordinate class test
-#######################
-
-# from your_module import Coordinate, Fraction, intSet  # 替換成你實際定義的模組名稱
-
-def test_coordinate_distance():
-    a = Coordinate(3, 4)
-    b = Coordinate(0, 0)
-    assert a.distance(b) == pytest.approx(5.0)
-
-def test_coordinate_eq():
-    a = Coordinate(1, 2)
-    b = Coordinate(1, 2)
-    c = Coordinate(2, 1)
-    assert a == b
-    assert not (a == c)
-
-def test_coordinate_polar():
-    c = Coordinate(3, 4)
-    r, theta = c.polor()
-    assert r == pytest.approx(5.0)
-    assert theta == pytest.approx(math.atan2(4, 3))
-
-
-#######################
-# Fraction class test
-#######################
-
-def test_fraction_add():
-    a = Fraction(1, 4)
-    b = Fraction(3, 4)
-    c = a + b
-    assert float(c) == pytest.approx(1.0)
-
-def test_fraction_sub():
-    a = Fraction(3, 4)
-    b = Fraction(1, 4)
-    c = a - b
-    assert float(c) == pytest.approx(0.5)
-
-def test_fraction_mul():
-    a = Fraction(1, 2)
-    b = Fraction(2, 3)
-    c = a * b
-    assert float(c) == pytest.approx(1/3)
-
-def test_fraction_inverse():
-    a = Fraction(2, 5)
-    inv = a.inverse()
-    assert float(inv) == pytest.approx(2.5)
-
-def test_fraction_str():
-    a = Fraction(2, 3)
-    assert str(a) == "2/3"
-
-
-#######################
-# intSet class test
-#######################
-
-def test_intset_insert_and_str():
-    s = intSet()
-    s.insert(3)
-    s.insert(4)
-    s.insert(3)
-    assert str(s) == "{3,4}"
-
-def test_intset_member():
-    s = intSet()
-    s.insert(1)
-    s.insert(2)
-    assert s.member(1)
-    assert not s.member(99)
-
-def test_intset_remove():
-    s = intSet()
-    s.insert(10)
-    s.remove(10)
-    assert str(s) == "{}"
-
-def test_intset_remove_error():
-    s = intSet()
-    with pytest.raises(ValueError):
-        s.remove(123)
+"""

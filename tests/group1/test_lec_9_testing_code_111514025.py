@@ -1,6 +1,6 @@
 import add_path
 import mit_ocw_exercises
-
+import pytest
 class Animal(object):
     def __init__(self, age):
         self.age = age
@@ -112,3 +112,48 @@ print(p3 < p2)
 print(p4 < p1)
 print(p4 < p4)
 print("=========================================================")
+
+import pytest
+# from your_module import Animal, Dog, Cat, Person, MITPerson  # 替換為你的模組名稱
+
+def test_animal_basic():
+    a = Animal(5)
+    a.set_name("Fluffy")
+    assert a.get_age() == 5
+    assert a.get_name() == "Fluffy"
+    assert str(a) == "animal:Fluffy:5"
+
+def test_dog_behavior():
+    d = Dog(3)
+    d.set_name("Lucky")
+    d.set_type("pit bull")
+    assert d.get_type() == "pit bull"
+    assert d.speak() == "ruff ruff"
+    assert d.behave("chase tail") == "Luckychase tail."
+    assert str(d) == "dog:Lucky:3"
+
+def test_cat_behavior():
+    c = Cat("Mimi", "Alice")
+    c.set_age(2)
+    assert c.name == "Mimi"
+    assert c.owner == "Alice"
+    assert c.get_age() == 2
+    assert c.speak() == "Mimi says meow!"
+
+def test_person_comparison():
+    p1 = Person("Alice")
+    p2 = Person("Bob")
+    p3 = Person("Alice")
+    assert p1 == p3
+    assert p1 != p2
+    assert p1 < p2
+    assert p1.speak() == "Alice says hello!"
+
+def test_mit_person_id_and_comparison():
+    MITPerson.nextIdNum = 0  # reset for testing consistency
+    m1 = MITPerson("Tom")
+    m2 = MITPerson("Jerry")
+    assert m1.getIdNum() == 0
+    assert m2.getIdNum() == 1
+    assert m1 < m2
+    assert m1.speak() == "Tom says hi!"
