@@ -1,4 +1,3 @@
-import add_path
 import pytest
 import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
 
@@ -24,12 +23,12 @@ def test_fib():
     assert lec6.fib(18) == 4181
     assert lec6.fib(19) == 6765
 
-
-
-
 def test_is_palindrome():
     assert lec6.is_palindrome('eve') == True
     assert lec6.is_palindrome('Able was I saw Elba') == True
     assert lec6.is_palindrome('Is this a palindrome') == False
     assert lec6.is_palindrome("HeleH") == True
     assert lec6.is_palindrome("redmeat") == False
+
+test_fib()
+test_is_palindrome()
