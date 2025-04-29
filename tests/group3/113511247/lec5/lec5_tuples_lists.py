@@ -31,6 +31,8 @@ def get_data(aTuple):
     """
     nums = ()    # empty tuple
     words = ()
+
+    #pair/pair....
     for t in aTuple:
         # concatenating with a singleton tuple
         nums = nums + (t[0],)   
@@ -63,13 +65,13 @@ print("From", min_year, "to", max_year, \
 def sum_elem_method1(L):
   total = 0 
   for i in range(len(L)): 
-      total += L[i] 
+      total += L[i] #i is the index of the element
   return total
   
 def sum_elem_method2(L):
     total = 0 
     for i in L: 
-        total += i 
+        total += i #i is the element itself
     return total
   
 print(sum_elem_method1([1,2,3,4]))
@@ -83,13 +85,14 @@ print(sum_elem_method2([1,2,3,4]))
 L1 = [2,1,3]
 L2 = [4,5,6]
 L3 = L1 + L2
-L1.extend([0,6])
+L1.extend([0,6]) #adds to the end of L1, multiple elements
+L1.append(7) #adds to the end of L1, single element
 
 L = [2,1,3,6,3,7,0]
 L.remove(2)
 L.remove(3)
 del(L[1])
-print(L.pop())
+print(L.pop()) # removes and returns the last element, argument is index
 
 s = "I<3 cs"
 print(list(s))
@@ -99,9 +102,9 @@ print(''.join(L))
 print('_'.join(L))
 
 L=[9,6,0,3]
-print(sorted(L))
-L.sort()
-L.reverse()
+print(sorted(L)) # returns a new list, ascending
+L.sort() # mutates the list, ascending
+L.reverse() # mutates the list, descending
 
 
 #########################
