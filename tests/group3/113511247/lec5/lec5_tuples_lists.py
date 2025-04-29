@@ -95,11 +95,12 @@ del(L[1])
 print(L.pop()) # removes and returns the last element, argument is index
 
 s = "I<3 cs"
-print(list(s))
-print(s.split('<'))
+#list function converts a string to a list of characters
+print(list(s)) #delimits by whitespace
+print(s.split('<')) #delimits by '<'
 L = ['a', 'b', 'c']
-print(''.join(L))
-print('_'.join(L))
+print(''.join(L)) #result: 'abc' 
+print('_'.join(L)) #result: 'a_b_c'
 
 L=[9,6,0,3]
 print(sorted(L)) # returns a new list, ascending
@@ -125,30 +126,31 @@ print(warm)
 ## EXAMPLE: cloning
 #########################
 cool = ['blue', 'green', 'grey']
-chill = cool[:]
+chill = cool[:] #':'means all elements
 chill.append('black')
-print(chill)
+print(chill) 
 print(cool)
 
 #########################
 ## EXAMPLE: sorting with/without mutation
 #########################
-warm = ['red', 'yellow', 'orange']
+warm = ['red', 'yellow', 'orange'] 
 sortedwarm = warm.sort()
 print(warm)
-print(sortedwarm)
+print(sortedwarm) #result: None, because sort() mutates the list and returns nothing
 
 cool = ['grey', 'green', 'blue']
 sortedcool = sorted(cool)
 print(cool)
-print(sortedcool)
+print(sortedcool) #result: ['blue', 'green', 'grey']
+#based on ascii values, not alphabetical order
 
 #########################
 ## EXAMPLE: lists of lists of lists...
 #########################
 warm = ['yellow', 'orange']
 hot = ['red']
-brightcolors = [warm]
+brightcolors = [warm] #2D list
 brightcolors.append(hot)
 print(brightcolors)
 hot.append('pink')
@@ -178,7 +180,7 @@ print(L1, L2)
 L1 = [1, 2, 3, 4]
 L2 = [1, 2, 5, 6]
 remove_dups_new(L1, L2)
-print(L1, L2)
+print(L1, L2) 
 
 ###############################
 ## EXERCISE: Test yourself by predicting what the output is and 
@@ -191,7 +193,7 @@ print(warm)
 
 colors1 = [cool]
 print(colors1)
-colors1.append(warm)
+colors1.append(warm) #colors1=[cool, warm]
 print('colors1 = ', colors1)
 
 colors2 = [['blue', 'green'],
@@ -201,9 +203,10 @@ print('colors2 =', colors2)
 warm.remove('red') 
 print('colors1 = ', colors1)
 print('colors2 =', colors2)
+#colors != colors2
 
 for e in colors1:
-    print('e =', e)
+    print('e =', e) #result: e = ['blue', 'green'], e = ['yellow', 'orange']
 
 for e in colors1:
     if type(e) == list:
@@ -211,6 +214,7 @@ for e in colors1:
             print(e1)
     else:
         print(e)
+#result: blue, green, yellow, orange
 
 flat = cool + warm
 print('flat =', flat)
@@ -218,7 +222,7 @@ print('flat =', flat)
 print(flat.sort())
 print('flat =', flat)
 
-new_flat = sorted(flat, reverse = True)
+new_flat = sorted(flat, reverse = True) #sorts in descending order due to reverse=True
 print('flat =', flat)
 print('new_flat =', new_flat)
 
