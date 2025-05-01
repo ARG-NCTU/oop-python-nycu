@@ -1,22 +1,22 @@
-def is_even_with_return( i ):
+def is_even_with_return( t ):
     print('with return')
-    remainder = i % 2
+    remainder = t % 2
     return remainder == 0
 
-def is_even_without_return( i ):
+def is_even_without_return(t ):
     print('without return')
-    remainder = i % 2
+    remainder = t % 2
 
-def is_even( i ):
-    remainder = i % 2
+def is_even( t ):
+    remainder = t % 2
     return remainder == 0
 def is_even_function_test(d):
     print(f"All numbers between 0 and {d}: even or not")
-    for i in range(d):
-        if is_even(i):
-            print(i, "even")
+    for t in range(d):
+        if is_even(t):
+            print(t, "even")
         else:
-            print(i, "odd")
+            print(t, "odd")
 
 def bisection_cuberoot_approx(x, epsilon):
     low = 0.0
