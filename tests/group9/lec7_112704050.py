@@ -82,3 +82,5 @@ test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
 
 #calculate_stat(test_grades)
 print(calculate_stat(test_grades))
+
+print("hello")
