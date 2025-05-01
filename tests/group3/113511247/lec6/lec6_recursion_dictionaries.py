@@ -81,9 +81,11 @@ def lyrics_to_frequencies(lyrics):
     myDict = {}
     for word in lyrics:
         if word in myDict:
-            myDict[word] += 1 #increment the count of the word (value) by 1
+            myDict[word] += 1 
+            #increment the count of the word (value) by 1
         else:
-            myDict[word] = 1 #create a new entry in the dictionary with the word as key and 1 as value
+            myDict[word] = 1 
+            #create a new entry in the dictionary with the word as key and 1 as value
     return myDict
     
     
