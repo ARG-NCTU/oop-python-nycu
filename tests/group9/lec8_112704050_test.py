@@ -60,3 +60,28 @@ def test_vector():
     assert result == a.vector(b)
     result = "<-6,-8>"
     assert result == b.vector(a)
+
+import pytest
+from lec8_112704050 import Vendingmachine
+
+def test_buy_success():
+    vm = Vendingmachine(100)
+    result = vm.buy("Coke", 2)
+    assert result == "Successfully purchased 2 Coke(s). Remaining cash: 50"
+    assert vm.inventory["Coke"] == 8
+    assert vm.dollar == 50
+
+def test_buy_invalid_item():
+    vm = Vendingmachine(100)
+    result = vm.buy("Tea", 1)
+    assert result == "Invalid item."
+
+def test_buy_not_enough_stock():
+    vm = Vendingmachine(100)
+    result = vm.buy("Coke", 20)
+    assert result == "Not enough stock."
+
+def test_buy_insufficient_cash():
+    vm = Vendingmachine(10)
+    result = vm.buy("Coke", 1)
+    assert result == "Insufficient Cash."
