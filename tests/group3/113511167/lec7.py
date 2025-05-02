@@ -166,15 +166,16 @@ def avg(grades):
     try:
         return sum(grades)/len(grades)
     except ZeroDivisionError:
-        print('warning: no grades data')
+        print('warning: no grades data type1')
         return 0.0
 
 
 # avg function: version with assert
 def avg(grades):
-    assert len(grades) != 0, 'warning: no grades data'  ##檢查grades是否為空。如果是空的，就會引發一個錯誤（AssertionError），並顯示訊息 'warning: no grades data', and halt the program
+    assert len(grades) != 0, 'warning: no grades data type2'  ##檢查grades是否為空。如果是空的，就會引發一個錯誤（AssertionError），並顯示訊息 'warning: no grades data', and halt the program
     return sum(grades)/len(grades)                      
 
+###當一個名稱相同的函式被再次定義時，後來的定義會覆蓋先前的定義。###
     
 test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]], 
               [['bruce', 'wayne'], [100.0, 80.0, 74.0]],
