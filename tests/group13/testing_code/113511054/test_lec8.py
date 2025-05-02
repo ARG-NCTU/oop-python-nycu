@@ -2,7 +2,7 @@
 ## EXAMPLE: simple Coordinate class
 #################
 class Coordinate(object):
-    """ A coordinate made up of an x and y value """
+    """ A coordinate made up of an x and y value"""
     def __init__(self, x, y):
         """ Sets the x and y values """
         self.x = x
