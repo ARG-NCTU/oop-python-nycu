@@ -31,8 +31,6 @@ def get_data(aTuple):
     """
     nums = ()    # empty tuple
     words = ()
-
-    #pair/pair....
     for t in aTuple:
         # concatenating with a singleton tuple
         nums = nums + (t[0],)   
@@ -65,13 +63,13 @@ print("From", min_year, "to", max_year, \
 def sum_elem_method1(L):
   total = 0 
   for i in range(len(L)): 
-      total += L[i] #i is the index of the element
+      total += L[i] 
   return total
   
 def sum_elem_method2(L):
     total = 0 
     for i in L: 
-        total += i #i is the element itself
+        total += i 
     return total
   
 print(sum_elem_method1([1,2,3,4]))
@@ -85,27 +83,25 @@ print(sum_elem_method2([1,2,3,4]))
 L1 = [2,1,3]
 L2 = [4,5,6]
 L3 = L1 + L2
-L1.extend([0,6]) #adds to the end of L1, multiple elements
-L1.append(7) #adds to the end of L1, single element
+L1.extend([0,6])
 
 L = [2,1,3,6,3,7,0]
 L.remove(2)
 L.remove(3)
 del(L[1])
-print(L.pop()) # removes and returns the last element, argument is index
+print(L.pop())
 
 s = "I<3 cs"
-#list function converts a string to a list of characters
-print(list(s)) #delimits by whitespace
-print(s.split('<')) #delimits by '<'
+print(list(s))
+print(s.split('<'))
 L = ['a', 'b', 'c']
-print(''.join(L)) #result: 'abc' 
-print('_'.join(L)) #result: 'a_b_c'
+print(''.join(L))
+print('_'.join(L))
 
 L=[9,6,0,3]
-print(sorted(L)) # returns a new list, ascending
-L.sort() # mutates the list, ascending
-L.reverse() # mutates the list, descending
+print(sorted(L))
+L.sort()
+L.reverse()
 
 
 #########################
@@ -120,37 +116,39 @@ warm = ['red', 'yellow', 'orange']
 hot = warm
 hot.append('pink')
 print(hot)
+print("line119")
 print(warm)
 
 #########################
 ## EXAMPLE: cloning
 #########################
 cool = ['blue', 'green', 'grey']
-chill = cool[:] #':'means all elements
+chill = cool[:]
 chill.append('black')
-print(chill) 
+print("line128")
+print(chill)
 print(cool)
 
 #########################
 ## EXAMPLE: sorting with/without mutation
 #########################
-warm = ['red', 'yellow', 'orange'] 
+warm = ['red', 'yellow', 'orange']
 sortedwarm = warm.sort()
 print(warm)
-print(sortedwarm) #result: None, because sort() mutates the list and returns nothing
+print("line138")
+print(sortedwarm)
 
 cool = ['grey', 'green', 'blue']
 sortedcool = sorted(cool)
 print(cool)
-print(sortedcool) #result: ['blue', 'green', 'grey']
-#based on ascii values, not alphabetical order
+print(sortedcool)
 
 #########################
 ## EXAMPLE: lists of lists of lists...
 #########################
 warm = ['yellow', 'orange']
 hot = ['red']
-brightcolors = [warm] #2D list
+brightcolors = [warm]
 brightcolors.append(hot)
 print(brightcolors)
 hot.append('pink')
@@ -180,7 +178,7 @@ print(L1, L2)
 L1 = [1, 2, 3, 4]
 L2 = [1, 2, 5, 6]
 remove_dups_new(L1, L2)
-print(L1, L2) 
+print(L1, L2)
 
 ###############################
 ## EXERCISE: Test yourself by predicting what the output is and 
@@ -193,7 +191,7 @@ print(warm)
 
 colors1 = [cool]
 print(colors1)
-colors1.append(warm) #colors1=[cool, warm]
+colors1.append(warm)
 print('colors1 = ', colors1)
 
 colors2 = [['blue', 'green'],
@@ -203,10 +201,9 @@ print('colors2 =', colors2)
 warm.remove('red') 
 print('colors1 = ', colors1)
 print('colors2 =', colors2)
-#colors != colors2
 
 for e in colors1:
-    print('e =', e) #result: e = ['blue', 'green'], e = ['yellow', 'orange']
+    print('e =', e)
 
 for e in colors1:
     if type(e) == list:
@@ -214,7 +211,6 @@ for e in colors1:
             print(e1)
     else:
         print(e)
-#result: blue, green, yellow, orange
 
 flat = cool + warm
 print('flat =', flat)
@@ -222,7 +218,7 @@ print('flat =', flat)
 print(flat.sort())
 print('flat =', flat)
 
-new_flat = sorted(flat, reverse = True) #sorts in descending order due to reverse=True
+new_flat = sorted(flat, reverse = True)
 print('flat =', flat)
 print('new_flat =', new_flat)
 

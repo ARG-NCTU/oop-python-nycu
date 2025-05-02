@@ -8,19 +8,17 @@ Created on Wed Sep 21 11:52:34 2016
 #####################################
 # EXAMPLE:  Towers of Hanoi
 #####################################
-#three rods:from, destination, spare
-#goal: move n disks from fr to des using spare
-def printMove(fr, des):
-    print('move from ' + str(fr) + ' to ' + str(des))
 
-#moving 'n' disks from 'fr' to 'des' using 'spare'
-def Towers(n, fr, des, spare):
+def printMove(fr, to):
+    print('move from ' + str(fr) + ' to ' + str(to))
+
+def Towers(n, fr, to, spare):
     if n == 1:
-        printMove(fr, des)
+        printMove(fr, to)
     else:
-        Towers(n-1, fr, spare, des) # move n-1 disks from fr to spare
-        Towers(1, fr, des, spare) # move 1 disk from fr to des
-        Towers(n-1, spare, des, fr) # move n-1 disks from spare to des
+        Towers(n-1, fr, spare, to) 
+        Towers(1, fr, to, spare) 
+        Towers(n-1, spare, to, fr) 
 
 #print(Towers(4, 'P1', 'P2', 'P3'))
 
@@ -39,13 +37,12 @@ def fib(x):
 #####################################
 # EXAMPLE:  testing for palindrome 回文
 #####################################
-#function inside a function  (cool!)    
+        
 def is_palindrome(s): 
 
-    #moves to lower case and remove non-alphabetic characters
     def to_chars(s):
-        s = s.lower() # convert to lower case (小寫)
-        ans = '' #a empty string
+        s = s.lower()
+        ans = ''
         for c in s:
             if c in 'abcdefghijklmnopqrstuvwxyz': 
                 ans = ans + c
@@ -55,10 +52,7 @@ def is_palindrome(s):
         if len(s) <= 1:
             return True
         else:
-            return s[0] == s[-1] and is_pal(s[1:-1])
-            #s[1:-1] is the string s without the first and last character (recursion)
-            #s[0] is the first character of s
-            #s[-1] is the last character of s !
+            return s[0] == s[-1] and is_pal(s[1:-1]) 
 
     return is_pal(to_chars(s))
 
@@ -72,20 +66,14 @@ def is_palindrome(s):
 # EXAMPLE: using dictionaries
 #          counting frequencies of words in song lyrics
 #####################################
-#dictionary: a data structure that stores a collection of key-value pairs
-#key: a unique index, can be a string, number, or tuple, immutable
-#value: the data associated with the key, can be any data type, mutable or immutable
-#framework: {key1: value1, key2: value2, ...}
-#dictionary is mutable, can be changed after creation
+
 def lyrics_to_frequencies(lyrics):
     myDict = {}
     for word in lyrics:
         if word in myDict:
-            myDict[word] += 1 
-            #increment the count of the word (value) by 1
+            myDict[word] += 1
         else:
-            myDict[word] = 1 
-            #create a new entry in the dictionary with the word as key and 1 as value
+            myDict[word] = 1
     return myDict
     
     
@@ -144,35 +132,33 @@ beatles = lyrics_to_frequencies(she_loves_you)
 
 
 def most_common_words(freqs):
-    values = freqs.values() #values() returns a 'list' of all the values in the dictionary
+    values = freqs.values()
     best = max(freqs.values())
     words = []
     for k in freqs:
         if freqs[k] == best:
             words.append(k)
     return (words, best)
-
-#find words in the 'freqs' (dictionary) that appear at least 'minTimes' times 
+    
 def words_often(freqs, minTimes):
     result = []
     done = False
     while not done:
-        temp = most_common_words(freqs) #temp is a tuple (words, best), words is a list of words, best is a integer
+        temp = most_common_words(freqs)
         if temp[1] >= minTimes:
             result.append(temp)
             for w in temp[0]:
-                del(freqs[w])  #delete the word from the dictionary so that it won't be counted again
+                del(freqs[w])  
         else:
             done = True
-    return result #result be a list of tuples
+    return result
     
-#print(words_often(beatles, 5))
+print(words_often(beatles, 5))
 
 #####################################
 # EXAMPLE: comparing fibonacci using memoization
 #####################################
-#memoization: a technique used to speed up recursive algorithms by 
-#storing the results of expensive function calls and reusing them when the same inputs occur again
+
 
 def fib_mem(n):
     if n == 1:
@@ -180,19 +166,18 @@ def fib_mem(n):
     elif n == 2:
         return 2
     else:
-        return fib_mem(n-1) + fib_mem(n-2)
-# mistakes recorrected: change fib_mem instead of fib1
+        return fib1(n-1) + fib1(n-2)
+
 
 def fib_efficient(n, d):
     if n in d:
-        return d[n] #check if n is in the dictionary d, if so, return the value of d[n]
+        return d[n]
     else:
         ans = fib_efficient(n-1, d)+fib_efficient(n-2, d)
         d[n] = ans
         return ans
-#this function will store f(1) to f(n) once it ended
-#aimed to reduce redundant calculations    
-d = {1:1, 2:2} #dictionary to store the results of fib_efficient, view as a cache, stored f(1) and f(2)
+        
+d = {1:1, 2:2}
 
 argToUse = 34
 #print("")
