@@ -23,6 +23,11 @@ class Solution:
         >>> solution.findValueOfPartition([100, 1, 10])
         9
         """
+        # already sorted
+        # for example 1, [1, 3 ,2, 4] -> [1, 2, 3, 4]
+        # [[1], [2, 3, 4]], [[1, 2], [3, 4]], [[1, 2, 3], [4]]
+        # value required : 1, 1, 1
+        # answer=min(1, 1, 1) = 1
         nums.sort()
         min = nums[1] - nums[0]
         for i in range(2, len(nums)):

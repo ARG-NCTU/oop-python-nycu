@@ -41,8 +41,11 @@ class Solution:
         """
         if root.val == 0 or root.val == 1:
             return bool(root.val)
-
+        
+        #recursively evaluate the left and right subtrees
         result = (self.evaluateTree(root.left), self.evaluateTree(root.right))
+
+        # any:OR, all:AND
         return any(result) if root.val == 2 else all(result) 
     
 

@@ -24,6 +24,9 @@ class Solution:
             >>> solution.sortPeople(names2, heights2)
             ['Bob', 'Alice', 'Bob']
         """
+        # zip(heights, names) = a list of tuples where each tuple is (height, name)
+        # _, name : heights ignored (_ means dontcare)
+        # reverse = True : descending
         return[name for _, name in sorted(zip(heights, names), reverse = True)]
     
 if __name__ == "__main__":

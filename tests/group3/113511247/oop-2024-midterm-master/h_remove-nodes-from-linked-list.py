@@ -9,7 +9,7 @@ class ListNode:
 class Solution:
     def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
-        Remove every node which has a node with a greater value anywhere to the right side of it.
+        Remove every node which has a node with a greater value "anywhere" to the right side of it.
 
         Return the head of the modified linked list.
 
@@ -46,11 +46,15 @@ class Solution:
             >>> result2.next.next.next.next is None
             True
         """
+
         def execute(head=head):
             if head is None:
                 return 
-
+            
+            # always check on the right side
             head.next = execute(head.next)
+
+            # if the next node is greater than the current node, discard the current node
             return head.next if (head.next and head.val < head.next.val) else head
 
         return execute()

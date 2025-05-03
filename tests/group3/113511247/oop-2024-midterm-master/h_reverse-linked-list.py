@@ -58,9 +58,11 @@ class Solution:
         
         new_head = head
 
+        # ensure there are at least 2 nodes
         if head and head.next:
             new_head = self.reverseList(head.next)
             head.next.next = head
+            # head.next : next node of the current head
             head.next = None
 
         return new_head

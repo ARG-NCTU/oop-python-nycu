@@ -37,7 +37,7 @@ class Solution:
             True
         """
         num_map = {}
-
+        # key : number, value : index
         for i in range(len(nums)):
             comp = target - nums[i]
             if comp in num_map:

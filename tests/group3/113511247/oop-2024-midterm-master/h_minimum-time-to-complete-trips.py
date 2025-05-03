@@ -24,6 +24,11 @@ class Solution:
             >>> solution.minimumTime(time2, totalTrips2)
             2
         """
+        # think from the other side :
+        # if we know the time, we can calculate how many trips can be completed
+
+        # lambda : 省略 the function name
+        # in this function, "check" returns true or false
         check = lambda t: sum(t // bus for bus in time) >= totalTrips
         lo, hi = 0, time[0] * totalTrips
         while lo < hi:

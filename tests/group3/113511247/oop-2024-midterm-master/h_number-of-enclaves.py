@@ -35,6 +35,8 @@ class Solution:
             grid[i][j] = 0
             for di, dj in dirs:
                 0 <= i+di < m and 0 <= j+dj < n and dfs(i + di, j + dj)
+                # if 0 <= i+di < m and 0 <= j+dj < n: dfs(ni, nj)
+                # recursive
 
             # if i - 1 >= 0:
             #     dfs(i - 1, j)
@@ -45,6 +47,7 @@ class Solution:
             # if j + 1 < n:
             #     dfs(i, j + 1) 
 
+        # 被淹掉的陸地 一定能走到邊界
         for i in range(m):
             dfs(i, 0)
             dfs(i, n-1)

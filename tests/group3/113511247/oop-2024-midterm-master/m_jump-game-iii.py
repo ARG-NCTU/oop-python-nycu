@@ -39,6 +39,7 @@ class Solution:
         n = len(arr)
         visited = [False] * n
 
+        # arr[] be given
         def dfs(i):
             nonlocal arr, visited, n
             if i < 0 or i >= n or visited[i]:
@@ -49,7 +50,7 @@ class Solution:
             visited[i] = True
     
             return dfs(i + arr[i]) or dfs(i - arr[i])
-        
+        # start from "start"
         return dfs(start)
     
 if __name__ == "__main__":

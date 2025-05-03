@@ -33,7 +33,7 @@ class Solution:
                 else: index += 1
 
             return count == p
-
+        # bisect_left is a bilid-in function to access 'left' of a binary search
         return bisect_left(range(nums[-1] - nums[0]), True, key=valid_diff)
 
         # nums.sort()
@@ -44,11 +44,11 @@ class Solution:
 
         #     while i < len(nums) - 1 and count < p:
         #         if (nums[i + 1] - nums[i]) <= diff:
-        #             count += 1
-        #             i += 2
+        #             count += 1 (a valid pair)
+        #             i += 2 (indexes can't be reused)
         #         else: 
         #             i += 1
-        #     return count == p
+        #     return count == p (check if "p" pairs)
 
         # while left < right:
         #     mid = (left + right) // 2

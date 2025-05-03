@@ -24,7 +24,9 @@ class Solution:
 
         result = 0
         s_len = len(s)
-
+        
+        # range(start, stop, step) : step means 公差
+        # default: range(0, s_len, 1)
         for i in range(s_len):
             if i < len(s) - 1 and m[s[i]] < m[s[i + 1]]:
                 result -= m[s[i]]
