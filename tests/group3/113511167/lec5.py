@@ -15,7 +15,6 @@ def quotient_and_remainder(x, y):
 print(quot)
 print(rem)
 
-
 #########################
 ## EXAMPLE: iterating over tuples
 #########################

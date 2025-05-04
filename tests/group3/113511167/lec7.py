@@ -183,5 +183,6 @@ test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
               [['deadpool'], []]]
 
 print("only print valid element in th list :\n", get_stats(test_grades[0 : 3]))
-
-print(get_stats(test_grades))
+'''
+print(get_stats(test_grades)) ##this will be erroe
+'''
