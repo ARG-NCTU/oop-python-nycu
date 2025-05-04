@@ -18,53 +18,41 @@ class Animal(object):
     def set_age(self, newage):
         self.age = newage
     def set_name(self, newname=""):
-        # "newname" is a string, default is empty string
-        # if newname is not provided, set name to empty string
         self.name = newname
     def __str__(self):
         return "animal:"+str(self.name)+":"+str(self.age)
         
-# print("\n---- animal tests ----")
-# a = Animal(4)
-# print(a)
-# print(a.get_age())
-# a.set_name("fluffy")
-# print(a)
-# a.set_name()
-# print(a)
-
-
+print("\n---- animal tests ----")
+a = Animal(4)
+print(a)
+print(a.get_age())
+a.set_name("fluffy")
+print(a)
+a.set_name()
+print(a)
 
 #################################
 ## Inheritance example 
 #################################
 class Cat(Animal):
-    # object of class "Cat" is also an object of class "Animal"
-    #=> can use all methods (functions) of Animal class
     def speak(self):
         print("meow")
     def __str__(self):
         return "cat:"+str(self.name)+":"+str(self.age)
     
 print("\n---- cat tests ----")
-c = Cat(5) #c.age = 5, c.name = None
+c = Cat(5)
 c.set_name("fluffy")
-# c=Cat(5, "fluffy") is not correct
-# because Cat class does not have __init__ method
 print(c)
 c.speak()
 print(c.get_age())
-#a.speak() # error because there is no speak method for Animal class
 
-    
 #################################
 ## Inheritance example
 #################################
 class Person(Animal):
-    """attributes: name(string), age(integer), friends(list)"""
     def __init__(self, name, age):
-        Animal.__init__(self, age) 
-        # call the function of the parent class (Animal)
+        Animal.__init__(self, age)  ##呼叫父類別的建構子
         self.set_name(name)
         self.friends = []
     def get_friends(self):
@@ -91,14 +79,11 @@ print(p1)
 p1.speak()
 p1.age_diff(p2)
 
-
 #################################
 ## Inheritance example
 #################################
 class Student(Person):
-    """attributes: name(string), age(integer), major(string), friends(list)"""
-    # major is optional, default is None
-    def __init__(self, name, age, major=None):
+    def __init__(self, name, age, major=None):  ##可以不提供major
         Person.__init__(self, name, age)
         self.major = major
     def __str__(self):
@@ -121,49 +106,43 @@ s1 = Student('alice', 20, "CS")
 s2 = Student('beth', 18)
 print(s1)
 print(s2)
-print(s1.get_name(),"says:", end=" ")
+print(s1.get_name(),"says:", end=" ")   ##讓print的結尾不換行，改用空格
 s1.speak()
 print(s2.get_name(),"says:", end=" ")
 s2.speak()
-
-
 
 #################################
 ## Use of class variables  
 #################################
 class Rabbit(Animal):
-    # "tag" can be accessed by all objects of class Rabbit
-    tag = 1 # count the number of rabbits created
+    # a class variable, tag, 不是屬於單一物件，而是整個類別共用的變數。
+    tag = 1
     def __init__(self, age, parent1=None, parent2=None):
         Animal.__init__(self, age)
         self.parent1 = parent1
         self.parent2 = parent2
-        self.r_id = Rabbit.tag
+        self.rid = Rabbit.tag
         Rabbit.tag += 1
-    # r_id for rabbit id
-    def get_r_id(self):
+    def get_rid(self):
         # zfill used to add leading zeroes 001 instead of 1
-        # e.g. 1.zfill(3) = 001, 10.zfill(3) = 010, 100.zfill(3) = 100
-        return str(self.r_id).zfill(3)
+        return str(self.rid).zfill(3)
     def get_parent1(self):
         return self.parent1
     def get_parent2(self):
         return self.parent2
-    def __repro__(self, other):
+    def __add__(self, other):
         # returning object of same type as this class
-        # reproduce a new rabbit
-        return Rabbit(0, self, other)
+        return Rabbit(0, self, other)       ##產生新的兔子物件，0歲，父母是self和other
     def __eq__(self, other):
-        # compare the ids of self and other's parents
-        # don't care about the order of the parents
-        # the backslash tells python I want to break up my line
-        parents_same = self.parent1.r_id == other.parent1.r_id \
-                       and self.parent2.r_id == other.parent2.r_id
-        parents_opposite = self.parent2.r_id == other.parent1.r_id \
-                           and self.parent1.r_id == other.parent2.r_id
+        if self.parent1 is None or self.parent2 is None or other.parent1 is None or other.parent2 is None:
+            return False
+        parents_same = self.parent1.rid == other.parent1.rid \
+                       and self.parent2.rid == other.parent2.rid
+        parents_opposite = self.parent2.rid == other.parent1.rid \
+                           and self.parent1.rid == other.parent2.rid
         return parents_same or parents_opposite
     def __str__(self):
-        return "rabbit:"+ self.get_r_id()
+        return "rabbit:"+ self.get_rid()
 
 print("\n---- rabbit tests ----")
 print("---- testing creating rabbits ----")
@@ -173,11 +152,11 @@ r3 = Rabbit(5)
 print("r1:", r1)
 print("r2:", r2)
 print("r3:", r3)
-print("r1 parent1:", r1.get_parent1())
+print("r1 parent1:", r1.get_parent1())  ##在定義r1時候沒有給parent參數，所以被當作none
 print("r1 parent2:", r1.get_parent2())
 
 print("---- testing rabbit addition ----")
-r4 = Rabbit.__repro__(r1, r2)   # r1.__repro__(r2)
+r4 = r1+r2   # r1.__add__(r2)
 print("r1:", r1)
 print("r2:", r2)
 print("r4:", r4)
@@ -185,8 +164,8 @@ print("r4 parent1:", r4.get_parent1())
 print("r4 parent2:", r4.get_parent2())
 
 print("---- testing rabbit equality ----")
-r5 = Rabbit.__repro__(r3, r4)   # r1.__repro__(r3)
-r6 = Rabbit.__repro__(r4, r3)   # r1.__repro__(r2)
+r5 = r3+r4
+r6 = r4+r3
 print("r3:", r3)
 print("r4:", r4)
 print("r5:", r5)
@@ -197,3 +176,4 @@ print("r6 parent1:", r6.get_parent1())
 print("r6 parent2:", r6.get_parent2())
 print("r5 and r6 have same parents?", r5 == r6)
 print("r4 and r6 have same parents?", r4 == r6)
+

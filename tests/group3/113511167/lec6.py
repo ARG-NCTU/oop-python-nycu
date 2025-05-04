@@ -135,10 +135,10 @@ beatles = lyrics_to_frequencies(she_loves_you)
 #construct a tuple of the list of keys and the maximum value
 def most_common_words(freqs):       #freqs is a dictionary
     if freqs == {}:                 #if freqs is empty, max(freqs.values()) will give an error
-        return ([], 0)             #return a tuple of empty list and 0
+        return ([], 0)              #return a tuple of empty list and 0
     else:
         values = freqs.values()         #values is a list of all values in freqs
-        best = max(freqs.values())
+        best = max(values)              #best is the maximum value in values
         words = []                      #words is a list of keys with same value
         for k in freqs:                 #for k the key in freqs
             if freqs[k] == best:        #freqs[k] is the value of key k, best is the maximum value of freqs
@@ -183,7 +183,7 @@ def fib_efficient(n, d):        #use hash table to store the values of fib(n)
         d[n] = ans
         return ans
           
-d = {1:1, 2:2}
+d = {0:1, 1:1}
 
 #the first fib will recalculate one terms many time, second one reduce these redundant works
 
