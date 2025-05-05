@@ -19,6 +19,9 @@ def test_function_object_f():
     func = f()
     assert func(2, 3) == 5
     assert func(10, 20) == 30
+def test_scope_g():
+    result = g(3)
+    assert result == 4
 
 
 
