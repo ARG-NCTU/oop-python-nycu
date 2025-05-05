@@ -1,5 +1,5 @@
 class Solution:
-    def fib(self, n: int) -> int:
+    def fib(self, n: int) -> int:   ##expect n to be integer, and return integer
         """
         Calculates the nth Fibonacci number.
 
