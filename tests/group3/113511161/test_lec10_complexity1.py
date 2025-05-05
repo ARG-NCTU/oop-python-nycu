@@ -15,3 +15,4 @@ def test_linear_search():
 	assert lec10.linear_search(testlist,testlist[0])==True
 	assert lec10.linear_search([],5) ==False
 def test_search():
+	assert 1==1
