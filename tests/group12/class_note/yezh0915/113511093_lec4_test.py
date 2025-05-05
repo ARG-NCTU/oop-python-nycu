@@ -15,6 +15,11 @@ def test_bisection_cuberoot_approx():
     assert abs(bisection_cuberoot_approx(27, epsilon) - 3) < epsilon
     assert abs(bisection_cuberoot_approx(64, epsilon) - 4) < epsilon
     assert abs(bisection_cuberoot_approx(1, epsilon) - 1) < epsilon
+def test_function_object_f():
+    func = f()
+    assert func(2, 3) == 5
+    assert func(10, 20) == 30
+
 
 
 if __name__ == "__main__":
