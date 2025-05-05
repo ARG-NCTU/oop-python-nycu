@@ -24,4 +24,15 @@ def test_get_data():
     assert min_year == 2008
     assert max_year == 2014
     assert num_people == 5
+def test_sum_elem_method1():
+    assert sum_elem_method1([1, 2, 3, 4]) == 10
+    assert sum_elem_method1([]) == 0
+    assert sum_elem_method1([10, -10, 20]) == 20
+
+def test_sum_elem_method2():
+    assert sum_elem_method2([1, 2, 3, 4]) == 10
+    assert sum_elem_method2([]) == 0
+    assert sum_elem_method2([10, -10, 20]) == 20
+
+
 
