@@ -12,4 +12,16 @@ def test_quotient_and_remainder():
     assert quotient_and_remainder(5, 3) == (1, 2)
     assert quotient_and_remainder(10, 2) == (5, 0)
     assert quotient_and_remainder(0, 5) == (0, 0)
+def test_get_data():
+    test_data = ((1, "a"), (2, "b"), (1, "a"), (7, "b"))
+    min_n, max_n, unique_strings = get_data(test_data)
+    assert min_n == 1
+    assert max_n == 7
+    assert unique_strings == 2
+
+    tswift_data = ((2014, "Katy"), (2014, "Harry"), (2012, "Jake"), (2010, "Taylor"), (2008, "Joe"))
+    min_year, max_year, num_people = get_data(tswift_data)
+    assert min_year == 2008
+    assert max_year == 2014
+    assert num_people == 5
 
