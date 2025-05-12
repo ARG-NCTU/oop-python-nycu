@@ -48,6 +48,7 @@ class Location:
 class Field:
     def __init__(self):
         self.drunks = {}
+        # key: drunk(Drunk), value: loc(Location)
 
     def add_drunk(self, drunk, loc):
         if drunk in self.drunks:
@@ -56,9 +57,12 @@ class Field:
             self.drunks[drunk] = loc
 
     def move_drunk(self, drunk):
+        # make 'drunk' walk
         if drunk not in self.drunks:
             raise ValueError('Drunk not in field')
-        x_dist, y_dist = drunk.take_step()
+        
+        # 'take_step' defined in UsualDrunk and MasochistDrunk
+        x_dist, y_dist = drunk.take_step() 
         # use move method of Location to get new location
         self.drunks[drunk] = self.drunks[drunk].move(x_dist, y_dist)
 
@@ -110,9 +114,12 @@ def sim_walks(num_steps, num_trials, d_class):
         f = Field()
         f.add_drunk(Homer, origin)
         distances.append(round(walk(f, Homer, num_steps), 1))
+        # 'walk' returns delta distance
     return distances
 
 class StyleIterator:
+    # 'styles' is a list of tuples, each tuple is a color and a marker
+    # 'index' is an int that keeps track of the current style
     def __init__(self, styles):
         self.index = 0
         self.styles = styles
@@ -120,13 +127,14 @@ class StyleIterator:
     def next_style(self):
         result = self.styles[self.index]
         if self.index == len(self.styles) - 1:
-            self.index = 0
+            self.index = 0 # iterates
         else:
             self.index += 1
         return result
 
 def sim_drunk(num_trials, d_class, walk_lengths):
-    mean_distances = []
+    # 'walk_lengths' is a list of ints, each int >= 0
+    mean_distances = [] # store mean distances for each walk length
     for num_steps in walk_lengths:
         print('Starting simulation of', num_steps, 'steps')
         trials = sim_walks(num_steps, num_trials, d_class)
