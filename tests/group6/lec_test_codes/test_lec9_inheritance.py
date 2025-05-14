@@ -69,7 +69,15 @@ def test_person_set_age():
     p = lec9.Person("a", 18)
     p.set_age(20)
     assert p.get_age() == 20
+
+def test_person_get_age():
+    p = lec9.Person("a", 18)
+    p.set_age(20)
+    assert p.get_age() == 20
+
+
 # def test_person_speak(capsys):
+
 
 
 # def test_person_age_diff(capsys):
