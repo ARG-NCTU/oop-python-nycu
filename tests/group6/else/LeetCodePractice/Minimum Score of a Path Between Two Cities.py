@@ -22,3 +22,4 @@ class Solution:
 
 
         return minimum
+    #float('inf')無限大 float('-inf')無限小
