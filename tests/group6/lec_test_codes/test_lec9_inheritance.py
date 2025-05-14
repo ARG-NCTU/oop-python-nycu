@@ -49,7 +49,7 @@ def test_person_init():
     assert p.get_name() == "a"
     assert p.get_age() == 18
     assert p.get_friends() == []
-    
+
 def test_person_set_name():
     p = lec9.Person("a", 18)
     p.set_name("b")
@@ -60,6 +60,15 @@ def test_person_add_friend():
     p.add_friend("C")
     assert "C" in p.get_friends()
 
+def test_person_get_friends():
+    p = lec9.Person("Bob", 30)
+    p.add_friend("C")
+    assert p.get_friends() == ["C"]
+
+def test_person_set_age():
+    p = lec9.Person("a", 18)
+    p.set_age(20)
+    assert p.get_age() == 20
 # def test_person_speak(capsys):
 
 
