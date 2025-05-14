@@ -15,3 +15,4 @@ class Solution:
                 left = mid + 1  # 時間太小，試更大的時間
                 
         return left
+    # mid = (left + right) // 2 搭配 return left if trips >= totalTrips: right = mid # 時間可能過大，試更小的時間 else: left = mid + 1
