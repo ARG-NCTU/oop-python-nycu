@@ -9,6 +9,16 @@ def test_coordinate():
   assert coo1.y == 4
   assert str(coo1) == "<3,4>"
   assert coo1.distance(o) == 5
+  assert coo1.distance(coo1) == 0
+  assert coo1.distance(lec8.Coordinate(3,4)) == 0
+
+def test_coordinate_distance():
+  coo1 = lec8.Coordinate(3,4)
+  o = lec8.Coordinate(0,0)
+  assert coo1.distance(o) == 5
+  assert coo1.distance(coo1) == 0
+  assert coo1.distance(lec8.Coordinate(3,4)) == 0
+  assert coo1.distance(lec8.Coordinate(6,8)) == 5
 
 def test_fraction():
   frac1 = lec8.Fraction(1, 4)
