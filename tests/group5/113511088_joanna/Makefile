@@ -1,8 +1,10 @@
+.PHONY: all test clean
+
 all: test
 
 test:
-	pytest
+	pytest test_joanna_lec5.py
+	pytest test_joanna_lec3.py
 
 clean:
-	find . -name "__pycache__" -type d | xargs rm -rf
-
+	find . -name "__pycache__" -type d -exec rm -r {} +
