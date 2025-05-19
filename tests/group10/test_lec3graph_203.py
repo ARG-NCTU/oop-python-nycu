@@ -28,3 +28,10 @@ class TestDigraph:
         self.graph.add_edge(self.edge2)
         assert self.node3 in self.graph.children_of(self.node2)
         assert self.node1 not in self.graph.children_of(self.node2)
+
+    def test_add_node(self):
+        self.graph.add_node(self.node2)
+        assert self.graph.has_node(self.node2)
+        assert not self.graph.has_node(self.node3)
+        self.graph.add_node(self.node3)
+        assert self.graph.has_node(self.node3)
