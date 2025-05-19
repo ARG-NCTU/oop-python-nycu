@@ -13,6 +13,7 @@ class TestDigraph:
         self.edge1 = lec3.Edge(self.node1, self.node2)
         self.edge2 = lec3.Edge(self.node2, self.node3)
         self.edge3 = lec3.Edge(self.node3, self.node4)
+        self.edge4 = lec3.Edge(self.node4, self.node5)
 
     def test_add_node(self):
         self.graph.add_node(self.node1)
