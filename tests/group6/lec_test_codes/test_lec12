@@ -1,0 +1,17 @@
+import add_path
+import pytest
+import mit_ocw_exercises.lec12_sorting as lec12
+
+def test_bubble_sort():
+    assert lec12.bubble_sort([4, 3, 2, 1]) == [1, 2, 3, 4]
+    assert lec12.bubble_sort([1, 2, 3, 4]) == [1, 2, 3, 4]
+    assert lec12.bubble_sort([4]) == [4]
+    assert lec12.bubble_sort([]) == []
+    assert lec12.bubble_sort([3, 2, 1]) == [1, 2, 3]
+
+def test_merge_sort():
+    assert lec12.merge_sort([4, 3, 2, 1]) == [1, 2, 3, 4]
+    assert lec12.merge_sort([1, 2, 3, 4]) == [1, 2, 3, 4]
+    assert lec12.merge_sort([4]) == [4]
+    assert lec12.merge_sort([]) == []
+    assert lec12.merge_sort([3, 2, 1]) == [1, 2, 3]
