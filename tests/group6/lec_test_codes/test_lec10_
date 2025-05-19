@@ -9,9 +9,9 @@ def test_linear_search():
     assert lec10.linear_search([1,2,3,4], 1) == 0
     assert lec10.linear_search([1,2,3,4], 4) == 3
 
-def test_binary_search():
-    assert lec10.binary_search([1,2,3,4], 3) == 2
-    assert lec10.binary_search([1,2,3,4], 5) == -1
-    assert lec10.binary_search([], 5) == -1
-    assert lec10.binary_search([1,2,3,4], 1) == 0
-    assert lec10.binary_search([1,2,3,4], 4) == 3
+def test_search():
+    assert lec10.search([1,2,3,4], 3) == 2
+    assert lec10.search([1,2,3,4], 5) == -1
+    assert lec10.search([], 5) == -1
+    assert lec10.search([1,2,3,4], 1) == 0
+    assert lec10.search([1,2,3,4], 4) == 3
