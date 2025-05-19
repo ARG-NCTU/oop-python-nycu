@@ -9,6 +9,7 @@ class TestDigraph:
         self.node2 = lec3.Node('2')
         self.node3 = lec3.Node('3')
         self.node4 = lec3.Node('4')
+        self.node5 = lec3.Node('5')
         self.edge1 = lec3.Edge(self.node1, self.node2)
         self.edge2 = lec3.Edge(self.node2, self.node3)
 
