@@ -1,4 +1,5 @@
 import lec5_tuples_lists as lec
+import pytest
 
 def remove_dups_test():
     L1 = [1, 2, 3, 4, 5, 10]

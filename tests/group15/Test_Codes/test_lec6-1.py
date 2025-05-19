@@ -1,4 +1,5 @@
 import lec6_recursion_dictionaries as lec
+import pytest
 
 def fib_test():
     assert lec.fib(0) == 1
@@ -7,7 +8,7 @@ def fib_test():
     assert lec.fib(3) == 3
     assert lec.fib(4) == 5
     assert lec.fib(10) == 89
-    print (fib(20))
+    print (lec.fib(20))
 fib_test()
 
 def is_palindrome_test():

@@ -7,9 +7,8 @@ import math
 def cube_root_test():
     assert lec.cube_root(27) == 3
     assert lec.cube_root(8) == 2
-    assert lec.cube_root(0) == 0
+    assert lec.cube_root(125) == 5
     print("tests passed!!")
 
 cube_root_test()
-lec.while_to_for()
 

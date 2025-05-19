@@ -18,6 +18,8 @@ class Animal(object):
     def set_age(self, newage):
         self.age = newage
     def set_name(self, newname=""):
+        # "newname" is a string, default is empty string
+        # if newname is not provided, set name to empty string
         self.name = newname
     def __str__(self):
         return "animal:"+str(self.name)+":"+str(self.age)
@@ -37,14 +39,18 @@ class Animal(object):
 ## Inheritance example 
 #################################
 class Cat(Animal):
+    # object of class "Cat" is also an object of class "Animal"
+    #=> can use all methods (functions) of Animal class
     def speak(self):
         print("meow")
     def __str__(self):
         return "cat:"+str(self.name)+":"+str(self.age)
     
 print("\n---- cat tests ----")
-c = Cat(5)
+c = Cat(5) #c.age = 5, c.name = None
 c.set_name("fluffy")
+# c=Cat(5, "fluffy") is not correct
+# because Cat class does not have __init__ method
 print(c)
 c.speak()
 print(c.get_age())
@@ -55,8 +61,10 @@ print(c.get_age())
 ## Inheritance example
 #################################
 class Person(Animal):
+    """attributes: name(string), age(integer), friends(list)"""
     def __init__(self, name, age):
-        Animal.__init__(self, age)
+        Animal.__init__(self, age) 
+        # call the function of the parent class (Animal)
         self.set_name(name)
         self.friends = []
     def get_friends(self):
@@ -88,6 +96,8 @@ p1.age_diff(p2)
 ## Inheritance example
 #################################
 class Student(Person):
+    """attributes: name(string), age(integer), major(string), friends(list)"""
+    # major is optional, default is None
     def __init__(self, name, age, major=None):
         Person.__init__(self, name, age)
         self.major = major
@@ -122,35 +132,38 @@ s2.speak()
 ## Use of class variables  
 #################################
 class Rabbit(Animal):
-    # a class variable, tag, shared across all instances
-    tag = 1
+    # "tag" can be accessed by all objects of class Rabbit
+    tag = 1 # count the number of rabbits created
     def __init__(self, age, parent1=None, parent2=None):
         Animal.__init__(self, age)
         self.parent1 = parent1
         self.parent2 = parent2
-        self.rid = Rabbit.tag
+        self.r_id = Rabbit.tag
         Rabbit.tag += 1
-    def get_rid(self):
+    # r_id for rabbit id
+    def get_r_id(self):
         # zfill used to add leading zeroes 001 instead of 1
-        return str(self.rid).zfill(3)
+        # e.g. 1.zfill(3) = 001, 10.zfill(3) = 010, 100.zfill(3) = 100
+        return str(self.r_id).zfill(3)
     def get_parent1(self):
         return self.parent1
     def get_parent2(self):
         return self.parent2
-    def __add__(self, other):
+    def __repro__(self, other):
         # returning object of same type as this class
+        # reproduce a new rabbit
         return Rabbit(0, self, other)
     def __eq__(self, other):
         # compare the ids of self and other's parents
         # don't care about the order of the parents
         # the backslash tells python I want to break up my line
-        parents_same = self.parent1.rid == other.parent1.rid \
-                       and self.parent2.rid == other.parent2.rid
-        parents_opposite = self.parent2.rid == other.parent1.rid \
-                           and self.parent1.rid == other.parent2.rid
+        parents_same = self.parent1.r_id == other.parent1.r_id \
+                       and self.parent2.r_id == other.parent2.r_id
+        parents_opposite = self.parent2.r_id == other.parent1.r_id \
+                           and self.parent1.r_id == other.parent2.r_id
         return parents_same or parents_opposite
     def __str__(self):
-        return "rabbit:"+ self.get_rid()
+        return "rabbit:"+ self.get_r_id()
 
 print("\n---- rabbit tests ----")
 print("---- testing creating rabbits ----")
@@ -164,7 +177,7 @@ print("r1 parent1:", r1.get_parent1())
 print("r1 parent2:", r1.get_parent2())
 
 print("---- testing rabbit addition ----")
-r4 = r1+r2   # r1.__add__(r2)
+r4 = Rabbit.__repro__(r1, r2)   # r1.__repro__(r2)
 print("r1:", r1)
 print("r2:", r2)
 print("r4:", r4)
@@ -172,8 +185,8 @@ print("r4 parent1:", r4.get_parent1())
 print("r4 parent2:", r4.get_parent2())
 
 print("---- testing rabbit equality ----")
-r5 = r3+r4
-r6 = r4+r3
+r5 = Rabbit.__repro__(r3, r4)   # r1.__repro__(r3)
+r6 = Rabbit.__repro__(r4, r3)   # r1.__repro__(r2)
 print("r3:", r3)
 print("r4:", r4)
 print("r5:", r5)
