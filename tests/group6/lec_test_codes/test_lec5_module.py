@@ -12,3 +12,7 @@ def test_location():
   assert 0 == l.get_y()
   assert 0 == l.dist_from(l)
 
+def test_field():
+  f = Field(10, 10)
+  assert 10 == f.get_width()
+  assert 10 == f.get_height()

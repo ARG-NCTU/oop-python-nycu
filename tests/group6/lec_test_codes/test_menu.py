@@ -71,4 +71,11 @@ def test_fast_max_val_empty():
     foods = []
     total_value, items = fast_max_val(foods, 150)
     assert total_value == 0
+    assert items == []
+    
+def test_fast_max_val_zero_capacity():
+    foods = [Food("apple", 10, 50), Food("banana", 20, 100)]
+    total_value, items = fast_max_val(foods, 0)
+    assert total_value == 0
+    assert items == []
     
