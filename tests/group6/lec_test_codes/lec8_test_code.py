@@ -11,3 +11,9 @@ def test_coordinate():
     assert lc.Coordinate.distance(c, origin) == 13
     assert origin.distance(c) == 13
     
+def test_point():
+    p = lc.Point(5, 12)
+    assert p.x == 5
+    assert p.y == 12
+    assert p.distance() == 13
+    assert p.distance(lc.Coordinate(0,0)) == 13

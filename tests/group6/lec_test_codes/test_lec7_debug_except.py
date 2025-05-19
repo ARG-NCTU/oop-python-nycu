@@ -17,5 +17,7 @@ def test_primes_list():
 def test_get_ratios():
   assert lec7.get_ratios([2],[1]) == [2]
   assert lec7.get_ratios([2],[3]) <= [0.67]
+  assert lec7.get_ratios([2,3],[1,2]) == [2,1.5]
+  assert lec7.get_ratios([2,3],[1,2]) == [2,1.5]
   
   

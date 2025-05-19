@@ -19,10 +19,14 @@ def test_coordinate_distance():
   assert coo1.distance(coo1) == 0
   assert coo1.distance(lec8.Coordinate(3,4)) == 0
   assert coo1.distance(lec8.Coordinate(6,8)) == 5
+  assert coo1.distance(lec8.Coordinate(3,4)) == 0
+  assert coo1.distance(lec8.Coordinate(0,0)) == 5
 
 def test_fraction():
   frac1 = lec8.Fraction(1, 4)
   frac2 = lec8.Fraction(3, 4)
+  assert frac1.num == 1 and frac1.denom == 4
+  assert frac2.num == 3 and frac2.denom == 4
   result = frac1 + frac2
   assert result.num == 16 and result.denom == 16
   result = frac2 - frac1
