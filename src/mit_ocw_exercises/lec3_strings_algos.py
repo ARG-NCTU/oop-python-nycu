@@ -108,4 +108,9 @@
 #    num_guesses += 1
 #print('num_guesses =', num_guesses)
 #print(guess, 'is close to the cube root of', cube)
-   
+def is_palindrome(s):
+    """
+    Returns True if s is a palindrome, False otherwise
+    """
+    s = s.lower()  # 忽略大小寫
+    return s == s[::-1]
