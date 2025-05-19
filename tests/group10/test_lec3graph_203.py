@@ -43,3 +43,12 @@ class TestDigraph:
         assert self.graph.get_node('2') == self.node2
         self.graph.add_node(self.node3)
         assert self.graph.get_node('3') == self.node3
+
+    @pytest.mark.xfail(raises=ValueError)
+    def test_add_edge(self):
+        self.graph.add_node(self.node1)
+        self.graph.add_node(self.node2)
+        self.graph.add_edge(self.edge1)
+        assert self.node2 in self.graph.children_of(self.node1)
+        self.graph.add_edge(Edge(self.node2, Node('4')))
+        self.graph.add_edge(Edge(Node('5'), Node('6')))
