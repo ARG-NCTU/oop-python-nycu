@@ -50,4 +50,3 @@ class TestDigraph:
         self.graph.add_node(self.node2)
         self.graph.add_edge(self.edge1)
         assert self.node2 in self.graph.children_of(self.node1)
-        self.graph.add_edge(Edge(self.node2, Node('4'))
