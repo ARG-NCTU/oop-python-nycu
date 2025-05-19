@@ -35,3 +35,7 @@ class TestDigraph:
         assert not self.graph.has_node(self.node3)
         self.graph.add_node(self.node3)
         assert self.graph.has_node(self.node3)
+
+    def test_get_node(self):
+        self.graph.add_node(self.node1)
+        assert self.graph.get_node('1') == self.node1
