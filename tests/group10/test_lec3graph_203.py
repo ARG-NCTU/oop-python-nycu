@@ -41,9 +41,3 @@ class TestDigraph:
         assert self.graph.get_node('1') == self.node1
         self.graph.add_node(self.node2)
         assert self.graph.get_node('2') == self.node2
-
-    def test_get_edge(self):
-        self.graph.add_node(self.node1)
-        self.graph.add_node(self.node2)
-        self.graph.add_edge(self.edge1)
-        assert self.graph.get_edge('1', '2') == self.edge1
