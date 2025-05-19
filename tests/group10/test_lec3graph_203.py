@@ -39,4 +39,5 @@ class TestDigraph:
     def test_get_node(self):
         self.graph.add_node(self.node1)
         assert self.graph.get_node('1') == self.node1
-        assert self.graph.get_node('2') is None
+        self.graph.add_node(self.node2)
+        assert self.graph.get_node('2') == self.node2
