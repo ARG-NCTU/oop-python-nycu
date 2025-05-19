@@ -15,3 +15,10 @@ def test_merge_sort():
     assert lec12.merge_sort([4]) == [4]
     assert lec12.merge_sort([]) == []
     assert lec12.merge_sort([3, 2, 1]) == [1, 2, 3]
+
+def test_selection_sort():
+    assert lec12.selection_sort([4, 3, 2, 1]) == [1, 2, 3, 4]
+    assert lec12.selection_sort([1, 2, 3, 4]) == [1, 2, 3, 4]
+    assert lec12.selection_sort([4]) == [4]
+    assert lec12.selection_sort([]) == []
+    assert lec12.selection_sort([3, 2, 1]) == [1, 2, 3]
