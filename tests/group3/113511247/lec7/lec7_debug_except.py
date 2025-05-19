@@ -25,6 +25,8 @@ def rev_list(L):
     Modifies L such that its elements are in reverse order
     returns: nothing
     """
+    #i start at 0, iterate to len(L)//2 (half the list)
+    #'//' is integer division
     for i in range(len(L)//2):
         j = len(L) - i - 1
         temp = L[i]
@@ -101,6 +103,9 @@ print(primes_list(15)  )
 #print("a/b = ", a/b)
 #print("a+b = ", a+b)
 
+
+#try: means "try to do this code"
+#except: means "if there is an error, do this code"
 try:
     a = int(input("Tell me one number: "))
     b = int(input("Tell me another number: "))
@@ -142,13 +147,14 @@ def get_ratios(L1, L2):
         finally:
             print("executed no matter what!")
     return ratios
-    
+#flow: try -> except1 or except2 or else -> finally
 print(get_ratios([1, 4], [2, 4]))
 
 
 #######################################
 ## EXAMPLE: Exceptions and lists
 #######################################
+#person:[['firstname', 'lastname'], ['grade1', 'grade2', 'grade3']], grades are floats
 def get_stats(class_list):
 	new_stats = []
 	for person in class_list:
@@ -171,6 +177,9 @@ def avg(grades):
 # avg function: version with assert
 def avg(grades):
     assert len(grades) != 0, 'warning: no grades data'
+    #'assert' is a debugging tool
+    #checks if condition is true, if not raises an AssertionError 
+    #and returns the message after the comma
     return sum(grades)/len(grades)
 
     

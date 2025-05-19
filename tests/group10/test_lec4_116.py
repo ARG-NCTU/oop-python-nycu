@@ -1,5 +1,5 @@
 import add_path
-import mit_ocw_data_science.lec4_module as lec4  
+import mit_ocw_data_science.lec4.lec4_module as lec4  
 import pytest
 
 def test_roll_die():
