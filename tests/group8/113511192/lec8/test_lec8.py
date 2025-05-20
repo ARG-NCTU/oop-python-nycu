@@ -2,7 +2,6 @@ import add_path
 import lec8 as lc
 import pytest
 
-
 def test_coordinate_basic():
     c = lc.Coordinate(3, 4)
     origin = lc.Coordinate(0, 0)
