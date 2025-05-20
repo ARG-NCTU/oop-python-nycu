@@ -57,9 +57,41 @@ def test_fraction_misc():
     assert float(a) == 0.5
     assert str(a) == "1/2"
 
+def test_init_and_str():
+    f = lc.Fraction(3, 5)
+    assert f.num == 3
+    assert f.denom == 5
+    assert str(f) == "3/5"
 
-if __name__ == "__main__":
-    test_coordinate_basic()
-    test_intset_basic()
-    test_fraction_operations()
-    print("Basic tests passed.")
+def test_addition():
+    a = lc.Fraction(1, 4)
+    b = lc.Fraction(3, 4)
+    result = a + b
+    assert result.num == 16
+    assert result.denom == 16
+    assert str(result) == "16/16"
+
+def test_subtraction():
+    a = lc.Fraction(3, 4)
+    b = lc.Fraction(1, 4)
+    result = a - b
+    assert result.num == 8
+    assert result.denom == 16
+    assert str(result) == "8/16"
+
+
+def test_invalid_init():
+    with pytest.raises(AssertionError):
+        lc.Fraction("a", 5)
+    with pytest.raises(AssertionError):
+        lc.Fraction(1, "b")
+    with pytest.raises(AssertionError):
+        lc.Fraction(1.5, 2)
+
+def test_mixed_operations():
+    a = lc.Fraction(1, 3)
+    b = lc.Fraction(2, 5)
+    add = a + b
+    sub = a - b
+    assert str(add) == "11/15"
+    assert str(sub) == "-1/15"
