@@ -3,7 +3,7 @@
 all: test
 
 run:
-	python lec10.py
+	python lec12.py
 
 test:
 	pytest
