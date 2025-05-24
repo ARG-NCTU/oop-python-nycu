@@ -32,9 +32,9 @@ def test_merge_np():
     assert lec12.merge_np([3], [1, 2]) == [1, 2, 3]
     
 def test_merge_sort_np():
-    assert merge_sort_np([4, 3, 2, 1]) == [1, 2, 3, 4]
-    assert merge_sort_np([1, 2, 3, 4]) == [1, 2, 3, 4]
-    assert merge_sort_np([4]) == [4]
-    assert merge_sort_np([]) == []
-    assert merge_sort_np([3, 2, 1]) == [1, 2, 3]
+    assert lec12.merge_sort_np([4, 3, 2, 1]) == [1, 2, 3, 4]
+    assert lec12.merge_sort_np([1, 2, 3, 4]) == [1, 2, 3, 4]
+    assert lec12.merge_sort_np([4]) == [4]
+    assert lec12.merge_sort_np([]) == []
+    assert lec12.merge_sort_np([3, 2, 1]) == [1, 2, 3]
     
