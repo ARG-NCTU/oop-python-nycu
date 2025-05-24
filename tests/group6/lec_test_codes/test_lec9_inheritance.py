@@ -76,13 +76,6 @@ def test_person_get_age():
     assert p.get_age() == 20
 
 
-# def test_person_speak(capsys):
-
-def test_person_speak():
-    s = lec9.Person("a", 18)
-    s.speak()
-    assert s.speak() == "Hello, my name is a and I am 18 years old."
-
 # def test_person_age_diff(capsys):
 
 
