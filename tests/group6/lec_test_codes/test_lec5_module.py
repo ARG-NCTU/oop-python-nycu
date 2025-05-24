@@ -1,7 +1,7 @@
 import pytest
 #!/usr/bin/env python3
 import add_path
-from mit_ocw_data_science.lec5.test_drunk import Field,  Drunk, UsualDrunk, MasochistDrunk, Location
+from mit_ocw_data_science.lec5.lec5_module import Field,  Drunk, UsualDrunk, MasochistDrunk, Location
 
 def test_location():
   l = Location(0, 0)
