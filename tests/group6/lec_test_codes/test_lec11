@@ -2,4 +2,17 @@ import add_path
 import pytest
 
 import mit_ocw_exercises.lec11_complexity_part2 as lec11
+        
+def test_bisect_search1():
+    assert lec11.bisect_search1([1, 2, 3, 4, 5], 3) == True
+    assert lec11.bisect_search1([1, 2, 3, 4, 5], 6) == False
+    assert lec11.bisect_search1([], 3) == False
+    assert lec11.bisect_search1([1], 1) == True
+    assert lec11.bisect_search1([1], 2) == False
 
+def test_bisect_search2():
+    assert lec11.bisect_search2([1, 2, 3, 4, 5], 3) == True
+    assert lec11.bisect_search2([1, 2, 3, 4, 5], 6) == False
+    assert lec11.bisect_search2([], 3) == False
+    assert lec11.bisect_search2([1], 1) == True
+    assert lec11.bisect_search2([1], 2) == False
