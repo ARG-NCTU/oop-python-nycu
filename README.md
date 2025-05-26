@@ -36,19 +36,19 @@ source docker_join.sh
 <!--START_SECTION:pytest-->
 | Group | Status  |
 |-------|---------|
-| group1 | ✅ success |
+| group1 | ❌ failed |
 | group2 | ❌ failed |
 | group3 | ❌ failed |
-| group4 | ❌ failed |
-| group5 | ❌ failed |
-| group6 | ✅ success |
+| group4 | ✅ success |
+| group5 | ✅ success |
+| group6 | ❌ failed |
 | group7 | ✅ success |
 | group8 | ❌ failed |
 | group9 | ✅ success |
 | group10 | ✅ success |
 | group11 | ❌ failed |
 | group12 | ❌ failed |
-| group13 | ✅ success |
+| group13 | ❌ failed |
 | group14 | ✅ success |
 | group15 | ❌ failed |
 | group16 | ❌ failed |
