@@ -142,3 +142,48 @@ def test_intSet():
     print("intSet class tests passed.")
 
 test_intSet()
+print("\n==== Custom Tests ====")
+
+# Coordinate 類別測試
+def test_coordinate_custom():
+    p1 = Coordinate(-1, -1)
+    p2 = Coordinate(2, 3)
+    assert str(p1) == "<-1,-1>"
+    assert str(p2) == "<2,3>"
+    assert round(p1.distance(p2), 5) == round(((3**2 + 4**2)**0.5), 5)  # 距離應該是 5.0
+
+test_coordinate_custom()
+print("Coordinate custom test passed.")
+
+# Fraction 類別測試
+def test_fraction_custom():
+    f1 = Fraction(2, 5)
+    f2 = Fraction(1, 10)
+    sum_f = f1 + f2  # 應該是 5/10 = 1/2
+    diff_f = f1 - f2  # 應該是 3/10
+    assert str(sum_f) == "25/50"
+    assert str(diff_f) == "15/50"
+    assert round(float(sum_f), 5) == 0.5
+    assert round(float(diff_f), 5) == 0.3
+    assert str(f1.inverse()) == "5/2"
+
+test_fraction_custom()
+print("Fraction custom test passed.")
+
+# intSet 類別測試
+def test_intset_custom():
+    s = intSet()
+    s.insert(10)
+    s.insert(-5)
+    s.insert(0)
+    assert str(s) == "{-5,0,10}"
+    assert s.member(-5)
+    s.remove(-5)
+    assert str(s) == "{0,10}"
+    try:
+        s.remove(-5)
+    except ValueError as e:
+        assert str(e) == "-5 not found"
+
+test_intset_custom()
+print("intSet custom test passed.")
