@@ -44,3 +44,15 @@ def test_max_val():
     assert len(selected_items) == 2
     assert str(selected_items[0]) == "cherry: <40, 70>"
     assert str(selected_items[1]) == "apple: <20, 50>"
+    
+def test_fast_max_val():
+    names = ["apple", "banana", "cherry"]
+    values = [20, 10, 40]
+    calories = [50, 60, 70]
+    menu = lec2.Menu(names, values, calories)
+
+    total_value, selected_items = lec2.fast_max_val(menu.get_foods(), 100)
+    assert total_value == 60
+    assert len(selected_items) == 2
+    assert str(selected_items[0]) == "cherry: <40, 70>"
+    assert str(selected_items[1]) == "apple: <20, 50>"
