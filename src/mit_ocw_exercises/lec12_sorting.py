@@ -104,18 +104,18 @@ def merge_sort_np(L):
         right = merge_sort_np(L[middle:])
         return merge_np(left, right)
     
-# Test 1: Sorting a random unsorted list
-test_list1 = [10, 3, 5, 2, 8, 6]
-print("\n--- Test 1: Sorting [10, 3, 5, 2, 8, 6] ---")
-print("bubble_sort result:", bubble_sort(test_list1[:]))
+# Test 2: Sorting a list with negative and positive numbers
+test_list2 = [-4, 0, 7, -1, 3, -2]
+print("\n--- Test 2: Sorting [-4, 0, 7, -1, 3, -2] ---")
+print("bubble_sort result:", bubble_sort(test_list2[:]))
 print("selection_sort result (in-place):", end=" ")
-temp1 = test_list1[:]
-selection_sort(temp1)
-print(temp1)
-print("merge_sort result:", merge_sort(test_list1[:]))
-print("bubble_sort_np result:", bubble_sort_np(test_list1[:]))
+temp3 = test_list2[:]
+selection_sort(temp3)
+print(temp3)
+print("merge_sort result:", merge_sort(test_list2[:]))
+print("bubble_sort_np result:", bubble_sort_np(test_list2[:]))
 print("selection_sort_np result (in-place):", end=" ")
-temp2 = test_list1[:]
-selection_sort_np(temp2)
-print(temp2)
-print("merge_sort_np result:", merge_sort_np(test_list1[:]))
+temp4 = test_list2[:]
+selection_sort_np(temp4)
+print(temp4)
+print("merge_sort_np result:", merge_sort_np(test_list2[:]))
