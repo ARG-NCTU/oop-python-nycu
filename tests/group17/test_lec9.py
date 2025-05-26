@@ -30,3 +30,24 @@ def test_100_animal():
     a.set_name("candy")
     assert a.get_name() == "candy"
     assert a.get_age() == 10
+
+def test_7_animal():
+    a = inh.Animal(10)
+    a.set_name("juicy")
+    print(a)
+    assert a.get_name() == "juicy"
+    assert a.get_age() == 10
+    a.set_age(5)
+    print(a)
+    assert a.get_age() == 5
+    a.set_age(8)
+    print(a)
+    assert a.get_age() == 8
+    a.set_name("bound")
+    print(a)
+    assert a.get_name() == "bound"
+    a.set_name("happy")
+    assert a.get_name() == "happy"
+    a.set_age(5)
+    assert a.get_age() == 5
+    assert a.__str__() == "animal:happy:5"
