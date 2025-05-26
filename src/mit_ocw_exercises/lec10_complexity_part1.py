@@ -51,27 +51,49 @@ def intersect(L1, L2):
             res.append(e)
     return res
 
-print("--- Testing linear_search ---")
-print(linear_search([1, 2, 3], 2) == True)
-print(linear_search([1, 2, 3], 4) == False)
-print(linear_search([], 0) == False)
+def test_linear_search():
+    print("--- Testing linear_search ---")
+    assert linear_search([1, 2, 3], 2) == True
+    assert linear_search([1, 2, 3], 4) == False
+    assert linear_search([], 0) == False
+    assert linear_search([10, 20, 30], 30) == True
+    assert linear_search([5, 6, 7], 1) == False
+    print("linear_search tests passed.")
 
-print("\n--- Testing search ---")
-print(search([1, 3, 5, 7], 5) == True)
-print(search([1, 3, 5, 7], 6) == False)
-print(search([], 3) == False)
-print(search([2, 4, 6], 1) == False)
+def test_search():
+    print("\n--- Testing search ---")
+    assert search([1, 3, 5, 7], 5) == True
+    assert search([1, 3, 5, 7], 6) == False
+    assert search([], 3) == False
+    assert search([2, 4, 6], 1) == False
+    assert search([1, 3, 5, 7, 9], 9) == True
+    assert search([1, 3, 5, 7, 9], 10) == False
+    print("search tests passed.")
 
-print("\n--- Testing isSubset ---")
-print(isSubset([1, 3], [1, 2, 3, 4]) == True)
-print(isSubset([], [1, 2, 3]) == True)
-print(isSubset([1, 5], [2, 3, 4]) == False)
-print(isSubset([1, 2], [1, 2]) == True)
+def test_isSubset():
+    print("\n--- Testing isSubset ---")
+    assert isSubset([1, 3], [1, 2, 3, 4]) == True
+    assert isSubset([], [1, 2, 3]) == True
+    assert isSubset([1, 5], [2, 3, 4]) == False
+    assert isSubset([1, 2], [1, 2]) == True
+    assert isSubset([5], [5, 6, 7]) == True
+    assert isSubset([8], [1, 2, 3]) == False
+    print("isSubset tests passed.")
 
-print("\n--- Testing intersect ---")
-print(intersect([1, 2, 3], [2, 3, 4]) == [2, 3])
-print(intersect([], [1, 2]) == [])
-print(intersect([1, 1, 2], [1]) == [1])
-print(intersect([1, 2, 2], [2, 2, 3]) == [2])
-print(intersect([1, 2, 3], [4, 5, 6]) == [])
+def test_intersect():
+    print("\n--- Testing intersect ---")
+    assert intersect([1, 2, 3], [2, 3, 4]) == [2, 3]
+    assert intersect([], [1, 2]) == []
+    assert intersect([1, 1, 2], [1]) == [1]
+    assert intersect([1, 2, 2], [2, 2, 3]) == [2]
+    assert intersect([1, 2, 3], [4, 5, 6]) == []
+    assert intersect([1, 2, 3, 4], [3, 4, 5, 6]) == [3, 4]
+    assert intersect([7, 8], [8, 9]) == [8]
+    print("intersect tests passed.")
+
+# Run all tests
+test_linear_search()
+test_search()
+test_isSubset()
+test_intersect()
 
