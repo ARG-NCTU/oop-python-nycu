@@ -50,3 +50,35 @@ def intersect(L1, L2):
         if not(e in res):
             res.append(e)
     return res
+
+import unittest
+
+class TestSearchFunctions(unittest.TestCase):
+
+    def test_linear_search(self):
+        self.assertTrue(linear_search([1, 2, 3], 2))
+        self.assertFalse(linear_search([1, 2, 3], 4))
+        self.assertTrue(linear_search([], 0) == False)
+
+    def test_search(self):
+        # 適用於已排序列表（有早停邏輯）
+        self.assertTrue(search([1, 3, 5, 7], 5))
+        self.assertFalse(search([1, 3, 5, 7], 6))
+        self.assertFalse(search([], 3))
+        self.assertFalse(search([2, 4, 6], 1))
+
+    def test_isSubset(self):
+        self.assertTrue(isSubset([1, 3], [1, 2, 3, 4]))
+        self.assertTrue(isSubset([], [1, 2, 3]))
+        self.assertFalse(isSubset([1, 5], [2, 3, 4]))
+        self.assertTrue(isSubset([1, 2], [1, 2]))
+
+    def test_intersect(self):
+        self.assertEqual(intersect([1, 2, 3], [2, 3, 4]), [2, 3])
+        self.assertEqual(intersect([], [1, 2]), [])
+        self.assertEqual(intersect([1, 1, 2], [1]), [1])
+        self.assertEqual(intersect([1, 2, 2], [2, 2, 3]), [2])
+        self.assertEqual(intersect([1, 2, 3], [4, 5, 6]), [])
+
+if __name__ == '__main__':
+    unittest.main()
