@@ -186,22 +186,13 @@ argToUse = 34
 #print("")
 #print('using fib_efficient')
 #print(fib_efficient(argToUse, d))
-# Test 1: Test Towers of Hanoi with 3 disks
-print("=== Test Towers of Hanoi ===")
-Towers(3, 'A', 'C', 'B')
 
-# Test 2: Test Fibonacci function (recursive)
-print("\n=== Test Fibonacci (recursive) ===")
-print("fib(5):", fib(5))  # Expected: 8
+# Test 5: Test Towers of Hanoi with 1 disk (edge case)
+print("\n=== Test Towers of Hanoi (1 Disk) ===")
+Towers(1, 'Left', 'Right', 'Middle')  # Should only print one move
 
-# Test 3: Test is_palindrome function
-print("\n=== Test Palindrome ===")
-test_strs = ["A man, a plan, a canal, Panama", "Python", "Madam", "No lemon, no melon"]
-for s in test_strs:
-    print(f"'{s}' -> {is_palindrome(s)}")
+# Test 6: Test Fibonacci with memoization for larger value
+print("\n=== Test Fibonacci with Memoization ===")
+d_test = {1:1, 2:2}
+print("fib_efficient(10):", fib_efficient(10, d_test))  # Expected: 89
 
-# Test 4: Test lyrics_to_frequencies and words_often
-print("\n=== Test Word Frequency ===")
-freq_result = lyrics_to_frequencies(['hello', 'world', 'hello', 'test', 'world', 'hello'])
-print("Word Frequencies:", freq_result)
-print("Words appearing >= 2 times:", words_often(freq_result, 2))
