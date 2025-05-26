@@ -22,4 +22,15 @@ def test_is_palindrome():
     assert lec6.is_palindrome('I am genious') == False
     assert lec6.is_palindrome('madam') == True
     assert lec6.is_palindrome('vdiejssjeidv') == True
-    
+def test_most_common_words_and_palindrome():
+    lyrics = [
+        'love', 'me', 'do',
+        'you', 'know', 'i', 'love', 'you',
+        'ill', 'always', 'be', 'true',
+        'so', 'please', 'love', 'me', 'do',
+        'whoa', 'love', 'me', 'do'
+    ]
+
+    assert lec6.most_common_words(lec6.lyrics_to_frequencies(lyrics)) == (['love'], 4)
+    assert lec6.is_palindrome('madam') == True
+    assert lec6.is_palindrome('beatles') == False
