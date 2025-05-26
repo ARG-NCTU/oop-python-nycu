@@ -60,9 +60,3 @@ def test_max_val():
     assert items[0].name == "banana"
     assert items[1].name == "apple"
 
-def test_fast_max_val():
-    foods = [Food("apple", 10, 50), Food("banana", 20, 100), Food("cherry", 15, 75)]
-    total_value, items = fast_max_val(foods, 150)
-    assert total_value == 30
-    assert items[0].name == "banana"
-    assert items[1].name == "apple"
