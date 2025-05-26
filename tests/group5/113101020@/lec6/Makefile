@@ -1,7 +1,8 @@
 # Makefile
+.PHONY: all test
 
-.PHONY: test
+all: test
 
-# 預設執行 pytest
+# Run pytest, stop at first failure, disable warnings, quiet output
 test:
-	pytest -q
+	pytest --maxfail=1 --disable-warnings -q
