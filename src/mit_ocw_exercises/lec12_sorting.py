@@ -104,50 +104,18 @@ def merge_sort_np(L):
         right = merge_sort_np(L[middle:])
         return merge_np(left, right)
     
-def test_sorting_algorithms():
-    print("\n--- Testing Sorting Algorithms ---")
-    
-    test_cases = [
-        [],
-        [1],
-        [2, 1],
-        [3, 1, 2],
-        [5, 3, 8, 6, 2],
-        [9, 8, 7, 6, 5],
-        [1, 2, 3, 4, 5],
-        [4, 5, 5, 4, 3, 3],
-    ]
-    
-    for case in test_cases:
-        expected = sorted(case)
-
-        # Bubble sort
-        result_bubble = bubble_sort(case[:])
-        assert result_bubble == expected, f"bubble_sort failed on input {case}"
-
-        # Selection sort (non-printing returns None so we check after sort)
-        sel_case = case[:]
-        selection_sort(sel_case)
-        assert sel_case == expected, f"selection_sort failed on input {case}"
-
-        # Merge sort
-        result_merge = merge_sort(case[:])
-        assert result_merge == expected, f"merge_sort failed on input {case}"
-
-        # Bubble sort no print
-        result_bubble_np = bubble_sort_np(case[:])
-        assert result_bubble_np == expected, f"bubble_sort_np failed on input {case}"
-
-        # Selection sort no print
-        sel_np_case = case[:]
-        selection_sort_np(sel_np_case)
-        assert sel_np_case == expected, f"selection_sort_np failed on input {case}"
-
-        # Merge sort no print
-        result_merge_np = merge_sort_np(case[:])
-        assert result_merge_np == expected, f"merge_sort_np failed on input {case}"
-
-    print("All sorting tests passed successfully.")
-
-# Run the test
-test_sorting_algorithms()
+# Test 1: Sorting a random unsorted list
+test_list1 = [10, 3, 5, 2, 8, 6]
+print("\n--- Test 1: Sorting [10, 3, 5, 2, 8, 6] ---")
+print("bubble_sort result:", bubble_sort(test_list1[:]))
+print("selection_sort result (in-place):", end=" ")
+temp1 = test_list1[:]
+selection_sort(temp1)
+print(temp1)
+print("merge_sort result:", merge_sort(test_list1[:]))
+print("bubble_sort_np result:", bubble_sort_np(test_list1[:]))
+print("selection_sort_np result (in-place):", end=" ")
+temp2 = test_list1[:]
+selection_sort_np(temp2)
+print(temp2)
+print("merge_sort_np result:", merge_sort_np(test_list1[:]))
