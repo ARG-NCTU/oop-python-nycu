@@ -1,3 +1,6 @@
+import sys
+import pytest
+
 def fib (n):
 
     if n == 0 or n ==1 :
@@ -22,6 +25,15 @@ def test_fib():
     assert fib(5) == 8
     assert fib(6) == 13
     assert fib(7) == 21
+
+def test_fast_fib():
+    assert fast_fib(0) == 1
+    assert fast_fib(1) == 1
+    assert fast_fib(3) == 3
+    assert fast_fib(4) == 5
+    assert fast_fib(5) == 8
+    assert fast_fib(6) == 13
+    assert fast_fib(7) == 21
 
 def main ():
     for i in range(36):
