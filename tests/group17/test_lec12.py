@@ -29,6 +29,11 @@ class TestSortingAlgorithms(unittest.TestCase):
                 case_copy = deepcopy(case)
                 selection_sort(case_copy)  # in-place
                 self.assertEqual(case_copy, self.sorted_cases[i])
+    def test_merge_sort(self):
+        from your_module import merge_sort
+        for i, case in enumerate(self.test_cases):
+            with self.subTest(i=i):
+                self.assertEqual(merge_sort(deepcopy(case)), self.sorted_cases[i])
 
 if __name__ == "__main__":
     unittest.main()
