@@ -16,5 +16,11 @@ class TestSortingAlgorithms(unittest.TestCase):
         ]
         self.sorted_cases = [sorted(case) for case in self.test_cases]
 
+    def test_bubble_sort(self):
+        from your_module import bubble_sort  # 把這裡改成你實際的模組名稱
+        for i, case in enumerate(self.test_cases):
+            with self.subTest(i=i):
+                self.assertEqual(bubble_sort(deepcopy(case)), self.sorted_cases[i])
+
 if __name__ == "__main__":
     unittest.main()
