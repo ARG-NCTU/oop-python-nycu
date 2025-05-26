@@ -16,22 +16,17 @@ class Coordinate(object):
         y_diff_sq = (self.y-other.y)**2
         return (x_diff_sq + y_diff_sq)**0.5
 
-def Coordinate test():
+# Test code for Coordinate
+def test_Coordinate():
     c1 = Coordinate(3, 4)
     c2 = Coordinate(0, 0)
     assert c1.x == 3 and c1.y == 4
     assert c2.x == 0 and c2.y == 0
     assert c1.distance(c2) == 5.0  # (3^2 + 4^2) ** 0.5 = 5
     assert str(c1) == "<3,4>"
+    print("Coordinate class tests passed.")
 
-Coodinate test()
-# c = Coordinate(3,4)
-# origin = Coordinate(0,0)
-# print(c.x, origin.x)
-# print(c.distance(origin))
-# print(Coordinate.distance(c, origin))
-# print(origin.distance(c))
-# print(c)
+test_Coordinate()
 
 
 #################
@@ -40,16 +35,14 @@ Coodinate test()
 ### Try adding a reduce method to reduce the fraction (use gcd)
 #################
 class Fraction(object):
-    """
-    A number represented as a fraction
-    """
+    """ A number represented as a fraction """
     def __init__(self, num, denom):
         """ num and denom are integers """
         assert type(num) == int and type(denom) == int, "ints not used"
         self.num = num
         self.denom = denom
     def __str__(self):
-        """ Retunrs a string representation of self """
+        """ Returns a string representation of self """
         return str(self.num) + "/" + str(self.denom)
     def __add__(self, other):
         """ Returns a new fraction representing the addition """
@@ -68,21 +61,22 @@ class Fraction(object):
         """ Returns a new fraction representing 1/self """
         return Fraction(self.denom, self.num)
 
-a = Fraction(1,4)
-b = Fraction(3,4)
-c = a + b # c is a Fraction object
-print(c)
-print(float(c))
-print(Fraction.__float__(c))
-print(float(b.inverse()))
+# Test code for Fraction
+def test_Fraction():
+    a = Fraction(1, 4)
+    b = Fraction(3, 4)
+    c = a + b
+    assert str(c) == "16/16"
+    assert float(c) == 1.0
+    assert float(b.inverse()) == 4/3
 
-try:
-    c = Fraction(3.14,2.7)
-    print(error)
-except AssertionError:
-    print (passed)
-##c = Fraction(3.14, 2.7) # assertion error
-##print a*b # error, did not define how to multiply two Fraction objects
+    try:
+        c = Fraction(3.14, 2.7)
+        print("Should not reach here")
+    except AssertionError:
+        print("Fraction class tests passed.")
+
+test_Fraction()
 
 
 ##############
@@ -121,40 +115,30 @@ class intSet(object):
         self.vals.sort()
         return '{' + ','.join([str(e) for e in self.vals]) + '}'
 
-s = intSet()
-assert str(s) == "{}"  # 初始集合應該是空的
+# Test code for intSet
+def test_intSet():
+    s = intSet()
+    assert str(s) == "{}"  # 初始集合應該是空的
 
-s.insert(3)
-s.insert(4)
-s.insert(3)  # 重複插入應該無效
-assert str(s) == "{3,4}"
+    s.insert(3)
+    s.insert(4)
+    s.insert(3)  # 重複插入應該無效
+    assert str(s) == "{3,4}"
 
-assert s.member(3) is True
-assert s.member(5) is False
+    assert s.member(3) is True
+    assert s.member(5) is False
 
-s.insert(6)
-assert str(s) == "{3,4,6}"
+    s.insert(6)
+    assert str(s) == "{3,4,6}"
 
-s.remove(3)
-assert str(s) == "{4,6}"
+    s.remove(3)
+    assert str(s) == "{4,6}"
 
-try:
-    s.remove(3)  # 應該拋出 ValueError
-except ValueError as e:
-    assert str(e) == "3 not found"
+    try:
+        s.remove(3)  # 應該拋出 ValueError
+    except ValueError as e:
+        assert str(e) == "3 not found"
 
-"""
-s = intSet()
-print(s)
-s.insert(3)
-s.insert(4)
-s.insert(3)
-print(s)
-s.member(3)
-s.member(5)
-s.insert(6)
-print(s)
-#s.remove(3)  # leads to an error
-print(s)
-s.remove(3)
-"""
+    print("intSet class tests passed.")
+
+test_intSet()
