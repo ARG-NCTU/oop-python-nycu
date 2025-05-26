@@ -35,5 +35,11 @@ class TestSortingAlgorithms(unittest.TestCase):
             with self.subTest(i=i):
                 self.assertEqual(merge_sort(deepcopy(case)), self.sorted_cases[i])
 
+    def test_bubble_sort_np(self):
+        from your_module import bubble_sort_np
+        for i, case in enumerate(self.test_cases):
+            with self.subTest(i=i):
+                self.assertEqual(bubble_sort_np(deepcopy(case)), self.sorted_cases[i])
+
 if __name__ == "__main__":
     unittest.main()
