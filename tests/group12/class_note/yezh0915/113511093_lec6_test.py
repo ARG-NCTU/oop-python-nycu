@@ -30,3 +30,9 @@ def test_is_palindrome():
     assert lec6.is_palindrome("") is True
     assert lec6.is_palindrome("A") is True
 
+def test_lyrics_to_frequencies():
+    lyrics = ["hello", "world", "hello"]
+    freqs = lec6.lyrics_to_frequencies(lyrics)
+    assert freqs["hello"] == 2
+    assert freqs["world"] == 1
+
