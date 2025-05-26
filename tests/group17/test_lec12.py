@@ -22,5 +22,13 @@ class TestSortingAlgorithms(unittest.TestCase):
             with self.subTest(i=i):
                 self.assertEqual(bubble_sort(deepcopy(case)), self.sorted_cases[i])
 
+    def test_selection_sort(self):
+        from your_module import selection_sort
+        for i, case in enumerate(self.test_cases):
+            with self.subTest(i=i):
+                case_copy = deepcopy(case)
+                selection_sort(case_copy)  # in-place
+                self.assertEqual(case_copy, self.sorted_cases[i])
+
 if __name__ == "__main__":
     unittest.main()
