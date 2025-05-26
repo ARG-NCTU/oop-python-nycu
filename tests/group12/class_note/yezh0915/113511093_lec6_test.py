@@ -42,3 +42,15 @@ def test_most_common_words():
     assert set(words) == {"a", "c"}
     assert count == 3
 
+def test_words_often():
+    freqs = {"a": 5, "b": 3, "c": 5, "d": 2}
+    result = lec6.words_often(freqs.copy(), 3)
+    assert ("a" in result[0][0] and "c" in result[0][0])
+    assert result[0][1] == 5
+    assert result[1][0] == ["b"]
+    assert result[1][1] == 3
+
+def test_fib_mem():
+    assert lec6.fib_mem(1) == 1
+    assert lec6.fib_mem(2) == 2
+    assert lec6.fib_mem(5) == lec6.fib_mem(4) + lec6.fib_mem(3)
