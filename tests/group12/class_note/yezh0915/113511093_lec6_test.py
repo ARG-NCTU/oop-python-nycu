@@ -36,3 +36,9 @@ def test_lyrics_to_frequencies():
     assert freqs["hello"] == 2
     assert freqs["world"] == 1
 
+def test_most_common_words():
+    freqs = {"a": 3, "b": 2, "c": 3}
+    words, count = lec6.most_common_words(freqs)
+    assert set(words) == {"a", "c"}
+    assert count == 3
+
