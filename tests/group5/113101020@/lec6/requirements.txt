@@ -1,3 +1,6 @@
+pytest>=7.0.0
+requests==2.31.0
+numpy>=1.25.0
 
 
 
