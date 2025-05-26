@@ -22,3 +22,11 @@ def test_fib_efficient():
     # The memoization should work
     assert 5 in d
     assert 3 in d
+    
+def test_is_palindrome():
+    assert lec6.is_palindrome("eve") is True
+    assert lec6.is_palindrome("Able was I, ere I saw Elba") is True
+    assert lec6.is_palindrome("Is this a palindrome") is False
+    assert lec6.is_palindrome("") is True
+    assert lec6.is_palindrome("A") is True
+
