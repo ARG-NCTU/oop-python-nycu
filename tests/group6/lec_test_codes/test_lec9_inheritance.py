@@ -76,10 +76,6 @@ def test_person_get_age():
     assert p.get_age() == 20
 
 
-# def test_person_speak(capsys):
-
-
-
 # def test_person_age_diff(capsys):
 
 
