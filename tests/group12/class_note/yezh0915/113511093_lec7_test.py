@@ -31,3 +31,8 @@ def test_get_ratios():
     with pytest.raises(ValueError):
         get_ratios([1, 2], [0])
 
+def test_avg():
+    assert avg([1, 2, 3]) == 2.0
+    with pytest.raises(AssertionError):
+        avg([])
+
