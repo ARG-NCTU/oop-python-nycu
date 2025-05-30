@@ -1,6 +1,7 @@
-import sys
-import os
+#!/usr/bin/env python3
 
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src'))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
+import os
+import sys
+sys.path.append(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                 '../../src'))
