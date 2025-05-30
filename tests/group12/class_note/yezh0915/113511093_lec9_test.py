@@ -35,4 +35,27 @@ def test_person_inheritance_and_methods(capsys):
     p1.age_diff(p2)
     captured = capsys.readouterr()
     assert "5 year difference" in captured.out
+    
+def test_student_inheritance_and_methods(monkeypatch, capsys):
+    s = Student("alice", 20, "CS")
+    assert str(s) == "student:alice:20:CS"
+    s.change_major("Math")
+    assert s.major == "Math"
+    # Test speak randomness by monkeypatching random.random
+    monkeypatch.setattr("random.random", lambda: 0.1)
+    s.speak()
+    captured = capsys.readouterr()
+    assert "i have homework" in captured.out
+    monkeypatch.setattr("random.random", lambda: 0.3)
+    s.speak()
+    captured = capsys.readouterr()
+    assert "i need sleep" in captured.out
+    monkeypatch.setattr("random.random", lambda: 0.6)
+    s.speak()
+    captured = capsys.readouterr()
+    assert "i should eat" in captured.out
+    monkeypatch.setattr("random.random", lambda: 0.8)
+    s.speak()
+    captured = capsys.readouterr()
+    assert "i am watching tv" in captured.out
 
