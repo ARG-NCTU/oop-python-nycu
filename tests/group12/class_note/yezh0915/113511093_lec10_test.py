@@ -13,5 +13,11 @@ def test_search():
     # test for sorted input (should stop early)
     assert search([1, 2, 4, 10], 5) is False
 
+def test_isSubset():
+    assert isSubset([1, 2], [1, 2, 3]) is True
+    assert isSubset([1, 4], [1, 2, 3]) is False
+    assert isSubset([], [1, 2, 3]) is True
+    assert isSubset([1], []) is False
+
 
 
