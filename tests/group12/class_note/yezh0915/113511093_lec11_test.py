@@ -12,3 +12,9 @@ def test_bisect_search1_not_found():
     assert lec.bisect_search1(L, -1) is False
     assert lec.bisect_search1(L, 100) is False
 
+def test_bisect_search2_found():
+    L = list(range(100))
+    assert lec.bisect_search2(L, 76) is True
+    assert lec.bisect_search2(L, 0) is True
+    assert lec.bisect_search2(L, 99) is True
+
