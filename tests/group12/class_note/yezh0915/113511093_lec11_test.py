@@ -29,3 +29,14 @@ def test_genSubsets_empty():
 def test_genSubsets_single():
     assert lec.genSubsets([1]) == [[], [1]]
 
+def test_genSubsets_multiple():
+    result = lec.genSubsets([1, 2])
+    expected = [[], [1], [2], [1, 2]]
+    # order may differ
+    for subset in expected:
+        assert subset in result
+    assert len(result) == 4
+
+    result = lec.genSubsets([1, 2, 3])
+    assert len(result) == 8  # 2^3 subsets
+
