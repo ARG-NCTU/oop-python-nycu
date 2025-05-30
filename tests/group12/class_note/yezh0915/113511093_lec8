@@ -51,8 +51,7 @@ print(c)
 print(float(c))
 print(Fraction.__float__(c))
 print(float(b.inverse()))
-##c = Fraction(3.14, 2.7) # assertion error
-##print a*b # error, did not define how to multiply two Fraction objects
+
 
 
 class intSet(object):
