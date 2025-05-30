@@ -59,3 +59,28 @@ def test_student_inheritance_and_methods(monkeypatch, capsys):
     captured = capsys.readouterr()
     assert "i am watching tv" in captured.out
 
+def test_rabbit_class_and_operators():
+    Rabbit.tag = 1  # Reset class variable for deterministic testing
+    r1 = Rabbit(3)
+    r2 = Rabbit(4)
+    r3 = Rabbit(5)
+    assert r1.get_parent1() is None
+    assert r1.get_parent2() is None
+    r4 = r1 + r2
+    assert isinstance(r4, Rabbit)
+    assert r4.get_parent1() == r1
+    assert r4.get_parent2() == r2
+    r5 = r3 + r4
+    r6 = r4 + r3
+    # Compare equality with same parents (order-insensitive)
+    assert r5 == r6
+    # Different parents
+    assert not (r4 == r6)
+    assert str(r1).startswith("rabbit:")
+    assert r1.get_rid() == "001"
+    assert r2.get_rid() == "002"
+    assert r3.get_rid() == "003"
+    assert r4.get_rid() == "004"
+
+
+
