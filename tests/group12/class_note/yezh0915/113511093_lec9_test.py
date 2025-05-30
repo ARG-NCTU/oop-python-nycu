@@ -12,6 +12,11 @@ def test_animal_basic():
     assert "animal:fluffy:5" == str(a)
     a.set_name()
     assert a.get_name() == ""
-
+def test_cat_inheritance_and_methods():
+    c = Cat(2)
+    c.set_name("kitty")
+    assert c.get_name() == "kitty"
+    assert c.get_age() == 2
+    assert str(c) == "cat:kitty:2"
 
 
