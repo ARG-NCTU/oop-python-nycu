@@ -23,3 +23,7 @@ def test_bisect_search2_not_found():
     assert lec.bisect_search2(L, -1) is False
     assert lec.bisect_search2(L, 100) is False
 
+def test_genSubsets_empty():
+    assert lec.genSubsets([]) == [[]]
+
+
