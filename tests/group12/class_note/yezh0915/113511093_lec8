@@ -90,6 +90,6 @@ s.member(3)
 s.member(5)
 s.insert(6)
 print(s)
-#s.remove(3)  # leads to an error
+
 print(s)
 s.remove(3)
