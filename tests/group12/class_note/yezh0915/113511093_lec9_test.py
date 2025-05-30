@@ -19,4 +19,20 @@ def test_cat_inheritance_and_methods():
     assert c.get_age() == 2
     assert str(c) == "cat:kitty:2"
 
+def test_person_inheritance_and_methods(capsys):
+    p1 = Person("jack", 30)
+    p2 = Person("jill", 25)
+    assert p1.get_name() == "jack"
+    assert p1.get_age() == 30
+    assert p2.get_name() == "jill"
+    assert p2.get_age() == 25
+    assert str(p1) == "person:jack:30"
+    p1.speak()
+    captured = capsys.readouterr()
+    assert "hello" in captured.out
+    p1.add_friend("jill")
+    assert "jill" in p1.get_friends()
+    p1.age_diff(p2)
+    captured = capsys.readouterr()
+    assert "5 year difference" in captured.out
 
