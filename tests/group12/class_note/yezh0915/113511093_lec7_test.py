@@ -21,3 +21,13 @@ def test_primes_list():
     assert primes_list(10) == [2, 3, 5, 7]
     assert primes_list(15) == [2, 3, 5, 7, 11, 13]
 
+def test_get_ratios():
+    assert get_ratios([2, 4], [2, 2]) == [1.0, 2.0]
+    # 除零返回 nan
+    res = get_ratios([1, 2], [0, 2])
+    assert math.isnan(res[0])
+    assert res[1] == 1.0
+    # 异常输入
+    with pytest.raises(ValueError):
+        get_ratios([1, 2], [0])
+
