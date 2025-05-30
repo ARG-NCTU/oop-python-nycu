@@ -16,3 +16,8 @@ def test_rev_list():
     rev_list(L)
     assert L == [7]
 
+def test_primes_list():
+    assert primes_list(2) == [2]
+    assert primes_list(10) == [2, 3, 5, 7]
+    assert primes_list(15) == [2, 3, 5, 7, 11, 13]
+
