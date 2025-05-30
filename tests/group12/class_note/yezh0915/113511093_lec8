@@ -46,7 +46,7 @@ class Fraction(object):
 
 a = Fraction(1,4)
 b = Fraction(3,4)
-c = a + b # c is a Fraction object
+c = a + b
 print(c)
 print(float(c))
 print(Fraction.__float__(c))
