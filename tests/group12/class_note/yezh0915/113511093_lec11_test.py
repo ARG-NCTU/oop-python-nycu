@@ -26,4 +26,6 @@ def test_bisect_search2_not_found():
 def test_genSubsets_empty():
     assert lec.genSubsets([]) == [[]]
 
+def test_genSubsets_single():
+    assert lec.genSubsets([1]) == [[], [1]]
 
