@@ -14,7 +14,7 @@ def test_rev_list():
     assert L == ['a']
     L = ["I","conquer","OOP"]
     lec7.rev_list(L)
-    assert L == ["OOP","conquer","I"] #test string
+    assert L == ["OOP","conquer","I"] #test string##
 def test_primes_list():
     assert lec7.primes_list(7) == [2, 3, 5, 7]
     assert lec7.primes_list(8) == [2, 3, 5, 7]
