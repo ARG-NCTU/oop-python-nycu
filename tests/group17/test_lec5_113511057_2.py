@@ -1,5 +1,4 @@
-import add_path
-import mit_ocw_exercises.lec5_tuples_lists as lec5
+import lec_5.py as lec5
 import pytest
 def test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(50, 4) == (12, 2)
