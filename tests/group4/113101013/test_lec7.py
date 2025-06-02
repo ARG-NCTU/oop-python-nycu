@@ -15,6 +15,9 @@ class Cat(Animal):
     def speak(self):
         return f"{self.name} meows"
 
+class Bird(Animal):
+    def speak(self):
+        return f"{self.name} chirps"
 # === Tests ===
 
 def test_animal_speak():
@@ -28,6 +31,10 @@ def test_dog_speak():
 def test_cat_speak():
     cat = Cat("Kitty")
     assert cat.speak() == "Kitty meows"
+
+def test_bird_speak():
+    bird = Bird("Tweety")
+    assert bird.speak() == "Tweety chirps"
 
 def test_isinstance_relationship():
     dog = Dog("Rocky")
