@@ -25,6 +25,10 @@ def primes_below(n):
 def test_is_palindrome():
     assert is_palindrome("racecar")
     assert is_palindrome("A man a plan a canal Panama")
+    assert is_palindrome("No lemon, no melon")  # 有逗號與空白
+    assert is_palindrome("Was it a car or a cat I saw")  
+    assert is_palindrome("")  # 空字串應該是 palindrome
+    assert is_palindrome(" ")  # 單空白字串
     assert not is_palindrome("hello")
 
 def test_char_frequency():
