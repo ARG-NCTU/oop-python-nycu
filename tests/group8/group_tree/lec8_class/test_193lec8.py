@@ -11,8 +11,8 @@ def test_fraction():
     c=lec8.Fraction(4,5)
     d=lec8.Fraction(1,10)
     sum = c + d
-    assert sum.num==9
-    assert sum.denom==10
+    assert sum.num==45
+    assert sum.denom==50
     assert str(c)=="4/5"
 
 def test_intSet():
