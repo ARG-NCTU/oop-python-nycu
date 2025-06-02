@@ -46,13 +46,12 @@ class Fraction(object):
 
 a = Fraction(1,4)
 b = Fraction(3,4)
-c = a + b # c is a Fraction object
+c = a + b
 print(c)
 print(float(c))
 print(Fraction.__float__(c))
 print(float(b.inverse()))
-##c = Fraction(3.14, 2.7) # assertion error
-##print a*b # error, did not define how to multiply two Fraction objects
+
 
 
 class intSet(object):
@@ -91,6 +90,6 @@ s.member(3)
 s.member(5)
 s.insert(6)
 print(s)
-#s.remove(3)  # leads to an error
+
 print(s)
 s.remove(3)
