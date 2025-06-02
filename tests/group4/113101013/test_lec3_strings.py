@@ -48,5 +48,14 @@ def test_primes_below():
     assert primes_below(10) == [2, 3, 5, 7]
     assert primes_below(2) == []
     assert primes_below(20) == [2, 3, 5, 7, 11, 13, 17, 19]
-
+    
+def test_is_palindrome_additional():
+    # 含標點符號與大小寫混合的字串，測試能否正確判斷
+    assert is_palindrome("Madam, I'm Adam")  # 加逗號與撇號
+    assert is_palindrome("Eva, can I see bees in a cave?")  # 含逗號與問號
+    # 含數字與字母的回文
+    assert is_palindrome("12321")
+    assert not is_palindrome("12345")
+    # 空白與標點混合
+    assert is_palindrome("A Santa at NASA")
 
