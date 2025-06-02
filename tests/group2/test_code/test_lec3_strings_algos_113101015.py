@@ -14,7 +14,7 @@ def test_approximate_root():
     assert lec3.approximate_root(0.6,0.1) == (60, -1)
     assert lec3.approximate_root(0,0.1) == (0, 0.0)
 
-####################
+#####################
 ## EXAMPLE: while loops and strings
 ## CHALLENGE: rewrite while loop with a for loop
 ####################

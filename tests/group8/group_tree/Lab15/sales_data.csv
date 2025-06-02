@@ -1,0 +1,17 @@
+Date,Product,Category,Quantity,Price
+2023-01-01,Laptop,Electronics,5,1000
+2023-01-01,Mouse,Electronics,10,20
+2023-01-01,Desk,Furniture,3,150
+2023-01-02,Laptop,Electronics,3,1000
+2023-01-02,Keyboard,Electronics,8,50
+2023-01-02,Chair,Furniture,2,100
+2023-01-03,Mouse,Electronics,15,20
+2023-01-03,Desk,Furniture,1,150
+2023-01-04,Laptop,Electronics,7,1000
+2023-01-04,Headphones,Electronics,4,80
+2023-01-05,Keyboard,Electronics,6,50
+2023-01-05,Table,Furniture,2,200
+2023-01-05,Mouse,Electronics,12,20
+2023-01-06,Laptop,Electronics,4,1000
+2023-01-06,Headphones,Electronics,5,80
+2023-01-06,Chair,Furniture,3,100
