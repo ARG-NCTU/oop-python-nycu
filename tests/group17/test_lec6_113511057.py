@@ -1,7 +1,5 @@
-import add_path
-import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
+import lec_6.py as lec6
 import pytest
-
 # please write a test for fib function
 def test_fib():
     assert lec6.fib(0) == 1
