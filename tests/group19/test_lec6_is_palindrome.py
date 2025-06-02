@@ -22,4 +22,4 @@ def test_is_palindrome():
     assert is_palindrome("Hello") == False
     assert is_palindrome("") == True
     assert is_palindrome("a") == True
-    assert is_palindrome("12321") == False
+    assert is_palindrome("12321") == True
