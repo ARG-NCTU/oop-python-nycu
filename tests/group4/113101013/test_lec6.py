@@ -26,6 +26,25 @@ def test_fib_small():
     assert fib(3) == 3
     assert fib(4) == 5
     assert fib(5) == 8
+def test_is_palindrome_basic():
+    assert is_palindrome("racecar")
+    assert is_palindrome("A man a plan a canal Panama")
+    assert not is_palindrome("banana")
+def test_is_palindrome_edge():
+    assert is_palindrome("")
+    assert is_palindrome("x")
+    assert not is_palindrome("xyz")
+    assert is_palindrome("   ")  # Only spaces → empty → True
+    assert is_palindrome(" a ")  # Single letter with spaces
+def test_is_palindrome_punctuation():
+    assert is_palindrome("Was it a car or a cat I saw?")
+    assert is_palindrome("No lemon, no melon")
+    assert is_palindrome("race!car")  # Should still work
+    assert not is_palindrome("not!palindrome")
+def test_is_palindrome_unicode():
+    assert is_palindrome("馬來西亞亞西來馬")  # Chinese palindrome
+    assert is_palindrome("😊")                 # Not a letter → filtered → empty
+
 
 def test_is_palindrome_cases():
     # 一般情境
