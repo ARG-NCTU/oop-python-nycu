@@ -12,9 +12,10 @@ class Testnode_and_edge:
         node1 = lec3.Node('Node1')
         node2 = lec3.Node('Node2')
         edge = lec3.Edge(node1, node2)
-        assert edge.get_start() == node1
-        assert edge.get_end() == node2
-        assert str(edge) == 'Node1 -> Node2'
+        assert edge.get_source() == node1         
+        assert edge.get_destination() == node2    
+        assert str(edge) == 'Node1->Node2'        
+
 class Testdigraph:
     def test_digraph(self):
         g = lec3.Digraph()
@@ -33,4 +34,4 @@ class Testdigraph:
         g.add_node(node2)
         edge = lec3.Edge(node1, node2)
         g.add_edge(edge)
-        assert edge in g.edges
+        assert node2 in g.children_of(node1)       
