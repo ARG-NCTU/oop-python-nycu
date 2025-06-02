@@ -14,15 +14,26 @@ def test_animal_set_name():
     a.set_name("5")
     assert a.get_name() == "5"
 
+def test_animal_get_name():
+    a = lec9.Animal(3)
+    a.set_name("3")
+    assert a.get_name() == "3"
+
 def test_animal_set_age():
     a = lec9.Animal(100)
     a.set_age(4)
     assert a.get_age() == 4
+def test_animal_get_age():
+    a = lec9.Animal(10)
+    a.set_age(20)
+    assert a.get_age() == 20
 
 def test_animal_str():
     a = lec9.Animal(1)
     a.set_name("test")
     assert str(a) == "animal:test:1"
+
+
 
 # cat test
 # def test_cat_speak(capsys):
@@ -39,12 +50,30 @@ def test_person_init():
     assert p.get_age() == 18
     assert p.get_friends() == []
 
+def test_person_set_name():
+    p = lec9.Person("a", 18)
+    p.set_name("b")
+    assert p.get_name() == "b"
+
 def test_person_add_friend():
     p = lec9.Person("Bob", 30)
     p.add_friend("C")
     assert "C" in p.get_friends()
 
-# def test_person_speak(capsys):
+def test_person_get_friends():
+    p = lec9.Person("Bob", 30)
+    p.add_friend("C")
+    assert p.get_friends() == ["C"]
+
+def test_person_set_age():
+    p = lec9.Person("a", 18)
+    p.set_age(20)
+    assert p.get_age() == 20
+
+def test_person_get_age():
+    p = lec9.Person("a", 18)
+    p.set_age(20)
+    assert p.get_age() == 20
 
 
 # def test_person_age_diff(capsys):

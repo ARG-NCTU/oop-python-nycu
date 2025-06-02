@@ -2,6 +2,7 @@
 ## EXAMPLE: simple Coordinate class
 #################
 import math
+import pytest
 class Coordinate(object):
     """ A coordinate made up of an x and y value """
     def __init__(self, x, y):
@@ -140,3 +141,93 @@ print(s)
 #s.remove(3)  # leads to an error
 print(s)
 s.remove(3)
+# =====================================================================================
+import math
+import pytest
+from fractions import Fraction as PyFraction  # 用來驗證結果
+
+#######################
+# Coordinate class test
+#######################
+
+# from your_module import Coordinate, Fraction, intSet  # 替換成你實際定義的模組名稱
+
+def test_coordinate_distance():
+    a = Coordinate(3, 4)
+    b = Coordinate(0, 0)
+    assert a.distance(b) == pytest.approx(5.0)
+
+def test_coordinate_eq():
+    a = Coordinate(1, 2)
+    b = Coordinate(1, 2)
+    c = Coordinate(2, 1)
+    assert a == b
+    assert not (a == c)
+
+def test_coordinate_polar():
+    c = Coordinate(3, 4)
+    r, theta = c.polor()
+    assert r == pytest.approx(5.0)
+    assert theta == pytest.approx(math.atan2(4, 3))
+
+
+#######################
+# Fraction class test
+#######################
+
+def test_fraction_add():
+    a = Fraction(1, 4)
+    b = Fraction(3, 4)
+    c = a + b
+    assert float(c) == pytest.approx(1.0)
+
+def test_fraction_sub():
+    a = Fraction(3, 4)
+    b = Fraction(1, 4)
+    c = a - b
+    assert float(c) == pytest.approx(0.5)
+
+def test_fraction_mul():
+    a = Fraction(1, 2)
+    b = Fraction(2, 3)
+    c = a * b
+    assert float(c) == pytest.approx(1/3)
+
+def test_fraction_inverse():
+    a = Fraction(2, 5)
+    inv = a.inverse()
+    assert float(inv) == pytest.approx(2.5)
+
+def test_fraction_str():
+    a = Fraction(2, 3)
+    assert str(a) == "2/3"
+
+
+#######################
+# intSet class test
+#######################
+
+def test_intset_insert_and_str():
+    s = intSet()
+    s.insert(3)
+    s.insert(4)
+    s.insert(3)
+    assert str(s) == "{3,4}"
+
+def test_intset_member():
+    s = intSet()
+    s.insert(1)
+    s.insert(2)
+    assert s.member(1)
+    assert not s.member(99)
+
+def test_intset_remove():
+    s = intSet()
+    s.insert(10)
+    s.remove(10)
+    assert str(s) == "{}"
+
+def test_intset_remove_error():
+    s = intSet()
+    with pytest.raises(ValueError):
+        s.remove(123)

@@ -4,15 +4,17 @@ from random import choice
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 WHITE = (255, 255, 255)
+RED = (255, 0, 0)
 
 
 class Ball():
-    def __init__(self):
-        self.x = SCREEN_WIDTH / 2
-        self.y = SCREEN_HEIGHT / 2
-        self.x_direction = choice((-2, 2))
-        self.y_direction = choice((-2, 2))
-        self.radius = 20
+    def __init__(self, x ,y, radius, color, speed):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.x_direction = choice((speed, speed))
+        self.y_direction = choice((speed, speed))
+        self.color = color
 
     def move(self):
         self.x += self.x_direction
@@ -29,21 +31,24 @@ class Ball():
             self.y_direction = -self.y_direction
 
     def draw(self, screen):
-        pygame.draw.circle(screen, WHITE, (self.x, self.y), self.radius)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
 
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 pygame.display.set_caption('BouncyBall')
-ball = Ball()
+ball_1 = Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 20, WHITE, 2)
+ball_2 = Ball(100, 50, 30, RED, 6)
 
 # game loop
 is_running = True
 while is_running:
     screen.fill((0, 0, 0))
-    ball.move()
-    ball.draw(screen)
+    ball_1.move()
+    ball_2.move()
+    ball_1.draw(screen)
+    ball_2.draw(screen)
 
     # event handler
     for event in pygame.event.get():

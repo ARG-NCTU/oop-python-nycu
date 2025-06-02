@@ -25,3 +25,4 @@ def test_remove_dup():
     L2 = [1, 2, 5, 6]
     lec5.remove_dups_new(L1,L2)
     assert L1 == [3,4]
+    ##
