@@ -4,14 +4,20 @@ class ListNode(object):
         self.next = next
 
 class Solution(object):
-    def removeNodes(self, head):
-        if head==None:
-            return None
-        head.next=self.removeNodes(head.next)
-        if head.next and head.val<head.next.val:
-            return head.next
-        else:
-            return head     
+    def removeNodes(self,head):
+        prev_nodes=[]
+        curr=head
+    
+        while curr:
+            while prev_nodes and prev_nodes[-1].val<curr.val:
+                prev_nodes.pop()
+            prev_nodes.append(curr)
+            curr=curr.next
+
+        for i in range(len(prev_nodes)-1):
+            prev_nodes[i].next=prev_nodes[i+1]
+
+        return prev_nodes[0]    
 
         
 
