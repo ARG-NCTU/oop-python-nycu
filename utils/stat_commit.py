@@ -59,7 +59,7 @@ def main():
     worksheet.write(0, 1, "Group Leader")
     worksheet.write(0, 2, "Group Member")
     worksheet.write(0, 3, "Group Member")
-    worksheet.write(0, 4, "Group Member")
+    # worksheet.write(0, 4, "Group Member")
     for i, accounts in enumerate(github_accounts):
         worksheet.write(i+1, 0, f"Group {i+1}")
         for j, account in enumerate(accounts):
