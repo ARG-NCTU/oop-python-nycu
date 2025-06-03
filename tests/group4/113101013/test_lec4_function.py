@@ -49,3 +49,10 @@ def test_make_adder():
 
 def test_show_scope_demo():
     assert show_scope_demo() == 11
+
+def test_all():
+    test_is_even()
+    test_bisection_cuberoot_approx()
+    test_apply_func()
+    test_make_adder()
+    test_show_scope_demo()

@@ -55,3 +55,11 @@ def test_make_adder():
 def test_apply_func():
     assert apply_func(lambda x: x * 2, 4) == 8
     assert apply_func(is_even, 4)
+
+def test_all():
+    test_is_even()
+    test_get_divisors()
+    test_find_common_factors()
+    test_get_multiplication_table()
+    test_make_adder()
+    test_apply_func()
