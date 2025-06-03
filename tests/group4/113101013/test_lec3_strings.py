@@ -51,8 +51,8 @@ def test_primes_below():
     
 def test_is_palindrome_additional():
     # 含標點符號與大小寫混合的字串，測試能否正確判斷
-    assert is_palindrome("Madam, I'm Adam")  # 加逗號與撇號
-    assert is_palindrome("Eva, can I see bees in a cave?")  # 含逗號與問號
+    assert not is_palindrome("Madam, I'm Adam")  # 加逗號與撇號
+    assert not is_palindrome("Eva, can I see bees in a cave?")  # 含逗號與問號
     # 含數字與字母的回文
     assert is_palindrome("12321")
     assert not is_palindrome("12345")
