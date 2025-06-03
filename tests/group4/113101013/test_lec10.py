@@ -78,3 +78,18 @@ def difference(L1, L2):
         if e not in L2:
             res.append(e)
     return res
+
+def test_linear_search():
+    assert linear_search([1, 2, 3, 4, 5], 3) == True
+    assert linear_search([1, 2, 3, 4, 5], 6) == False
+    assert linear_search([], 1) == False
+def test_search():
+    assert search([1, 2, 3, 4, 5], 3) == True
+    assert search([1, 2, 3, 4, 5], 6) == False
+    assert search([], 1) == False
+
+def test_isSubset():
+    assert isSubset([1, 2], [1, 2, 3]) == True
+    assert isSubset([1, 4], [1, 2, 3]) == False
+    assert isSubset([], [1, 2, 3]) == True
+    assert isSubset([], []) == True
