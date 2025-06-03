@@ -61,3 +61,22 @@ class intSet(object):
     def __str__(self):
         self.vals.sort()
         return '{' + ','.join(str(e) for e in self.vals) + '}'
+    
+# === Tests ===
+def test_coordinate():
+    c1 = Coordinate(3, 4)
+    c2 = Coordinate(0, 0)
+    assert str(c1) == "<3,4>"
+    assert c1.distance(c2) == 5.0
+    assert c2.distance(c1) == 5.0
+    
+def test_fraction():
+    f1 = Fraction(1, 2)
+    f2 = Fraction(1, 3)
+    assert str(f1) == "1/2"
+    assert str(f2) == "1/3"
+    assert str(f1 + f2) == "5/6"
+    assert str(f1 - f2) == "1/6"
+    assert float(f1) == 0.5
+    assert float(f2) == 0.3333333333333333
+    assert str(f1.inverse()) == "2/1"
