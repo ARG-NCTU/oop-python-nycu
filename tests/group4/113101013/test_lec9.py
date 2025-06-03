@@ -112,3 +112,29 @@ class Rabbit(Animal):
 
     def __str__(self):
         return f"rabbit:{self.get_rid()}"
+
+# === Tests ===
+def test_animal():
+    a = Animal(5)
+    a.set_name("Generic Animal")
+    assert a.get_age() == 5
+    assert a.get_name() == "Generic Animal"
+    assert str(a) == "animal:Generic Animal:5"
+
+def test_cat():
+    c = Cat(3)
+    c.set_name("Whiskers")
+    assert c.get_age() == 3
+    assert c.get_name() == "Whiskers"
+    assert str(c) == "cat:Whiskers:3"
+    c.speak()  # Should print "meow"
+
+def test_person():
+    p = Person("Alice", 30)
+    p.add_friend("Bob")
+    p.add_friend("Charlie")
+    assert p.get_age() == 30
+    assert p.get_name() == "Alice"
+    assert p.get_friends() == ["Bob", "Charlie"]
+    assert str(p) == "person:Alice:30"
+    p.speak()  # Should print "hello"
