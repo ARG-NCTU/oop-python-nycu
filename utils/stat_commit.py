@@ -1,4 +1,4 @@
-from git_commit_count import get_commits_by_user
+from utils.git_commit_count import get_commits_by_user
 import argparse
 import xlsxwriter
 
