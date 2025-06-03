@@ -138,3 +138,21 @@ def test_person():
     assert p.get_friends() == ["Bob", "Charlie"]
     assert str(p) == "person:Alice:30"
     p.speak()  # Should print "hello"
+def test_student():
+    s = Student("Dave", 20, "Computer Science")
+    s.add_friend("Eve")
+    assert s.get_age() == 20
+    assert s.get_name() == "Dave"
+    assert s.major == "Computer Science"
+    assert s.get_friends() == ["Eve"]
+    assert str(s) == "student:Dave:20:Computer Science"
+    s.speak()  # Should print one of the random messages
+
+ 
+
+def test_all():
+    test_animal()
+    test_cat()
+    test_person()
+    test_student()
+
