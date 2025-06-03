@@ -39,7 +39,7 @@ source docker_join.sh
 | ✅ | Group 1 | LeeYinWei : 9 | unknown899 : 22 |  |
 | ❌ | Group 2 | neoAurora : 2 | Lawrence16428 : 0 | howardhung14 : 14 |
 | ❌ | Group 3 | yoyo0213 : 25 | JonathanYangSW : 21 | GinoChen113511247 : 29 |
-| ✅ | Group 4 | JumboZhang1119 : 0 | peienwu1216 : 32 | chxyuuu : 21 |
+| ✅ | Group 4 | JumboZhang1119 : 0 | peienwu1216 : 32 | chxyuuu : 46 |
 | ❌ | Group 5 | ginny923 : 4 | joanna0420 : 1 | dua0505 : 1 |
 | ✅ | Group 6 | jui-pixel : 65 | SamTung113511034 : 23 | charles691 : 34 |
 | ✅ | Group 7 | Tony104147 : 12 |  |  |
