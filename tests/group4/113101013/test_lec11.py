@@ -64,4 +64,8 @@ def test_bisect_search2():
     assert bisect_search2([1, 2, 3, 4, 5], 6) == False
     assert bisect_search2([], 1) == False
 
+def test_all():
+    test_bisect_search1()
+    test_bisect_search2()
+
 
