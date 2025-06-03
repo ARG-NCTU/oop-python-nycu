@@ -259,6 +259,7 @@ jobs:
       - name: Run update script
         run: |
           cat $GITHUB_WORKSPACE/utils/pytest_results.txt
+          pip3 install xlsxwriter
           python3 utils/stat_commit.py
           python3 utils/update_readme.py
 
