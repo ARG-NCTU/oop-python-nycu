@@ -58,6 +58,8 @@ jobs:
 
       - name: Check out repository code
         uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0  # Fetch all history for all branches and tags
 
       - name: Init pytest_results.txt
         run: echo "" > $GITHUB_WORKSPACE/utils/pytest_results.txt
