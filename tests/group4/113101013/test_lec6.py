@@ -60,3 +60,12 @@ def test_is_palindrome_cases():
     # 特殊標點與大小寫
     assert is_palindrome("Was it a car or a cat I saw?")
     assert is_palindrome("No lemon, no melon")
+
+ 
+def test_all():
+    test_fib_small()
+    test_is_palindrome_basic()
+    test_is_palindrome_edge()
+    test_is_palindrome_punctuation()
+    test_is_palindrome_unicode()
+    test_is_palindrome_cases()
