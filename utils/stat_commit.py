@@ -6,7 +6,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='Get commit counts by user from a git repository.')
     parser.add_argument('--repo', type=str, default='/home/arg/oop-python-nycu', help='Path to the git repository.')
-    parser.add_argument('--start_date', type=str, default='2024-09-29', help='Start date for commit count calculation. Format: YYYY-MM-DD', nargs='?')
+    parser.add_argument('--start_date', type=str, default=None, help='Start date for commit count calculation. Format: YYYY-MM-DD', nargs='?')
     args = parser.parse_args()
 
     github_accounts = [
