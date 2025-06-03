@@ -56,3 +56,25 @@ def intersect(L1, L2):
         if e not in res:
             res.append(e)
     return res
+
+# === 求兩個列表的聯集 ===
+def union(L1, L2):
+    """
+    傳回 L1 和 L2 的聯集（無重複元素）
+    """
+    res = []
+    for e in L1 + L2:
+        if e not in res:
+            res.append(e)
+    return
+    res
+# === 求兩個列表的差集 ===
+def difference(L1, L2):
+    """
+    傳回 L1 和 L2 的差集（L1 中有而 L2 中沒有的元素）
+    """
+    res = []
+    for e in L1:
+        if e not in L2:
+            res.append(e)
+    return res
