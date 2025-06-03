@@ -34,7 +34,7 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
         since_date = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
 
     # Prepare git log command
-    cmd = ["git", "-C", repo_path, "log", "--since", since_date, "--pretty=format:%H;%an"]
+    cmd = ["git", "-C", repo_path, "log", "--since", since_date, "--pretty=format:%an;%ae"]
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
     if result.stderr:
@@ -44,8 +44,15 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
     # Organize commits by user
     commits_by_user = defaultdict(int)
     for line in result.stdout.strip().split('\n'):
-        commit_hash, author = line.split(';')
-        commits_by_user[author] += 1
+        author_name, author_email = line.split(';')
+        # determine the commit key based on email
+        if author_email.endswith('@users.noreply.github.com'):
+            key = author_email.split('@')[0]
+        else:
+            key = author_name
+
+        print(key)
+        commits_by_user[key] += 1
 
     # Return total commits for the specified user or all users if no username is specified
     if username:
