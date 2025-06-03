@@ -69,7 +69,7 @@ def test_coordinate():
     assert str(c1) == "<3,4>"
     assert c1.distance(c2) == 5.0
     assert c2.distance(c1) == 5.0
-    
+
 def test_fraction():
     f1 = Fraction(1, 2)
     f2 = Fraction(1, 3)
@@ -80,3 +80,22 @@ def test_fraction():
     assert float(f1) == 0.5
     assert float(f2) == 0.3333333333333333
     assert str(f1.inverse()) == "2/1"
+def test_intSet():
+    s = intSet()
+    s.insert(3)
+    s.insert(1)
+    s.insert(2)
+    assert str(s) == "{1,2,3}"
+    assert s.member(2) is True
+    assert s.member(4) is False
+    s.remove(2)
+    assert str(s) == "{1,3}"
+    try:
+        s.remove(4)
+        assert False, "Expected ValueError"
+    except ValueError as e:
+        assert str(e) == "4 not found"
+def test_all():
+    test_coordinate()
+    test_fraction()
+    test_intSet()
