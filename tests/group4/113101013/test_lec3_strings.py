@@ -58,4 +58,7 @@ def test_is_palindrome_additional():
     assert not is_palindrome("12345")
     # 空白與標點混合
     assert is_palindrome("A Santa at NASA")
+    assert is_palindrome("232 32")  # 數字與空白
+    assert not is_palindrome("Hello, World!")  # 含標點符號的非回文
+
 
