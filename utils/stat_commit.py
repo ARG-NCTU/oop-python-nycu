@@ -53,7 +53,7 @@ def main():
             print(f"User: {account}, Commit Count: {commits_by_users[i][j]}")
 
     # Export the commit counts to a xlsx file
-    workbook = xlsxwriter.Workbook('commit_counts.xlsx')
+    workbook = xlsxwriter.Workbook('utils/commit_counts.xlsx')
     worksheet = workbook.add_worksheet('github_commit')
     worksheet.write(0, 0, "Group")
     worksheet.write(0, 1, "Group Leader")
