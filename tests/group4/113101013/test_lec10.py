@@ -105,3 +105,11 @@ def test_difference():
     assert difference([1, 2], [3, 4]) == [1, 2]
     assert difference([], [1, 2]) == []
     assert difference([], []) == []
+
+def test_all():
+    test_linear_search()
+    test_search()
+    test_isSubset()
+    test_intersect()
+    test_difference()
+    # Add more tests as needed
