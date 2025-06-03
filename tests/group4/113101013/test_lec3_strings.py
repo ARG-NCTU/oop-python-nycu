@@ -61,4 +61,11 @@ def test_is_palindrome_additional():
     assert is_palindrome("232 32")  # 數字與空白
     assert not is_palindrome("Hello, World!")  # 含標點符號的非回文
 
+def test_all():
+    test_is_palindrome()
+    test_char_frequency()
+    test_is_prime()
+    test_primes_below()
+    test_is_palindrome_additional()
+
 
