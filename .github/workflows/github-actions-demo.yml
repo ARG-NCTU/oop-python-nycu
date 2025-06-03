@@ -267,7 +267,7 @@ jobs:
 
       - name: Configure git to allow pushing this directory
         run: |
-          git config --global --add safe.directory /__w/oop-python-nycu/oop-python-nycu
+          git config --global --add safe.directory $GITHUB_WORKSPACE
       
       - name: Commit changes
         run: |
