@@ -48,6 +48,7 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
         # determine the commit key based on email
         if author_email.endswith('@users.noreply.github.com'):
             key = author_email.split('@')[0]
+            key = key.split('+')[1]
         else:
             key = author_name
 
