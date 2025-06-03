@@ -1,3 +1,4 @@
+import os
 import subprocess
 import argparse
 from collections import defaultdict
@@ -67,7 +68,7 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
 def main():
     parser = argparse.ArgumentParser(description='Get commit counts by user from a git repository.')
     parser.add_argument('--user', type=str, help='Username to filter commit counts by.')
-    parser.add_argument('--repo', type=str, default='/home/arg/oop-python-nycu', help='Path to the git repository.')
+    parser.add_argument('--repo', type=str, default=os.getcwd(), help='Path to the git repository.')
     parser.add_argument('--start_date', type=str, default='2024-08-26', help='Start date for commit count calculation. Format: YYYY-MM-DD', nargs='?')
     args = parser.parse_args()
 
