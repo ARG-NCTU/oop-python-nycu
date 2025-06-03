@@ -40,3 +40,12 @@ def test_large_random_list():
     import random
     data = random.sample(range(-1000, 1000), 100)
     assert bubble_sort(data) == sorted(data)
+
+def test_sorted_large_list():
+    data = list(range(1000))
+    assert bubble_sort(data) == data
+
+def test_reverse_sorted_large_list():
+    data = list(range(999, -1, -1))
+    assert bubble_sort(data) == list(range(1000))
+    
