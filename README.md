@@ -46,7 +46,7 @@ source docker_join.sh
 | ❌ | Group 8 | haleychang0530 : 19 | Hazel-1212 : 23 | tree1014 : 1 |
 | ✅ | Group 9 | CHENG-JE : 9 | lwc-ed : 24 |  |
 | ✅ | Group 10 | tpvupu : 33 | xiaotin22 : 61 | calistayang : 12 |
-| ❌ | Group 11 | Rickycheong0515 : 0 | hfchiang : 0 | Samuel11GitHub : 0 |
+| ❌ | Group 11 | Rickycheong0515 : 0 | hfchiang : 3 | Samuel11GitHub : 0 |
 | ❌ | Group 12 | kufanghua : 25 | yezh0915 : 52 | fiesta0217 : 10 |
 | ❌ | Group 13 | lucasliu0910 : 0 | carabapy : 0 | jing1688 : 59 |
 | ✅ | Group 14 | weiouo-0817 : 24 | NiNialpaca : 0 |  |
