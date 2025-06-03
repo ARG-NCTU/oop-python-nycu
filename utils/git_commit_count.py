@@ -34,7 +34,7 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
         since_date = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
 
     # Prepare git log command
-    cmd = ["git", "-C", repo_path, "log", "--since", since_date, "--pretty=format:%H;%an;%ae"]
+    cmd = ["git", "-C", repo_path, "log", "--since", since_date, "--pretty=format:%H;%an"]
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
     if result.stderr:
