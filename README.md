@@ -34,7 +34,7 @@ source docker_join.sh
 ```
 
 <!--START_SECTION:pytest-->
-| Status | Group | Group Leader | Group Member | Group Member.1 |
+| Status | Group | Group Leader | Group Member 1 | Group Member 2 |
 | ------ | ------ | ------ | ------ | ------ |
 | ✅ | Group 1 | LeeYinWei : 8 | unknown899 : 22 |  |
 | ❌ | Group 2 | neoAurora : 1 | Lawrence16428 : 0 | howardhung14 : 12 |
