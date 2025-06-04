@@ -300,6 +300,12 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for all branches and tags
 
+      - name: Ensure output directory exists
+        run: mkdir -p $GITHUB_WORKSPACE/utils/oop_2025
+      
+      - name: Authenticate gh CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
       - name: Fetch commits by ${{ matrix.author }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -307,5 +313,6 @@ jobs:
           gh api \
             -H "Accept: application/vnd.github.v3+json" \
             "repos/ARG-NCTU/oop-python-nycu/commits?author=${{ matrix.author }}" \
+            --paginate \
             --jq '.[] | {sha: .sha, message: .commit.message, date: .commit.author.date, author: .commit.author.name}' \
             > $GITHUB_WORKSPACE/utils/oop_2025/commits_${{ matrix.author }}.json
