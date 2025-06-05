@@ -277,6 +277,14 @@ jobs:
           git commit -m "chore: update README.md" || echo "No changes to commit"
           git push
 
+  Fetch-Commits-By-Authors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+      
       - name: Ensure output directory exists
         run: mkdir -p $GITHUB_WORKSPACE/utils/oop_2025
         
