@@ -260,24 +260,14 @@ jobs:
 
       - name: Run update script
         run: |
-          pip3 install xlsxwriter openpyxl
-          python3 utils/stat_commit.py --repo $GITHUB_WORKSPACE
-          python3 utils/update_readme.py
+          python3 utils/update_pytest_results.py
 
       - name: Configure git to allow pushing this directory
         run: |
           git config --global --add safe.directory $GITHUB_WORKSPACE
-      
-      - name: Commit changes
-        run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-          git pull
-          git add README.md $GITHUB_WORKSPACE/utils/pytest_results.txt
-          git commit -m "chore: update README.md" || echo "No changes to commit"
-          git push
 
   Fetch-Commits-By-Authors:
+    needs: Run-Pytest-Tests
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -308,3 +298,17 @@ jobs:
             echo "$author: $COUNT" >> $GITHUB_WORKSPACE/utils/commit_counts.txt
           done
           cat $GITHUB_WORKSPACE/utils/commit_counts.txt
+
+      - name: Update new commit counts and write to README.md
+        run: |
+          python3 utils/update_commit_counts.py
+          python3 utils/group_status_update_readme.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git pull
+          git add README.md
+          git commit -m "chore: update README.md" || echo "No changes to commit"
+          git push

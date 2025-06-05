@@ -52,7 +52,7 @@ def get_commits_by_user(repo_path, username=None, start_date=None):
         else:
             key = author_name
 
-        print(author_email)
+        # print(author_email)
         commits_by_user[key] += 1
 
     # Return total commits for the specified user or all users if no username is specified
