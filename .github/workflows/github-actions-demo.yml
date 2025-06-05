@@ -302,6 +302,9 @@ jobs:
 
       - name: Ensure output directory exists
         run: mkdir -p $GITHUB_WORKSPACE/utils/oop_2025
+
+      - name: Initial commit_counts.txt
+        run: echo "" > $GITHUB_WORKSPACE/utils/commit_counts.txt
       
       - name: Authenticate gh CLI
         run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
@@ -310,8 +313,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api \
+          COUNT = $(gh api \
             -H "Accept: application/vnd.github.v3+json" \
             "repos/ARG-NCTU/oop-python-nycu/commits?author=${{ matrix.author }}&per_page=100" \
             --paginate \
-            --jq 'length'
+            --jq 'length')
+          echo "${{ matrix.author }}: $COUNT" >> $GITHUB_WORKSPACE/utils/commit_counts.txt
+          cat $GITHUB_WORKSPACE/utils/commit_counts.txt
