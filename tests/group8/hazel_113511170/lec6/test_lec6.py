@@ -1,5 +1,6 @@
 import pytest
 import lec6
+import add_path
 
 def test_fib():
     """assumes x an int >= 0
@@ -121,3 +122,9 @@ def test_most_common_words():
 
     assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
     assert lec6.is_palindrome('iamhazellezahmai') == True
+
+def test_words_often():
+    lyrics = ['k', 'l', 'l', 'c', 'c', 'c']
+    freq = lec6.lyrics_to_frequencies(lyrics)
+    assert lec6.words_often(freq, 3) == [(['c'], 3)]
+    assert lec6.words_often(freq, 2) == [(['l'], 2)]
