@@ -2,7 +2,7 @@ import json
 
 # Step 1: Load the commit counts from txt file
 commit_counts = {}
-with open('commit_counts.txt', 'r', encoding='utf-8') as f:
+with open('utils/commit_counts.txt', 'r', encoding='utf-8') as f:
     for line in f:
         if ':' in line:
             username, count = line.strip().split(':', 1)
@@ -10,7 +10,7 @@ with open('commit_counts.txt', 'r', encoding='utf-8') as f:
 
 # Step 2: Load the group data
 try:
-    with open('group_status.json', 'r', encoding='utf-8') as f:
+    with open('utils/group_status.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
 except FileNotFoundError:
     print("Error: group_status.json not found. Please ensure the file exists.")
