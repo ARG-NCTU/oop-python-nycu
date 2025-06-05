@@ -87,4 +87,40 @@ print(markdown_table_string)
 
 # 你現在可以用這個 markdown_table_string 去更新 README.md 了
 # 後續步驟：讀取 README.md，找到標記，替換內容，然後寫回。
-# 這部分與我之前在 `update_readme.py` 中提供的邏輯相同。
+
+# --- 8. 更新 README.md 中的指定區塊 (不使用 re) ---
+
+readme_path = 'README.md'
+start_marker = '<!--START_SECTION:pytest-->'
+end_marker = '<!--END_SECTION:pytest-->'
+
+try:
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+except FileNotFoundError:
+    print(f"Error: {readme_path} not found.")
+    exit(1)
+
+start_idx = end_idx = None
+for i, line in enumerate(lines):
+    if start_marker in line:
+        start_idx = i
+    if end_marker in line:
+        end_idx = i
+        break
+
+if start_idx is None or end_idx is None or start_idx >= end_idx:
+    print("Markers not found in README.md. No changes made.")
+    exit(1)
+
+# 保留 start_marker 行和 end_marker 行，中間替換為 markdown_table_string
+new_lines = (
+    lines[:start_idx + 1] +
+    ['\n', markdown_table_string + '\n'] +
+    lines[end_idx:]
+)
+
+with open(readme_path, 'w', encoding='utf-8') as f:
+    f.writelines(new_lines)
+
+print("README.md updated successfully.")

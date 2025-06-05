@@ -301,7 +301,7 @@ jobs:
 
       - name: Update new commit counts and write to README.md
         run: |
-          pip3 install pandas
+          pip3 install pandas tabulate
           python3 utils/update_commit_counts.py
           python3 utils/group_status_update_readme.py
 
