@@ -1,5 +1,6 @@
 import lec8
 import pytest
+import add_path
 
 def test_coordinate():
     c=lec8.Coordinate(4,6)

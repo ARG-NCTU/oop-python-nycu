@@ -159,7 +159,7 @@ def fib_mem(n):
     elif n == 2:
         return 2
     else:
-        return fib1(n-1) + fib1(n-2)
+        return fib_mem(n-1) + fib_mem(n-2)
 
 
 def fib_efficient(n, d):
