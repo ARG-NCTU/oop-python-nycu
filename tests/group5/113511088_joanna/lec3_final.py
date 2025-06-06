@@ -1,6 +1,7 @@
 def is_even(n):
     return n % 2 == 0
 
+
 def factorial(n):
     if n < 0:
         raise ValueError("Factorial is not defined for negative integers.")
@@ -8,8 +9,10 @@ def factorial(n):
         return 1
     return n * factorial(n - 1)
 
+
 def is_palindrome(s):
     return s == s[::-1]
+
 
 def find_max(L):
     if not L:
