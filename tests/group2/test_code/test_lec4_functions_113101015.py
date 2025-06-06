@@ -23,4 +23,4 @@ def test_func_in_func():
     assert f()(1,5) == 6
     assert f()(1,-1) == 0
     assert f()(0.1,0.5) == 0.6
-##
+#
