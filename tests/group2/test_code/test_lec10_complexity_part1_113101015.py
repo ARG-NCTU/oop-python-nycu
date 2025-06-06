@@ -21,4 +21,4 @@ def test_intersect():
     assert lec10.intersect(testSet,testSet1) == [1,3,5]
     assert lec10.intersect(testSet,testSet2) == [1]
     
-    ##
+    #
