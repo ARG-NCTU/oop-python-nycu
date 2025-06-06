@@ -7,6 +7,7 @@ def test_cube_root():
     assert lec3.cube_root(1000) == 10
     assert lec3.cube_root(1) == 1
     assert lec3.cube_root(125) == 5
+    assert lec3.cube_root(8) == 2
 
 def test_approximate_root():
     assert lec3.approximate_root(125,0.01) == (500, 4.999999999999938)
