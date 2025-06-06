@@ -24,7 +24,7 @@ def test_fraction():
 
 def test_intset():
     s = lec8.intSet()
-    assert str(s) == "{}"  # 初始集合應該是空的##
+    assert str(s) == "{}"  # 初始集合應該是空的#
 
     s.insert(5)
     s.insert(6)
