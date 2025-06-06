@@ -24,5 +24,8 @@ def test_getdata():
 def test_remove_dup():
     L1 = [1, 2, 3, 4]
     L2 = [1, 2, 5, 6]
+    L3 = [1, 2, 7, 8] 
     lec5.remove_dups_new(L1,L2)
     assert L1 == [3,4]
+    lec5.remove_dups_new(L2,L3)
+    assert L2 == [5,6]
