@@ -38,6 +38,9 @@ def test_intset():
 
     s.remove(5)
     assert str(s) == "{3,6}"
+    
+    s.insert(5)
+    assert str(s) == "{3,5,6}"
 
     try:
         s.remove(5)  # 應該拋出 ValueError
