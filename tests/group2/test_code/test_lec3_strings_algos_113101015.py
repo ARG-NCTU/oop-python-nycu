@@ -17,7 +17,7 @@ def test_approximate_root():
 #####################
 ## EXAMPLE: while loops and strings
 ## CHALLENGE: rewrite while loop with a for loop
-####################
+###################
 def while_to_for():
     an_letters = "aefhilmnorsxAEFHILMNORSX"
     word = input("I will cheer for you! Enter a word: ")
