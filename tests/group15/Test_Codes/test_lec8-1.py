@@ -1,5 +1,6 @@
 import lec8_classes as lec
 from lec8_classes import Coordinate
+import pytest
 
 def coordinate_test():
     a0 = Coordinate (0, 0)

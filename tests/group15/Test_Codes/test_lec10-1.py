@@ -1,4 +1,5 @@
 import lec10_complexity_part1 as lec
+import pytest
 
 testlist = [1, 3, 4, 5, 9, 10, 18, 27]
 t2 = [1, 2, 5, 8]
