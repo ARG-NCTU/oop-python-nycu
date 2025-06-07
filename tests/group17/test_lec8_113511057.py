@@ -1,5 +1,4 @@
-import add_path
-import mit_ocw_exercises.lec8_classes as lc
+import lec_8.py as lc
 import pytest
 
 def test_coordinate():
