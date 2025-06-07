@@ -1,5 +1,5 @@
 import pytest
-from src.mit_ocw_exercises.lec3_strings_algos import is_palindrome
+# from src.mit_ocw_exercises.lec3_strings_algos import is_palindrome
 
 @pytest.mark.parametrize("test_input,expected", [
     ("radar", True),           # Simple palindrome
