@@ -4,7 +4,19 @@ Created on Sun Oct  9 12:13:13 2016
 
 @author: ericgrimson
 """
-
+def bisect_search1(L, e):
+    print('low: ' + str(L[0]) + '; high: ' + str(L[-1]))
+    if L == []:
+        return False
+    elif len(L) == 1:
+        return L[0] == e
+    else:
+        half = len(L)//2
+        if L[half] > e:
+            return bisect_search1(L[:half], e)
+        else:
+            return bisect_search1(L[half:], e)
+        
 def bisect_search2(L, e):
     def bisect_search_helper(L, e, low, high):
         print('low: ' + str(low) + '; high: ' + str(high))  #added to visualize
