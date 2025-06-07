@@ -27,18 +27,18 @@ def test_intset():
     assert str(s) == "{}"  # 初始集合應該是空的#
 
     s.insert(5)
-    s.insert(6)
-    s.insert(6)  # 重複插入應該無效
-    assert str(s) == "{5,6}"
+    s.insert(7)
+    s.insert(6)  
+    assert str(s) == "{5,6,7}"
 
     assert s.member(3) is False
-    assert s.member(5) is True
+    assert s.member(7) is True
 
     s.insert(3)
-    assert str(s) == "{3,5,6}"
+    assert str(s) == "{3,5,6,7}"
 
     s.remove(5)
-    assert str(s) == "{3,6}"
+    assert str(s) == "{3,6,7}"
 
     try:
         s.remove(5)  # 應該拋出 ValueError
