@@ -263,7 +263,7 @@ jobs:
           python3 utils/update_pytest_results.py
 
       - name: Upload test-status artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-status
           path: $GITHUB_WORKSPACE/utils/group_status.json
@@ -273,7 +273,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download pytest-status artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: pytest-status
           path: $GITHUB_WORKSPACE/utils
