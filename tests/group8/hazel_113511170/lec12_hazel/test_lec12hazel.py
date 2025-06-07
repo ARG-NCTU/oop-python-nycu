@@ -2,13 +2,12 @@ import copy
 import pytest
 import random
 
-from lec12 import (
+from lec12 import (  
     bubble_sort, bubble_sort_np,
     selection_sort, selection_sort_np,
     merge_sort, merge_sort_np,
-    merge,merge_np
+    merge, merge_np
 )
-
 # Generate random test cases
 random_lists = [
     random.sample(range(-100, 100), k) for k in range(0, 20)
