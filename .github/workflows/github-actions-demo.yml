@@ -262,14 +262,22 @@ jobs:
         run: |
           python3 utils/update_pytest_results.py
 
-      - name: Configure git to allow pushing this directory
-        run: |
-          git config --global --add safe.directory $GITHUB_WORKSPACE
+      - name: Upload test-status artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-status
+          path: $GITHUB_WORKSPACE/utils/group_status.json
 
   Fetch-Commits-By-Authors:
     needs: Run-Pytest-Tests
     runs-on: ubuntu-latest
     steps:
+      - name: Download pytest-status artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: pytest-status
+          path: $GITHUB_WORKSPACE/utils
+
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
