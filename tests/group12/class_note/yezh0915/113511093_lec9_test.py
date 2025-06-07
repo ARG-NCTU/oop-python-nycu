@@ -1,5 +1,5 @@
 import pytest
-from src.mit_ocw_exercises.lec9_inheritance import Animal, Cat, Person, Student, Rabbit
+#from src.mit_ocw_exercises.lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
 def test_animal_basic():
     a = Animal(4)
