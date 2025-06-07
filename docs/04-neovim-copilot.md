@@ -298,7 +298,10 @@ git commit
 Now you will use neovim as editor.
 Within nvim call CopilotChat by
 ```
-:CopilotChatCommitStaged
+:CopilotChatCommit
 ```
 Press Ctrl + y to accept diff.
+
+Note: due to some keybinding conflicts, you may need to manually yank the generated commit message, and paste it into the commit message buffer.
+
 
