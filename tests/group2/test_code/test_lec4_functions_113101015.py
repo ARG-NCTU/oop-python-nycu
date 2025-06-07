@@ -7,6 +7,7 @@ def test_even():
     assert lec4.is_even_with_return(4) == True
     assert lec4.is_even_with_return(0) == True
     assert lec4.is_even_with_return(-2) == True #check for negative even numbers
+    assert lec4.is_even_with_return(0.2) == False##check for floating numbers
 
 def test_cuberoot():
     assert lec4.bisection_cuberoot_approx(10,0.01) == 2.154541015625
@@ -23,4 +24,5 @@ def test_func_in_func():
     assert f()(1,5) == 6
     assert f()(1,-1) == 0
     assert f()(0.1,0.5) == 0.6
-##
+    assert f()(f()(0.1,0.5),f()(0.1,0.5)) == 1.2##new
+#
