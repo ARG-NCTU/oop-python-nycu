@@ -33,28 +33,82 @@ More terminal:
 source docker_join.sh
 ```
 
+## Sync your fork
+Go to your fork page and click "Sync fork" then "Update branch"
+
+
+Open your terminal and get ready for the repo:
+```sh
+cd oop-python-nycu/
+git pull
+```
+
+## Check your user name with user email in the repository
+To add an exception for this directory:
+```sh
+git config --global --add safe.directory /home/arg/oop-python-nycu
+```
+
+Check your user name with user email:
+```sh
+git log --pretty="%an <%ae>" | grep "your email signed in github" | sort | uniq
+```
+
+For example:
+```sh
+git log --pretty="%an <%ae>" | grep "tzuchichen.sc08@nycu.edu.tw" | sort | uniq
+```
+
+## If you have not set the user name in your local machine
+Exit the docker
+```sh
+exit
+```
+
+Set the user name in your local machine:
+```sh
+git config --global user.name your_github_username
+```
+
+For example:
+```sh
+git config --global user.name zhuchi76
+```
+
+Check your global username:
+```sh
+git config --list
+```
+Result should be like:
+```
+user.email=tzuchichen.sc08@nycu.edu.tw
+user.name=zhuchi76
+```
+
 <!--START_SECTION:pytest-->
-| Group | Status  |
-|-------|---------|
-| group1 | ✅ success |
-| group2 | ❌ failed |
-| group3 | ❌ failed |
-| group4 | ✅ success |
-| group5 | ❌ failed |
-| group6 | ❌ failed |
-| group7 | ✅ success |
-| group8 | ❌ failed |
-| group9 | ✅ success |
-| group10 | ✅ success |
-| group11 | ❌ failed |
-| group12 | ❌ failed |
-| group13 | ❌ failed |
-| group14 | ✅ success |
-| group15 | ❌ failed |
-| group16 | ❌ failed |
-| group17 | ❌ failed |
-| group18 | ✅ success |
-| group19 | ❌ failed |
-| group20 | ❌ failed |
-| group21 | ✅ success |
+
+| status   | group_name   | Group Leader        | Group Member 1        | Group Member 2         |
+|:---------|:-------------|:--------------------|:----------------------|:-----------------------|
+| ✅        | Group 1      | LeeYinWei : 50      | unknown899 : 25       |                        |
+| ❌        | Group 2      | neoAurora : 22      | Lawrence16428 : 0     | howardhung14 : 14      |
+| ❌        | Group 3      | yoyo0213 : 50       | JonathanYangSW : 37   | GinoChen113511247 : 32 |
+| ✅        | Group 4      | JumboZhang1119 : 52 | peienwu1216 : 33      | chxyuuu : 46           |
+| ❌        | Group 5      | ginny923 : 18       | joanna0420 : 13       | dua0505 : 17           |
+| ✅        | Group 6      | jui-pixel : 66      | SamTung113511034 : 29 | charles691 : 35        |
+| ✅        | Group 7      | Tony104147 : 13     |                       |                        |
+| ❌        | Group 8      | haleychang0530 : 30 | Hazel-1212 : 41       | tree1014 : 24          |
+| ✅        | Group 9      | CHENG-JE : 9        | lwc-ed : 26           |                        |
+| ✅        | Group 10     | tpvupu : 56         | xiaotin22 : 62        | calistayang : 43       |
+| ❌        | Group 11     | Rickycheong0515 : 3 | hfchiang : 3          | Samuel11GitHub : 0     |
+| ❌        | Group 12     | kufanghua : 25      | yezh0915 : 65         | fiesta0217 : 13        |
+| ❌        | Group 13     | lucasliu0910 : 7    | carabapy : 6          | jing1688 : 65          |
+| ✅        | Group 14     | weiouo-0817 : 24    | NiNialpaca : 0        |                        |
+| ❌        | Group 15     | gamemode0701 : 11   | Tonyyu2403 : 32       |                        |
+| ❌        | Group 16     | TerryCheese : 8     | junlin27 : 36         |                        |
+| ❌        | Group 17     | Miiaow3011 : 26     | bonnieliao774 : 54    | emmazheng0318 : 21     |
+| ✅        | Group 18     | ChocomintTW : 1     | TedChueh : 12         | pitinghsu : 0          |
+| ❌        | Group 19     | max052028 : 3       | 113511080 : 0         |                        |
+| ❌        | Group 20     | houyuankai : 4      |                       |                        |
+| ✅        | Group 21     | 0u88 : 12           |                       |                        |
+
 <!--END_SECTION:pytest-->

@@ -1,5 +1,5 @@
 import pytest
-from src.mit_ocw_exercises import lec11_complexity_part2 as lec
+# from src.mit_ocw_exercises import lec11_complexity_part2 as lec
 
 def test_bisect_search1_found():
     L = list(range(100))

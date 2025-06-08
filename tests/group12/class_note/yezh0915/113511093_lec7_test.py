@@ -1,7 +1,7 @@
 import pytest
 import math
 
-from src.mit_ocw_exercises.lec7_debug_except import rev_list, primes_list, get_ratios, get_stats, avg
+#from src.mit_ocw_exercises.lec7_debug_except import rev_list, primes_list, get_ratios, get_stats, avg
 
 def test_rev_list():
     L = [1, 2, 3, 4]
