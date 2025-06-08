@@ -1,4 +1,4 @@
-import add_path
+#import add_path
 import pytest
 #import mit_ocw_exercises.lec5_tuples_lists as lec5  
 
