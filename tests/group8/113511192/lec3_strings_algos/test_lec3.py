@@ -1,5 +1,5 @@
 import pytest
-from lec3 import is_palindrome  # Replace with the actual module name
+from lec3_strings_algos import is_palindrome  # Replace with the actual module name
 
 @pytest.mark.parametrize("s,expected", [
     ("Racecar", True),         # mixed case
