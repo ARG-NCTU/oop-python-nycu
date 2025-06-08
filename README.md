@@ -110,5 +110,4 @@ user.name=zhuchi76
 | ❌        | Group 19     | max052028 : 3       | 113511080 : 0         |                        |
 | ❌        | Group 20     | houyuankai : 4      |                       |                        |
 | ✅        | Group 21     | 0u88 : 12           |                       |                        |
-
 <!--END_SECTION:pytest-->
