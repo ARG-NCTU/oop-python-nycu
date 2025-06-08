@@ -97,7 +97,7 @@ user.name=zhuchi76
 | ✅        | Group 6      | jui-pixel : 66      | SamTung113511034 : 29 | charles691 : 35        |
 | ✅        | Group 7      | Tony104147 : 13     |                       |                        |
 | ❌        | Group 8      | haleychang0530 : 31 | Hazel-1212 : 41       | tree1014 : 24          |
-| ✅        | Group 9      | CHENG-JE : 9        | lwc-ed : 26           |                        |
+| ✅        | Group 9      | CHENG-JE : 26       | lwc-ed : 26           |                        |
 | ✅        | Group 10     | tpvupu : 56         | xiaotin22 : 62        | calistayang : 43       |
 | ❌        | Group 11     | Rickycheong0515 : 3 | hfchiang : 3          | Samuel11GitHub : 0     |
 | ❌        | Group 12     | kufanghua : 25      | yezh0915 : 65         | fiesta0217 : 13        |
