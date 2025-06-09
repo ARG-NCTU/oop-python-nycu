@@ -91,6 +91,7 @@ def test_intersect():
     assert intersect([7, 8], [8, 9]) == [8]
     print("intersect tests passed.")
 
+
 # Run all tests
 test_linear_search()
 test_search()
