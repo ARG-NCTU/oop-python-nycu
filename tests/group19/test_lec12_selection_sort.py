@@ -1,3 +1,5 @@
+import pytest
+
 def selection_sort(L):
     suffixSt = 0
     while suffixSt != len(L):
