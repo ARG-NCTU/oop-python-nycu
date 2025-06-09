@@ -58,5 +58,29 @@ def genSubsets(L):
     return smaller+new  # combine those with last element and those without
 
 
+
 testSet = [1,2,3,4]
 print(genSubsets(testSet))
+
+print("\n--- Testing bisect_search1 ---")
+print(bisect_search1([], 5))                  # False
+print(bisect_search1([5], 5))                 # True
+print(bisect_search1([1, 3, 5, 7, 9], 7))      # True
+print(bisect_search1([1, 3, 5, 7, 9], 2))      # False
+print(bisect_search1([1, 2, 3, 4, 5], 1))      # True
+print(bisect_search1([1, 2, 3, 4, 5], 5))      # True
+
+print("\n--- Testing bisect_search2 ---")
+print(bisect_search2([], 5))                  # False
+print(bisect_search2([5], 5))                 # True
+print(bisect_search2([1, 3, 5, 7, 9], 7))      # True
+print(bisect_search2([1, 3, 5, 7, 9], 2))      # False
+print(bisect_search2([1, 2, 3, 4, 5], 1))      # True
+print(bisect_search2([1, 2, 3, 4, 5], 5))      # True
+
+print("\n--- Testing genSubsets ---")
+print(genSubsets([]))                         # [[]]
+print(genSubsets([1]))                        # [[], [1]]
+print(genSubsets([1, 2]))                     # [[], [1], [2], [1, 2]]
+print(genSubsets([1, 2, 3]))                  # All subsets of 3 elements
+print(genSubsets([1, 2, 3, 4]))               # All subsets of 4 elements (16 subsets total)
