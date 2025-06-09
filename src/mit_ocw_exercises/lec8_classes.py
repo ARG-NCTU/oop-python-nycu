@@ -185,5 +185,6 @@ def test_intset_custom():
     except ValueError as e:
         assert str(e) == "-5 not found"
 
+
 test_intset_custom()
 print("intSet custom test passed.")
