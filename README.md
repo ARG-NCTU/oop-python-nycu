@@ -54,7 +54,7 @@ source docker_join.sh
 | group16 | ❌ failed |
 | group17 | ❌ failed |
 | group18 | ✅ success |
-| group19 | ✅ success |
+| group19 | ❌ failed |
 | group20 | ❌ failed |
 | group21 | ✅ success |
 <!--END_SECTION:pytest-->
