@@ -1,6 +1,6 @@
-import add_path
+#import add_path
 import pytest
-import mit_ocw_data_science.lec2.menu as lec2
+#import mit_ocw_data_science.lec2.menu as lec2
 
 def test_food():
     food = lec2.Food("apple", 20, 50)
