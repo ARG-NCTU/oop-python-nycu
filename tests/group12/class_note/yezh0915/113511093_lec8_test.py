@@ -1,5 +1,5 @@
 import pytest
-from src.mit_ocw_exercises.lec8_classes import Coordinate
+# from oop-python-nycu.src.mit_ocw_exercises.lec8_classes import Coordinate
 
 def test_coordinate_init():
     c = Coordinate(3, 4)

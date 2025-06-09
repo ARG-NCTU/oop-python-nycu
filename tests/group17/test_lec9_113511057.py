@@ -1,5 +1,4 @@
-import add_path
-import mit_ocw_exercises.lec9_inheritance as inh
+import lec_5.py as inh
 import pytest
 
 def test_animal_5A():

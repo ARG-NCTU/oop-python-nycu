@@ -8,6 +8,7 @@ def test_linear_search():
     assert lec10.linear_search(testList,3) == True
     assert lec10.linear_search(testList,27) == True
     assert lec10.linear_search(testList,2) == False
+    assert lec10.linear_search(testList,99) == False
 testSet = [1, 2, 3, 4, 5]
 testSet1 = [1, 5, 3]
 testSet2 = [1, 1, 6]

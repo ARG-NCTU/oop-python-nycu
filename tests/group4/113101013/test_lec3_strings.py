@@ -25,6 +25,10 @@ def primes_below(n):
 def test_is_palindrome():
     assert is_palindrome("racecar")
     assert is_palindrome("A man a plan a canal Panama")
+    assert is_palindrome("No lemon, no melon")  # 有逗號與空白
+    assert is_palindrome("Was it a car or a cat I saw")  
+    assert is_palindrome("")  # 空字串應該是 palindrome
+    assert is_palindrome(" ")  # 單空白字串
     assert not is_palindrome("hello")
 
 def test_char_frequency():
@@ -44,5 +48,24 @@ def test_primes_below():
     assert primes_below(10) == [2, 3, 5, 7]
     assert primes_below(2) == []
     assert primes_below(20) == [2, 3, 5, 7, 11, 13, 17, 19]
+    
+def test_is_palindrome_additional():
+    # 含標點符號與大小寫混合的字串，測試能否正確判斷
+    assert not is_palindrome("Madam, I'm Adam")  # 加逗號與撇號
+    assert not is_palindrome("Eva, can I see bees in a cave?")  # 含逗號與問號
+    # 含數字與字母的回文
+    assert is_palindrome("12321")
+    assert not is_palindrome("12345")
+    # 空白與標點混合
+    assert is_palindrome("A Santa at NASA")
+    assert is_palindrome("232 32")  # 數字與空白
+    assert not is_palindrome("Hello, World!")  # 含標點符號的非回文
+
+def test_all():
+    test_is_palindrome()
+    test_char_frequency()
+    test_is_prime()
+    test_primes_below()
+    test_is_palindrome_additional()
 
 

@@ -1,6 +1,6 @@
-import add_path
+#import add_path
 import pytest
-import mit_ocw_data_science.lec2.menu as lec2
+#import mit_ocw_data_science.lec2.menu as lec2
 
 def test_food():
     food = lec2.Food("apple", 20, 50)
@@ -28,10 +28,10 @@ def test_greedy():
     menu = lec2.Menu(names, values, calories)
 
     result, total_value = lec2.greedy(menu.get_foods(), 100, key_function=lambda x: x.get_value())
-    assert total_value == 60  # Should take apple (20) and cherry (40)
-    assert len(result) == 2
+    assert total_value == 40
+    assert len(result) == 1
     assert str(result[0]) == "cherry: <40, 70>"
-    assert str(result[1]) == "apple: <20, 50>"
+
 
 def test_max_val():
     names = ["apple", "banana", "cherry"]
@@ -40,10 +40,10 @@ def test_max_val():
     menu = lec2.Menu(names, values, calories)
 
     total_value, selected_items = lec2.max_val(menu.get_foods(), 100)
-    assert total_value == 60
-    assert len(selected_items) == 2
+    assert total_value == 40
+    assert len(selected_items) == 1
     assert str(selected_items[0]) == "cherry: <40, 70>"
-    assert str(selected_items[1]) == "apple: <20, 50>"
+
     
 def test_fast_max_val():
     names = ["apple", "banana", "cherry"]
@@ -52,7 +52,6 @@ def test_fast_max_val():
     menu = lec2.Menu(names, values, calories)
 
     total_value, selected_items = lec2.fast_max_val(menu.get_foods(), 100)
-    assert total_value == 60
-    assert len(selected_items) == 2
+    assert total_value == 40
+    assert len(selected_items) == 1
     assert str(selected_items[0]) == "cherry: <40, 70>"
-    assert str(selected_items[1]) == "apple: <20, 50>"

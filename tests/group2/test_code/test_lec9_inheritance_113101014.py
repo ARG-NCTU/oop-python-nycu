@@ -9,6 +9,8 @@ def test_animal():
     assert a.get_age() == 7
     a.set_name('johnny')
     assert a.get_name() == 'johnny'
+    a.set_name('johnny_walker')
+    assert a.get_name() == 'johnny_walker'
 
 def test_cat():
     c = lec9.Cat(9)

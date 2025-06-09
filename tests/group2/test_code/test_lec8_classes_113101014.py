@@ -18,7 +18,7 @@ def test_fraction():
     assert lec8.Fraction.__float__(c) == 1.0
     assert float(b.inverse()) == 1.3333333333333333
 def test_assertionerror():
-    with pytest.raise(AssertionError)
+    with pytest.raises(AssertionError):
         lec8.Fraction(3.14, 2.7)
 
 def test_intset():
@@ -38,6 +38,9 @@ def test_intset():
 
     s.remove(5)
     assert str(s) == "{3,6}"
+    
+    s.insert(5)
+    assert str(s) == "{3,5,6}"
 
     try:
         s.remove(5)  # 應該拋出 ValueError
