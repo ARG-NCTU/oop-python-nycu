@@ -1,4 +1,5 @@
 import lec9_inheritance as lec
+import pytest
 
 def animal_test():
     z = lec.Animal(10)

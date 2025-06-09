@@ -1,4 +1,5 @@
 import lec12_sorting as lec
+import pytest
 
 L = [4, 8, 3, 2, 10, 9, 1, 5, 7, 6]
 

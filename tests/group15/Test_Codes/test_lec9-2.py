@@ -1,5 +1,6 @@
 import lec9_inheritance as lec
 from lec9_inheritance import Rabbit
+import pytest
 
 def rabbit_test():
     print("rabbit test!!")
