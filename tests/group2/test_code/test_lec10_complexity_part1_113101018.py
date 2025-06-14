@@ -10,6 +10,12 @@ def test_linear_search():
     assert lec10.linear_search(num_list, 14)  is True
     assert lec10.linear_search(num_list, 9)   is False
     assert lec10.linear_search(num_list, 100) is False
+    prime_list = [3, 5, 7, 11, 13, 17, 19]
+    assert lec10.linear_search(prime_list, 3)  is True
+    assert lec10.linear_search(prime_list, 19) is True
+    assert lec10.linear_search(prime_list, 2)  is False
+    assert lec10.linear_search(prime_list, 18) is False
+
 
 
 # ---------- isSubset ----------
