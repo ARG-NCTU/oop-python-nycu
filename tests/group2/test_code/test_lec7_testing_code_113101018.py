@@ -23,6 +23,8 @@ def test_primes_list():
     assert lec7.primes_list(6)  == [2, 3, 5]
     assert lec7.primes_list(7)  == [2, 3, 5, 7]
     assert lec7.primes_list(8)  == [2, 3, 5, 7]
+    assert lec7.primes_list(15)  == [2, 3, 5, 7, 11, 13]
+    assert lec7.primes_list(30)  == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
     assert lec7.primes_list(20) == [2, 3, 5, 7, 11, 13, 17, 19]
 
 
