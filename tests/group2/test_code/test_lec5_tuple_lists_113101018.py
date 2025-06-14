@@ -19,6 +19,7 @@ def test_divide_by_zero():
 
 def test_getdata():
     assert lec5.get_data(((3, "x"), (9, "y"), (0, "x"), (5, "z"))) == (0, 9, 3)
+    assert lec5.get_data(((4, "p"), (8, "q"), (1, "p"), (9, "r"))) == (1, 9, 3)
     assert lec5.get_data(((-5, "m"), (-1, "n"), (5, "m"), (10, "o"))) == (-5, 10, 3)
     assert lec5.get_data(((1999, "A"), (2000, "B"), (2000, "C"),
                           (1998, "A"), (2005, "D"))) == (1998, 2005, 4)
