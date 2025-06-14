@@ -8,6 +8,7 @@ def test_quoNrem():
     assert lec5.quotient_and_remainder(9,  3) == (3, 0)
     assert lec5.quotient_and_remainder(-10, 4) == (-3, 2)
     assert lec5.quotient_and_remainder(18, 7) == (2, 4)
+    assert lec5.quotient_and_remainder(12, 6) == (2, 0)
 
 def test_divide_by_zero():
     with pytest.raises(ZeroDivisionError):
