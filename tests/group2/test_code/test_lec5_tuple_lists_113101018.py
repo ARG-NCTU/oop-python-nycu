@@ -41,3 +41,5 @@ def test_remove_dup():
     a3 = [12, 14, 16]
     lec5.remove_dups_new(a1, a2)
     assert a1 == [9, 11]
+    lec5.remove_dups_new(a2, a3)
+    assert a2 == [10]
