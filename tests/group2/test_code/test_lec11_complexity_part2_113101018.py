@@ -10,6 +10,11 @@ def test_bisect_search():
     assert lec11.bisect_search2(ascending_0_to_99, 50) is True
     assert lec11.bisect_search1(ascending_0_to_99, 101) is False
     assert lec11.bisect_search2(ascending_0_to_99, 101) is False
+    hundred_evens = [x * 2 for x in range(100)]     # 0,2,4,…,198
+    assert lec11.bisect_search1(hundred_evens, 64) is True
+    assert lec11.bisect_search2(hundred_evens, 64) is True
+    assert lec11.bisect_search1(hundred_evens, 199) is False
+    assert lec11.bisect_search2(hundred_evens, 199) is False
 
 
 # ---------- genSubsets ----------
