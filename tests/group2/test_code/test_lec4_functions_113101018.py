@@ -22,6 +22,7 @@ def test_cuberoot():
     assert lec4.bisection_cuberoot_approx(50, 0.01) == 3.684234619140625
     assert lec4.bisection_cuberoot_approx(250, 0.01) == 6.299614906311035
     assert lec4.bisection_cuberoot_approx(2,  0.01)  == 1.26171875
+    assert lec4.bisection_cuberoot_approx(3,  0.01) == 1.44140625
     assert lec4.bisection_cuberoot_approx(1,  0.01)  == 0.998046875
     assert lec4.bisection_cuberoot_approx(5,  0.01)  == 1.708984375
 
