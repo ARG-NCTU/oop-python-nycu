@@ -16,6 +16,17 @@ def test_animal():
 
     animal_obj.set_name("bruno_mars")
     assert animal_obj.get_name() == "bruno_mars"
+    pet = lec9.Animal(4)
+    assert pet.get_name() is None
+
+    pet.set_age(10)
+    assert pet.get_age() == 10
+
+    pet.set_name("loki")
+    assert pet.get_name() == "loki"
+
+    pet.set_name("loki_odinson")
+    assert pet.get_name() == "loki_odinson"
 
 
 # ---------- Cat ----------
