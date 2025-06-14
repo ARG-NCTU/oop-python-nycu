@@ -9,7 +9,12 @@ def test_bubble_sort():
 
     bubble_case_single = [42]
     assert lec12.bubble_sort_np(bubble_case_single) == [42]
+    unsorted_numbers = [5, 2, 9, 1, 5, 6]
+    sorted_expected  = [1, 2, 5, 5, 6, 9]
+    assert lec12.bubble_sort_np(unsorted_numbers) == sorted_expected
 
+    single_element_list = [-7]
+    assert lec12.bubble_sort_np(single_element_list) == [-7]
 
 # ---------- merge_sort_np ----------
 def test_merge_sort():
