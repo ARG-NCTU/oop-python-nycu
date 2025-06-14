@@ -9,6 +9,8 @@ def test_even():
     assert lec4.is_even_with_return(9) == False
     assert lec4.is_even_with_return(18) == True
     assert lec4.is_even_with_return(0) == True
+    assert lec4.is_even_with_return(-10) == True     # negative even
+    assert lec4.is_even_with_return(3.4) == False    # float check
     assert lec4.is_even_with_return(-6) == True      # check negative even
     assert lec4.is_even_with_return(7.2) == False    # check float
 
