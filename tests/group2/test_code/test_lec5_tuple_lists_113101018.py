@@ -35,4 +35,9 @@ def test_remove_dup():
     assert L1 == [4, 6]          # 5、7 被移除
     lec5.remove_dups_new(L2, L3)
     assert L2 == [5, 8]          # 7 被移除
-
+    
+    a1 = [9, 10, 11, 12]
+    a2 = [10, 12, 14]
+    a3 = [12, 14, 16]
+    lec5.remove_dups_new(a1, a2)
+    assert a1 == [9, 11]
