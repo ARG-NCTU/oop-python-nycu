@@ -19,6 +19,7 @@ def test_cuberoot():
     # ε = 0.01 ；數值由 lec4.bisection_cuberoot_approx() 實際跑出的結果填入
     assert lec4.bisection_cuberoot_approx(20, 0.01)  == 2.71484375
     assert lec4.bisection_cuberoot_approx(30, 0.01) == 3.1072998046875
+    assert lec4.bisection_cuberoot_approx(50, 0.01) == 3.684234619140625
     assert lec4.bisection_cuberoot_approx(250, 0.01) == 6.299614906311035
     assert lec4.bisection_cuberoot_approx(2,  0.01)  == 1.26171875
     assert lec4.bisection_cuberoot_approx(1,  0.01)  == 0.998046875
