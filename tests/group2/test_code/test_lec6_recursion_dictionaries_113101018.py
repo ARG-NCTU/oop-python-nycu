@@ -17,6 +17,8 @@ def test_fib():
 
 def test_pal():
     assert lec6.is_palindrome("") == True
+    assert lec6.is_palindrome("racecar") == True
+    assert lec6.is_palindrome("python") == False
     assert lec6.is_palindrome("a") == True
     assert lec6.is_palindrome("ab") == False
     assert lec6.is_palindrome("aba") == True
