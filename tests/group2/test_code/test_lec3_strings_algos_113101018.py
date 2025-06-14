@@ -7,6 +7,7 @@ def test_cube_root():
     assert lec3.cube_root(27)    == 3
     assert lec3.cube_root(125)   == 5
     assert lec3.cube_root(1331)  == 11
+    assert lec3.cube_root(512)  == 8
     assert lec3.cube_root(1000)  == 10
     assert lec3.cube_root(-27)   == None  ## The function do not allow negative numbers
 
