@@ -6,6 +6,8 @@ import math
 def test_even():
     assert lec4.is_even_with_return(5) == False
     assert lec4.is_even_with_return(12) == True
+    assert lec4.is_even_with_return(9) == False
+    assert lec4.is_even_with_return(18) == True
     assert lec4.is_even_with_return(0) == True
     assert lec4.is_even_with_return(-6) == True      # check negative even
     assert lec4.is_even_with_return(7.2) == False    # check float
