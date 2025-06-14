@@ -22,6 +22,8 @@ def test_pal():
     assert lec6.is_palindrome("a") == True
     assert lec6.is_palindrome("ab") == False
     assert lec6.is_palindrome("aba") == True
+    assert lec6.is_palindrome("Was it a rat I saw?") == True
+    assert lec6.is_palindrome("Step on no pets") == True
     assert lec6.is_palindrome("Madam in Eden, I'm Adam") == True
 
 
