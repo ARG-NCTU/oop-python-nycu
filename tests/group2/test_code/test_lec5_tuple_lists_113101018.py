@@ -22,7 +22,8 @@ def test_getdata():
     assert lec5.get_data(((-5, "m"), (-1, "n"), (5, "m"), (10, "o"))) == (-5, 10, 3)
     assert lec5.get_data(((1999, "A"), (2000, "B"), (2000, "C"),
                           (1998, "A"), (2005, "D"))) == (1998, 2005, 4)
-
+    assert lec5.get_data(((2021, "Dan"), (2018, "Eva"), (2021, "Fred"),
+                          (2010, "Gia"), (2012, "Hal"))) == (2010, 2021, 5)
 
 def test_remove_dup():
     L1 = [4, 5, 6, 7]
