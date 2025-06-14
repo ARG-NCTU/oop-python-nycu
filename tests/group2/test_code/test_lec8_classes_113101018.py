@@ -12,6 +12,12 @@ def test_coordinate():
     assert (c2.x, c2.y) == (1, 2)
     assert c1.distance(c2) == 5.0
     assert str(c1) == "<4,6>"
+    point_p = lec8.Coordinate(7, 1)
+    point_q = lec8.Coordinate(3, -2)
+    assert (point_p.x, point_p.y) == (7, 1)
+    assert (point_q.x, point_q.y) == (3, -2)
+    assert point_p.distance(point_q) == 5.0            # Δx=4, Δy=3
+    assert str(point_p) == "<7,1>"
 
 
 # ---------- Fraction ----------
