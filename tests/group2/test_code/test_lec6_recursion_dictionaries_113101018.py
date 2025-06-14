@@ -81,9 +81,12 @@ def test_freq():
     ]
 
     beatles = lec6.lyrics_to_frequencies(she_loves_you)
-    assert lec6.words_often(beatles, 15) == [
-        (['you'], 36),
-        (['yeah'], 28),
-        (['she'], 20)
+    # minTimes = 13 → 4 個詞符合
+    expected = [
+        (['you'],   36),
+        (['yeah'],  28),
+        (['she'],   20),
+        (['loves'], 13)
     ]
+    assert lec6.words_often(beatles, 13) == expected
 
