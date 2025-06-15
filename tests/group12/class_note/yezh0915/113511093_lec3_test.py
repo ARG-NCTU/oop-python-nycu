@@ -1,5 +1,7 @@
+import add_path
+import mit_ocw_exercises.lec3_strings_algos as lec3
 import pytest
-# from src.mit_ocw_exercises.lec3_strings_algos import is_palindrome
+
 
 @pytest.mark.parametrize("test_input,expected", [
     ("radar", True),           # Simple palindrome
@@ -13,4 +15,4 @@ import pytest
     ("Was it a car or a cat I saw?", False)  # Special characters make it non-palindromic
 ])
 def test_is_palindrome(test_input, expected):
-    assert is_palindrome(test_input) == expected
+    assert lec3.is_palindrome(test_input) == expected
