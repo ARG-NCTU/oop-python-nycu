@@ -102,8 +102,8 @@ user.name=zhuchi76
 | ❌        | Group 11     | Rickycheong0515 : 3 | hfchiang : 3          | Samuel11GitHub : 0     |
 | ❌        | Group 12     | kufanghua : 25      | yezh0915 : 65         | fiesta0217 : 21        |
 | ❌        | Group 13     | lucasliu0910 : 7    | carabapy : 6          | jing1688 : 65          |
-| ✅        | Group 14     | weiouo-0817 : 24    | NiNialpaca : 0        |                        |
-| ❌        | Group 15     | gamemode0701 : 11   | Tonyyu2403 : 32       |                        |
+| ✅        | Group 14     | weiouo-0817 : 24    | NiNialpaca : 4        |                        |
+| ❌        | Group 15     | gamemode0701 : 11   | Tonyyu2403 : 36       |                        |
 | ❌        | Group 16     | TerryCheese : 8     | junlin27 : 36         |                        |
 | ❌        | Group 17     | Miiaow3011 : 26     | bonnieliao774 : 54    | emmazheng0318 : 21     |
 | ✅        | Group 18     | ChocomintTW : 1     | TedChueh : 12         | pitinghsu : 0          |
