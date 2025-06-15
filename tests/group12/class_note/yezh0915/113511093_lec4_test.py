@@ -53,13 +53,13 @@ def test_f_scope(capsys):
     out, _ = capsys.readouterr()
     assert "2" in out  # x is incremented from 1 to 2
 
-# g (scope version)
 def test_g_scope(capsys):
     global_x = 5
     lec4_functions.x = global_x  # set module-level x
     lec4_functions.g(10)
     out, _ = capsys.readouterr()
-    assert str(global_x) in out
+    assert "in g(x): x =  11" in out
+    assert "in h(x): x =  12" in out
 
 # h (scope version, does nothing)
 def test_h_scope():
