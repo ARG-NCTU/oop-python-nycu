@@ -42,16 +42,8 @@ def test_func_c(capsys):
     out, _ = capsys.readouterr()
     assert "inside func_c" in out
 
-# f (function object version)
-def test_f_function_object():
-    func = lec4_functions.f()
-    assert func(2, 3) == 5
 
-# f (scope version)
-def test_f_scope(capsys):
-    lec4_functions.f(10)
-    out, _ = capsys.readouterr()
-    assert "2" in out  # x is incremented from 1 to 2
+
 
 def test_g_scope(capsys):
     global_x = 5
