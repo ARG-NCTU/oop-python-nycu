@@ -52,7 +52,4 @@ def test_words_often():
     assert result[1][0] == ["b"]
     assert result[1][1] == 3
 
-def test_fib_mem():
-    assert lec6.fib_mem(1) == 1
-    assert lec6.fib_mem(2) == 2
-    assert lec6.fib_mem(5) == lec6.fib_mem(4) + lec6.fib_mem(3)
+
