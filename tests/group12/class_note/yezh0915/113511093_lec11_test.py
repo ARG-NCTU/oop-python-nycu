@@ -1,3 +1,5 @@
+import add_path
+import mit_ocw_exercises.lec11_complexity_part2 as lec
 import pytest
 # from src.mit_ocw_exercises import lec11_complexity_part2 as lec
 
