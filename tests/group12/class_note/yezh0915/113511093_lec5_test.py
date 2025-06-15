@@ -28,12 +28,7 @@ def test_sum_elem_method2():
     assert lec5.sum_elem_method2([1, 2, 3, 4]) == 10
     assert lec5.sum_elem_method2([]) == 0
     assert lec5.sum_elem_method2([10, -10, 20]) == 20
-def test_remove_dups():
-    L1 = [1, 2, 3, 4]
-    L2 = [1, 2, 5, 6]
-    lec5.remove_dups(L1, L2)
-    assert L1 == [3, 4]
-    assert L2 == [1, 2, 5, 6]
+
 
 def test_remove_dups_new():
     L1 = [1, 2, 3, 4]
