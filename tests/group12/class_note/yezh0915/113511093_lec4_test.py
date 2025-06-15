@@ -1,26 +1,34 @@
 import add_path
-import mit_ocw_exercises.lec4_functions as lec4
+import mit_ocw_exercises.lec4_functions as lec4_functions
 import pytest
 
 
 def test_is_even_with_return():
-    assert lec4.is_even_with_return(2) == True
-    assert lec4.is_even_with_return(3) == False
-    assert lec4.is_even_with_return(0) == True
-def test_bisection_cuberoot_approx():
+    assert lec4_functions.is_even_with_return(2) is True
+    assert lec4_functions.is_even_with_return(3) is False
+    assert lec4_functions.is_even_with_return(0) is True
+
+def test_is_even_without_return(capsys):
+    lec4_functions.is_even_without_return(2)
+    captured = capsys.readouterr()
+    assert "without return" in captured.out
+
+    lec4_functions.is_even_without_return(3)
+    captured = capsys.readouterr()
+    assert "without return" in captured.out
+
+def test_is_even():
+    assert lec4_functions.is_even(4) is True
+    assert lec4_functions.is_even(7) is False
+
+@pytest.mark.parametrize("x", [1, 8, 27, 1000])
+def test_bisection_cuberoot_approx(x):
     epsilon = 0.01
-    assert lec4.abs(bisection_cuberoot_approx(27, epsilon) - 3) < epsilon
-    assert lec4.abs(bisection_cuberoot_approx(64, epsilon) - 4) < epsilon
-    assert lec4.abs(bisection_cuberoot_approx(1, epsilon) - 1) < epsilon
-def test_function_object_f():
-    func = f()
-    assert lec4.func(2, 3) == 5
-    assert lec4.func(10, 20) == 30
-def test_scope_g():
-    result = g(3)
-    assert lec4.result == 4
+    approx = lec4_functions.bisection_cuberoot_approx(x, epsilon)
+    assert math.isclose(approx ** 3, x, abs_tol=epsilon)
 
-
-
-if __name__ == "__main__":
-    pytest.main()
+def test_f_returns_function():
+    func = lec4_functions.f()
+    assert callable(func)
+    assert func(3, 4) == 7
+    assert func(-2, 5) == 3
