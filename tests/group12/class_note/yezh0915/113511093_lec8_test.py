@@ -15,4 +15,4 @@ def test_coordinate_str():
 def test_coordinate_distance():
     c1 = lec8.Coordinate(3, 4)
     c2 = lec8.Coordinate(0, 0)
-    assert c1.lec8.distance(c2) == 5.0
+    assert c1.distance(c2) == 5.0
