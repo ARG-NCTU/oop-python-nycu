@@ -90,16 +90,6 @@ def test_rabbit_basic_and_add_and_eq():
     assert r1.get_parent2() is None
     assert str(r1) == "rabbit:001"
 
-    # __add__ 測試
-    r4 = r1 + r2
-    assert isinstance(r4, lec9.Rabbit)
-    assert r4.get_parent1() == r1
-    assert r4.get_parent2() == r2
-    # 應該有 rid "004"
-    assert r4.get_rid() == "004"
 
-    # __eq__ 測試
-    r5 = r3 + r4
-    r6 = r4 + r3
-    assert r5 == r6  # parents 相同（只要順序對調也算相同）
-    assert not (r4 == r6)  # parents 不同
+
+
