@@ -90,7 +90,7 @@ user.name=zhuchi76
 | status   | group_name   | Group Leader        | Group Member 1        | Group Member 2         |
 |:---------|:-------------|:--------------------|:----------------------|:-----------------------|
 | ✅        | Group 1      | LeeYinWei : 50      | unknown899 : 25       |                        |
-| ❌        | Group 2      | neoAurora : 25      | Lawrence16428 : 0     | howardhung14 : 26      |
+| ❌        | Group 2      | neoAurora : 25      | Lawrence16428 : 44    | howardhung14 : 26      |
 | ❌        | Group 3      | yoyo0213 : 50       | JonathanYangSW : 37   | GinoChen113511247 : 32 |
 | ✅        | Group 4      | JumboZhang1119 : 52 | peienwu1216 : 33      | chxyuuu : 46           |
 | ❌        | Group 5      | ginny923 : 18       | joanna0420 : 24       | dua0505 : 17           |
