@@ -100,7 +100,7 @@ user.name=zhuchi76
 | ✅        | Group 9      | CHENG-JE : 26       | lwc-ed : 26           |                        |
 | ✅        | Group 10     | tpvupu : 56         | xiaotin22 : 62        | calistayang : 43       |
 | ❌        | Group 11     | Rickycheong0515 : 3 | hfchiang : 3          | Samuel11GitHub : 0     |
-| ❌        | Group 12     | kufanghua : 25      | yezh0915 : 65         | fiesta0217 : 21        |
+| ❌        | Group 12     | kufanghua : 25      | yezh0915 : 88         | fiesta0217 : 21        |
 | ❌        | Group 13     | lucasliu0910 : 7    | carabapy : 6          | jing1688 : 65          |
 | ✅        | Group 14     | weiouo-0817 : 24    | NiNialpaca : 4        |                        |
 | ❌        | Group 15     | gamemode0701 : 11   | Tonyyu2403 : 36       |                        |
