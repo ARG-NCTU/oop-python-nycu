@@ -107,7 +107,7 @@ user.name=zhuchi76
 | ❌        | Group 16     | TerryCheese : 8     | junlin27 : 36         |                        |
 | ❌        | Group 17     | Miiaow3011 : 26     | bonnieliao774 : 54    | emmazheng0318 : 21     |
 | ✅        | Group 18     | ChocomintTW : 1     | TedChueh : 12         | pitinghsu : 0          |
-| ❌        | Group 19     | max052028 : 3       | 113511080 : 25        |                        |
+| ❌        | Group 19     | max052028 : 14      | 113511080 : 25        |                        |
 | ❌        | Group 20     | houyuankai : 4      |                       |                        |
 | ✅        | Group 21     | 0u88 : 12           |                       |                        |
 <!--END_SECTION:pytest-->
