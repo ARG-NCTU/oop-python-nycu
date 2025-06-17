@@ -45,3 +45,11 @@ def test_get_ratios_div_by_zero():
     result = get_ratios(L1, L2)
     assert math.isnan(result[0])
     assert result[1] == 5.0
+    
+def test_avg_normal():
+    assert avg([4, 12, 16]) == 32/3
+    assert avg([7]) == 7
+
+def test_avg_empty():
+    with pytest.raises(AssertionError):
+        avg([])
