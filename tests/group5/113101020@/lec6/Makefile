@@ -1,8 +1,12 @@
-# Makefile
-.PHONY: all test
+# Makefile for running pytest on test_dua_example.py
 
-all: test
-
-# Run pytest, stop at first failure, disable warnings, quiet output
+# 執行測試
 test:
-	pytest --maxfail=1 --disable-warnings -q
+	pytest test_dua_example.py
+
+# 移除 pytest 的暫存資料
+clean:
+	rm -rf __pycache__ .pytest_cache
+
+# 預設目標（當只打 make 時會執行）
+all: test
