@@ -49,3 +49,18 @@ def test_remove_dups_new():
 def test_quotient_and_remainder_zero_division():
     with pytest.raises(ZeroDivisionError):
         lec5.quotient_and_remainder(5, 0)
+
+def test_remove_dups_new():
+    L1 = [21, 22, 23, 24]
+    L2 = [22, 25]
+    lec5.remove_dups_new(L1, L2)
+    assert L1 == [21, 23, 24]
+
+    L1 = [1, 3, 5, 7, 9]
+    L2 = [3, 7]
+    lec5.remove_dups_new(L1, L2)
+    assert L1 == [1, 5, 9]
+
+def test_quotient_and_remainder_zero_division():
+    with pytest.raises(ZeroDivisionError):
+        lec5.quotient_and_remainder(5, 0)
