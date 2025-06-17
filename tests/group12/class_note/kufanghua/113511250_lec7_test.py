@@ -24,3 +24,9 @@ def test_primes_list():
     assert primes_list(5) == [2, 3, 5]
     assert primes_list(13) == [2, 3, 5, 7, 11, 13]
     assert primes_list(19) == [2, 3, 5, 7, 11, 13, 17, 19]
+
+def test_get_ratios_normal():
+    L1 = [12, 24, 36]
+    L2 = [3, 6, 12]
+    expected = [4.0, 4.0, 3.0]
+    assert get_ratios(L1, L2) == expected
