@@ -29,3 +29,7 @@ def test_words_often():
     # Should find ('a','c') with 5, ('b',) with 2
     result_sorted = sorted([(sorted(words), count) for words, count in result])
     assert result_sorted == [(['a', 'c'], 5), (['b'], 2)]
+def test_fib_mem():
+    assert lec6.fib_mem(1) == 1
+    assert lec6.fib_mem(2) == 2
+    assert lec6.fib_mem(5) == lec6.fib_mem(4) + lec6.fib_mem(3)
