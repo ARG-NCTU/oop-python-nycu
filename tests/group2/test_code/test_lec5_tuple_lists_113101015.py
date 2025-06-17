@@ -6,6 +6,7 @@ def test_quoNrem():
     assert lec5.quotient_and_remainder(10,3) == (3,1)
     assert lec5.quotient_and_remainder(4,2) == (2,0)
     assert lec5.quotient_and_remainder(-10,3) == (-4, 2)
+    assert lec5.quotient_and_remainder(10,-3) == (-4, -2)##new
     try:
         assert lec5.quotient_and_remainder(10,0) == (3,1)
     except(ZeroDivisionError):
@@ -25,3 +26,6 @@ def test_remove_dup():
     L2 = [1, 2, 5, 6]
     lec5.remove_dups_new(L1,L2)
     assert L1 == [3,4]
+    lec5.remove_dups_new(L1,L2)
+    assert L1 == [3,4]##try the result when doing twice
+    #

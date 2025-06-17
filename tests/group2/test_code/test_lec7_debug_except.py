@@ -14,13 +14,17 @@ def test_rev_list():
     assert L == ['a']
     L = ["I","conquer","OOP"]
     lec7.rev_list(L)
-    assert L == ["OOP","conquer","I"] #test string
+    assert L == ["OOP","conquer","I"] #test string#
+    L = ["靈感菇離菇離哇恰靈感菇靈感菇"]
+    lec7.rev_list(L)
+    assert L == ["靈感菇離菇離哇恰靈感菇靈感菇"] #test single string in list#
 def test_primes_list():
     assert lec7.primes_list(7) == [2, 3, 5, 7]
     assert lec7.primes_list(8) == [2, 3, 5, 7]
     assert lec7.primes_list(9) == [2, 3, 5, 7]
     assert lec7.primes_list(10) == [2, 3, 5, 7]
     assert lec7.primes_list(11) == [2, 3, 5, 7, 11]
+    assert lec7.primes_list(1) == [2]##return [2] for n<2
 
 def test_get_ratios():
     assert lec7.get_ratios([2, 4, 6, 8], [1, 2, 3, 4]) == [2.0, 2.0, 2.0, 2.0]

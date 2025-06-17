@@ -9,6 +9,7 @@ def test_fib():
     assert lec6.fib(10) == 89
 
 def test_pal():
+    assert lec6.is_palindrome("") == True
     assert lec6.is_palindrome("a") == True
     assert lec6.is_palindrome("ab") == False
     assert lec6.is_palindrome("aba") == True

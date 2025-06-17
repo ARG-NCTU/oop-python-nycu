@@ -58,7 +58,7 @@ docker run \
     -v "/home/$USER/$PROJ_NAME:/home/arg/$PROJ_NAME" \
     -w "/home/arg/$PROJ_NAME" \
     --user "root:root" \
-    --name argmm \
+    --name oop-gpu \
     --network host \
     --privileged \
     --security-opt seccomp=unconfined \

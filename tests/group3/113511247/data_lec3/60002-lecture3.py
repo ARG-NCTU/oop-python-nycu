@@ -15,6 +15,7 @@ class Node(object):
         return self.name
 
 class Edge(object):
+    # from source(nodes) to destination(nodes)
     def __init__(self, src, dest):
         """Assumes src and dest are nodes"""
         self.src = src
@@ -35,7 +36,7 @@ class Digraph(object):
         if node in self.edges:
             raise ValueError('Duplicate node')
         else:
-            self.edges[node] = []
+            self.edges[node] = [] # key: node, value: empty list
     def addEdge(self, edge):
         src = edge.getSource()
         dest = edge.getDestination()
@@ -52,20 +53,22 @@ class Digraph(object):
                 return n
         raise NameError(name)
     def __str__(self):
-        result = ''
+        result = '' # string
         for src in self.edges:
             for dest in self.edges[src]:
                 result = result + src.getName() + '->'\
                          + dest.getName() + '\n'
-        return result[:-1] #omit final newline
+        return result[:-1] #omit(ignore) final newline
+        # structure : [start:stop:step]
 
 class Graph(Digraph):
     def addEdge(self, edge):
         Digraph.addEdge(self, edge)
-        rev = Edge(edge.getDestination(), edge.getSource())
+        rev = Edge(edge.getDestination(), edge.getSource()) #reverse
         Digraph.addEdge(self, rev)
-    
+   
 def buildCityGraph(graphType):
+    """Assumes graphType is a class that is a subclass of Digraph"""
     g = graphType()
     for name in ('Boston', 'Providence', 'New York', 'Chicago',
                  'Denver', 'Phoenix', 'Los Angeles'): #Create 7 nodes
@@ -92,17 +95,27 @@ def printPath(path):
             result = result + '->'
     return result 
 
+# DFS: Depth First Search, a recursive algorithm, which
+# explores as far as possible along each branch before backtracking
 def DFS(graph, start, end, path, shortest, toPrint = False):
-    """Assumes graph is a Digraph; start and end are nodes;
-          path and shortest are lists of nodes
+    # recursive, as always
+    """Assumes 'graph' is a Digraph; 'start' and 'end' are nodes;
+          'path' and 'shortest' are lists of nodes
        Returns a shortest path from start to end in graph"""
     path = path + [start]
     if toPrint:
         print('Current DFS path:', printPath(path))
+
+    #base case
     if start == end:
         return path
+    
     for node in graph.childrenOf(start):
         if node not in path: #avoid cycles
+            # shortest == None : hasn't searched yet
+            # len(path) < len(shortest) : could be shorter
+            # path : current path
+            # shortest : shortest path found so far
             if shortest == None or len(path) < len(shortest):
                 newPath = DFS(graph, node, end, path, shortest,
                               toPrint)
@@ -134,8 +147,11 @@ print()
 
 printQueue = True 
 
+# BFS: Breadth First Search, an iterative algorithm
+# which explores all of the neighbor nodes at the present depth 
+# prior to moving on to nodes at the next depth level
 def BFS(graph, start, end, toPrint = False):
-    """Assumes graph is a Digraph; start and end are nodes
+    """Assumes 'graph' is a Digraph; 'start' and 'end' are nodes
        Returns a shortest path from start to end in graph"""
     initPath = [start]
     pathQueue = [initPath]
@@ -157,6 +173,7 @@ def BFS(graph, start, end, toPrint = False):
                 newPath = tmpPath + [nextNode]
                 pathQueue.append(newPath)
     return None
+# [[A]] -> [[A, B], [A, C]] -> [[A, C], [A, B, D], [A, B, E]].....
 
 def shortestPath(graph, start, end, toPrint = False):
     """Assumes graph is a Digraph; start and end are nodes
@@ -164,4 +181,3 @@ def shortestPath(graph, start, end, toPrint = False):
     return BFS(graph, start, end, toPrint)
     
 #testSP('Boston', 'Phoenix')
-    

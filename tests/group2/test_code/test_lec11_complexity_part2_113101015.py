@@ -8,7 +8,10 @@ def test_bisect_search():
         testList.append(i)
     assert lec11.bisect_search1(testList,50) == True
     assert lec11.bisect_search2(testList,50) == True
+    assert lec11.bisect_search1(testList,101) == False
+    assert lec11.bisect_search2(testList,-1) == False
 
 def test_gensubset():
     testSet = [1,2,3,4]
     assert lec11.genSubsets(testSet) == [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3], [4], [1, 4], [2, 4], [1, 2, 4], [3, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]]
+    #

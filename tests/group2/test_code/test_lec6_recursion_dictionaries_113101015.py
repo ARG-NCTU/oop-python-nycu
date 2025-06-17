@@ -7,12 +7,14 @@ def test_fib():
     assert lec6.fib(1) == 1
     assert lec6.fib(2) == 2
     assert lec6.fib(10) == 89
+    assert lec6.fib(20) == 10946##using dictionaries for calculating bigger fib numbers.
 
 def test_pal():
     assert lec6.is_palindrome("a") == True
     assert lec6.is_palindrome("ab") == False
     assert lec6.is_palindrome("aba") == True
     assert lec6.is_palindrome("Madam in Eden, I'm Adam") == True
+    assert lec6.is_palindrome("靈感菇離菇離哇恰靈感菇靈感菇") == True##return true whenever encountering different language
     
 def test_freq():
     she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
@@ -69,4 +71,4 @@ def test_freq():
     beatles = lec6.lyrics_to_frequencies(she_loves_you)
 
     assert lec6.words_often(beatles, 5) == [(['you'], 36), (['yeah'], 28), (['she'], 20), (['loves'], 13), (['know'], 11), (['be'], 10), (['and'], 8), (['that', 'should', 'glad'], 7), (['love'], 5)]
-
+#
