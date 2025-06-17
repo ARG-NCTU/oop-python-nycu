@@ -11,4 +11,7 @@ def test_is_palindrome():
     assert lec6.is_palindrome('Able was I, ere I saw Elba') is True
     assert lec6.is_palindrome('Is this a palindrome') is False
     assert lec6.is_palindrome('A man, a plan, a canal, Panama') is True
-
+def test_lyrics_to_frequencies():
+    lyrics = ['hello', 'world', 'hello', 'python']
+    result = lec6.lyrics_to_frequencies(lyrics)
+    assert result == {'hello': 2, 'world': 1, 'python': 1}
