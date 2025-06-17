@@ -2,7 +2,7 @@ import lec8_classes as lec
 from lec8_classes import Coordinate
 import pytest
 
-def coordinate_test():
+def test_coordinate():
     a0 = Coordinate (0, 0)
     a1 = Coordinate(5, 12)
     a2 = Coordinate(6, 8)
@@ -12,9 +12,9 @@ def coordinate_test():
     assert a2.distance(a0) == 10
     print (a1.distance(a0))
     print("The distance from a0 to a1 is " +str(a1.distance(a0)))
-coordinate_test()
+test_coordinate()
 
-def fraction_test():
+def test_fraction():
     b1 = lec.Fraction(3, 4)
     b2 = lec.Fraction(1, 4)
     c = b1 + b2
@@ -27,9 +27,9 @@ def fraction_test():
         c = lec.Fraction(3.14,2.7)
     except AssertionError:
         pass
-fraction_test()
+test_fraction()
 
-def intset_test():
+def test_intset():
     s = lec.intSet()
     assert str(s) == "{}"
     s.insert(1)
@@ -47,4 +47,4 @@ def intset_test():
         s.remove(1)
     except ValueError as e:
         assert str(e) == "1 not found"
-intset_test()
+test_intset()

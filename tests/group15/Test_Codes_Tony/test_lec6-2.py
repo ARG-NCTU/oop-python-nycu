@@ -1,7 +1,7 @@
 import lec6_recursion_dictionaries as lec
 import pytest
 
-def most_common_words_test():
+def test_most_common_words():
     she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
     'yeah','she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
     'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
@@ -55,4 +55,4 @@ def most_common_words_test():
 
     assert lec.most_common_words(lec.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
     print("most common word test successful!!")
-most_common_words_test()
+test_most_common_words()

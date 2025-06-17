@@ -1,7 +1,7 @@
 import lec5_tuples_lists as lec
 import pytest
 
-def remove_dups_test():
+def test_remove_dups():
     L1 = [1, 2, 3, 4, 5, 10]
     L2 = [1, 2, 3, 4]
     lec.remove_dups(L1, L2)
@@ -12,9 +12,9 @@ def remove_dups_test():
     lec.remove_dups(L3, L4)
     assert L3 == ['ab', 'abc', 'abcd']
     print (L3, L4)
-remove_dups_test()
+test_remove_dups()
 
-def remove_dups_new_test():
+def test_remove_dups_new():
     L1 = [1, 2, 3, 4, 5, 10]
     L2 = [1, 2, 3, 4]
     lec.remove_dups_new(L1, L2)
@@ -25,4 +25,4 @@ def remove_dups_new_test():
     lec.remove_dups_new(L3, L4)
     assert L3 == ['abc', 'abcd']
     print (L3, L4)
-remove_dups_new_test()
+test_remove_dups_new()
