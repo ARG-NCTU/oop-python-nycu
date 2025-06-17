@@ -15,3 +15,17 @@ def test_lyrics_to_frequencies():
     lyrics = ['hello', 'world', 'hello', 'python']
     result = lec6.lyrics_to_frequencies(lyrics)
     assert result == {'hello': 2, 'world': 1, 'python': 1}
+def test_most_common_words():
+    freqs = {'a': 5, 'b': 2, 'c': 5}
+    words, count = lec6.most_common_words(freqs)
+    assert set(words) == {'a', 'c'}
+    assert count == 5
+
+def test_words_often():
+    freqs = {'a': 5, 'b': 2, 'c': 5, 'd': 1}
+    # Copy as function modifies input
+    from copy import deepcopy
+    result = lec6.words_often(deepcopy(freqs), 2)
+    # Should find ('a','c') with 5, ('b',) with 2
+    result_sorted = sorted([(sorted(words), count) for words, count in result])
+    assert result_sorted == [(['a', 'c'], 5), (['b'], 2)]
