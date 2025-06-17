@@ -20,3 +20,7 @@ def test_rev_list():
     rev_list(data)
     assert data == expected
 
+def test_primes_list():
+    assert primes_list(5) == [2, 3, 5]
+    assert primes_list(13) == [2, 3, 5, 7, 11, 13]
+    assert primes_list(19) == [2, 3, 5, 7, 11, 13, 17, 19]
