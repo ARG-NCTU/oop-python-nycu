@@ -15,3 +15,11 @@ def test_get_data():
     assert lec5.get_data(data2) == (50, 300, 3)
     data3 = ((1, "a"), (2, "b"), (1, "a"), (7, "b"))
     assert lec5.get_data(data3) == (1, 7, 2)
+
+def test_sum_elem_methods():
+    assert lec5.sum_elem_method1([7, 8, 9]) == 24
+    assert lec5.sum_elem_method1([4, 5, 6, 7]) == 22
+    assert lec5.sum_elem_method2([10, 20]) == 30
+    assert lec5.sum_elem_method2([1, 2, 3, 4, 5]) == 15
+    assert lec5.sum_elem_method1([]) == 0
+    assert lec5.sum_elem_method2([]) == 0
