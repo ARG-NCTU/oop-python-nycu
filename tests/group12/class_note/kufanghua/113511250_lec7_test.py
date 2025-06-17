@@ -30,3 +30,26 @@ def test_get_ratios_normal():
     L2 = [3, 6, 12]
     expected = [4.0, 4.0, 3.0]
     assert get_ratios(L1, L2) == expected
+
+def test_get_ratios_div_by_zero():
+    L1 = [4, 5]
+    L2 = [0, 1]
+    result = get_ratios(L1, L2)
+    assert math.isnan(result[0])
+    assert result[1] == 5.0
+
+def test_get_ratios_bad_arg():
+    # L2 too short
+    with pytest.raises(ValueError):
+        get_ratios([100, 200], [10])
+    # L2 is not a number
+    with pytest.raises(ValueError):
+        get_ratios([1, 2], [1, "abc"])
+
+def test_avg_normal():
+    assert avg([4, 12, 16]) == 32/3
+    assert avg([7]) == 7
+
+def test_avg_empty():
+    with pytest.raises(AssertionError):
+        avg([])
