@@ -33,3 +33,9 @@ def test_fib_mem():
     assert lec6.fib_mem(1) == 1
     assert lec6.fib_mem(2) == 2
     assert lec6.fib_mem(5) == lec6.fib_mem(4) + lec6.fib_mem(3)
+
+def test_fib_efficient():
+    d = {1: 1, 2: 2}
+    assert lec6.fib_efficient(3, d.copy()) == 3
+    d = {1: 1, 2: 2}
+    assert lec6.fib_efficient(6, d.copy()) == 21
