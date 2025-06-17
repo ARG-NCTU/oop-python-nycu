@@ -31,6 +31,14 @@ def test_get_ratios_normal():
     expected = [4.0, 4.0, 3.0]
     assert get_ratios(L1, L2) == expected
 
+def test_get_ratios_bad_arg():
+    # L2 too short
+    with pytest.raises(ValueError):
+        get_ratios([100, 200], [10])
+    # L2 is not a number
+    with pytest.raises(ValueError):
+        get_ratios([1, 2], [1, "abc"])
+
 def test_get_ratios_div_by_zero():
     L1 = [4, 5]
     L2 = [0, 1]
