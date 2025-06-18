@@ -1,6 +1,6 @@
 import add_path
 import pytest
-import mit_ocw_data_science.lec4.lec4 module as lec4
+import mit_ocw_data_science.lec4.lec4_module as lec4
 
 def test_roll_die():
     # Test the roll_die function
