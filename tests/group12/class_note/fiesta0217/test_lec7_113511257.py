@@ -4,10 +4,18 @@ import mit_ocw_exercises.lec7_debug_except as lec7
 import math
 
 def test_rev_list():
-    assert lec7.rev_list([1, 2, 3]) == [3, 2, 1]
-    assert lec7.rev_list([]) == []
-    assert lec7.rev_list([1]) == [1]
-    assert lec7.rev_list([1, 2, 3, 4, 5]) == [5, 4, 3, 2, 1]    
+    L = [1, 3, 5]
+    lec7.rev_list(L)
+    assert L == [5, 3, 1]
+    L = []
+    lec7.rev_list(L)
+    assert L == []
+    L = [12]
+    lec7.rev_list(L)
+    assert L == [12]
+    L = [1, 2, 3, 4, 5]
+    lec7.rev_list(L)
+    assert L == [5, 4, 3, 2, 1]
 
 def test_primes_list():
     assert lec7.primes_list(2) == [2]
