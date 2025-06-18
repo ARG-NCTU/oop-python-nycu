@@ -4,11 +4,11 @@ import math
 
 #test for cube_root()
 
-def cube_root_test():
+def test_cube_root():
     assert lec.cube_root(27) == 3
     assert lec.cube_root(8) == 2
     assert lec.cube_root(125) == 5
     print("tests passed!!")
 
-cube_root_test()
+test_cube_root()
 

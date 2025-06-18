@@ -2,7 +2,7 @@ import lec9_inheritance as lec
 from lec9_inheritance import Rabbit
 import pytest
 
-def rabbit_test():
+def test_rabbit():
     print("rabbit test!!")
     r1 = Rabbit(3)
     r2 = Rabbit(4)
@@ -15,4 +15,4 @@ def rabbit_test():
     r5 = r4+r3
     print("r11:", r5)
     print("r4 and r5 have same parents?", r5 == r4)
-rabbit_test()
+test_rabbit()

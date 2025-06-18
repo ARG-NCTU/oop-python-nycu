@@ -1,15 +1,15 @@
 import lec4_functions as lec
 import pytest
 
-def is_even_with_return_test():
+def test_is_even_with_return():
     assert lec.is_even_with_return(13) == False
     assert lec.is_even_with_return(24) == True
     print("test successful!!")
 
-def bisection_cuberoot_approx_test():
+def test_bisection_cuberoot_approx():
     assert lec.bisection_cuberoot_approx(27, 0.01) == 3.000091552734375
     assert lec.bisection_cuberoot_approx(1, 0.01) == 0.998046875
     print("test successful!!")
 
-is_even_with_return_test()
-bisection_cuberoot_approx_test()
+test_is_even_with_return()
+test_bisection_cuberoot_approx()
