@@ -21,6 +21,7 @@ def test_fraction_add_sub_float_inverse():
     assert isinstance(inv, Fraction)
     assert str(inv) == "4/3"
 
+
 def test_fraction_assertion():
     with pytest.raises(AssertionError):
         Fraction(1.5, 3)
