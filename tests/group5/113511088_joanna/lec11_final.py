@@ -1,3 +1,4 @@
+
 def bisect_search1(L, e):
     if L == []:
         return False
