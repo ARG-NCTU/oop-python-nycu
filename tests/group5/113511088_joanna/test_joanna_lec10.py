@@ -18,6 +18,7 @@ def test_isSubset():
     assert isSubset([4], [1, 2, 3]) == False
     assert isSubset([], [1, 2, 3]) == True
 
+
 def test_intersect():
     assert intersect([1, 2, 3], [2, 3, 4]) == [2, 3]
     assert intersect([1, 2, 2], [2, 2]) == [2]
