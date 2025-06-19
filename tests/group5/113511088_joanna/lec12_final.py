@@ -8,12 +8,14 @@ def bubble_sort_np(L):
                 swap = False
     return L
 
+
 def selection_sort_np(L):
     for suffixSt in range(len(L)):
         for i in range(suffixSt, len(L)):
             if L[i] < L[suffixSt]:
                 L[suffixSt], L[i] = L[i], L[suffixSt]
     return L
+
 
 def merge_np(left, right):
     result = []
