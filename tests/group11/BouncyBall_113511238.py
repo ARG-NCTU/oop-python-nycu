@@ -6,7 +6,7 @@ class Ball:
         self.screen = screen
         self.color = color
         self.radius = radius
-        self.pos = pos
+        self.pos =
         self.velocity = velocity
 
     def update(self, screen_width, screen_height):
