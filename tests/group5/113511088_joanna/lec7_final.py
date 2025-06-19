@@ -31,6 +31,7 @@ def get_ratios(L1, L2):
             raise ValueError("get_ratios called with bad arg")
     return ratios
 
+
 def avg(grades):
     assert len(grades) != 0, "warning: no grades data"
     return sum(grades) / len(grades)
