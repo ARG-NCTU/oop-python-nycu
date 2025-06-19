@@ -36,6 +36,7 @@ def avg(grades):
     assert len(grades) != 0, "warning: no grades data"
     return sum(grades) / len(grades)
 
+
 def get_stats(class_list):
     new_stats = []
     for person in class_list:
