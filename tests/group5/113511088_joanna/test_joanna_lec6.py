@@ -37,6 +37,7 @@ def test_words_often():
 def test_fib_mem():
     assert fib_mem(5) == 8
 
+
 def test_fib_efficient():
     assert fib_efficient(5) == fib_mem(5)
     assert fib_efficient(10) == 89
