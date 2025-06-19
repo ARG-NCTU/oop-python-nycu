@@ -1,6 +1,7 @@
 from lec8_final import *
 import pytest
 
+
 def test_coordinate():
     c1 = Coordinate(3, 4)
     c2 = Coordinate(0, 0)
