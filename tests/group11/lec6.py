@@ -12,3 +12,16 @@ import add_path  # if your repo requires this to set up sys.path
 ])
 def test_fib(n, expected):
     assert lec6.fib(n) == expected
+
+# --- Test for fib_mem ---
+@pytest.mark.parametrize("n, expected", [
+    (1, 1),
+    (2, 2),
+    (5, 8),
+    (6, 13),
+])
+def test_fib_mem(n, expected):
+    assert lec6.fib_mem(n) == expected
+
+def test_fib_mem_relation():
+    assert lec6.fib_mem(5) == lec6.fib_mem(4) + lec6.fib_mem(3)
