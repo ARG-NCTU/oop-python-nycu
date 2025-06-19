@@ -8,6 +8,7 @@ def test_coordinate():
     assert c1.distance(c2) == 5.0
     assert str(c1) == "<3,4>"
 
+
 def test_fraction_add_sub_float_inverse():
     f1 = Fraction(1, 4)
     f2 = Fraction(3, 4)
