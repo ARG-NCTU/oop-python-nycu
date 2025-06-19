@@ -7,6 +7,7 @@ def test_bisect_search1():
     assert bisect_search1(L, -1) == False
     assert bisect_search1([], 0) == False
 
+
 def test_bisect_search2():
     L = list(range(100))
     assert bisect_search2(L, 76) == True
