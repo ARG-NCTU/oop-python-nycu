@@ -26,6 +26,7 @@ def test_fraction_assertion():
     with pytest.raises(AssertionError):
         Fraction(1.5, 3)
 
+
 def test_intset_insert_member_remove():
     s = intSet()
     assert str(s) == "{}"
