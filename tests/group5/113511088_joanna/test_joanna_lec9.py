@@ -27,12 +27,14 @@ def test_person():
     assert p1.speak() == "hello"
     assert str(p2) == "person:jill:25"
 
+
 def test_student():
     s = Student("alice", 20, "CS")
     s.change_major("EE")
     result = s.speak()
     assert result in {"i have homework", "i need sleep", "i should eat", "i am watching tv"}
     assert str(s) == "student:alice:20:EE"
+
 
 def test_rabbit_creation_and_id():
     Rabbit.tag = 1  # reset for test consistency
