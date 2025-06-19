@@ -1,5 +1,6 @@
 from lec12_final import *
 
+
 def test_bubble_sort():
     assert bubble_sort_np([3, 2, 1]) == [1, 2, 3]
     assert bubble_sort_np([]) == []
