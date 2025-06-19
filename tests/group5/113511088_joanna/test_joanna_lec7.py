@@ -5,10 +5,12 @@ def test_rev_list():
     assert rev_list([1, 2, 3, 4]) == [4, 3, 2, 1]
     assert rev_list([]) == []
 
+
 def test_primes_list():
     assert primes_list(2) == [2]
     assert primes_list(15) == [2, 3, 5, 7, 11, 13]
     assert primes_list(1) == []
+
 
 def test_get_ratios():
     result = get_ratios([1, 4], [2, 4])
