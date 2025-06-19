@@ -11,6 +11,7 @@ def bisect_search1(L, e):
             return bisect_search1(L[half:], e)
 
 
+
 def bisect_search2(L, e):
     def bisect_helper(L, e, low, high):
         if high < low:
