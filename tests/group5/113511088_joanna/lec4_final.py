@@ -36,6 +36,7 @@ def f_returning_function():
         return a + b
     return x
 
+
 def scope_demo_f(y):
     x = 1
     x += 1
