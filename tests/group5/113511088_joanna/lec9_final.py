@@ -72,6 +72,7 @@ class Student(Person):
         return f"student:{self.name}:{self.age}:{self.major}"
 
 
+
 class Rabbit(Animal):
     tag = 1
 
