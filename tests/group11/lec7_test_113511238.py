@@ -34,3 +34,21 @@ def test_quotient_and_remainder_zero_division():
 ])
 def test_get_data(data, expected):
     assert lec5.get_data(data) == expected
+
+# --- Test for sum_elem_method1 and sum_elem_method2 ---
+@pytest.mark.parametrize("lst, expected", [
+    ([7, 8, 9], 24),
+    ([], 0),
+    ([0, 0, 0], 0),
+])
+def test_sum_elem_method1(lst, expected):
+    assert lec5.sum_elem_method1(lst) == expected
+
+@pytest.mark.parametrize("lst, expected", [
+    ([10, 20], 30),
+    ([1, 2, 3, 4, 5], 15),
+    ([], 0),
+    ([0, 0], 0),
+])
+def test_sum_elem_method2(lst, expected):
+    assert lec5.sum_elem_method2(lst) == expected
