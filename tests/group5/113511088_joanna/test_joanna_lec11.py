@@ -1,5 +1,6 @@
 from lec11_final import *
 
+
 def test_bisect_search1():
     L = list(range(100))
     assert bisect_search1(L, 76) == True
