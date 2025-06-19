@@ -14,10 +14,12 @@ def test_is_palindrome():
     assert is_palindrome("Able was I, ere I saw Elba")
     assert not is_palindrome("Hello world")
 
+
 def test_lyrics_to_frequencies():
     sample = ['a', 'b', 'a', 'c', 'b', 'a']
     freqs = lyrics_to_frequencies(sample)
     assert freqs == {'a': 3, 'b': 2, 'c': 1}
+
 
 def test_most_common_words():
     freqs = {'a': 3, 'b': 2, 'c': 3}
