@@ -18,6 +18,7 @@ def primes_list(n):
             primes.append(j)
     return primes
 
+
 def get_ratios(L1, L2):
     ratios = []
     for i in range(len(L1)):
