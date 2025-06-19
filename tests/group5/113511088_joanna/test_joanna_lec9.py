@@ -45,6 +45,7 @@ def test_rabbit_creation_and_id():
     assert r3.get_parent2() == r2
     assert r3.get_rid() == "003"
 
+
 def test_rabbit_equality():
     Rabbit.tag = 1
     r1 = Rabbit(3)
