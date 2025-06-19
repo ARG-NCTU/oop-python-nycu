@@ -47,3 +47,24 @@ def test_fib_efficient():
 def test_is_palindrome(s, expected):
     assert lec6.is_palindrome(s) is expected
 
+# --- Test for lyrics_to_frequencies ---
+def test_lyrics_to_frequencies():
+    lyrics = ['hello', 'world', 'hello', 'python']
+    result = lec6.lyrics_to_frequencies(lyrics)
+    expected = {'hello': 2, 'world': 1, 'python': 1}
+    assert result == expected
+
+    lyrics = []
+    assert lec6.lyrics_to_frequencies(lyrics) == {}
+
+# --- Test for most_common_words ---
+def test_most_common_words():
+    freqs = {'a': 5, 'b': 2, 'c': 5}
+    words, count = lec6.most_common_words(freqs)
+    assert set(words) == {'a', 'c'}
+    assert count == 5
+
+    freqs = {'x': 1}
+    words, count = lec6.most_common_words(freqs)
+    assert words == ['x']
+    assert count == 1
