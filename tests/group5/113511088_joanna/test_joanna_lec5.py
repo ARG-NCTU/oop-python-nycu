@@ -13,6 +13,7 @@ def test_get_data():
               (2010, "Taylor"), (2008, "Joe"))
     assert get_data(tswift) == (2008, 2014, 5)
 
+
 def test_sum_elem_methods():
     L = [1, 2, 3, 4]
     assert sum_elem_method1(L) == 10
