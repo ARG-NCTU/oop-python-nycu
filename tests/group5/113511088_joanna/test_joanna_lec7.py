@@ -19,8 +19,10 @@ def test_get_ratios():
     result = get_ratios([1, 4], [0, 4])
     assert math.isnan(result[0]) and result[1] == 1.0
 
+
 def test_avg():
     assert avg([80.0, 70.0, 85.0]) == 78.33333333333333
+
 
 def test_get_stats():
     test_grades = [
