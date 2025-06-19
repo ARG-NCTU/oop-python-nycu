@@ -35,3 +35,15 @@ def test_fib_efficient():
     assert lec6.fib_efficient(1, d.copy()) == 1
     assert lec6.fib_efficient(2, d.copy()) == 2
 
+# --- Test for is_palindrome ---
+@pytest.mark.parametrize("s, expected", [
+    ('eve', True),
+    ('Able was I, ere I saw Elba', True),
+    ('Is this a palindrome', False),
+    ('A man, a plan, a canal, Panama', True),
+    ('', True),
+    ('a', True),
+])
+def test_is_palindrome(s, expected):
+    assert lec6.is_palindrome(s) is expected
+
