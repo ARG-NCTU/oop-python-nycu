@@ -28,6 +28,7 @@ def bisect_search2(L, e):
     return bisect_helper(L, e, 0, len(L) - 1)
 
 
+
 def genSubsets(L):
     if len(L) == 0:
         return [[]]
