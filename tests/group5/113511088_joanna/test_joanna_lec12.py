@@ -17,6 +17,7 @@ def test_merge_sort():
     assert merge_sort_np([1, 2, 3]) == [1, 2, 3]
     assert merge_sort_np([]) == []
 
+
 def test_merge():
     assert merge_np([1, 3], [2, 4]) == [1, 2, 3, 4]
     assert merge_np([], [1, 2]) == [1, 2]
