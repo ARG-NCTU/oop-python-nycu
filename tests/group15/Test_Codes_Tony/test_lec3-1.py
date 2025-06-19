@@ -10,5 +10,8 @@ def test_cube_root():
     assert lec.cube_root(125) == 5
     print("tests passed!!")
 
-test_cube_root()
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec3-1.py
 

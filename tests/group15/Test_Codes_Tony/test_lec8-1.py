@@ -35,3 +35,8 @@ def test_intset():
     assert str(s) == "{2,3}"
     with pytest.raises(ValueError, match="1 not found"):
         s.remove(1)
+
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec8-1.py

@@ -9,6 +9,9 @@ def test_approximate_root():
     assert lec.approximate_root(10000, 1e-10)[1] == -1
     print("tests passed!!")
 
-test_approximate_root()
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec3-2.py
 
 

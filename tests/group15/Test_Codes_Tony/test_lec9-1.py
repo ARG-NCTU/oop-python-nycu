@@ -29,3 +29,8 @@ def test_people():
     p1.speak()
     p1.age_diff(p2)
 test_people()
+
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec9-1.py

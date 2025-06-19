@@ -9,14 +9,12 @@ def test_linear_search():
     assert lec.linear_search(testlist, 12) == False
     print("Test complete")
 
-test_linear_search()
 
 def test_isSubset():
     assert lec.isSubset(testlist, t2) == False
     assert lec.isSubset(t3, testlist) == True
     print ("t3 is testlist's sublist")
 
-test_isSubset()
 
 def test_intersect():
     print(lec.intersect(t2, t3))
@@ -24,4 +22,7 @@ def test_intersect():
     print(lec.intersect(testlist, t3))
     assert lec.intersect(testlist, t3) == [3, 4, 5, 9]
 
-test_intersect()
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec10-1.py

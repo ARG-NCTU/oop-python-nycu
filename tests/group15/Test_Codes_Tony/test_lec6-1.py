@@ -9,12 +9,15 @@ def test_fib():
     assert lec.fib(4) == 5
     assert lec.fib(10) == 89
     print (lec.fib(20))
-test_fib()
 
 def test_is_palindrome():
     assert lec.is_palindrome("racecar") == True
     assert lec.is_palindrome("A man, a plan, a canal: Panama") == True
     assert lec.is_palindrome("Tony") == False
     print ("is palindrome test successful!!")
-test_is_palindrome()
+
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec6-1.py
 
