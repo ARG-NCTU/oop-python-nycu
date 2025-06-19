@@ -5,6 +5,7 @@ def test_linear_search():
     assert linear_search(L, 5) == True
     assert linear_search(L, 2) == False
 
+
 def test_search_sorted():
     L = [1, 3, 5, 7, 9]
     assert search(L, 7) == True
