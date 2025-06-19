@@ -1,6 +1,6 @@
-#import add_path
+import add_path
 import pytest
-#import mit_ocw_exercises.lec5_tuples_lists as lec5  
+import mit_ocw_exercises.lec5_tuples_lists as lec5  
 
 def test_quotient_and_remainder():
     # Test the quotient_and_remainder function

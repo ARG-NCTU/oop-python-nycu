@@ -1,5 +1,5 @@
-#import add_path
-#import mit_ocw_data_science.lec3.lecture3_graph as lec3
+import add_path
+import mit_ocw_data_science.lec3.lecture3_graph as lec3
 import pytest
 
 class Testnode_and_edge:
