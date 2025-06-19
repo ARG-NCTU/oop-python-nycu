@@ -19,6 +19,7 @@ def test_sum_elem_methods():
     assert sum_elem_method1(L) == 10
     assert sum_elem_method2(L) == 10
 
+
 def test_remove_dups():
     L1 = [1, 2, 3, 4]
     L2 = [1, 2, 5, 6]
