@@ -25,3 +25,13 @@ def test_fib_mem(n, expected):
 
 def test_fib_mem_relation():
     assert lec6.fib_mem(5) == lec6.fib_mem(4) + lec6.fib_mem(3)
+
+
+# --- Test for fib_efficient ---
+def test_fib_efficient():
+    d = {1: 1, 2: 2}
+    assert lec6.fib_efficient(3, d.copy()) == 3
+    assert lec6.fib_efficient(6, d.copy()) == 21
+    assert lec6.fib_efficient(1, d.copy()) == 1
+    assert lec6.fib_efficient(2, d.copy()) == 2
+
