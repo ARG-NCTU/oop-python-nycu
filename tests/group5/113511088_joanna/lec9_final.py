@@ -71,6 +71,7 @@ class Student(Person):
     def __str__(self):
         return f"student:{self.name}:{self.age}:{self.major}"
 
+
 class Rabbit(Animal):
     tag = 1
 
