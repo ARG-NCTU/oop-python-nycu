@@ -14,6 +14,7 @@ def test_bisect_search2():
     assert bisect_search2(L, 100) == False
     assert bisect_search2([], 1) == False
 
+
 def test_genSubsets():
     result = genSubsets([1, 2])
     expected = [[], [1], [2], [1, 2]]
