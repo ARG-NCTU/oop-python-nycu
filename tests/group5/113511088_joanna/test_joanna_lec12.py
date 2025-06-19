@@ -11,6 +11,7 @@ def test_selection_sort():
     assert selection_sort_np([5, 1, 4, 2]) == [1, 2, 4, 5]
     assert selection_sort_np([3, 3, 3]) == [3, 3, 3]
 
+
 def test_merge_sort():
     assert merge_sort_np([5, 2, 4, 1]) == [1, 2, 4, 5]
     assert merge_sort_np([1, 2, 3]) == [1, 2, 3]
