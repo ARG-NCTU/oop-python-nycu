@@ -4,6 +4,7 @@ def test_quotient_and_remainder():
     assert quotient_and_remainder(5, 3) == (1, 2)
     assert quotient_and_remainder(10, 2) == (5, 0)
 
+
 def test_get_data():
     test = ((1, "a"), (2, "b"), (1, "a"), (7, "b"))
     assert get_data(test) == (1, 7, 2)
