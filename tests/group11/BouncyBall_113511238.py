@@ -6,15 +6,15 @@ class Ball:
         self.screen = screen
         self.color = color
         self.radius = radius
-        self.pos =
+        self.pos = pos
         self.velocity = velocity
 
     def update(self, screen_width, screen_height):
-        # 移動
+        # move
         self.pos[0] += self.velocity[0]
         self.pos[1] += self.velocity[1]
 
-        # 邊界檢查
+        # check
         if self.pos[0] - self.radius <= 0 or self.pos[0] + self.radius >= screen_width:
             self.velocity[0] = -self.velocity[0]
         if self.pos[1] - self.radius <= 0 or self.pos[1] + self.radius >= screen_height:
