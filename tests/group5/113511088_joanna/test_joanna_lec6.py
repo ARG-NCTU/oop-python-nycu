@@ -27,10 +27,12 @@ def test_most_common_words():
     assert set(words) == {'a', 'c'}
     assert count == 3
 
+
 def test_words_often():
     freqs = {'a': 4, 'b': 3, 'c': 2, 'd': 1}
     result = words_often(freqs, 2)
     assert result == [(['a'], 4), (['b'], 3), (['c'], 2)]
+
 
 def test_fib_mem():
     assert fib_mem(5) == 8
