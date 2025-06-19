@@ -12,6 +12,7 @@ def test_search_sorted():
     assert search(L, 4) == False
     assert search(L, 10) == False
 
+
 def test_isSubset():
     assert isSubset([1, 2], [1, 2, 3]) == True
     assert isSubset([4], [1, 2, 3]) == False
