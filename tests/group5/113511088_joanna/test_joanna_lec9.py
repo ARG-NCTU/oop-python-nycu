@@ -15,6 +15,7 @@ def test_cat():
     assert c.speak() == "meow"
     assert str(c) == "cat:whiskers:2"
 
+
 def test_person():
     p1 = Person("jack", 30)
     p2 = Person("jill", 25)
