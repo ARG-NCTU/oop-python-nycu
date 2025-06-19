@@ -52,3 +52,15 @@ def test_sum_elem_method1(lst, expected):
 ])
 def test_sum_elem_method2(lst, expected):
     assert lec5.sum_elem_method2(lst) == expected
+
+
+# --- Test for remove_dups ---
+@pytest.mark.parametrize("L1, L2, expected", [
+    ([10, 20, 30, 40], [20, 50, 60], [10, 30, 40]),
+    ([5, 6, 7, 8, 9], [6, 8, 10], [5, 7, 9]),
+    ([], [1, 2], []),
+    ([1, 2, 3], [1, 2, 3], []),
+])
+def test_remove_dups(L1, L2, expected):
+    lec5.remove_dups(L1, L2)
+    assert L1 == expected
