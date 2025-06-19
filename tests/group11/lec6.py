@@ -68,3 +68,16 @@ def test_most_common_words():
     words, count = lec6.most_common_words(freqs)
     assert words == ['x']
     assert count == 1
+
+# --- Test for words_often ---
+def test_words_often():
+    freqs = {'a': 5, 'b': 2, 'c': 5, 'd': 1}
+    result = lec6.words_often(deepcopy(freqs), 2)
+    result_sorted = sorted((sorted(words), count) for words, count in result)
+    expected_sorted = sorted((['a', 'c'], 5), (['b'], 2))
+    assert result_sorted == expected_sorted
+
+def test_words_often_none():
+    freqs = {'a': 1}
+    result = lec6.words_often(deepcopy(freqs), 2)
+    assert result == [(['a'], 1)]
