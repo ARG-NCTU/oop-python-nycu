@@ -8,6 +8,7 @@ def test_animal():
     assert a.get_age() == 4
     assert str(a) == "animal:fluffy:4"
 
+
 def test_cat():
     c = Cat(2)
     c.set_name("whiskers")
