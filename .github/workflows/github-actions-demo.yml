@@ -270,23 +270,24 @@ jobs:
           name: pytest-status
           path: utils/group_status.json
 
+      - name: Confirm Artifact Upload
+        run: |
+          echo "Artifact uploaded successfully."
+
   Fetch-Commits-By-Authors:
     needs: Run-Pytest-Tests
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+
       - name: Download pytest-status artifact
         uses: actions/download-artifact@v4
         with:
           name: pytest-status
           path: utils
-
-      - name: Check out repository code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Fetch all history for all branches and tags
-      
-      - name: Ensure output directory exists
-        run: mkdir -p $GITHUB_WORKSPACE/utils/oop_2025
         
       - name: Initial commit_counts.txt
         run: echo "" > $GITHUB_WORKSPACE/utils/commit_counts.txt
