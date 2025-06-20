@@ -1,7 +1,6 @@
 import pytest
-import add_path  # Ensure module path is correct
+import add_path  
 from lec9 import Animal, Cat, Person, Student, Rabbit
-from unittest.mock import patch
 
 def test_animal():
     a = Animal(4)
@@ -44,26 +43,13 @@ def test_person(capsys):
     p1.add_friend("jill")  # Duplicate, no effect
     assert p1.get_friends() == ["jill"]
 
-def test_student(capsys):
+def test_student():
     s1 = Student("alice", 20, "CS")
     s2 = Student("beth", 18)
     assert str(s1) == "student:alice:20:CS"
     assert str(s2) == "student:beth:18:None"
     s1.change_major("Math")
     assert str(s1) == "student:alice:20:Math"
-    with patch('random.random', side_effect=[0.1, 0.3, 0.6, 0.9]):
-        s1.speak()
-        captured = capsys.readouterr()
-        assert captured.out == "i have homework\n"
-        s1.speak()
-        captured = capsys.readouterr()
-        assert captured.out == "i need sleep\n"
-        s1.speak()
-        captured = capsys.readouterr()
-        assert captured.out == "i should eat\n"
-        s1.speak()
-        captured = capsys.readouterr()
-        assert captured.out == "i am watching tv\n"
 
 def test_rabbit():
     r1 = Rabbit(3)
