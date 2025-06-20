@@ -1,5 +1,5 @@
 import pytest
-from lec6_recursion_dict import (
+from lec6 import (
     printMove, Towers, fib, is_palindrome,
     lyrics_to_frequencies, most_common_words, words_often,
     fib_mem, fib_efficient
