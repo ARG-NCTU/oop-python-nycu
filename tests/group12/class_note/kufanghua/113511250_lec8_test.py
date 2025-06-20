@@ -29,3 +29,27 @@ def test_fraction():
         assert False, "Should raise AssertionError for non-integer numerator"
     except AssertionError:
         pass
+def test_intSet():
+    s = intSet()
+    assert str(s) == "{}"
+    s.insert(3)
+    s.insert(4)
+    s.insert(3)  # Duplicate
+    assert str(s) == "{3,4}"
+    assert s.member(3) is True
+    assert s.member(5) is False
+    s.insert(6)
+    assert str(s) == "{3,4,6}"
+    s.remove(3)
+    assert str(s) == "{4,6}"
+    try:
+        s.remove(3)
+        assert False, "Should raise ValueError when removing non-member"
+    except ValueError as e:
+        assert str(e) == "3 not found"
+
+if __name__ == "__main__":
+    test_coordinate()
+    test_fraction()
+    test_intSet()
+    print("All tests passed.")
