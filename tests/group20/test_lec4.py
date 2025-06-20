@@ -1,5 +1,5 @@
 import pytest
-from lec4_functions_scope import (
+from lec4 import (
     is_even, check_even_with_message, print_even_status,
     approximate_cube_root, execute_function, create_adder,
     modify_local_variable, read_global_variable,
