@@ -45,7 +45,7 @@ class Person(Animal):
 
 class Student(Person):
     def __init__(self, name, age, major=None):
-        Person.__init__(self, name, change_major(self, major):
+        Person.__init__(self, name, age)
         self.major = major
     def __str__(self):
         return "student:" + str(self.name) + ":" + str(self.age) + ":" + str(self.major)
