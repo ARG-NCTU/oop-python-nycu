@@ -1,5 +1,5 @@
 import pytest
-from lec5_tuples_lists import (
+from lec5 import (
     quotient_and_remainder, get_data, sum_elem_method1, sum_elem_method2,
     list_operations, sort_lists, demonstrate_aliasing, demonstrate_cloning,
     nested_list_operations, remove_dups, remove_dups_new
