@@ -55,4 +55,8 @@ def test_most_common_words():
 
     assert lec.most_common_words(lec.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
     print("most common word test successful!!")
-test_most_common_words()
+
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec6-2.py

@@ -12,7 +12,6 @@ def test_remove_dups():
     lec.remove_dups(L3, L4)
     assert L3 == ['ab', 'abc', 'abcd']
     print (L3, L4)
-test_remove_dups()
 
 def test_remove_dups_new():
     L1 = [1, 2, 3, 4, 5, 10]
@@ -25,4 +24,8 @@ def test_remove_dups_new():
     lec.remove_dups_new(L3, L4)
     assert L3 == ['abc', 'abcd']
     print (L3, L4)
-test_remove_dups_new()
+
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec5-2.py

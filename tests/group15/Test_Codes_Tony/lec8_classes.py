@@ -16,7 +16,8 @@ class Coordinate(object):
         y_diff_sq = (self.y-other.y)**2
         return (x_diff_sq + y_diff_sq)**0.5
 
-def Coordinate():
+# Rename this function to avoid name conflict
+def test_Coordinate():
     c1 = Coordinate(3, 4)
     c2 = Coordinate(0, 0)
     assert c1.x == 3 and c1.y == 4

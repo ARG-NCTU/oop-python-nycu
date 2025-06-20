@@ -14,10 +14,12 @@ def test_bisect_search():
     print("76 is in the testList")
     print("100 is not in the testList")
 
-test_bisect_search()
-
 def test_gensubset():
     testSet = [1,2,3]
     assert lec.genSubsets(testSet) == [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
     print("there are so many subsets!!")
-test_gensubset()
+
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec11-1.py

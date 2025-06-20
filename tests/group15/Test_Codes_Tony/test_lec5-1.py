@@ -11,5 +11,7 @@ def test_get_data():
     assert lec.get_data(test1) == (1, 4, 3)
     print ("get data test successful!!")
 
-test_quotient_and_remainder()
-test_get_data()
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec5-1.py

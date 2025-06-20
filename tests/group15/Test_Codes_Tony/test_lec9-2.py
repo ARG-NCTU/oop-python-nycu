@@ -15,4 +15,11 @@ def test_rabbit():
     r5 = r4+r3
     print("r11:", r5)
     print("r4 and r5 have same parents?", r5 == r4)
-test_rabbit()
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])
+    # Alternatively, you can run pytest from the command line:
+    # pytest test_lec9-2.py
+
+
