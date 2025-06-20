@@ -93,7 +93,7 @@ user.name=zhuchi76
 | ❌        | Group 2      | neoAurora : 25      | Lawrence16428 : 44    | howardhung14 : 26      |
 | ❌        | Group 3      | yoyo0213 : 53       | JonathanYangSW : 48   | GinoChen113511247 : 32 |
 | ✅        | Group 4      | JumboZhang1119 : 52 | peienwu1216 : 33      | chxyuuu : 46           |
-| ❌        | Group 5      | ginny923 : 18       | joanna0420 : 24       | dua0505 : 17           |
+| ❌        | Group 5      | ginny923 : 18       | joanna0420 : 77       | dua0505 : 23           |
 | ✅        | Group 6      | jui-pixel : 66      | SamTung113511034 : 29 | charles691 : 35        |
 | ✅        | Group 7      | Tony104147 : 13     |                       |                        |
 | ❌        | Group 8      | haleychang0530 : 31 | Hazel-1212 : 41       | tree1014 : 25          |
