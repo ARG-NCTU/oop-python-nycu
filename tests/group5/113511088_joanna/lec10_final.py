@@ -1,8 +1,11 @@
+
 def linear_search(L, e):
     for i in range(len(L)):
         if L[i] == e:
             return True
     return False
+
+
 
 def search(L, e):
     for i in range(len(L)):
@@ -11,6 +14,8 @@ def search(L, e):
         if L[i] > e:
             return False
     return False
+
+
 
 def isSubset(L1, L2):
     for e1 in L1:
@@ -22,6 +27,8 @@ def isSubset(L1, L2):
         if not matched:
             return False
     return True
+
+
 
 def intersect(L1, L2):
     tmp = []

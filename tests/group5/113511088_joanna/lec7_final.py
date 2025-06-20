@@ -18,6 +18,8 @@ def primes_list(n):
             primes.append(j)
     return primes
 
+
+
 def get_ratios(L1, L2):
     ratios = []
     for i in range(len(L1)):
@@ -29,9 +31,11 @@ def get_ratios(L1, L2):
             raise ValueError("get_ratios called with bad arg")
     return ratios
 
+
 def avg(grades):
     assert len(grades) != 0, "warning: no grades data"
     return sum(grades) / len(grades)
+
 
 def get_stats(class_list):
     new_stats = []

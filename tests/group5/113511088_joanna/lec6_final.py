@@ -37,6 +37,7 @@ def most_common_words(freqs):
     words = [k for k in freqs if freqs[k] == best]
     return (words, best)
 
+
 def words_often(freqs, min_times):
     result = []
     freqs = freqs.copy()
@@ -49,6 +50,7 @@ def words_often(freqs, min_times):
         else:
             break
     return result
+
 
 def fib_mem(n):
     if n == 0 or n == 1:

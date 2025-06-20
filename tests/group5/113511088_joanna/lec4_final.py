@@ -10,6 +10,7 @@ def is_even_without_return(i):
 def is_even(i):
     return i % 2 == 0
 
+
 def bisection_cuberoot_approx(x, epsilon):
     low = 0.0
     high = x
@@ -22,19 +23,24 @@ def bisection_cuberoot_approx(x, epsilon):
         guess = (high + low) / 2.0
     return guess
 
+
 def func_a():
     return "inside func_a"
+
 
 def func_b(y):
     return y
 
+
 def func_c(z):
     return z()
+
 
 def f_returning_function():
     def x(a, b):
         return a + b
     return x
+
 
 def scope_demo_f(y):
     x = 1

@@ -10,6 +10,8 @@ class Coordinate(object):
         return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
 
 
+
+
 class Fraction(object):
     def __init__(self, num, denom):
         assert type(num) == int and type(denom) == int, "ints not used"
@@ -34,6 +36,9 @@ class Fraction(object):
 
     def inverse(self):
         return Fraction(self.denom, self.num)
+
+
+
 
 
 class intSet(object):

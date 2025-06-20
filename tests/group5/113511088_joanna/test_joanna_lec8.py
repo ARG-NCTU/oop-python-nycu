@@ -1,11 +1,13 @@
 from lec8_final import *
 import pytest
 
+
 def test_coordinate():
     c1 = Coordinate(3, 4)
     c2 = Coordinate(0, 0)
     assert c1.distance(c2) == 5.0
     assert str(c1) == "<3,4>"
+
 
 def test_fraction_add_sub_float_inverse():
     f1 = Fraction(1, 4)
@@ -19,9 +21,11 @@ def test_fraction_add_sub_float_inverse():
     assert isinstance(inv, Fraction)
     assert str(inv) == "4/3"
 
+
 def test_fraction_assertion():
     with pytest.raises(AssertionError):
         Fraction(1.5, 3)
+
 
 def test_intset_insert_member_remove():
     s = intSet()

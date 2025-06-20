@@ -1,3 +1,4 @@
+
 def bisect_search1(L, e):
     if L == []:
         return False
@@ -9,6 +10,8 @@ def bisect_search1(L, e):
             return bisect_search1(L[:half], e)
         else:
             return bisect_search1(L[half:], e)
+
+
 
 def bisect_search2(L, e):
     def bisect_helper(L, e, low, high):
@@ -25,6 +28,8 @@ def bisect_search2(L, e):
     if len(L) == 0:
         return False
     return bisect_helper(L, e, 0, len(L) - 1)
+
+
 
 def genSubsets(L):
     if len(L) == 0:
