@@ -1,5 +1,5 @@
 import pytest
-from lec3_strings_algos import (is_palindrome, check_vowels, cheer_word, 
+from lec3 import (is_palindrome, check_vowels, cheer_word, 
                                find_perfect_cube, guess_cube_root, 
                                approximate_cube_root, bisection_cube_root)
 
