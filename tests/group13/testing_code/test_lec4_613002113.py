@@ -103,3 +103,37 @@ local_var = 5
 test_function_c(local_var)
 print(local_var)
 
+def outer_function(param):
+    def inner_function():
+        param = 'abc'
+    param = param + 1
+    print('in outer_function(param): param =', param)
+    inner_function()
+    return param
+
+param = 3
+result_var = outer_function(param)
+
+def process_data(input_val):
+   input_val = input_val + 1
+   print('in process_data(input_val): input_val =', input_val)
+   return input_val
+
+input_val = 3
+output_val = process_data(input_val)
+print('in main program scope: output_val =', output_val)
+print('in main program scope: input_val =', input_val)
+
+def wrapper_function(input_val):
+    def nested_function(input_val):
+        input_val = input_val+1
+        print("in nested_function(input_val): input_val = ", input_val)
+    input_val = input_val + 1
+    print('in wrapper_function(input_val): input_val = ', input_val)
+    nested_function(input_val)
+    return input_val
+
+input_val = 3
+output_val = wrapper_function(input_val)
+print('in main program scope: input_val = ', input_val)
+print('in main program scope: output_val = ', output_val)
