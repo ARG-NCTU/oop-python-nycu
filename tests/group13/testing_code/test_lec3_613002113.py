@@ -1,5 +1,6 @@
 import pytest
-import graph_structures as gs
+import lec3_strings_algos as lec
+import math
 
 def test_vertex():
     vertex = gs.Vertex("A")
