@@ -1,5 +1,6 @@
 import pandas as pd
 import argparse
+import os
 
 def load_status(file_path):
     statuses = []
@@ -15,12 +16,17 @@ def load_status(file_path):
             statuses.append(st)
     return statuses
 
-df = pd.read_json('utils/group_status.json')
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+group_status_path = os.path.join(script_dir, 'group_status.json')
+pytest_results_path = os.path.join(script_dir, 'pytest_results.txt')
+
+df = pd.read_json(group_status_path)
 curr_status = df['status'].tolist()
 
-new_status = load_status('utils/pytest_results.txt')
+new_status = load_status(pytest_results_path)
 if len(new_status) == len(curr_status):
     df['status'] = new_status
-    df.to_json('group_status.json', orient='records', force_ascii=False)
+    df.to_json(group_status_path, orient='records', force_ascii=False)
 else:
     print("Error: Status count mismatch. No update performed.")
