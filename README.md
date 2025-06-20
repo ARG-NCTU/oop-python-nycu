@@ -109,5 +109,5 @@ user.name=zhuchi76
 | ✅        | Group 18     | ChocomintTW : 1     | TedChueh : 20         | pitinghsu : 0          |
 | ❌        | Group 19     | max052028 : 14      | 113511080 : 25        |                        |
 | ❌        | Group 20     | houyuankai : 37     |                       |                        |
-| ✅        | Group 21     | 0u88 : 12           |                       |                        |
+| ✅        | Group 21     | 0u88 : 20           |                       |                        |
 <!--END_SECTION:pytest-->
