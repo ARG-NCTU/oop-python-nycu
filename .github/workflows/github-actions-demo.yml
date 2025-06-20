@@ -262,6 +262,7 @@ jobs:
         run: |
           cat $GITHUB_WORKSPACE/utils/pytest_results.txt
           python3 utils/update_pytest_results.py
+          cat $GITHUB_WORKSPACE/utils/group_status.json
 
       - name: Upload test-status artifact
         uses: actions/upload-artifact@v4
@@ -310,9 +311,9 @@ jobs:
 
       - name: Update new commit counts and write to README.md
         run: |
-          pip3 install pandas tabulate
-          cat 
+          pip3 install pandas tabulate 
           python3 utils/update_commit_counts.py
+          cat $GITHUB_WORKSPACE/utils/group_status.json
           python3 utils/group_status_update_readme.py
 
       - name: Commit changes
