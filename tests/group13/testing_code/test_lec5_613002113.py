@@ -62,3 +62,31 @@ def test_random_walker():
     
     step = walker.take_step()
     assert step in [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+def test_movement_sequence():
+    walker = lec5.UsualDrunk("Walker1")
+    start_pos = lec5.Location(0, 0)
+    playground = lec5.Field()
+    playground.add_drunk(walker, start_pos)
+    
+    for _ in range(10):
+        playground.move_drunk(walker)
+    
+    final_position = playground.get_loc(walker)
+    assert final_position.dist_from(start_pos) <= 10
+    
+    for _ in range(100):
+        playground.move_drunk(walker)
+    final_position = playground.get_loc(walker)
+    assert final_position.dist_from(start_pos) <= 100
+
+def test_simulation_analysis():
+    step_count = 10
+    trial_count = 100
+    walker_type = lec5.UsualDrunk
+    results = lec5.sim_walks(step_count, trial_count, walker_type)
+    assert isinstance(results, list)
+    assert len(results) == trial_count
+    assert all(isinstance(distance, float) for distance in results)
+    assert all(distance >= 0 for distance in results)
+    assert all(distance <= step_count for distance in results)
