@@ -260,6 +260,7 @@ jobs:
 
       - name: Run update script
         run: |
+          cat $GITHUB_WORKSPACE/utils/pytest_results.txt
           python3 utils/update_pytest_results.py
 
       - name: Upload test-status artifact
@@ -310,6 +311,7 @@ jobs:
       - name: Update new commit counts and write to README.md
         run: |
           pip3 install pandas tabulate
+          cat 
           python3 utils/update_commit_counts.py
           python3 utils/group_status_update_readme.py
 
