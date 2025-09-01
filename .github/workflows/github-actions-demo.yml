@@ -298,7 +298,7 @@ jobs:
       - name: Fetch commits by authors
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          Authors: "LeeYinWei unknown899 neoAurora Lawrence16428 howardhung14 yoyo0213 JonathanYangSW GinoChen113511247 JumboZhang1119 peienwu1216 chxyuuu ginny923 joanna0420 dua0505 jui-pixel SamTung113511034 charles691 Tony104147 haleychang0530 Hazel-1212 tree1014 CHENG-JE lwc-ed tpvupu xiaotin22 calistayang Rickycheong0515 hfchiang Samuel11GitHub kufanghua yezh0915 fiesta0217 lucasliu0910 carabapy jing1688 weiouo-0817 NiNialpaca gamemode0701 Tonyyu2403 TerryCheese junlin27 Miiaow3011 bonnieliao774 emmazheng0318 ChocomintTW TedChueh pitinghsu max052028 113511080 houyuankai 0u88"
+          # Authors: "LeeYinWei unknown899 neoAurora Lawrence16428 howardhung14 yoyo0213 JonathanYangSW GinoChen113511247 JumboZhang1119 peienwu1216 chxyuuu ginny923 joanna0420 dua0505 jui-pixel SamTung113511034 charles691 Tony104147 haleychang0530 Hazel-1212 tree1014 CHENG-JE lwc-ed tpvupu xiaotin22 calistayang Rickycheong0515 hfchiang Samuel11GitHub kufanghua yezh0915 fiesta0217 lucasliu0910 carabapy jing1688 weiouo-0817 NiNialpaca gamemode0701 Tonyyu2403 TerryCheese junlin27 Miiaow3011 bonnieliao774 emmazheng0318 ChocomintTW TedChueh pitinghsu max052028 113511080 houyuankai 0u88"
         run: |
           for author in $Authors; do
             COUNT=$(gh api \
