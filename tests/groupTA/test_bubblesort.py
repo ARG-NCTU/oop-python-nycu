@@ -1,5 +1,7 @@
+import add_path
+from mit_ocw_exercises.lec12_sorting import *
 import pytest
-from bubble_sort import bubble_sort
+
 
 def test_empty_list():
     assert bubble_sort([]) == []
