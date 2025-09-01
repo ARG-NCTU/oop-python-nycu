@@ -1,7 +1,0 @@
-groupleader:
-gamemode0701
-ID:110613024
-
-group member:
-Tonyyu2403
-ID:110613011
