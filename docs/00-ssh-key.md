@@ -6,11 +6,11 @@ You can follow below step to setting your ssh key for Github.
 ```
  $ mkdir ~/.ssh
  $ chmod 700 ~/.ssh
- $ ssh-keygen -t ed25519 -C "your_email@example.com"
+ $ ssh-keygen -t ed25519 -C "your_email@example.com" # replace with your own email which you used for signing up github
 ```
 ## 2. Push key to Github
 ```
- $ cat ~/.ssh/key_name.pub 
+ $ cat ~/.ssh/id_ed25519.pub 
  ssh-ed25519 ........ your_email@example.com
 ```
 Log in your Github account and select setting\
