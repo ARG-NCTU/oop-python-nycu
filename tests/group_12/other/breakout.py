@@ -2,6 +2,7 @@ import pygame
 import random
 import platform
 import asyncio
+import math
 
 def main():
     # 初始化 pygame
@@ -47,7 +48,7 @@ def main():
 
     # 開始界面函數
     def start_screen(final_score=None, rounds_cleared=0):
-        nonlocal sync_paddle_and_ball
+        nonlocal sync_paddle_and_ball, ball_collision_enabled
         font = pygame.font.Font(None, 74)
         small_font = pygame.font.Font(None, 36)
         while True:
@@ -61,6 +62,8 @@ def main():
                 screen.blit(rounds_text, (WIDTH // 2 - rounds_text.get_width() // 2, 250))
             sync_text = small_font.render(f"Sync ball and paddle: {'Yes' if sync_paddle_and_ball else 'No'} (press S to switch)", True, WHITE)
             screen.blit(sync_text, (WIDTH // 2 - sync_text.get_width() // 2, 300))
+            collision_text = small_font.render(f"Ball collision: {'On' if ball_collision_enabled else 'Off'} (press E to switch)", True, WHITE)
+            screen.blit(collision_text, (WIDTH // 2 - collision_text.get_width() // 2, 330))
             start_text = small_font.render("Press ENTER to start the game", True, WHITE)
             screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, 400))
             instructions = [
@@ -70,6 +73,9 @@ def main():
                 "P/O: Increase/Decrease paddle size",
                 "C: Change brick color",
                 "B: Add new ball",
+                "T: Add 10 new balls",
+                "R: Reset bricks",
+                "E: Toggle ball collision",
                 "ESC: Quit to menu"
             ]
             y_offset = 450
@@ -85,6 +91,8 @@ def main():
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_s:
                         sync_paddle_and_ball = not sync_paddle_and_ball
+                    elif event.key == pygame.K_e:
+                        ball_collision_enabled = not ball_collision_enabled
                     elif event.key == pygame.K_RETURN:
                         return
 
@@ -113,6 +121,7 @@ def main():
 
     # 遊戲選項
     sync_paddle_and_ball = False
+    ball_collision_enabled = False
     score = 0
     rounds_cleared = 0
 
@@ -177,13 +186,43 @@ def main():
                         new_ball = pygame.Rect(WIDTH//2, HEIGHT//2, BALL_RADIUS * 2, BALL_RADIUS * 2)
                         balls.append(new_ball)
                         ball_colors.append(random.choice(COLORS))
-                        ball_speeds.append((current_base_speed * random.uniform(1, -1), current_base_speed * random.uniform(1, -1)))
-                    elif event.key == pygame.K_t:  # Add new ball x 10
+                        ball_speeds.append((current_base_speed * random.triangular(-1, 1), -current_base_speed))
+                    elif event.key == pygame.K_t:  # Add 10 new balls
                         for _ in range(10):
                             new_ball = pygame.Rect(WIDTH//2, HEIGHT//2, BALL_RADIUS * 2, BALL_RADIUS * 2)
                             balls.append(new_ball)
                             ball_colors.append(random.choice(COLORS))
-                            ball_speeds.append((current_base_speed * random.uniform(1, -1), current_base_speed * random.uniform(1, -1)))
+                            ball_speeds.append((current_base_speed * random.triangular(-1, 1), -current_base_speed))
+                    elif event.key == pygame.K_r:  # Reset bricks
+                        bricks = generate_bricks()
+                        brick_color = random.choice(COLORS)
+                    elif event.key == pygame.K_e:  # Toggle ball collision
+                        ball_collision_enabled = not ball_collision_enabled
+
+            # 球與球碰撞檢測
+            if ball_collision_enabled:
+                for i in range(len(balls)):
+                    for j in range(i + 1, len(balls)):
+                        ball1, ball2 = balls[i], balls[j]
+                        dx = ball1.centerx - ball2.centerx
+                        dy = ball1.centery - ball2.centery
+                        distance = math.sqrt(dx**2 + dy**2)
+                        if distance < 2 * BALL_RADIUS:
+                            # 計算碰撞後的速度（簡單的二維彈性碰撞）
+                            v1x, v1y = ball_speeds[i]
+                            v2x, v2y = ball_speeds[j]
+                            # 交換速度分量（假設質量相同）
+                            ball_speeds[i] = (v2x, v2y)
+                            ball_speeds[j] = (v1x, v1y)
+                            # 稍微分開球以避免連續碰撞
+                            overlap = (2 * BALL_RADIUS - distance) / 2
+                            if distance > 0:
+                                dx /= distance
+                                dy /= distance
+                                ball1.x += dx * overlap
+                                ball1.y += dy * overlap
+                                ball2.x -= dx * overlap
+                                ball2.y -= dy * overlap
 
             # 移動所有球
             for i, ball in enumerate(balls):
@@ -275,6 +314,8 @@ def main():
             screen.blit(balls_text, (WIDTH - 150, 90))
             rounds_text = font.render(f"Round: {rounds_cleared + 1}/{MAX_ROUNDS}", True, WHITE)
             screen.blit(rounds_text, (WIDTH - 150, 130))
+            collision_text = font.render(f"Collision: {'On' if ball_collision_enabled else 'Off'}", True, WHITE)
+            screen.blit(collision_text, (WIDTH - 150, 170))
 
             # 檢查是否清除當前輪的磚塊
             if not bricks:
@@ -283,7 +324,6 @@ def main():
                     running = False
                     end_screen("Victory", score, rounds_cleared)
                 else:
-                    # 生成新的一輪磚塊
                     bricks = generate_bricks()
                     brick_color = random.choice(COLORS)
 
