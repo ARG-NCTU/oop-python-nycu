@@ -49,4 +49,18 @@ def test_rabbit_creation_and_addition():
     r4 = r1 + r2
     assert r4.get_parent1() is r1
     assert r4.get_parent2() is r2
+    '''
+      這裡不能用 "==" 來比較兩隻兔子是否相同，因為我們在 Rabbit class 裡面定義的 __eq__ 方法中，若父母其中一方是 None，則會回傳 False
+      而 r1 和 r2 的父母都是 None。
+      def __eq__(self, other):
+        if self.parent1 is None or self.parent2 is None or \
+        other.parent1 is None or other.parent2 is None:
+            return False
+        parents_same = self.parent1.rid == other.parent1.rid \
+                    and self.parent2.rid == other.parent2.rid
+        parents_opposite = self.parent2.rid == other.parent1.rid \
+                        and self.parent1.rid == other.parent2.rid
+        return parents_same or parents_opposite
+    '''
     assert isinstance(r4, l9.Rabbit)
+    
