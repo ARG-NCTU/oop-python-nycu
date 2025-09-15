@@ -20,13 +20,13 @@ COLORS = [WHITE, BLACK, RED, BLUE, GREEN]  # List of possible brick colors
 # 遊戲參數
 PADDLE_WIDTH = 100
 PADDLE_HEIGHT = 30
+PADDLE_MAX_WIDTH = 1000
+PADDLE_MIN_WIDTH = 10
 BALL_RADIUS = 10
-BRICK_WIDTH = 75
-BRICK_HEIGHT = 40
-BRICK_MAX_WIDTH = 1000
-BRICK_MIN_WIDTH = 10
-ROWS = 1  # 磚塊行數
-COLS = 10  # 磚塊列數
+BRICK_WIDTH = 20
+BRICK_HEIGHT = 10
+ROWS = 8  # 磚塊行數
+COLS = 32  # 磚塊列數
 BASE_SPEED = 4  # 初始球速
 MIN_SPEED = 1  # 最小球速
 MAX_SPEED = 100  # 最大球速
@@ -163,12 +163,12 @@ while True:
                     ball_speed_y = (1 if ball_speed_y > 0 else -1) * current_base_speed
                 elif event.key == pygame.K_p:  # Increase paddle size
                     old_center = paddle.centerx
-                    current_paddle_width = min(current_paddle_width + 20, BRICK_MAX_WIDTH)  # Max width 200
+                    current_paddle_width = min(current_paddle_width + 20, PADDLE_MAX_WIDTH)  # Max width 200
                     paddle.width = current_paddle_width
                     paddle.centerx = old_center
                 elif event.key == pygame.K_o:  # Decrease paddle size
                     old_center = paddle.centerx
-                    current_paddle_width = max(current_paddle_width - 20, BRICK_MIN_WIDTH)  # Min width 40
+                    current_paddle_width = max(current_paddle_width - 20, PADDLE_MIN_WIDTH)  # Min width 40
                     paddle.width = current_paddle_width
                     paddle.centerx = old_center
                 elif event.key == pygame.K_c:  # Change brick color
