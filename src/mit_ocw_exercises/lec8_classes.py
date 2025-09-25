@@ -16,7 +16,15 @@ class Coordinate(object):
         y_diff_sq = (self.y-other.y)**2
         return (x_diff_sq + y_diff_sq)**0.5
 
+def Coordinate_test():
+    c1 = Coordinate(3, 4)
+    c2 = Coordinate(0, 0)
+    assert c1.x == 3 and c1.y == 4
+    assert c2.x == 0 and c2.y == 0
+    assert c1.distance(c2) == 5.0  # (3^2 + 4^2) ** 0.5 = 5
+    assert str(c1) == "<3,4>"
 
+# Coodinate test()
 # c = Coordinate(3,4)
 # origin = Coordinate(0,0)
 # print(c.x, origin.x)
@@ -67,6 +75,12 @@ print(c)
 print(float(c))
 print(Fraction.__float__(c))
 print(float(b.inverse()))
+
+# try:
+#     c = Fraction(3.14,2.7)
+#     print(error)
+# except AssertionError:
+#     print (passed)
 ##c = Fraction(3.14, 2.7) # assertion error
 ##print a*b # error, did not define how to multiply two Fraction objects
 
@@ -107,7 +121,29 @@ class intSet(object):
         self.vals.sort()
         return '{' + ','.join([str(e) for e in self.vals]) + '}'
 
+s = intSet()
+assert str(s) == "{}"  # 初始集合應該是空的
 
+s.insert(3)
+s.insert(4)
+s.insert(3)  # 重複插入應該無效
+assert str(s) == "{3,4}"
+
+assert s.member(3) is True
+assert s.member(5) is False
+
+s.insert(6)
+assert str(s) == "{3,4,6}"
+
+s.remove(3)
+assert str(s) == "{4,6}"
+
+try:
+    s.remove(3)  # 應該拋出 ValueError
+except ValueError as e:
+    assert str(e) == "3 not found"
+
+"""
 s = intSet()
 print(s)
 s.insert(3)
@@ -121,3 +157,4 @@ print(s)
 #s.remove(3)  # leads to an error
 print(s)
 s.remove(3)
+"""
