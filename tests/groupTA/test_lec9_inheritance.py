@@ -26,14 +26,6 @@ def test_animal_5A():
 
 
 def test_group7_animal():
-    """
-    Test case for the Animal class.
-
-    This test case performs the following steps:
-    1. Creates an instance of the Animal class with age 69.
-    2. Prints the Animal instance.
-    3. Prints the age of the Animal instance.
-    """
     a = inh.Animal(69)
     print(a)
     print(a.get_age())
@@ -344,7 +336,7 @@ def test_17_animal():
     print(a)
     assert a.get_name() == "PulsarGlory"
     assert a.get_age() == 19
-
+      
 def test_6_cat():
     c = inh.Cat(5)
     print(c)
@@ -437,4 +429,4 @@ def test_ella_rabbit():
     assert r5.get_rid() == "031"
     assert r6.get_rid() == "032"
     assert r5.__eq__(r6) == True
-
+    
