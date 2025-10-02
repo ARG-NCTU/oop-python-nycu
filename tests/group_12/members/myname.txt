@@ -1,4 +1,0 @@
-學號 : 113511002
-系別 : 電機系
-名子 : 廖經傑 
-Github account : jui-pixel
