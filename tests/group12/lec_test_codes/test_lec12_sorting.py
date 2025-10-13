@@ -58,3 +58,23 @@ def test_bubble_sort_np():
     assert l12.bubble_sort_np([2, 1]) == [1, 2]
     assert l12.bubble_sort_np([1, 2]) == [1, 2]
     assert l12.bubble_sort_np([1, 1, 1]) == [1, 1, 1]
+    
+def test_selection_sort_np():
+    testList = [5, 3, 6, 2, 10, 1]
+    l12.selection_sort_np(testList)
+    assert testList == [1, 2, 3, 5, 6, 10]
+    testList = []
+    l12.selection_sort_np(testList)
+    assert testList == []
+    testList = [1]
+    l12.selection_sort_np(testList)
+    assert testList == [1]
+    testList = [2, 1]
+    l12.selection_sort_np(testList)
+    assert testList == [1, 2]
+    testList = [1, 2]
+    l12.selection_sort_np(testList)
+    assert testList == [1, 2]
+    testList = [1, 1, 1]
+    l12.selection_sort_np(testList)
+    assert testList == [1, 1, 1]
