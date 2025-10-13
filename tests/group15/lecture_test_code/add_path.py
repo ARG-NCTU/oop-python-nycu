@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-
-import os
+from pathlib import Path
 import sys
-sys.path.append(
-    os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                 '../src'))
+
+here = Path(__file__).resolve()
+
+for p in here.parents:
+    if (p / "mit_ocw_exercises").exists():
+        sys.path.insert(0, str(p))
+        break
