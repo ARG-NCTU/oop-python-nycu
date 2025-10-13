@@ -15,6 +15,21 @@ def test_selection_sort():
     testList = [5, 3, 6, 2, 10, 1]
     l12.selection_sort(testList)
     assert testList == [1, 2, 3, 5, 6, 10]
+    testList = []
+    l12.selection_sort(testList)
+    assert testList == []
+    testList = [1]
+    l12.selection_sort(testList)
+    assert testList == [1]
+    testList = [2, 1]
+    l12.selection_sort(testList)
+    assert testList == [1, 2]
+    testList = [1, 2]
+    l12.selection_sort(testList)
+    assert testList == [1, 2]
+    testList = [1, 1, 1]
+    l12.selection_sort(testList)
+    assert testList == [1, 1, 1]
     
 def test_merge():
     assert l12.merge([1, 3, 5], [2, 4, 6]) == [1, 2, 3, 4, 5, 6]
