@@ -1,5 +1,6 @@
-import tests.group15.lec_test_codes.add_path
+import tests.group15.lecture_test_code.add_path
 import mit_ocw_exercises.lec10_complexity_part1 as l10
+
 import pytest
 
 @pytest.mark.parametrize(
