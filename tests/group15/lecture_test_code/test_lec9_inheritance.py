@@ -1,5 +1,5 @@
 import importlib
-import tests.group15.lec_test_code.add_path
+import tests.group15.lecture_test_code.add_path
 import mit_ocw_exercises.lec9_inheritance as lec9
 import pytest
 
