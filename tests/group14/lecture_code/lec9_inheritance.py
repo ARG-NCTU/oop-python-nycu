@@ -133,14 +133,29 @@ class Rabbit(Animal):
     def __add__(self, other):
         # returning object of same type as this class
         return Rabbit(0, self, other)
+    # 在 Rabbit Class 中，一個更嚴謹的、基於父母的 __eq__
     def __eq__(self, other):
-        if self.parent1 is None or self.parent2 is None or other.parent1 is None or other.parent2 is None:
+        # 確保比較的對象也是 Rabbit
+        if not isinstance(other, Rabbit):
+            return NotImplemented
+
+        # 處理雙方都沒有父母的情況
+        self_no_parents = self.parent1 is None or self.parent2 is None
+        other_no_parents = other.parent1 is None or other.parent2 is None
+        if self_no_parents and other_no_parents:
+            # 如果都沒有父母，比較牠們自己的 rid
+            return self.rid == other.rid
+        if self_no_parents or other_no_parents:
+            # 如果一方有父母，一方沒有，那肯定不相等
             return False
+
+        # 現在，雙方都有父母，執行你原來的邏輯
         parents_same = self.parent1.rid == other.parent1.rid \
-                       and self.parent2.rid == other.parent2.rid
+                    and self.parent2.rid == other.parent2.rid
         parents_opposite = self.parent2.rid == other.parent1.rid \
-                           and self.parent1.rid == other.parent2.rid
+                        and self.parent1.rid == other.parent2.rid
         return parents_same or parents_opposite
+
     def __str__(self):
         return "rabbit:"+ self.get_rid()
 
