@@ -1,3 +1,4 @@
+import math
 ########################################
 ### EXAMPLE: Buggy code to reverse a list
 ### Try to debug it! (fixes needed are explained below)
@@ -19,7 +20,7 @@
 ## list index out of range -> sub 1 to j
 ## get same list back -> iterate only over half
 ## --------------------------
-def rev_list(L):
+def rev_list(L): #use new version
     """
     input: L, a list
     Modifies L such that its elements are in reverse order
@@ -76,6 +77,10 @@ def primes_list(n):
     input: n an integer > 1
     returns: list of all the primes up to and including n
     """
+
+    if n < 2:
+        return []
+
     # initialize primes list
     primes = [2]
     # go through each of 3...n
@@ -127,20 +132,44 @@ except:
 # EXAMPLE: Raising your own exceptions
 ######################################
 def get_ratios(L1, L2):
-    """ Assumes: L1 and L2 are lists of equal length of numbers
-        Returns: a list containing L1[i]/L2[i] """
+    """ 
+    假設 L1 和 L2 是長度相等的數字列表。
+    返回一個包含 L1[i]/L2[i] 的列表。
+    """
+    
+    # 防禦性檢查 1：在迴圈開始前，先檢查長度是否相等。
+    # 如果不相等，立即拋出一個帶有明確訊息的 ValueError，終止函式。
+    if len(L1) != len(L2):
+        raise ValueError('get_ratios called with lists of different lengths')
+
     ratios = []
     for index in range(len(L1)):
         try:
-            ratios.append(L1[index]/L2[index])
+            # 嘗試執行可能會出錯的核心邏輯
+            ratios.append(L1[index] / L2[index])
+            
         except ZeroDivisionError:
-            ratios.append(float('nan')) #nan = Not a Number
-        except:
-            raise ValueError('get_ratios called with bad arg')
+            # 情況一：如果除以零，添加一個 'nan' 值
+            ratios.append(float('nan'))  # nan = Not a Number
+            
+        except TypeError:
+            # 情況二：如果發生型別錯誤 (例如用數字除以字串)，
+            # 這表示傳入的參數型別不對。拋出一個帶有具體訊息的 ValueError。
+            raise ValueError('get_ratios called with bad argument type')
+            
+        # 注意：不應再有通用的 except:，因為我們希望能明確處理預期中的錯誤，
+        # 而讓未預期的錯誤直接拋出，以便開發者能注意到並修復。
+            
+        # else 和 finally 是可選的，主要用於演示。在實際產品程式碼中，
+        # 如果沒有特別需要在成功或無論如何都執行的邏輯，可以省略。
         else:
-            print("success")
+            # 只有在 try 區塊“沒有”發生任何例外時，才會執行這裡。
+            print(f"Index {index}: success")
+            
         finally:
-            print("executed no matter what!")
+            # “無論” try 區塊是否發生例外，這裡“永遠”會被執行。
+            print(f"Index {index}: finished processing.")
+            
     return ratios
     
 print(get_ratios([1, 4], [2, 4]))
