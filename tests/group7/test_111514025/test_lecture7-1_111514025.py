@@ -38,3 +38,15 @@ print(L)
 
 
 
+def test_rev_list():
+    L = [1, 2, 3, 4, 5]
+    rev_list(L)
+    assert L == [5, 4, 3, 2, 1]
+    
+    L = ['a', 'b', 'c']
+    rev_list(L)
+    assert L == ['c', 'b', 'a']
+    
+    L = []
+    rev_list(L)
+    assert L == []
