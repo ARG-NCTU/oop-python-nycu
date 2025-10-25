@@ -26,3 +26,11 @@ except ZeroDivisionError:
     print("Can't divide by zero")
 except:
     print("Something went very wrong.")
+
+
+def test_exceptions():
+    try:
+        a = int("hello")
+    except ValueError:
+        return "Caught ValueError"
+    return "No Exception"
