@@ -22,9 +22,9 @@ def avg(grades):
 
 
 # avg function: version with assert
-def avg(grades):
-    assert len(grades) != 0, 'warning: no grades data'
-    return sum(grades)/len(grades)
+# def avg(grades):
+#     assert len(grades) != 0, 'warning: no grades data'
+#     return sum(grades)/len(grades)
 
     
 test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]], 
