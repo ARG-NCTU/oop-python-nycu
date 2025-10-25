@@ -31,3 +31,9 @@ test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
               [['bruce', 'wayne'], [100.0, 80.0, 74.0]],
               [['captain', 'america'], [80.0, 70.0, 96.0]],
               [['deadpool'], []]]
+
+print(get_stats(test_grades))
+
+def test_get_stats():
+    stats = get_stats([[['alice'], [90, 80]], [['bob'], []]])
+    assert stats == [[['alice'], [90, 80], 85.0], [['bob'], [], 0.0]]
