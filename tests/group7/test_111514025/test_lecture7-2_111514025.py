@@ -55,3 +55,10 @@ def primes_list(n):
 
 print(primes_list(2) )               
 print(primes_list(15)  )              
+
+
+def test_primes_list():
+    assert primes_list(2) == [2]
+    assert primes_list(3) == [2, 3]
+    assert primes_list(10) == [2, 3, 5, 7]
+    assert primes_list(20) == [2, 3, 5, 7, 11, 13, 17, 19]
