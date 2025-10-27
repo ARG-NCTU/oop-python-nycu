@@ -1,15 +1,16 @@
-####################
-## EXAMPLE: for loops over strings
-####################
-#s = "demo loops"
-#for index in range(len(s)):
-#    if s[index] == 'i' or s[index] == 'u':
-#        print("There is an i or u")
-#
-#for char in s:
-#    if char == 'i' or char == 'u':
-#        print("There is an i or u")
+###################
+# EXAMPLE: for loops over strings
+###################
+s = "demo loops iiiuuu"
+for index in range(len(s)):
+    if s[index] == 'i' or s[index] == 'u':
+        print("There is an i or u")
+#type one to look over the string directly
 
+for char in s:
+    if char == 'i' or char == 'u':
+        print("There is an i or u")
+#type two to look over the string directly
 
 ####################
 ## EXAMPLE: while loops and strings
