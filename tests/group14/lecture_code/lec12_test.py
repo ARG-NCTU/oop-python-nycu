@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Sorting demos (verbose and non-verbose versions)
+pytest version of sorting algorithms
 """
 
 from typing import List
 
+# ---------- Sorting functions ----------
+
 def bubble_sort(L: List[int]) -> List[int]:
-    """氣泡排序（含過程輸出），回傳同一個 list 物件。"""
     swap = False
     while not swap:
         print('bubble sort:', L)
@@ -18,7 +19,6 @@ def bubble_sort(L: List[int]) -> List[int]:
     return L
 
 def selection_sort(L: List[int]) -> List[int]:
-    """選擇排序（含過程輸出），回傳同一個 list 物件。"""
     suffixSt = 0
     while suffixSt != len(L):
         print('selection sort:', L)
@@ -29,7 +29,6 @@ def selection_sort(L: List[int]) -> List[int]:
     return L
 
 def merge(left: List[int], right: List[int]) -> List[int]:
-    """合併（含過程輸出）。"""
     result = []
     i, j = 0, 0
     while i < len(left) and j < len(right):
@@ -45,7 +44,6 @@ def merge(left: List[int], right: List[int]) -> List[int]:
     return result
 
 def merge_sort(L: List[int]) -> List[int]:
-    """合併排序（含過程輸出），回傳新 list。"""
     print('merge sort:', L)
     if len(L) < 2:
         return L[:]
@@ -54,10 +52,7 @@ def merge_sort(L: List[int]) -> List[int]:
     right = merge_sort(L[middle:])
     return merge(left, right)
 
-# ---------- Non-verbose（不輸出過程）版本 ----------
-
 def bubble_sort_np(L: List[int]) -> List[int]:
-    """氣泡排序（不輸出過程），回傳同一個 list 物件。"""
     swap = False
     while not swap:
         swap = True
@@ -68,7 +63,6 @@ def bubble_sort_np(L: List[int]) -> List[int]:
     return L
 
 def selection_sort_np(L: List[int]) -> List[int]:
-    """選擇排序（不輸出過程），回傳同一個 list 物件。"""
     suffixSt = 0
     while suffixSt != len(L):
         for i in range(suffixSt, len(L)):
@@ -78,7 +72,6 @@ def selection_sort_np(L: List[int]) -> List[int]:
     return L
 
 def merge_np(left: List[int], right: List[int]) -> List[int]:
-    """合併（不輸出過程）。"""
     result = []
     i, j = 0, 0
     while i < len(left) and j < len(right):
@@ -93,7 +86,6 @@ def merge_np(left: List[int], right: List[int]) -> List[int]:
     return result
 
 def merge_sort_np(L: List[int]) -> List[int]:
-    """合併排序（不輸出過程），回傳新 list。"""
     if len(L) < 2:
         return L[:]
     middle = len(L) // 2
@@ -101,35 +93,56 @@ def merge_sort_np(L: List[int]) -> List[int]:
     right = merge_sort_np(L[middle:])
     return merge_np(left, right)
 
-# ---------- 簡單測試 ----------
-if __name__ == "__main__":
-    data = [9, 1, 5, 3, 7, 2, 8, 6, 4]
+# ---------- pytest tests ----------
 
-    # verbose 版本（會印步驟）
-    print("== Verbose ==")
-    a = data[:]  # 複本
-    bubble_sort(a)
-    assert a == sorted(data)
+import pytest
+from copy import deepcopy
 
-    b = data[:]
-    selection_sort(b)
-    assert b == sorted(data)
+@pytest.mark.parametrize("func", [
+    bubble_sort, selection_sort, merge_sort,
+    bubble_sort_np, selection_sort_np, merge_sort_np
+])
+@pytest.mark.parametrize("data", [
+    [], [1], [2, 1], [3, 2, 1],
+    [9, 1, 5, 3, 7, 2, 8, 6, 4],
+    [0, -1, 2, -3, 4, -5],
+    [1, 3, 2, 2, 3, 1]
+])
+def test_sort_correctness(func, data):
+    L = deepcopy(data)
+    # merge_sort 會回傳新 list
+    result = func(L if "merge" not in func.__name__ else data[:])
+    assert result == sorted(data)
 
-    c = merge_sort(data[:])  # 回傳新 list
-    assert c == sorted(data)
+def test_inplace_behavior():
+    L1 = [3, 1, 2]
+    L2 = [3, 1, 2]
+    id_before1 = id(L1)
+    id_before2 = id(L2)
+    bubble_sort(L1)
+    selection_sort(L2)
+    assert id(L1) == id_before1
+    assert id(L2) == id_before2
+    assert L1 == [1, 2, 3]
+    assert L2 == [1, 2, 3]
 
-    # non-verbose 版本（不印步驟）
-    print("\n== Non-verbose ==")
-    d = data[:]
-    bubble_sort_np(d)
-    assert d == sorted(data)
+def test_merge_sort_new_object():
+    L = [3, 1, 2]
+    out = merge_sort(L)
+    assert out is not L
+    assert out == [1, 2, 3]
 
-    e = data[:]
-    selection_sort_np(e)
-    assert e == sorted(data)
+def test_verbose_output(capsys):
+    L = [3, 2, 1]
+    bubble_sort(L)
+    captured = capsys.readouterr().out
+    assert "bubble sort" in captured
 
-    f = merge_sort_np(data[:])
-    assert f == sorted(data)
+    selection_sort([3, 2, 1])
+    captured = capsys.readouterr().out
+    assert "selection sort" in captured
 
-    print("\nAll tests passed.")
-
+    merge_sort([3, 2, 1])
+    captured = capsys.readouterr().out
+    assert "merge sort" in captured
+    assert "merge:" in captured
