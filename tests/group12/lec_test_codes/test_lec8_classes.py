@@ -40,3 +40,15 @@ def test_intset_insert_and_str():
     s.insert(4)
     s.insert(3)  # duplicate
     assert str(s) == "{3,4}"
+
+def test_intset_member_and_remove():
+    s = l8.intSet()
+    s.insert(3)
+    s.insert(6)
+    assert s.member(3)
+    assert not s.member(5)
+    s.remove(3)
+    assert str(s) == "{6}"
+    with pytest.raises(ValueError) as e:
+        s.remove(3)
+    assert "3 not found" in str(e.value)
