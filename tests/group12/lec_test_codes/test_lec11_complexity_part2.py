@@ -61,3 +61,10 @@ def test_genSubsets_length_property():
         L = list(range(n))
         subsets = l11.genSubsets(L)
         assert len(subsets) == 2 ** n, f"Expected 2^{n} subsets"
+
+def test_combined_behavior():
+    """確保三個函式能同時正常運作"""
+    nums = list(range(10))
+    assert l11.bisect_search2(nums, 5)
+    subsets = l11.genSubsets([1, 2, 3])
+    assert [1, 2] in subsets
