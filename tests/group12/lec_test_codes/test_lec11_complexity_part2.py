@@ -16,7 +16,7 @@ def test_bisect_search1_found():
 def test_bisect_search1_not_found():
     L = list(range(0, 100))
     assert l11.bisect_search1(L, -1) is False
+    assert l11.bisect_search1(L, 100) is False
     with pytest.raises(IndexError) as e:
-        l11.bisect_search1(L, 100)
+        l11.bisect_search1([], 5)
     assert "list index out of range" in str(e.value)
-    assert l11.bisect_search1([], 5) is False
