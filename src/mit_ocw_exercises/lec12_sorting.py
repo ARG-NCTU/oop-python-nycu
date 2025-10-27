@@ -25,7 +25,7 @@ def selection_sort(L):
             if L[i] < L[suffixSt]:
                 L[suffixSt], L[i] = L[i], L[suffixSt]
         suffixSt += 1
- 
+    return L 
 
 def merge(left, right):
     result = []
@@ -75,13 +75,13 @@ def selection_sort_np(L):
             if L[i] < L[suffixSt]:
                 L[suffixSt], L[i] = L[i], L[suffixSt]
         suffixSt += 1
- 
+    return L 
 
 def merge_np(left, right):
     result = []
     i,j = 0,0
     while i < len(left) and j < len(right):
-        if left[i] < right[j]:
+        if left[i] <= right[j]:
             result.append(left[i])
             i += 1
         else:
@@ -103,4 +103,3 @@ def merge_sort_np(L):
         left = merge_sort_np(L[:middle])
         right = merge_sort_np(L[middle:])
         return merge_np(left, right)
-    
