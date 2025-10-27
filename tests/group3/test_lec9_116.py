@@ -41,12 +41,27 @@ def test_student():
 
 
 def test_rabbit():
-    r = lec9.Rabbit(3, "white")
-    assert r.get_age() == 3
-    assert r.get_color() == "white"
-    r.set_name("bunny")
-    assert str(r) == "rabbit:bunny:3:white"
-    r.set_name()
-    assert str(r) == "rabbit::3:white"
-    r2 = lec9.Rabbit(2)
-    assert r2.get_color() is None
+    r1 = lec9.Rabbit(3)
+    r2 = lec9.Rabbit(4)
+    r3 = lec9.Rabbit(5)
+    assert str(r1) == "rabbit:001"
+    assert str(r2) == "rabbit:002"
+    assert str(r3) == "rabbit:003"
+    assert r1.get_parent1() is None
+    assert r1.get_parent2() is None
+
+    r4 = r1 + r2
+    assert str(r4) == "rabbit:004"
+    assert r4.get_parent1() == r1
+    assert r4.get_parent2() == r2
+
+    r5 = r3 + r4
+    r6 = r4 + r3
+    assert str(r5) == "rabbit:005"
+    assert str(r6) == "rabbit:006"
+    assert r5.get_parent1() == r3
+    assert r5.get_parent2() == r4
+    assert r6.get_parent1() == r4
+    assert r6.get_parent2() == r3
+    assert r5 == r6
+    assert not (r4 == r6)
