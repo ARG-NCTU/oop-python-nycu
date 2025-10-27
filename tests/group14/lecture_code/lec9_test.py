@@ -1,7 +1,7 @@
 import pytest
 import io
 import sys
-# 假設你的主檔案名稱是 lec9_inheritance.py
+
 from lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
 # ===============================
