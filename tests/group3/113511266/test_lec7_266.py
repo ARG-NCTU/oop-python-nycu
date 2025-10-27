@@ -28,3 +28,15 @@ def test_get_ratios():
     assert lec7.get_ratios([0, 0, 0], [5, 2, 4]) == [0.0, 0.0, 0.0]
     assert lec7.get_ratios([8, 5, 49], [2, 20, 7]) == [4.0, 0.25, 7.0]
     assert lec7.get_ratios([], []) == []
+
+
+
+def test_get_stats():
+    name_and_grades = [("Alice", [90, 94, 92]), ("Bob", [80, 85, 84]), ("Charlie", [70, 98, 72])]
+    assert lec7.get_stats(name_and_grades) == [["Alice", [90, 94, 92], 92.0], ["Bob", [80, 85, 84], 83.0], ["Charlie", [70, 98, 72], 80.0]]
+
+def test_avg():
+    assert lec7.avg([1, 2, 3]) == 2.0
+    assert lec7.avg([0, 0, 0]) == 0.0
+    assert lec7.avg([95, 84, 91]) == 90.0
+    assert lec7.avg([45, 87, 62, 97, 58]) == 69.8
