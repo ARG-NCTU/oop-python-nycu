@@ -1,6 +1,6 @@
 import pytest
 import add_path
-import lec6_recursion_dictionaries as lec6
+import lec6_recursion_dictionaries as lec6 # type: ignore
 import time
 
 def test_fib():

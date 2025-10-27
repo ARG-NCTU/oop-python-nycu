@@ -1,5 +1,5 @@
 import add_path
-import mit_ocw_exercises.lec5_tuples_lists as lec5
+import lec5_tuples_lists as lec5 # type: ignore
 import pytest
 import random
 
