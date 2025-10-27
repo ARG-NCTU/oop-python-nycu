@@ -16,31 +16,32 @@ for char in s:
 # EXAMPLE: while loops and strings
 # CHALLENGE: rewrite while loop with a for loop
 ###################
-an_letters = "aefhilmnorsxAEFHILMNORSX"
-word = input("I will cheer for you! Enter a word: ")
-times = int(input("Enthusiasm level (1-10): "))
-
-for char in word:
-    if char in an_letters:
-        print("Give me an " + char + "! " + char)
-    else:
-        print("Give me a  " + char + "! " + char)
-# use for loop to replace while loop
-print("What does that spell?")
-for i in range(times):
-    print(word, "!!!")
+#an_letters = "aefhilmnorsxAEFHILMNORSX"
+#word = input("I will cheer for you! Enter a word: ")
+#times = int(input("Enthusiasm level (1-10): "))
+#
+#for char in word:
+#    if char in an_letters:
+#        print("Give me an " + char + "! " + char)
+#    else:
+#        print("Give me a  " + char + "! " + char)
+## use for loop to replace while loop
+#print("What does that spell?")
+#for i in range(times):
+#    print(word, "!!!")
 
 
     
-####################
-## EXAMPLE: perfect cube 
-####################
-#cube = 27
-##cube = 8120601
-#for guess in range(cube+1):
-#    if guess**3 == cube:
-#        print("Cube root of", cube, "is", guess)
-#        # loops keeps going even after found the cube root
+###################
+# EXAMPLE: perfect cube 
+###################
+cube = 27
+#cube = 8120601
+for guess in range(int(cube/3)+2):
+    #change the condition to use less time
+    if guess**3 == cube:
+        print("Cube root of", cube, "is", guess)
+        # loops keeps going even after found the cube root
     
 
 ####################
