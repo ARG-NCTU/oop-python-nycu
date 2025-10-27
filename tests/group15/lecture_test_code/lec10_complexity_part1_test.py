@@ -14,7 +14,7 @@ import pytest
         ([1, 2, 3, 4], 3, True),
         ([1, 2, 3, 4], 9, False),
         ([1, 1, 2, 2], 1, True),
-    ],
+    ],  
 )
 def test_linear_search_various(L, e, expect):
     assert l10.linear_search(L, e) is expect
