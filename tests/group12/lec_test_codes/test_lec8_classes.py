@@ -52,3 +52,9 @@ def test_intset_member_and_remove():
     with pytest.raises(ValueError) as e:
         s.remove(3)
     assert "3 not found" in str(e.value)
+
+def test_intset_multiple_inserts_sorted():
+    s = l8.intSet()
+    for val in [10, 5, 8, 5, 2]:
+        s.insert(val)
+    assert str(s) == "{2,5,8,10}"
