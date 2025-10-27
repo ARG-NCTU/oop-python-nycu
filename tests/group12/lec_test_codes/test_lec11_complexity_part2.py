@@ -42,3 +42,13 @@ def test_genSubsets_basic():
     result = l11.genSubsets([1, 2])
     expected = [[], [1], [2], [1, 2]]
     assert sorted(result) == sorted(expected)
+
+def test_genSubsets_three_elements():
+    result = l11.genSubsets([1, 2, 3])
+    expected = [
+        [],
+        [1], [2], [3],
+        [1, 2], [1, 3], [2, 3],
+        [1, 2, 3],
+    ]
+    assert sorted(result) == sorted(expected)
