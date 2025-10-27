@@ -32,3 +32,11 @@ def test_fraction_add_and_sub():
 def test_fraction_assertion_error():
     with pytest.raises(AssertionError):
         l8.Fraction(3.14, 2.7)
+
+def test_intset_insert_and_str():
+    s = l8.intSet()
+    assert str(s) == "{}"
+    s.insert(3)
+    s.insert(4)
+    s.insert(3)  # duplicate
+    assert str(s) == "{3,4}"
