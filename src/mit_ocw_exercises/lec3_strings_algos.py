@@ -32,34 +32,34 @@ for char in s:
 
 
     
-###################
-# EXAMPLE: perfect cube 
-###################
-cube = 27
-#cube = 8120601
-for guess in range(int(cube/3)+2):
-    #change the condition to use less time
-    if guess**3 == cube:
-        print("Cube root of", cube, "is", guess)
-        # loops keeps going even after found the cube root
-    
-
 ####################
-## EXAMPLE: guess and check cube root 
+## EXAMPLE: perfect cube 
 ####################
 #cube = 27
 ##cube = 8120601
-#for guess in range(abs(cube)+1):
-#    # passed all potential cube roots
-#    if guess**3 >= abs(cube):
-#        # no need to keep searching
-#        break
-#if guess**3 != abs(cube):
-#    print(cube, 'is not a perfect cube')
-#else:
-#    if cube < 0:
-#        guess = -guess
-#    print('Cube root of ' + str(cube) + ' is ' + str(guess))
+#for guess in range(int(cube/3)+2):
+#    #change the condition to use less time
+#    if guess**3 == cube:
+#        print("Cube root of", cube, "is", guess)
+#        # loops keeps going even after found the cube root
+    
+
+###################
+# EXAMPLE: guess and check cube root 
+###################
+cube = 27
+#cube = 8120601
+for guess in range(int(abs(cube)/3)+2):
+    # passed all potential cube roots
+    if guess**3 >= abs(cube):
+        # no need to keep searching
+        break
+if guess**3 != abs(cube):
+    print(cube, 'is not a perfect cube')
+else:
+    if cube < 0:
+        guess = -guess
+    print('Cube root of ' + str(cube) + ' is ' + str(guess))
 
 
 ####################
