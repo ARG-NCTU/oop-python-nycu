@@ -1,7 +1,7 @@
 ###################
 # EXAMPLE: for loops over strings
 ###################
-s = "demo loops iiiuuu"
+s = "demo loops"
 for index in range(len(s)):
     if s[index] == 'i' or s[index] == 'u':
         print("There is an i or u")
@@ -12,25 +12,23 @@ for char in s:
         print("There is an i or u")
 #type two to look over the string directly
 
-####################
-## EXAMPLE: while loops and strings
-## CHALLENGE: rewrite while loop with a for loop
-####################
-#an_letters = "aefhilmnorsxAEFHILMNORSX"
-#word = input("I will cheer for you! Enter a word: ")
-#times = int(input("Enthusiasm level (1-10): "))
-#
-#i = 0
-#while i < len(word):
-#    char = word[i]
-#    if char in an_letters:
-#        print("Give me an " + char + "! " + char)
-#    else:
-#        print("Give me a  " + char + "! " + char)
-#    i += 1
-#print("What does that spell?")
-#for i in range(times):
-#    print(word, "!!!")
+###################
+# EXAMPLE: while loops and strings
+# CHALLENGE: rewrite while loop with a for loop
+###################
+an_letters = "aefhilmnorsxAEFHILMNORSX"
+word = input("I will cheer for you! Enter a word: ")
+times = int(input("Enthusiasm level (1-10): "))
+
+for char in word:
+    if char in an_letters:
+        print("Give me an " + char + "! " + char)
+    else:
+        print("Give me a  " + char + "! " + char)
+# use for loop to replace while loop
+print("What does that spell?")
+for i in range(times):
+    print(word, "!!!")
 
 
     
