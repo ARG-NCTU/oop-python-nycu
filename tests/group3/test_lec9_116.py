@@ -39,29 +39,19 @@ def test_student():
     assert str(s) == "student:eve:20:MIT"
 
 
-
-def test_rabbit():
-    r1 = lec9.Rabbit(3)
-    r2 = lec9.Rabbit(4)
-    r3 = lec9.Rabbit(5)
-    assert str(r1) == "rabbit:001"
-    assert str(r2) == "rabbit:002"
-    assert str(r3) == "rabbit:003"
-    assert r1.get_parent1() is None
-    assert r1.get_parent2() is None
-
+def test_Rabbit():
+    r1 = lec9.Rabbit(2, "r0")
+    assert lec9.Rabbit.tag == 8
+    r2 = lec9.Rabbit(3, "r1", "r3")
+    assert lec9.Rabbit.tag == 9
+    assert r1.get_rid() == "007"
+    assert r1.get_parent1() == "r0"
+    assert r2.get_parent2() == "r3"
+    r1.set_age(5)
+    assert r1.get_age() == 5
     r4 = r1 + r2
-    assert str(r4) == "rabbit:004"
-    assert r4.get_parent1() == r1
-    assert r4.get_parent2() == r2
-
-    r5 = r3 + r4
-    r6 = r4 + r3
-    assert str(r5) == "rabbit:005"
-    assert str(r6) == "rabbit:006"
-    assert r5.get_parent1() == r3
-    assert r5.get_parent2() == r4
-    assert r6.get_parent1() == r4
-    assert r6.get_parent2() == r3
-    assert r5 == r6
-    assert not (r4 == r6)
+    assert isinstance(r4, lec9.Rabbit)
+    assert r4.get_parent1() is r1
+    assert str(r4) == "rabbit:009"
+    r5 = r2 + r1
+    assert (r4 == r5) is True
