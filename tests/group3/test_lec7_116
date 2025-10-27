@@ -18,18 +18,27 @@ def test_get_ratios():
     with pytest.raises(ValueError):
         lec7.get_ratios([1,2,'a'], [1,2,3])
 
-def get_stats(class_list):
-	new_stats = []
-	for person in class_list:
-		new_stats.append([person[0], person[1], avg(person[1])])
-	return new_stats 
+    
+  
 def test_get_stats():
-    test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]], 
-              [['bruce', 'wayne'], [100.0, 80.0, 74.0]],
-              [['captain', 'america'], [80.0, 70.0, 96.0]],
-              [['deadpool'], []]]
-    expected = [[['peter', 'parker'], [80.0, 70.0, 85.0], 78.33333333333333], 
-                [['bruce', 'wayne'], [100.0, 80.0, 74.0], 84.66666666666667],
-                [['captain', 'america'], [80.0, 70.0, 96.0], 82.0],
-                [['deadpool'], [], 0.0]]
-    assert lec7.get_stats(test_grades) == expected
+    # normal case: each person's avg is computed and returned
+    data = [
+        [['alice'], [50.0, 100.0]],
+        [['bob'], [80.0]]
+    ]
+    stats = lec7.get_stats(data)
+    assert stats == [
+        [['alice'], [50.0, 100.0], 75.0],
+        [['bob'], [80.0], 80.0]
+    ]
+
+    # if any student has empty grades, avg (final definition) asserts -> get_stats should propagate AssertionError
+    with pytest.raises(AssertionError):
+        lec7.get_stats([[['deadpool'], []]])
+
+    
+def test_avg():
+    assert lec7.avg([80.0, 70.0, 85.0]) == 78.33333333333333
+    assert lec7.avg([100.0, 80.0, 74.0]) == 84.66666666666667
+    assert lec7.avg([80.0, 70.0, 96.0]) == 82.0
+    assert lec7.avg([]) == 0.0
