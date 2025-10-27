@@ -1,68 +1,62 @@
-import tests.group15.lecture_test_code.add_path
-import pytest
-import mit_ocw_exercises.lec11_complexity_part2 as l11
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct  9 12:13:13 2016
 
-@pytest.mark.parametrize(
-    "L,e,expect",
-    [
-        ([], 0, False),
-        ([1], 1, True),
-        ([1], 0, False),
-        (list(range(0, 10)), 0, True),
-        (list(range(0, 10)), 9, True),
-        (list(range(0, 10)), 5, True),
-        (list(range(0, 10)), -1, False),
-        (list(range(0, 10)), 10, False),
-        ([1, 1, 2, 2, 3, 3], 2, True),
-    ],
-)
-def test_bisect_search1_basic(L, e, expect, capsys):
-    assert l11.bisect_search1(L, e) is expect
-    _ = capsys.readouterr().out  # swallow prints
+@author: ericgrimson
+"""
 
-@pytest.mark.parametrize(
-    "L,e,expect",
-    [
-        ([], 0, False),
-        ([1], 1, True),
-        ([1], 2, False),
-        (list(range(0, 10)), 0, True),
-        (list(range(0, 10)), 9, True),
-        (list(range(0, 10)), 4, True),
-        (list(range(0, 10)), -3, False),
-        (list(range(0, 10)), 11, False),
-        ([1, 1, 2, 2, 3, 3], 3, True),
-    ],
-)
-def test_bisect_search2_basic(L, e, expect, capsys):
-    assert l11.bisect_search2(L, e) is expect
-    _ = capsys.readouterr().out  # swallow prints
+def bisect_search1(L, e):
+    print('low: ' + str(L[0]) + '; high: ' + str(L[-1]))
+    if L == []:
+        return False
+    elif len(L) == 1:
+        return L[0] == e
+    else:
+        half = len(L)//2
+        if L[half] > e:
+            return bisect_search1(L[:half], e)
+        else:
+            return bisect_search1(L[half:], e)
 
-def to_set_of_tuples(list_of_lists):
-    return {tuple(x) for x in list_of_lists}
+def bisect_search2(L, e):
+    def bisect_search_helper(L, e, low, high):
+        print('low: ' + str(low) + '; high: ' + str(high))  #added to visualize
+        if high == low:
+            return L[low] == e
+        mid = (low + high)//2
+        if L[mid] == e:
+            return True
+        elif L[mid] > e:
+            if low == mid: #nothing left to search
+                return False
+            else:
+                return bisect_search_helper(L, e, low, mid - 1)
+        else:
+            return bisect_search_helper(L, e, mid + 1, high)
+    if len(L) == 0:
+        return False
+    else:
+        return bisect_search_helper(L, e, 0, len(L) - 1)
 
-@pytest.mark.parametrize(
-    "L,expected_set",
-    [
-        ([], {()}),
-        ([1], {(), (1,)}),
-        ([1, 2], {(), (1,), (2,), (1, 2)}),
-        ([1, 2, 3], {(), (1,), (2,), (3,), (1, 2), (1, 3), (2, 3), (1, 2, 3)}),
-    ],
-)
-def test_genSubsets_contents_and_size(L, expected_set):
-    res = l11.genSubsets(L)
-    got = to_set_of_tuples(res)
-    assert got == expected_set
-    assert len(res) == 2 ** len(L)
+testList = []
+for i in range(100):
+    testList.append(i)
 
-def test_genSubsets_order_example_small():
-    res = l11.genSubsets([1, 2])
-    assert res == [[], [1], [2], [1, 2]]
+print(bisect_search1(testList, 76))
+print(bisect_search2(testList, 76))
 
-def test_bisect_search_edges_large():
-    L = list(range(0, 100))
-    assert l11.bisect_search1(L, 0) is True
-    assert l11.bisect_search1(L, 99) is True
-    assert l11.bisect_search2(L, 0) is True
-    assert l11.bisect_search2(L, 99) is True
+
+def genSubsets(L):
+    res = []
+    if len(L) == 0:
+        return [[]] #list of empty list
+    smaller = genSubsets(L[:-1]) # all subsets without last element
+    extra = L[-1:] # create a list of just last element
+    new = []
+    for small in smaller:
+        new.append(small+extra)  # for all smaller solutions, add one with last element
+    return smaller+new  # combine those with last element and those without
+
+
+testSet = [1,2,3,4]
+print(genSubsets(testSet))
