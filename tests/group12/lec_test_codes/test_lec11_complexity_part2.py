@@ -55,3 +55,9 @@ def test_genSubsets_three_elements():
 
 def test_genSubsets_empty():
     assert l11.genSubsets([]) == [[]]
+
+def test_genSubsets_length_property():
+    for n in range(6):
+        L = list(range(n))
+        subsets = l11.genSubsets(L)
+        assert len(subsets) == 2 ** n, f"Expected 2^{n} subsets"
