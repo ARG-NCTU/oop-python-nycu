@@ -52,3 +52,6 @@ def test_genSubsets_three_elements():
         [1, 2, 3],
     ]
     assert sorted(result) == sorted(expected)
+
+def test_genSubsets_empty():
+    assert l11.genSubsets([]) == [[]]
