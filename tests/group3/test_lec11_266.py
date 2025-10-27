@@ -18,3 +18,10 @@ def test_bisect_search2():
     assert lec11.bisect_search2([], 10) == False
     assert lec11.bisect_search2([80], 80) == True
     assert lec11.bisect_search2([55], 7) == False
+    assert lec11.bisect_search2([1,3,5,7,9], 7) == True
+
+def test_genSubsets():
+    assert list(lec11.genSubsets([1, 2, 3])) == [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+    assert list(lec11.genSubsets([1])) == [[], [1]]
+    assert list(lec11.genSubsets([])) == [[]]
+    assert list(lec11.genSubsets(['a', 'b'])) == [[], ['a'], ['b'], ['a', 'b']]
