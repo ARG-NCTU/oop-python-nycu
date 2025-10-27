@@ -1,0 +1,22 @@
+RDpro7b – Patch Notes
+
+Changes focused on 5 areas: correctness, OOP/maintainability, performance, UI/UX groundwork, and bug fixes.
+
+1) Timing correctness (FPS-independent firing)
+   - dice.py: Dice cooldown now accumulates in seconds using dt * speed_mult.
+   - Converted frame-based base_fire_rate to base_period_sec (frames / FPS).
+   - Effective period = base_period_sec * fire_rate_factor * boss_zone_mult.
+
+2) Telegraph respects game speed
+   - main.py: TelegraphZone.update() now receives dt * self.speed_mult.
+
+3) Multi chain bounce fix
+   - projectiles.py: ChainBolt now tracks a 'visited' set to avoid bouncing between the same two enemies.
+     Candidates exclude visited; chosen target is added to visited.
+
+4) Wave formula precedence clarified
+   - level_manager.py: Added parentheses to clarify operator precedence for base enemy count growth.
+
+Notes:
+- No asset or API signatures changed. Existing saves/loadouts should continue to work if any exist.
+- For best consistency, prefer specifying time-based constants in seconds in settings.py in future updates.
