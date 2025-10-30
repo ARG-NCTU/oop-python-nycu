@@ -88,7 +88,7 @@ user.name=Brian2074
 # 2025 AOOP Commit & Pytest Result
 <!--START_SECTION:pytest-->
 
-| status   | group_name   | Group Leader        | Group Member 1     | Group Member 2            |
+| Pytest Status   | Group Name   | Group Leader        | Group Member 1     | Group Member 2            |
 |:---------|:-------------|:--------------------|:-------------------|:--------------------------|
 | ❌        | Group 1      | bryson7736 : 1      | Chiang-Ian : 0     | peppa1122ee13 : 0         |
 | ❌        | Group 2      | ginny923 : 4        | joanna0420 : 0     | bondyhung : 0             |
