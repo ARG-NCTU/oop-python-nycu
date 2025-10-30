@@ -70,8 +70,8 @@ df_normalized['Group Member 2'] = df_normalized['formatted_members'].apply(
 # --- 5. 選擇最終需要的欄位並重新排序 ---
 # 這些欄位將直接對應到你的 Markdown 表格列
 final_df = df_normalized[[
-    'status',
-    'group_name',
+    'Pytest Status',
+    'Group Name',
     'Group Leader',
     'Group Member 1',
     'Group Member 2'
