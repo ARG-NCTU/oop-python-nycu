@@ -70,8 +70,8 @@ df_normalized['Group Member 2'] = df_normalized['formatted_members'].apply(
 # --- 5. 選擇最終需要的欄位並重新排序 ---
 # 這些欄位將直接對應到你的 Markdown 表格列
 final_df = df_normalized[[
-    'Pytest Status',
-    'Group Name',
+    'status',
+    'group_name',
     'Group Leader',
     'Group Member 1',
     'Group Member 2'
@@ -81,6 +81,8 @@ final_df = df_normalized[[
 # to_markdown() 是一個非常方便的函數，能直接生成 Markdown 表格
 # index=False 表示不包含 DataFrame 的索引列
 markdown_table_string = final_df.to_markdown(index=False)
+# 把status改成Pytest Status，group_name改成Group Name
+markdown_table_string = markdown_table_string.replace('status', 'Pytest Status').replace('group_name', 'Group Name')
 
 # --- 7. 輸出 Markdown 表格字串 ---
 print(markdown_table_string)
