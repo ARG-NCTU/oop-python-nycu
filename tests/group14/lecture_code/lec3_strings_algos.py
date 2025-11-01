@@ -1,31 +1,32 @@
-###################
-# EXAMPLE: for loops over strings
-###################
-s = "demo loops"
-for index in range(len(s)):
-    if s[index] == 'i' or s[index] == 'u':
-        print("There is an i or u")
-#type one to look over the string directly
+####################
+## EXAMPLE: for loops over strings
+####################
+#s = "demo loops"
+#for index in range(len(s)):
+#    if s[index] == 'i' or s[index] == 'u':
+#        print("There is an i or u")
+#
+#for char in s:
+#    if char == 'i' or char == 'u':
+#        print("There is an i or u")
 
-for char in s:
-    if char == 'i' or char == 'u':
-        print("There is an i or u")
-#type two to look over the string directly
 
-###################
-# EXAMPLE: while loops and strings
-# CHALLENGE: rewrite while loop with a for loop
-###################
+####################
+## EXAMPLE: while loops and strings
+## CHALLENGE: rewrite while loop with a for loop
+####################
 #an_letters = "aefhilmnorsxAEFHILMNORSX"
 #word = input("I will cheer for you! Enter a word: ")
 #times = int(input("Enthusiasm level (1-10): "))
 #
-#for char in word:
+#i = 0
+#while i < len(word):
+#    char = word[i]
 #    if char in an_letters:
 #        print("Give me an " + char + "! " + char)
 #    else:
 #        print("Give me a  " + char + "! " + char)
-## use for loop to replace while loop
+#    i += 1
 #print("What does that spell?")
 #for i in range(times):
 #    print(word, "!!!")
@@ -37,29 +38,28 @@ for char in s:
 ####################
 #cube = 27
 ##cube = 8120601
-#for guess in range(int(cube/3)+2):
-#    #change the condition to use less time
+#for guess in range(cube+1):
 #    if guess**3 == cube:
 #        print("Cube root of", cube, "is", guess)
 #        # loops keeps going even after found the cube root
     
 
-###################
-# EXAMPLE: guess and check cube root 
-###################
-cube = 27
-#cube = 8120601
-for guess in range(int(abs(cube)/3)+2):
-    # passed all potential cube roots
-    if guess**3 >= abs(cube):
-        # no need to keep searching
-        break
-if guess**3 != abs(cube):
-    print(cube, 'is not a perfect cube')
-else:
-    if cube < 0:
-        guess = -guess
-    print('Cube root of ' + str(cube) + ' is ' + str(guess))
+####################
+## EXAMPLE: guess and check cube root 
+####################
+#cube = 27
+##cube = 8120601
+#for guess in range(abs(cube)+1):
+#    # passed all potential cube roots
+#    if guess**3 >= abs(cube):
+#        # no need to keep searching
+#        break
+#if guess**3 != abs(cube):
+#    print(cube, 'is not a perfect cube')
+#else:
+#    if cube < 0:
+#        guess = -guess
+#    print('Cube root of ' + str(cube) + ' is ' + str(guess))
 
 
 ####################
