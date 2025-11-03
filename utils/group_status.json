@@ -3,13 +3,17 @@
     "status": "✅",
     "group_name": "Group 1",
     "group_leader": {
-      "username": "LeeYinWei",
-      "commits": 50
+      "username": "bryson7736",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "unknown899",
-        "commits": 22
+        "username": "Chiang-Ian",
+        "commits": 0
+      },
+      {
+        "username": "peppa1122ee13",
+        "commits": 0
       }
     ]
   },
@@ -17,17 +21,17 @@
     "status": "❌",
     "group_name": "Group 2",
     "group_leader": {
-      "username": "neoAurora",
-      "commits": 2
+      "username": "ginny923",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "Lawrence16428",
+        "username": "joanna0420",
         "commits": 0
       },
       {
-        "username": "howardhung14",
-        "commits": 14
+        "username": "bondyhung",
+        "commits": 0
       }
     ]
   },
@@ -35,17 +39,13 @@
     "status": "❌",
     "group_name": "Group 3",
     "group_leader": {
-      "username": "yoyo0213",
-      "commits": 50
+      "username": "tpvupu",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "JonathanYangSW",
-        "commits": 37
-      },
-      {
-        "username": "GinoChen113511247",
-        "commits": 32
+        "username": "xiaotin22",
+        "commits": 0
       }
     ]
   },
@@ -53,17 +53,13 @@
     "status": "✅",
     "group_name": "Group 4",
     "group_leader": {
-      "username": "JumboZhang1119",
-      "commits": 52
+      "username": "yt-chen1230",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "peienwu1216",
-        "commits": 33
-      },
-      {
-        "username": "chxyuuu",
-        "commits": 46
+        "username": "Nelson0314",
+        "commits": 0
       }
     ]
   },
@@ -71,17 +67,13 @@
     "status": "❌",
     "group_name": "Group 5",
     "group_leader": {
-      "username": "ginny923",
-      "commits": 18
+      "username": "htyunn",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "joanna0420",
-        "commits": 13
-      },
-      {
-        "username": "dua0505",
-        "commits": 17
+        "username": "okkohero",
+        "commits": 0
       }
     ]
   },
@@ -89,17 +81,17 @@
     "status": "✅",
     "group_name": "Group 6",
     "group_leader": {
-      "username": "jui-pixel",
-      "commits": 66
+      "username": "jerrywustarwars",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "SamTung113511034",
-        "commits": 29
+        "username": "FrosterMonster",
+        "commits": 0
       },
       {
-        "username": "charles691",
-        "commits": 35
+        "username": "doralu950413ee13-gif",
+        "commits": 0
       }
     ]
   },
@@ -107,26 +99,31 @@
     "status": "✅",
     "group_name": "Group 7",
     "group_leader": {
-      "username": "Tony104147",
-      "commits": 13
+      "username": "unknown899",
+      "commits": 0
     },
-    "group_members": []
+    "group_members": [
+      {
+        "username": "LeeYinWei",
+        "commits": 0
+      }
+    ]
   },
   {
     "status": "❌",
     "group_name": "Group 8",
     "group_leader": {
-      "username": "haleychang0530",
-      "commits": 19
+      "username": "hatthebutterfly",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "Hazel-1212",
-        "commits": 23
+        "username": "August0117",
+        "commits": 0
       },
       {
-        "username": "tree1014",
-        "commits": 17
+        "username": "hungchi0222",
+        "commits": 0
       }
     ]
   },
@@ -134,13 +131,13 @@
     "status": "✅",
     "group_name": "Group 9",
     "group_leader": {
-      "username": "CHENG-JE",
-      "commits": 9
+      "username": "pieapple1587",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "lwc-ed",
-        "commits": 26
+        "username": "terrycc9375",
+        "commits": 0
       }
     ]
   },
@@ -148,17 +145,13 @@
     "status": "✅",
     "group_name": "Group 10",
     "group_leader": {
-      "username": "tpvupu",
-      "commits": 56
+      "username": "iamkyleh",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "xiaotin22",
-        "commits": 62
-      },
-      {
-        "username": "calistayang",
-        "commits": 43
+        "username": "billlllllllly",
+        "commits": 0
       }
     ]
   },
@@ -166,53 +159,35 @@
     "status": "❌",
     "group_name": "Group 11",
     "group_leader": {
-      "username": "Rickycheong0515",
-      "commits": 3
+      "username": "Nelson0314",
+      "commits": 0
     },
-    "group_members": [
-      {
-        "username": "hfchiang",
-        "commits": 3
-      },
-      {
-        "username": "Samuel11GitHub",
-        "commits": 0
-      }
-    ]
+    "group_members": []
   },
   {
     "status": "❌",
     "group_name": "Group 12",
     "group_leader": {
-      "username": "kufanghua",
-      "commits": 25
+      "username": "jui-pixel",
+      "commits": 0
     },
-    "group_members": [
-      {
-        "username": "yezh0915",
-        "commits": 52
-      },
-      {
-        "username": "fiesta0217",
-        "commits": 10
-      }
-    ]
+    "group_members": []
   },
   {
     "status": "❌",
     "group_name": "Group 13",
     "group_leader": {
-      "username": "lucasliu0910",
-      "commits": 7
+      "username": "max052028",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "carabapy",
-        "commits": 6
+        "username": "jeffjun113",
+        "commits": 0
       },
       {
-        "username": "jing1688",
-        "commits": 65
+        "username": "ngvihoee11-nycu",
+        "commits": 0
       }
     ]
   },
@@ -220,12 +195,12 @@
     "status": "✅",
     "group_name": "Group 14",
     "group_leader": {
-      "username": "weiouo-0817",
-      "commits": 24
+      "username": "lilil0724",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "NiNialpaca",
+        "username": "noobLeo536",
         "commits": 0
       }
     ]
@@ -234,96 +209,14 @@
     "status": "❌",
     "group_name": "Group 15",
     "group_leader": {
-      "username": "gamemode0701",
-      "commits": 11
+      "username": "minopeng",
+      "commits": 0
     },
     "group_members": [
       {
-        "username": "Tonyyu2403",
-        "commits": 32
-      }
-    ]
-  },
-  {
-    "status": "❌",
-    "group_name": "Group 16",
-    "group_leader": {
-      "username": "TerryCheese",
-      "commits": 8
-    },
-    "group_members": [
-      {
-        "username": "junlin27",
-        "commits": 22
-      }
-    ]
-  },
-  {
-    "status": "❌",
-    "group_name": "Group 17",
-    "group_leader": {
-      "username": "Miiaow3011",
-      "commits": 26
-    },
-    "group_members": [
-      {
-        "username": "bonnieliao774",
-        "commits": 54
-      },
-      {
-        "username": "emmazheng0318",
-        "commits": 21
-      }
-    ]
-  },
-  {
-    "status": "✅",
-    "group_name": "Group 18",
-    "group_leader": {
-      "username": "ChocomintTW",
-      "commits": 1
-    },
-    "group_members": [
-      {
-        "username": "TedChueh",
-        "commits": 12
-      },
-      {
-        "username": "pitinghsu",
+        "username": "KuoShengHsin",
         "commits": 0
       }
     ]
-  },
-  {
-    "status": "❌",
-    "group_name": "Group 19",
-    "group_leader": {
-      "username": "max052028",
-      "commits": 3
-    },
-    "group_members": [
-      {
-        "username": "113511080",
-        "commits": 0
-      }
-    ]
-  },
-  {
-    "status": "❌",
-    "group_name": "Group 20",
-    "group_leader": {
-      "username": "houyuankai",
-      "commits": 4
-    },
-    "group_members": []
-  },
-  {
-    "status": "✅",
-    "group_name": "Group 21",
-    "group_leader": {
-      "username": "0u88",
-      "commits": 12
-    },
-    "group_members": []
   }
 ]
