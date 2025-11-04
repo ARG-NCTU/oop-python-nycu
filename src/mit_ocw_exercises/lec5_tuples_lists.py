@@ -1,224 +1,64 @@
-#########################
-## EXAMPLE: returning a tuple
-#########################
-def quotient_and_remainder(x, y):
-    """
-    Function that returns the quotient and remainder of two numbers
-    x: int, y: int returns: tuple (quotient, remainder)
+# src/mit_ocw_exercises/lec5_tuples_lists.py
 
+from typing import Iterable, Tuple, List
+
+def quotient_and_remainder(x: int, y: int) -> Tuple[int, int]:
     """
-    q = x // y
-    r = x % y
-    return (q, r)
-    
-(quot, rem) = quotient_and_remainder(5,3)
-print(quot)
-print(rem)
+    Return (quotient, remainder) for integers x, y with y != 0.
+    """
+    if y == 0:
+        raise ZeroDivisionError("y must not be zero")
+    return (x // y, x % y)
 
 
-#########################
-## EXAMPLE: iterating over tuples
-#########################
-def get_data(aTuple):
+def get_data(aTuple: Tuple[Tuple[int, str], ...]) -> Tuple[int, int, int]:
     """
-    aTuple, tuple of tuples (int, string)
-    Extracts all integers from aTuple and sets 
-    them as elements in a new tuple. 
-    Extracts all unique strings from from aTuple 
-    and sets them as elements in a new tuple.
-    Returns a tuple of the minimum integer, the
-    maximum integer, and the number of unique strings
+    aTuple: tuple of (int, str)
+    Returns (min_int, max_int, num_unique_strings).
     """
-    nums = ()    # empty tuple
-    words = ()
+    if not aTuple:
+        raise ValueError("aTuple must not be empty")
+    nums: Tuple[int, ...] = ()
+    words: Tuple[str, ...] = ()
     for t in aTuple:
-        # concatenating with a singleton tuple
-        nums = nums + (t[0],)   
-        # only add words haven't added before
-        if t[1] not in words:   
-            words = words + (t[1],)
-    min_n = min(nums)
-    max_n = max(nums)
-    unique_words = len(words)
-    return (min_n, max_n, unique_words)
+        nums += (t[0],)
+        if t[1] not in words:
+            words += (t[1],)
+    return (min(nums), max(nums), len(words))
 
-test = ((1,"a"),(2, "b"),
-        (1,"a"),(7,"b"))
-(a, b, c) = get_data(test)
-print("a:",a,"b:",b,"c:",c)
 
-# apply to any data you want!
-tswift = ((2014,"Katy"),
-          (2014, "Harry"),
-          (2012,"Jake"), 
-          (2010,"Taylor"), 
-          (2008,"Joe"))    
-(min_year, max_year, num_people) = get_data(tswift)
-print("From", min_year, "to", max_year, \
-        "Taylor Swift wrote songs about", num_people, "people!")
-
-#########################
-## EXAMPLE: sum of elements in a list
-#########################
-def sum_elem_method1(L):
-  total = 0 
-  for i in range(len(L)): 
-      total += L[i] 
-  return total
-  
-def sum_elem_method2(L):
-    total = 0 
-    for i in L: 
-        total += i 
+def sum_elem_method1(L: Iterable[int]) -> int:
+    total = 0
+    for i, _ in enumerate(L):
+        total += list(L)[i]
     return total
-  
-print(sum_elem_method1([1,2,3,4]))
-print(sum_elem_method2([1,2,3,4]))
 
 
-#########################
-## EXAMPLE: various list operations
-## put print(L) at different locations to see how it gets mutated
-#########################
-L1 = [2,1,3]
-L2 = [4,5,6]
-L3 = L1 + L2
-L1.extend([0,6])
-
-L = [2,1,3,6,3,7,0]
-L.remove(2)
-L.remove(3)
-del(L[1])
-print(L.pop())
-
-s = "I<3 cs"
-print(list(s))
-print(s.split('<'))
-L = ['a', 'b', 'c']
-print(''.join(L))
-print('_'.join(L))
-
-L=[9,6,0,3]
-print(sorted(L))
-L.sort()
-L.reverse()
+def sum_elem_method2(L: Iterable[int]) -> int:
+    total = 0
+    for v in L:
+        total += v
+    return total
 
 
-#########################
-## EXAMPLE: aliasing
-#########################
-a = 1
-b = a
-print(a)
-print(b)
-
-warm = ['red', 'yellow', 'orange']
-hot = warm
-hot.append('pink')
-print(hot)
-print(warm)
-
-#########################
-## EXAMPLE: cloning
-#########################
-cool = ['blue', 'green', 'grey']
-chill = cool[:]
-chill.append('black')
-print(chill)
-print(cool)
-
-#########################
-## EXAMPLE: sorting with/without mutation
-#########################
-warm = ['red', 'yellow', 'orange']
-sortedwarm = warm.sort()
-print(warm)
-print(sortedwarm)
-
-cool = ['grey', 'green', 'blue']
-sortedcool = sorted(cool)
-print(cool)
-print(sortedcool)
-
-#########################
-## EXAMPLE: lists of lists of lists...
-#########################
-warm = ['yellow', 'orange']
-hot = ['red']
-brightcolors = [warm]
-brightcolors.append(hot)
-print(brightcolors)
-hot.append('pink')
-print(hot)
-print(brightcolors)
+def remove_dups(L1: List[int], L2: List[int]) -> None:
+    """
+    Mutates L1: remove any element that is also in L2.
+    (正確版，避免邊走邊砍造成漏刪)
+    """
+    i = 0
+    while i < len(L1):
+        if L1[i] in L2:
+            L1.pop(i)
+        else:
+            i += 1
 
 
-###############################
-## EXAMPLE: mutating a list while iterating over it
-###############################
-def remove_dups(L1, L2):
-    for e in L1:
-        if e in L2:
-            L1.remove(e)
-      
-def remove_dups_new(L1, L2):
-    L1_copy = L1[:]
-    for e in L1_copy:
+def remove_dups_new(L1: List[int], L2: List[int]) -> None:
+    """
+    Mutates L1: safe version using a copy.
+    """
+    for e in L1[:]:
         if e in L2:
             L1.remove(e)
 
-L1 = [1, 2, 3, 4]
-L2 = [1, 2, 5, 6]
-remove_dups(L1, L2)
-print(L1, L2)
-
-L1 = [1, 2, 3, 4]
-L2 = [1, 2, 5, 6]
-remove_dups_new(L1, L2)
-print(L1, L2)
-
-###############################
-## EXERCISE: Test yourself by predicting what the output is and 
-##           what gets mutated then check with the Python Tutor
-###############################
-cool = ['blue', 'green']
-warm = ['red', 'yellow', 'orange']
-print(cool)
-print(warm)
-
-colors1 = [cool]
-print(colors1)
-colors1.append(warm)
-print('colors1 = ', colors1)
-
-colors2 = [['blue', 'green'],
-          ['red', 'yellow', 'orange']]
-print('colors2 =', colors2)
-
-warm.remove('red') 
-print('colors1 = ', colors1)
-print('colors2 =', colors2)
-
-for e in colors1:
-    print('e =', e)
-
-for e in colors1:
-    if type(e) == list:
-        for e1 in e:
-            print(e1)
-    else:
-        print(e)
-
-flat = cool + warm
-print('flat =', flat)
-
-print(flat.sort())
-print('flat =', flat)
-
-new_flat = sorted(flat, reverse = True)
-print('flat =', flat)
-print('new_flat =', new_flat)
-
-cool[1] = 'black'
-print(cool)
-print(colors1)
