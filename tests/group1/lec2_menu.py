@@ -1,6 +1,6 @@
 import random
 
-class Food(object):
+class Food:
     """A food item with a name, value, and calories."""
     def __init__(self, n, v, w):
         self.name = n
@@ -20,9 +20,15 @@ class Food(object):
         return f"{self.name}: <{self.value}, {self.calories}>"
 
 
-class Menu(object):
+class Menu:
     """A menu of food items."""
-    def __init__(self, names=[], values=[], calories=[]):
+    def __init__(self, names=None, values=None, calories=None):
+        if names is None:
+            names = []
+        if values is None:
+            values = []
+        if calories is None:
+            calories = []
         self.foods = []
         for i in range(len(values)):
             self.foods.append(Food(names[i], values[i], calories[i]))
@@ -66,18 +72,15 @@ def greedy(items, max_cost, key_function):
 # --------------------- Recursive 0/1 Knapsack ---------------------
 def max_val(to_consider, avail):
     """Recursive brute-force search for the best combination."""
-    if to_consider == [] or avail == 0:
+    if not to_consider or avail == 0:
         result = (0, ())
     elif to_consider[0].get_cost() > avail:
         result = max_val(to_consider[1:], avail)
     else:
         next_item = to_consider[0]
-        # Case 1: Take item
         with_val, with_to_take = max_val(to_consider[1:], avail - next_item.get_cost())
         with_val += next_item.get_value()
-        # Case 2: Skip item
         without_val, without_to_take = max_val(to_consider[1:], avail)
-        # Choose better option
         if with_val > without_val:
             result = (with_val, with_to_take + (next_item,))
         else:
@@ -92,7 +95,7 @@ def fast_max_val(to_consider, avail, memo=None):
         memo = {}
     if (len(to_consider), avail) in memo:
         return memo[(len(to_consider), avail)]
-    elif to_consider == [] or avail == 0:
+    elif not to_consider or avail == 0:
         result = (0, ())
     elif to_consider[0].get_cost() > avail:
         result = fast_max_val(to_consider[1:], avail, memo)
@@ -128,22 +131,22 @@ def main():
     print(f"[Greedy by value] total value = {val}")
     print(Menu.get_foods_str(taken), "\n")
 
-    # Greedy by cost (choose lower cost first)
+    # Greedy by cost
     taken, val = greedy(foods, max_calories, lambda x: 1 / x.get_cost())
     print(f"[Greedy by cost] total value = {val}")
     print(Menu.get_foods_str(taken), "\n")
 
-    # Greedy by density (value per calorie)
+    # Greedy by density
     taken, val = greedy(foods, max_calories, Food.density)
     print(f"[Greedy by density] total value = {val}")
     print(Menu.get_foods_str(taken), "\n")
 
-    # Exhaustive recursion (brute force)
+    # Brute force
     val, taken = max_val(foods, max_calories)
-    print(f"[Exhaustive recursion] total value = {val}")
+    print(f"[Brute force recursion] total value = {val}")
     print(Menu.get_foods_str(taken), "\n")
 
-    # Memoized recursion (fast version)
+    # Memoized
     val, taken = fast_max_val(foods, max_calories)
     print(f"[Memoized recursion] total value = {val}")
     print(Menu.get_foods_str(taken), "\n")
