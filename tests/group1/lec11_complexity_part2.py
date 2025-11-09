@@ -71,4 +71,5 @@ def genPerms(L):
         for i in range(len(perm)+1):
             res.append(perm[:i] + [first] + perm[i:])
     return res
-print (genPerms(testList, 76))
+testSet = [1,2,3]
+print(genPerms(testSet))   
