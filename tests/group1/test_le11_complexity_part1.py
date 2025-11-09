@@ -33,3 +33,11 @@ def test_binary_search_random_sizes(n):
     L = sorted(random.sample(range(0, 1000), n))
     e = random.choice(L)
     assert binary_search(L, e) == True
+
+def test_difference_random_sizes():
+    random.seed(123)
+    L1 = sorted(random.sample(range(0, 1000), 50))
+    L2 = sorted(random.sample(range(0, 1000), 30))
+    result = difference(L1, L2)
+    for item in result:
+        assert item in L1 and item not in L2
