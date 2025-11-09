@@ -1,4 +1,5 @@
 import pytest
+import add_path
 from lec3_strings_algos import is_palindrome
 # ↑ replace 'your_module_filename' with the actual .py file name (without .py)
 

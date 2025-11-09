@@ -1,6 +1,6 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-
+import add_path
 from lec2_menu import Food, Menu, greedy, max_val, fast_max_val
 
 
