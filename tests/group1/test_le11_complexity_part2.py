@@ -83,3 +83,24 @@ def test_difference():
     L1 = [1, 2, 3, 4, 5]
     L2 = [2, 4]
     assert difference(L1, L2) == [1, 3, 5]
+
+def test_difference_random():
+    random.seed(42)
+    L1 = sorted(random.sample(range(50), 10))
+    L2 = sorted(random.sample(range(50), 5))
+    result = difference(L1, L2)
+    # 檢查結果是否正確
+    expected = [x for x in L1 if x not in L2]
+    assert expected == result
+@pytest.mark.parametrize("n", [10, 50, 100])
+def test_bisect_search1_random_sizes(n):
+    random.seed(123)
+    L = sorted(random.sample(range(0, 1000), n))
+    e = random.choice(L)
+    assert bisect_search1(L, e)
+@pytest.mark.parametrize("n", [10, 50, 100])
+def test_bisect_search2_random_sizes(n):
+    random.seed(123)
+    L = sorted(random.sample(range(0, 1000), n))
+    e = random.choice(L)
+    assert bisect_search2(L, e)
