@@ -41,3 +41,5 @@ def test_difference_random_sizes():
     result = difference(L1, L2)
     for item in result:
         assert item in L1 and item not in L2
+    expected = [item for item in L1 if item not in L2]
+    assert sorted(result) == sorted(expected)
