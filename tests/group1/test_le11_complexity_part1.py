@@ -43,3 +43,11 @@ def test_difference_random_sizes():
         assert item in L1 and item not in L2
     expected = [item for item in L1 if item not in L2]
     assert sorted(result) == sorted(expected)
+
+def test_union_random_sizes():
+    random.seed(123)
+    L1 = sorted(random.sample(range(0, 1000), 50))
+    L2 = sorted(random.sample(range(0, 1000), 30))
+    result = union(L1, L2)
+    expected = sorted(set(L1).union(set(L2)))
+    assert result == expected
