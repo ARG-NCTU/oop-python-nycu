@@ -60,6 +60,15 @@ def genSubsets(L):
 
 testSet = [1,2,3,4]
 print(genSubsets(testSet))
-testList = list(range(100))
-print(bisect_search1(testList, 76))
-print(bisect_search2(testList, 76))
+def genPerms(L):
+    res = []
+    if len(L) == 0:
+        return [[]] #list of empty list
+    first = L[0]
+    rest = L[1:]
+    permsWithoutFirst = genPerms(rest)
+    for perm in permsWithoutFirst:
+        for i in range(len(perm)+1):
+            res.append(perm[:i] + [first] + perm[i:])
+    return res
+print (genPerms(testList, 76))
