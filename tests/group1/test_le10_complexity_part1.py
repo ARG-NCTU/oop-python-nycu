@@ -46,3 +46,11 @@ def test_intersect_with_duplicates():
     L1 = [1, 2, 2, 3, 4]
     L2 = [2, 2, 4, 4, 5]
     assert intersect(L1, L2) == [2, 4]
+    
+    
+@pytest.mark.parametrize("n", [10, 50, 100])
+def test_search_random_sizes(n):
+    random.seed(123)
+    L = sorted(random.sample(range(0, 1000), n))
+    e = random.choice(L)
+    assert search(L, e)
