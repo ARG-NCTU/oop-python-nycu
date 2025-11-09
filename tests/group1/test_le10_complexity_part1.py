@@ -21,3 +21,28 @@ def test_search_not_found():
     L = [1, 3, 4, 5, 9, 18, 27]
     e = 10
     assert search(L, e) == False
+
+def test_isSubset_true():
+    L1 = [1, 3, 5]
+    L2 = [1, 2, 3, 4, 5]
+    assert isSubset(L1, L2) == True 
+
+def test_isSubset_false():
+    L1 = [1, 6]
+    L2 = [1, 2, 3, 4, 5]
+    assert isSubset(L1, L2) == False
+
+def test_intersect():
+    L1 = [1, 2, 3, 4, 5]
+    L2 = [4, 5, 6, 7, 8]
+    assert intersect(L1, L2) == [4, 5]
+
+def test_intersect_no_common():
+    L1 = [1, 2, 3]
+    L2 = [4, 5, 6]
+    assert intersect(L1, L2) == []
+
+def test_intersect_with_duplicates():
+    L1 = [1, 2, 2, 3, 4]
+    L2 = [2, 2, 4, 4, 5]
+    assert intersect(L1, L2) == [2, 4]
