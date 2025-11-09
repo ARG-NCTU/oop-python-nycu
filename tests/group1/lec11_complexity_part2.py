@@ -72,4 +72,4 @@ def genPerms(L):
             res.append(perm[:i] + [first] + perm[i:])
     return res
 testSet = []
-print(genPerms(testSet))   
+print(genPerms(testSet))
