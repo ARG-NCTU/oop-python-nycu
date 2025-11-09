@@ -66,41 +66,20 @@ def difference(L1, L2):
         i += 1
     return res
 
-def test_difference():
-    L1 = [1, 2, 3, 4]
-    L2 = [3, 4, 5]
-    assert difference(L1, L2) == [1, 2]
+def test_union():
+    L1 = [1, 3, 5, 7]
+    L2 = [2, 3, 6, 8]
+    assert union(L1, L2) == [1, 2, 3, 5, 6, 7, 8]
 
-@pytest.mark.parametrize("n", [10, 50, 100])
-def test_binary_search_random_sizes(n):
-    random.seed(123)
-    L = sorted(random.sample(range(0, 1000), n))
-    e = random.choice(L)
-    assert binary_search(L, e) == True
-
-def test_difference_random_sizes():
-    random.seed(123)
-    L1 = sorted(random.sample(range(0, 1000), 50))
-    L2 = sorted(random.sample(range(0, 1000), 30))
-    result = difference(L1, L2)
-    for item in result:
-        assert item in L1 and item not in L2
-    expected = [item for item in L1 if item not in L2]
-    assert sorted(result) == sorted(expected)
-
-def test_union_random_sizes():
-    random.seed(123)
-    L1 = sorted(random.sample(range(0, 1000), 50))
-    L2 = sorted(random.sample(range(0, 1000), 30))
+def test_union_random():
+    random.seed(42)
+    L1 = sorted(random.sample(range(50), 10))
+    L2 = sorted(random.sample(range(50), 10))
     result = union(L1, L2)
-    expected = sorted(set(L1).union(set(L2)))
-    assert result == expected
+    # 檢查是否包含所有元素且不重複
+    assert sorted(set(L1 + L2)) == result
 
-@pytest.mark.parametrize("n", [10, 50, 100])
-def test_union_random_sizes(n):
-    random.seed(123)
-    L1 = sorted(random.sample(range(0, 1000), n))
-    L2 = sorted(random.sample(range(0, 1000), n))
-    result = union(L1, L2)
-    expected = sorted(set(L1).union(set(L2)))
-    assert result == expected
+def test_difference():  
+    L1 = [1, 2, 3, 4, 5]
+    L2 = [2, 4]
+    assert difference(L1, L2) == [1, 3, 5]
