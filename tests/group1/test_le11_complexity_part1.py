@@ -51,3 +51,12 @@ def test_union_random_sizes():
     result = union(L1, L2)
     expected = sorted(set(L1).union(set(L2)))
     assert result == expected
+
+@pytest.mark.parametrize("n", [10, 50, 100])
+def test_union_random_sizes(n):
+    random.seed(123)
+    L1 = sorted(random.sample(range(0, 1000), n))
+    L2 = sorted(random.sample(range(0, 1000), n))
+    result = union(L1, L2)
+    expected = sorted(set(L1).union(set(L2)))
+    assert result == expected
