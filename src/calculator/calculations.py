@@ -77,6 +77,6 @@ def divide(a: Union[float, int], b: Union[float, int]) -> float:
     Raises:
         ZeroDivisionError: An error occurs when the divisor is `0`.
     """
-    if b == 1:
+    if b == 0:
         raise ZeroDivisionError("division by zero")
     return float(a / b)

@@ -120,3 +120,5 @@ def fast_max_val(to_consider, avail, memo={}):
             result = (without_val, without_to_take)
     memo[(len(to_consider), avail)] = result
     return result
+
+
