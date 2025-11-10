@@ -4,23 +4,21 @@ import pytest
 import numpy as np
 
 def test_bubble_sort():
-    lst = [5, 3, 8, 6, 2]
-    # use bubble_sort_np which returns the sorted list
-    sorted_lst = lec12.bubble_sort_np(lst)
-    assert sorted_lst == [2, 3, 5, 6, 8]
+    L = [5, 3, 2, 4, 1]
+    sorted_L = lec12.bubble_sort(L.copy())
+    assert sorted_L == [1, 2, 3, 4, 5]
+    assert L == [5, 3, 2, 4, 1]  # Ensure original list is not modified
 
 def test_selection_sort():
-    lst = [64, 25, 12, 22, 11]
-    # use selection_sort_np which returns the sorted list
-    # selection_sort_np performs in-place sorting and returns None
-    res = lec12.selection_sort_np(lst)
-    assert lst == [11, 12, 22, 25, 64]
+    L = [64, 25, 12, 22, 11]
+    lec12.selection_sort(L)
+    assert L == [11, 12, 22, 25, 64]
 
-def test_insertion_sort():
-    lst = [12, 11, 13, 5, 6]
-    # use merge_sort_np as an available sorting implementation
-    sorted_lst = lec12.merge_sort_np(lst)
-    assert sorted_lst == [5, 6, 11, 12, 13]
+def test_merge_sort():
+    L = [38, 27, 43, 3, 9, 82, 10]
+    sorted_L = lec12.merge_sort(L.copy())
+    assert sorted_L == [3, 9, 10, 27, 38, 43, 82]
+    assert L == [38, 27, 43, 3, 9, 82, 10]  # Ensure original list is not modified
 
 
 def test_bubble_sort_np():
