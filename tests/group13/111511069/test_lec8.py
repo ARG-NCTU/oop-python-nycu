@@ -50,3 +50,13 @@ def test_fraction_add_sub():
 
     f_sub = f1 - f2
     assert float(f_sub) == pytest.approx(n1/d1 - n2/d2)
+
+def test_fraction_inverse():
+    n = random.randint(1, 100)
+    d = random.randint(1, 100)
+
+    f = l8.Fraction(n, d)
+    f_inv = f.inverse()
+
+    assert f_inv.num == d and f_inv.denom == n
+    assert float(f_inv) == pytest.approx(d / n)
