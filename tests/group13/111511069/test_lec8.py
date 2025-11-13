@@ -20,6 +20,8 @@ def test_coordinate():
     assert str(c1) == f"<{x1},{y1}>"
     assert str(c2) == f"<{x2},{y2}>"
 
+########################
+
 def test_fraction():
     n1 = random.randint(1, 100)
     d1 = random.randint(1, 100)
@@ -87,3 +89,22 @@ def test_fraction_multiply_divide():
         f1 * f2
     with pytest.raises(TypeError):
         f1 / f2
+
+########################
+
+def test_intset():
+    s = l8.intSet()
+    assert str(s) == "{}"
+
+    assert s.insert(3) == None
+    assert s.insert(5) == None
+    assert s.member(3) == True
+    assert s.member(4) == False
+    assert str(s) == "{3,5}"
+
+    assert s.remove(3) == None
+    assert s.member(3) == False
+    assert str(s) == "{5}"
+
+    with pytest.raises(ValueError):
+        s.remove(10)
