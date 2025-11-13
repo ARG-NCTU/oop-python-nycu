@@ -3,6 +3,8 @@ import mit_ocw_exercises.lec9_inheritance as l9 # type: ignore
 import pytest
 
 import random
+from io import StringIO
+import sys
 
 def test_animal():
     age = random.randint(1, 20)
@@ -17,15 +19,54 @@ def test_animal():
 def test_cat():
     age = random.randint(1, 20)
     c = l9.Cat(age)
-    c.set_name("weiss")
-    assert str(c) == f"cat:weiss:{age}"
+    name = "weiss"
+    c.set_name(name)
+    assert str(c) == f"cat:{name}:{age}"
     assert c.get_age() == age
 
     # Capture the output of speak
-    from io import StringIO
-    import sys
     captured_output = StringIO()
     sys.stdout = captured_output
     c.speak()
     sys.stdout = sys.__stdout__
     assert captured_output.getvalue().strip() == "meow"
+
+def test_person():
+    age = random.randint(1, 20)
+    name = "yang"
+    p = l9.Person(name, age)
+    assert str(p) == f"person:{name}:{age}"
+    assert p.get_age() == age
+    assert p.get_name() == name
+    assert p.get_friends() == []
+
+    # Capture the output of speak
+    captured_output = StringIO()
+    sys.stdout = captured_output
+    p.speak()
+    sys.stdout = sys.__stdout__
+    assert captured_output.getvalue().strip() == "hello"
+
+def test_person_with_friends():
+    p = l9.Person("alice", 25)
+
+    p.add_friend("charlie")
+    p.add_friend("david")
+    assert p.get_friends() == ["charlie", "david"]
+
+    # Test adding the same friend again
+    p.add_friend("charlie")
+    assert p.get_friends() == ["charlie", "david"]
+
+
+def test_person_age_diff():
+    p1 = l9.Person("alice", 25)
+    p2 = l9.Person("bob", 30)
+
+    # Capture the output of age_diff
+    captured_output = StringIO()
+    sys.stdout = captured_output
+    p1.age_diff(p2)
+    sys.stdout = sys.__stdout__
+    expected_diff = abs(25 - 30)
+    assert captured_output.getvalue().strip() == f"{expected_diff} year difference"
