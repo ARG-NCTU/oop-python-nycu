@@ -105,3 +105,44 @@ def test_student_no_major():
     assert str(s) == f"student:{name}:{age}:None"
 
 ##########################
+
+def test_rabbit():
+    l9.Rabbit.tag = 1
+
+    # Test rebbit creation
+    age1 = random.randint(1, 10)
+    age2 = random.randint(1, 10)
+    age3 = random.randint(1, 10)
+    r1 = l9.Rabbit(age1)
+    r2 = l9.Rabbit(age2)
+    r3 = l9.Rabbit(age3)
+
+    assert str(r1) == f"rabbit:001"
+    assert str(r2) == f"rabbit:002"
+    assert str(r3) == f"rabbit:003"
+
+    assert r1.get_age() == age1
+    assert r2.get_age() == age2
+    assert r3.get_age() == age3
+
+    assert r1.parent1 == None and r1.parent2 == None
+    assert r2.parent1 == None and r2.parent2 == None
+    assert r3.parent1 == None and r3.parent2 == None
+
+def test_rabbit_produce():
+    l9.Rabbit.tag = 1
+
+    r1 = l9.Rabbit(random.randint(1, 10))
+    r2 = l9.Rabbit(random.randint(1, 10))
+
+    # Test rebbit addition
+    r3 = r1 + r2
+    assert str(r3) == "rabbit:003"
+    assert r3.get_parent1() in [r1, r2]
+    assert r3.get_parent2() in [r1, r2]
+
+    # Test rabbit equality
+    r4 = r2 + r1
+    assert r3 == r4
+    r5 = r1 + r3
+    assert r3 != r5
