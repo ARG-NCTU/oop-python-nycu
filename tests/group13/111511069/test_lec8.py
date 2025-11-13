@@ -17,3 +17,4 @@ def test_coordinate():
     expected_distance = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
     assert c1.distance(c2) == pytest.approx(expected_distance)
     assert str(c1) == f"<{x1},{y1}>"
+    assert str(c2) == f"<{x2},{y2}>"
