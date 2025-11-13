@@ -16,6 +16,8 @@ def test_animal():
     a.set_name()
     assert str(a) == f"animal::{age}"
 
+#########################
+
 def test_cat():
     age = random.randint(1, 20)
     c = l9.Cat(age)
@@ -30,6 +32,8 @@ def test_cat():
     c.speak()
     sys.stdout = sys.__stdout__
     assert captured_output.getvalue().strip() == "meow"
+
+#########################
 
 def test_person():
     age = random.randint(1, 20)
@@ -70,3 +74,25 @@ def test_person_age_diff():
     sys.stdout = sys.__stdout__
     expected_diff = abs(25 - 30)
     assert captured_output.getvalue().strip() == f"{expected_diff} year difference"
+
+#########################
+
+def test_student():
+    age = random.randint(1, 20)
+    name = "bob"
+    s = l9.Student(name, age)
+    assert str(s) == f"student:{name}:{age}:None"
+    assert s.get_age() == age
+    assert s.get_name() == name
+
+    major = "Computer Science"
+    s.change_major(major)
+    assert str(s) == f"student:{name}:{age}:{major}"
+
+    # Capture the output of speak
+    captured_output = StringIO()
+    sys.stdout = captured_output
+    s.speak()
+    sys.stdout = sys.__stdout__
+    output = captured_output.getvalue().strip()
+    assert output in ["i have homework", "i need sleep", "i should eat", "i am watching tv"]
