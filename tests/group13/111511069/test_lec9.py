@@ -80,8 +80,9 @@ def test_person_age_diff():
 def test_student():
     age = random.randint(1, 20)
     name = "bob"
-    s = l9.Student(name, age)
-    assert str(s) == f"student:{name}:{age}:None"
+    major = "Mathematics"
+    s = l9.Student(name, age, major)
+    assert str(s) == f"student:{name}:{age}:{major}"
     assert s.get_age() == age
     assert s.get_name() == name
 
@@ -96,3 +97,11 @@ def test_student():
     sys.stdout = sys.__stdout__
     output = captured_output.getvalue().strip()
     assert output in ["i have homework", "i need sleep", "i should eat", "i am watching tv"]
+
+def test_student_no_major():
+    age = random.randint(1, 20)
+    name = "carol"
+    s = l9.Student(name, age)
+    assert str(s) == f"student:{name}:{age}:None"
+
+##########################
