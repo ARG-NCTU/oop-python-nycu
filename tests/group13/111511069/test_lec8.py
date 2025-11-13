@@ -60,3 +60,30 @@ def test_fraction_inverse():
 
     assert f_inv.num == d and f_inv.denom == n
     assert float(f_inv) == pytest.approx(d / n)
+
+def test_fraction_invalid_init():
+    with pytest.raises(AssertionError):
+        l8.Fraction(1.5, 2)
+    with pytest.raises(AssertionError):
+        l8.Fraction(1, '2')
+    with pytest.raises(AssertionError):
+        l8.Fraction('1', 2.0)
+
+def test_fraction_zero_denom():
+    f = l8.Fraction(1, 0)
+    with pytest.raises(ZeroDivisionError):
+        float(f)  # This will raise ZeroDivisionError when converting to float
+
+def test_fraction_multiply_divide():
+    n1 = random.randint(1, 100)
+    d1 = random.randint(1, 100)
+    n2 = random.randint(1, 100)
+    d2 = random.randint(1, 100)
+
+    f1 = l8.Fraction(n1, d1)
+    f2 = l8.Fraction(n2, d2)
+
+    with pytest.raises(TypeError):
+        f1 * f2
+    with pytest.raises(TypeError):
+        f1 / f2
