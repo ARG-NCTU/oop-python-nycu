@@ -39,3 +39,9 @@ def test_avg():
     assert avg([0, 0, 0]) == 0.0
     assert avg([95, 84, 91]) == 90.0
     assert avg([45, 87, 62, 97, 58]) == 69.8
+
+def test_avg_capfd(capfd):
+    try:
+        avg([])
+    except AssertionError:
+        pass

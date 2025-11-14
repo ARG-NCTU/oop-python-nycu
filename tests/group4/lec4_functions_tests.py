@@ -10,11 +10,27 @@ def test_is_even_with_return():
     assert is_even_with_return(0) == True
     assert is_even_with_return(1) == False
 
+def test_is_even_with_return_output(capsys):
+    is_even_with_return(4)
+    captured = capsys.readouterr()
+    assert captured.out == 'with return\n'
+    is_even_with_return(7)
+    captured = capsys.readouterr()
+    assert captured.out == 'with return\n'
+
 def test_is_even_without_return():
     assert is_even_without_return(4) is None
     assert is_even_without_return(7) is None
     assert is_even_without_return(0) is None
-    assert is_even_without_return(1) is None    
+    assert is_even_without_return(1) is None
+
+def test_is_even_without_return_output(capsys):
+    is_even_without_return(4)
+    captured = capsys.readouterr()
+    assert captured.out == 'without return\n'
+    is_even_without_return(7)
+    captured = capsys.readouterr()
+    assert captured.out == 'without return\n'    
 
 def test_is_even():
     assert is_even(4) == True

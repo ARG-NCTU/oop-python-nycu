@@ -25,6 +25,12 @@ def test_cat():
     assert c.get_age() == 10
     assert str(c) == "cat:kitty:10"
 
+def test_cat_speak(capsys):
+    c = Cat(2)
+    c.speak()
+    captured = capsys.readouterr()
+    assert captured.out == "meow\n"
+
 def test_person():
     p1 = Person("Alice", 30)
     p2 = Person("Bob", 25)
@@ -38,6 +44,12 @@ def test_person():
     p1.set_age(35)
     assert p1.get_age() == 35
     assert str(p1) == "person:Alice:35"
+
+def test_person_speak(capsys):
+    p = Person("Eve", 28)
+    p.speak()
+    captured = capsys.readouterr()
+    assert captured.out == "hello\n"
 
 def test_student():
     s = Student("Eve", 18, "Computer Science")
@@ -53,6 +65,12 @@ def test_student():
     assert str(s) == "student:Tom:21:Physics"
     s_no_major = Student("Grace", 22)
     assert str(s_no_major) == "student:Grace:22:None"
+
+def test_student_speak(capsys):
+    s = Student("Hank", 20, "Math")
+    s.speak()
+    captured = capsys.readouterr()
+    assert captured.out != "hello\n"
 
 def test_Rabbit():
     r1 = Rabbit(2, "r0")
