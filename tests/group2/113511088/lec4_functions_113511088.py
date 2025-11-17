@@ -109,6 +109,20 @@ def func_c(z):
     return z()
 
 
+#########################
+# EXAMPLE: returning function objects
+#########################
+
+
+def f():
+    """回傳一個把兩個參數相加的函式 x。"""
+
+    def x(a, b):
+        return a + b
+
+    return x
+
+
 # 直接執行這個檔案時的小 demo（交作業不一定要用到）
 if __name__ == "__main__":
     # 1. print / return 的例子
@@ -123,7 +137,11 @@ if __name__ == "__main__":
     # 2. 重複呼叫 bisection 近似立方根
     print_bisection_cuberoot_series()
 
-    # 3. functions as arguments 的例子
+    # 3. functions as arguments
     print(func_a())
     print(5 + func_b(2))
     print(func_c(func_a))
+
+    # 4. returning function objects
+    val = f()(3, 4)
+    print(val)

@@ -10,6 +10,7 @@ from lec4_functions_113511088 import (
     func_a,
     func_b,
     func_c,
+    f,
 )
 
 # ----------------------
@@ -131,3 +132,19 @@ def test_func_c_calls_func_a(capsys):
     # 呼叫順序：先 inside func_c，再 inside func_a
     assert result is None
     assert lines == ["inside func_c", "inside func_a"]
+
+
+# ----------------------
+# returning function objects
+# ----------------------
+
+
+def test_f_returns_function_and_adds():
+    add_fn = f()
+    assert callable(add_fn)
+    assert add_fn(3, 4) == 7
+    assert add_fn(10, -2) == 8
+
+
+def test_f_direct_call():
+    assert f()(5, 6) == 11
