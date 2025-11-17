@@ -1,26 +1,32 @@
 ####################
-# EXAMPLE: while loops and strings
-# CHALLENGE: rewrite while loop with a for loop
+# EXAMPLE: perfect cube
 ####################
 
-AN_LETTERS = "aefhilmnorsxAEFHILMNORSX"
-
-
-def cheer_word(word: str, times: int) -> None:
+def find_perfect_cube_root(cube: int):
     """
-    模仿原本的程式：
-      1. 逐字母喊口號，遇到 an_letters 裡的字母用 'an'，其餘用 'a'
-      2. 印出 'What does that spell?'
-      3. 印出 times 次的「word !!!」
-    這裡用 for 迴圈來實作（不用 while）
+    用 for 迴圈從 0 ~ |cube| 找立方根。
+    如果 cube 是 perfect cube，回傳整數立方根；
+    否則回傳 None。
+    支援負數：例如 cube = -27 -> 回傳 -3。
     """
-    # 用 for 迴圈取代原本的 while 迴圈
-    for char in word:
-        if char in AN_LETTERS:
-            print("Give me an " + char + "! " + char)
-        else:
-            print("Give me a  " + char + "! " + char)
+    limit = abs(cube)
+    for guess in range(limit + 1):
+        if guess ** 3 == limit:
+            # 處理負數
+            return guess if cube >= 0 else -guess
+    return None
 
-    print("What does that spell?")
-    for _ in range(times):
-        print(word, "!!!")
+
+def print_cube_root(cube: int) -> None:
+    """
+    模仿原本的範例輸出格式：
+      如果是 perfect cube:
+          Cube root of <cube> is <guess>
+      否則：
+          <cube> is not a perfect cube
+    """
+    root = find_perfect_cube_root(cube)
+    if root is not None:
+        print("Cube root of", cube, "is", root)
+    else:
+        print(f"{cube} is not a perfect cube")
