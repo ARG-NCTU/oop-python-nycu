@@ -5,7 +5,14 @@ from lec4_functions_113511088 import (
     is_even_without_return,
     is_even,
     print_even_or_not_upto,
+    bisection_cuberoot_approx,
+    print_bisection_cuberoot_series,
 )
+
+
+# ----------------------
+# combinations of print and return
+# ----------------------
 
 
 def test_is_even_with_return_true_and_false(capsys):
@@ -29,9 +36,7 @@ def test_is_even_without_return_only_print(capsys):
     captured = capsys.readouterr()
     lines = captured.out.strip().splitlines()
 
-    # 不應該有回傳值
     assert result is None
-    # 會印出 without return
     assert lines[-1] == "without return"
 
 
@@ -49,10 +54,7 @@ def test_print_even_or_not_upto_6(capsys):
     captured = capsys.readouterr()
     lines = captured.out.strip().splitlines()
 
-    # 第一行標題
     assert lines[0] == "All numbers between 0 and 6: even or not"
-
-    # 後面 6 行是 0~5 的奇偶
     expected = [
         "0 even",
         "1 odd",
@@ -62,3 +64,38 @@ def test_print_even_or_not_upto_6(capsys):
         "5 odd",
     ]
     assert lines[1:] == expected
+
+
+# ----------------------
+# applying functions many times: bisection_cuberoot_approx
+# ----------------------
+
+
+def test_bisection_cuberoot_approx_values():
+    # 測試原本 while 迴圈會跑到的幾個 x
+    epsilon = 0.01
+    for x in [1, 10, 100, 1000, 10000]:
+        approx = bisection_cuberoot_approx(x, epsilon)
+        assert abs(approx**3 - x) < epsilon
+
+
+def test_print_bisection_cuberoot_series_default(capsys):
+    # 對應原本 x = 1; x *= 10; 到 10000
+    print_bisection_cuberoot_series()
+    captured = capsys.readouterr()
+    lines = captured.out.strip().splitlines()
+
+    # 應該有 5 行：對應 x = 1, 10, 100, 1000, 10000
+    assert len(lines) == 5
+
+    xs = [1, 10, 100, 1000, 10000]
+    epsilon = 0.01
+    for line, x in zip(lines, xs):
+        # line 形式類似："0.999... is close to cube root of 1"
+        parts = line.split()
+        approx_str = parts[0]
+        tail = " ".join(parts[1:])
+        assert tail == f"is close to cube root of {x}"
+
+        approx = float(approx_str)
+        assert abs(approx**3 - x) < epsilon
