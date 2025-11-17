@@ -1,150 +1,228 @@
-import pytest
-
-from lec4_functions_113511088 import (
-    is_even_with_return,
-    is_even_without_return,
-    is_even,
-    print_even_or_not_upto,
-    bisection_cuberoot_approx,
-    print_bisection_cuberoot_series,
-    func_a,
-    func_b,
-    func_c,
-    f,
-)
-
-# ----------------------
-# combinations of print and return
-# ----------------------
+#########################
+# EXAMPLE: combinations of print and return
+#########################
 
 
-def test_is_even_with_return_true_and_false(capsys):
-    # 測試偶數
-    result = is_even_with_return(4)
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
-    assert result is True
-    assert lines[-1] == "with return"
-
-    # 測試奇數
-    result = is_even_with_return(3)
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
-    assert result is False
-    assert lines[-1] == "with return"
+def is_even_with_return(i: int) -> bool:
+    """ 
+    Input: i, a positive int
+    Returns True if i is even, otherwise False
+    """
+    print("with return")
+    remainder = i % 2
+    return remainder == 0
 
 
-def test_is_even_without_return_only_print(capsys):
-    result = is_even_without_return(3)
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
+def is_even_without_return(i: int) -> None:
+    """ 
+    Input: i, a positive int
+    Does not return anything (回傳 None)
+    """
+    print("without return")
+    remainder = i % 2
+    # 沒有 return → Python 會自動回傳 None
 
-    assert result is None
-    assert lines[-1] == "without return"
+
+# Simple is_even function definition
+def is_even(i: int) -> bool:
+    """ 
+    Input: i, a positive int
+    Returns True if i is even, otherwise False
+    """
+    remainder = i % 2
+    return remainder == 0
 
 
-def test_is_even_on_range_0_to_9():
-    expected_even = {0, 2, 4, 6, 8}
-    for i in range(10):
-        if i in expected_even:
-            assert is_even(i) is True
+def print_even_or_not_upto(limit: int) -> None:
+    """
+    模仿原本程式：
+      print("All numbers between 0 and 20: even or not")
+      for i in range(20): ...
+    只是把 20 換成參數 limit。
+    """
+    print(f"All numbers between 0 and {limit}: even or not")
+    for n in range(limit):
+        if is_even(n):
+            print(n, "even")
         else:
-            assert is_even(i) is False
+            print(n, "odd")
 
 
-def test_print_even_or_not_upto_6(capsys):
-    print_even_or_not_upto(6)
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
-
-    assert lines[0] == "All numbers between 0 and 6: even or not"
-    expected = [
-        "0 even",
-        "1 odd",
-        "2 even",
-        "3 odd",
-        "4 even",
-        "5 odd",
-    ]
-    assert lines[1:] == expected
+#########################
+# EXAMPLE: applying functions to repeat same task many times
+#########################
 
 
-# ----------------------
-# applying functions many times: bisection_cuberoot_approx
-# ----------------------
+def bisection_cuberoot_approx(x: float, epsilon: float) -> float:
+    """
+    Input: x, a positive number
+    Uses bisection to approximate the cube root of x to within epsilon
+    Returns: a float approximating the cube root of x
+    """
+    low = 0.0
+    high = x
+    guess = (high + low) / 2.0
+    while abs(guess ** 3 - x) >= epsilon:
+        if guess ** 3 < x:
+            low = guess
+        else:
+            high = guess
+        guess = (high + low) / 2.0
+    return guess
 
 
-def test_bisection_cuberoot_approx_values():
-    epsilon = 0.01
-    for x in [1, 10, 100, 1000, 10000]:
+def print_bisection_cuberoot_series(
+    start: int = 1, stop: int = 10000, factor: int = 10, epsilon: float = 0.01
+) -> None:
+    """
+    模仿原本的程式：
+
+        x = 1
+        while x <= 10000:
+            approx = bisection_cuberoot_approx(x, 0.01)
+            print(approx, "is close to cube root of", x)
+            x *= 10
+    """
+    x = start
+    while x <= stop:
         approx = bisection_cuberoot_approx(x, epsilon)
-        assert abs(approx ** 3 - x) < epsilon
+        print(approx, "is close to cube root of", x)
+        x *= factor
 
 
-def test_print_bisection_cuberoot_series_default(capsys):
+#########################
+# EXAMPLE: functions as arguments
+#########################
+
+
+def func_a():
+    print("inside func_a")
+
+
+def func_b(y):
+    print("inside func_b")
+    return y
+
+
+def func_c(z):
+    print("inside func_c")
+    return z()
+
+
+#########################
+# EXAMPLE: returning function objects
+#########################
+
+
+def f():
+    """回傳一個把兩個參數相加的函式 x。"""
+
+    def x(a, b):
+        return a + b
+
+    return x
+
+
+#########################
+# EXAMPLE: shows accessing variables outside scope
+#########################
+
+
+def scope_example_f():
+    """
+    對應原本：
+
+        def f(y):
+            x = 1
+            x += 1
+            print(x)
+        x = 5
+        f(x)
+        print(x)
+
+    輸出：
+        2
+        5
+    """
+
+    def f_inner(y):
+        x = 1
+        x += 1
+        print(x)
+
+    x = 5
+    f_inner(x)
+    print(x)
+
+
+def scope_example_g():
+    """
+    對應原本：
+
+        def g(y):
+            print(x)
+            print(x+1)
+        x = 5
+        g(x)
+        print(x)
+
+    輸出：
+        5
+        6
+        5
+    """
+
+    def g_inner(y):
+        print(x)
+        print(x + 1)
+
+    x = 5
+    g_inner(x)
+    print(x)
+
+
+def scope_example_h():
+    """
+    對應原本：
+
+        def h(y):
+            pass
+            # x += 1
+        x = 5
+        h(x)
+        print(x)
+
+    這裡只保留「不動到 x」的效果，輸出：
+        5
+    """
+
+    def h_inner(y):
+        pass  # 不動 x
+
+    x = 5
+    h_inner(x)
+    print(x)
+
+
+# 直接執行這個檔案時的小 demo（不是 pytest 必要的）
+if __name__ == "__main__":
+    is_even_with_return(3)
+    print(is_even_with_return(3))
+
+    is_even_without_return(3)
+    print(is_even_without_return(3))
+
+    print_even_or_not_upto(10)
+
     print_bisection_cuberoot_series()
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
 
-    # 5 行：1, 10, 100, 1000, 10000
-    assert len(lines) == 5
+    print(func_a())
+    print(5 + func_b(2))
+    print(func_c(func_a))
 
-    xs = [1, 10, 100, 1000, 10000]
-    epsilon = 0.01
-    for line, x in zip(lines, xs):
-        parts = line.split()
-        approx_str = parts[0]
-        tail = " ".join(parts[1:])
-        assert tail == f"is close to cube root of {x}"
+    val = f()(3, 4)
+    print(val)
 
-        approx = float(approx_str)
-        assert abs(approx ** 3 - x) < epsilon
-
-
-# ----------------------
-# functions as arguments
-# ----------------------
-
-
-def test_func_a(capsys):
-    result = func_a()
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
-
-    assert result is None
-    assert lines == ["inside func_a"]
-
-
-def test_func_b(capsys):
-    result = func_b(7)
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
-
-    assert result == 7
-    assert lines == ["inside func_b"]
-
-
-def test_func_c_calls_func_a(capsys):
-    result = func_c(func_a)
-    captured = capsys.readouterr()
-    lines = captured.out.strip().splitlines()
-
-    # 呼叫順序：先 inside func_c，再 inside func_a
-    assert result is None
-    assert lines == ["inside func_c", "inside func_a"]
-
-
-# ----------------------
-# returning function objects
-# ----------------------
-
-
-def test_f_returns_function_and_adds():
-    add_fn = f()
-    assert callable(add_fn)
-    assert add_fn(3, 4) == 7
-    assert add_fn(10, -2) == 8
-
-
-def test_f_direct_call():
-    assert f()(5, 6) == 11
+    scope_example_f()
+    scope_example_g()
+    scope_example_h()
