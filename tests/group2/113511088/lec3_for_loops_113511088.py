@@ -1,48 +1,54 @@
 ####################
-# EXAMPLE: approximate cube root
+# EXAMPLE: bisection cube root (only positive cubes!)
 ####################
 
 
-def approximate_cube_root(cube: float, epsilon: float = 0.1, increment: float = 0.01):
+def bisection_cube_root(cube: float, epsilon: float = 0.01):
     """
-    依照題目的 approximate cube root 演算法：
-        guess 從 0 開始、每次加 increment
-        while abs(guess**3 - cube) >= epsilon and guess <= cube:
-            更新 guess 與 num_guesses
+    用二分搜尋法找 cube 的立方根，模仿題目中的程式：
 
-    回傳：(guess, num_guesses, success)
-      - guess: 最後的猜測值
-      - num_guesses: 一共嘗試了幾次
-      - success: 是否在誤差 epsilon 以內
-    （這個版本只考慮 cube >= 0，和原範例一致）
+        low = 0
+        high = cube
+        guess = (high + low) / 2.0
+        while abs(guess**3 - cube) >= epsilon:
+            ...
+
+    限制：
+        - 僅處理 cube > 0，和原註解一致（only positive cubes）
+        - cube < 1 時，原始版本 upper bound < 實際根，所以不保證正確
+
+    回傳：(guess, num_guesses)
+        guess       : 最後的猜測值
+        num_guesses : while 迴圈跑了幾次
     """
-    guess = 0.0
+    if cube <= 0:
+        raise ValueError("bisection_cube_root only supports cube > 0.")
+
+    low = 0.0
+    high = cube
+    guess = (high + low) / 2.0
     num_guesses = 0
 
-    while abs(guess ** 3 - cube) >= epsilon and guess <= cube:
-        guess += increment
+    while abs(guess ** 3 - cube) >= epsilon:
+        if guess ** 3 < cube:
+            # look only in upper half search space
+            low = guess
+        else:
+            # look only in lower half search space
+            high = guess
+        guess = (high + low) / 2.0
         num_guesses += 1
 
-    success = abs(guess ** 3 - cube) < epsilon
-    return guess, num_guesses, success
+    return guess, num_guesses
 
 
-def print_approximate_cube_root(
-    cube: float, epsilon: float = 0.1, increment: float = 0.01
-) -> None:
+def print_bisection_cube_root(cube: float, epsilon: float = 0.01) -> None:
     """
-    完全模仿原來 script 的輸出格式：
+    完全照原本 script 的輸出格式：
 
         num_guesses = <num_guesses>
-        <guess> is close to the cube root of <cube>    (成功)
-    或是：
-        num_guesses = <num_guesses>
-        Failed on cube root of <cube> with these parameters.  (失敗)
+        <guess> is close to the cube root of <cube>
     """
-    guess, num_guesses, success = approximate_cube_root(cube, epsilon, increment)
-
+    guess, num_guesses = bisection_cube_root(cube, epsilon)
     print("num_guesses =", num_guesses)
-    if not success:
-        print("Failed on cube root of", cube, "with these parameters.")
-    else:
-        print(guess, "is close to the cube root of", cube)
+    print(guess, "is close to the cube root of", cube)
