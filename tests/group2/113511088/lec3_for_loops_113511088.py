@@ -1,16 +1,26 @@
 ####################
-# EXAMPLE: for loops over strings
+# EXAMPLE: while loops and strings
+# CHALLENGE: rewrite while loop with a for loop
 ####################
 
-def print_i_or_u_by_index(s: str) -> None:
-    """用 index 走訪字串，遇到 i 或 u 就印一句話"""
-    for index in range(len(s)):
-        if s[index] == 'i' or s[index] == 'u':
-            print("There is an i or u")
+AN_LETTERS = "aefhilmnorsxAEFHILMNORSX"
 
 
-def print_i_or_u_by_char(s: str) -> None:
-    """直接用字元走訪字串，遇到 i 或 u 就印一句話"""
-    for char in s:
-        if char == 'i' or char == 'u':
-            print("There is an i or u")
+def cheer_word(word: str, times: int) -> None:
+    """
+    模仿原本的程式：
+      1. 逐字母喊口號，遇到 an_letters 裡的字母用 'an'，其餘用 'a'
+      2. 印出 'What does that spell?'
+      3. 印出 times 次的「word !!!」
+    這裡用 for 迴圈來實作（不用 while）
+    """
+    # 用 for 迴圈取代原本的 while 迴圈
+    for char in word:
+        if char in AN_LETTERS:
+            print("Give me an " + char + "! " + char)
+        else:
+            print("Give me a  " + char + "! " + char)
+
+    print("What does that spell?")
+    for _ in range(times):
+        print(word, "!!!")
