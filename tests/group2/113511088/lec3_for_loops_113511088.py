@@ -1,47 +1,48 @@
 ####################
-# EXAMPLE: guess and check cube root
+# EXAMPLE: approximate cube root
 ####################
 
 
-def guess_and_check_cube_root(cube: int):
+def approximate_cube_root(cube: float, epsilon: float = 0.1, increment: float = 0.01):
     """
-    模仿題目中的 guess-and-check 演算法：
-      for guess in range(abs(cube)+1):
-          if guess**3 >= abs(cube):
-              break
-      if guess**3 != abs(cube): -> not perfect cube
-      else: 處理負號、回傳 guess
+    依照題目的 approximate cube root 演算法：
+        guess 從 0 開始、每次加 increment
+        while abs(guess**3 - cube) >= epsilon and guess <= cube:
+            更新 guess 與 num_guesses
 
-    回傳值：
-      - 如果 cube 是 perfect cube，回傳整數立方根 (可為負數)
-      - 否則回傳 None
+    回傳：(guess, num_guesses, success)
+      - guess: 最後的猜測值
+      - num_guesses: 一共嘗試了幾次
+      - success: 是否在誤差 epsilon 以內
+    （這個版本只考慮 cube >= 0，和原範例一致）
     """
-    abs_cube = abs(cube)
-    for guess in range(abs_cube + 1):
-        if guess ** 3 >= abs_cube:
-            # 找到第一個立方 >= abs(cube)，就停止搜尋
-            break
+    guess = 0.0
+    num_guesses = 0
 
-    if guess ** 3 != abs_cube:
-        return None
+    while abs(guess ** 3 - cube) >= epsilon and guess <= cube:
+        guess += increment
+        num_guesses += 1
 
-    # 是 perfect cube，處理負數情況
-    if cube < 0:
-        guess = -guess
-    return guess
+    success = abs(guess ** 3 - cube) < epsilon
+    return guess, num_guesses, success
 
 
-def print_guess_and_check_result(cube: int) -> None:
+def print_approximate_cube_root(
+    cube: float, epsilon: float = 0.1, increment: float = 0.01
+) -> None:
     """
-    完全照原本範例的輸出格式：
+    完全模仿原來 script 的輸出格式：
 
-      如果不是 perfect cube：
-          <cube> is not a perfect cube
-      如果是：
-          Cube root of <cube> is <guess>
+        num_guesses = <num_guesses>
+        <guess> is close to the cube root of <cube>    (成功)
+    或是：
+        num_guesses = <num_guesses>
+        Failed on cube root of <cube> with these parameters.  (失敗)
     """
-    root = guess_and_check_cube_root(cube)
-    if root is None:
-        print(f"{cube} is not a perfect cube")
+    guess, num_guesses, success = approximate_cube_root(cube, epsilon, increment)
+
+    print("num_guesses =", num_guesses)
+    if not success:
+        print("Failed on cube root of", cube, "with these parameters.")
     else:
-        print("Cube root of " + str(cube) + " is " + str(root))
+        print(guess, "is close to the cube root of", cube)
