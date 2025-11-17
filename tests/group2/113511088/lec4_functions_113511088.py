@@ -37,8 +37,7 @@ def print_even_or_not_upto(limit: int) -> None:
     """
     模仿原本程式：
       print("All numbers between 0 and 20: even or not")
-      for i in range(20):
-          ...
+      for i in range(20): ...
     只是把 20 換成參數 limit。
     """
     print(f"All numbers between 0 and {limit}: even or not")
@@ -76,15 +75,13 @@ def print_bisection_cuberoot_series(
     start: int = 1, stop: int = 10000, factor: int = 10, epsilon: float = 0.01
 ) -> None:
     """
-    模仿原本程式：
+    模仿原本的程式：
 
         x = 1
         while x <= 10000:
             approx = bisection_cuberoot_approx(x, 0.01)
             print(approx, "is close to cube root of", x)
             x *= 10
-
-    只是把參數抽出來方便測試。
     """
     x = start
     while x <= stop:
@@ -93,9 +90,28 @@ def print_bisection_cuberoot_series(
         x *= factor
 
 
+#########################
+# EXAMPLE: functions as arguments
+#########################
+
+
+def func_a():
+    print("inside func_a")
+
+
+def func_b(y):
+    print("inside func_b")
+    return y
+
+
+def func_c(z):
+    print("inside func_c")
+    return z()
+
+
 # 直接執行這個檔案時的小 demo（交作業不一定要用到）
 if __name__ == "__main__":
-    # 原本的示範呼叫
+    # 1. print / return 的例子
     is_even_with_return(3)
     print(is_even_with_return(3))
 
@@ -104,4 +120,10 @@ if __name__ == "__main__":
 
     print_even_or_not_upto(20)
 
+    # 2. 重複呼叫 bisection 近似立方根
     print_bisection_cuberoot_series()
+
+    # 3. functions as arguments 的例子
+    print(func_a())
+    print(5 + func_b(2))
+    print(func_c(func_a))
