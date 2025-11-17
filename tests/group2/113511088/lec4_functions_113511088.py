@@ -1,48 +1,58 @@
 #########################
-# EXAMPLE: harder scope example from slides
+# EXAMPLE: complicated scope, test yourself!
 #########################
 
 
-def g(x):
-    """
-    原始範例：
-
-        def g(x):
-            def h():
-                x = 'abc'
-            x = x + 1
-            print('in g(x): x =', x)
-            h()
-            return x
-    """
-    def h():
-        # 這個 x 其實是 h 裡面的「區域變數」
-        # 不會改到 g 外面的 x
-        x_local = "abc"
-        return x_local
-
+def f(x):
     x = x + 1
-    print("in g(x): x =", x)
-    h()
+    print("in f(x): x =", x)
     return x
 
 
-def harder_scope_example():
+def run_f_example():
     """
-    模擬原本 script：
+    對應原本：
+
+        x = 3
+        z = f(x)
+        print('in main program scope: z =', z)
+        print('in main program scope: x =', x)
+    """
+    x = 3
+    z = f(x)
+    print("in main program scope: z =", z)
+    print("in main program scope: x =", x)
+    return x, z
+
+
+def g(x):
+    def h(x):
+        x = x + 1
+        print("in h(x): x = ", x)
+
+    x = x + 1
+    print("in g(x): x = ", x)
+    h(x)
+    return x
+
+
+def run_g_example():
+    """
+    對應原本：
 
         x = 3
         z = g(x)
-
-    回傳 (x, z)，方便在 pytest 裡檢查。
+        print('in main program scope: x = ', x)
+        print('in main program scope: z = ', z)
     """
     x = 3
     z = g(x)
+    print("in main program scope: x = ", x)
+    print("in main program scope: z = ", z)
     return x, z
 
 
 if __name__ == "__main__":
-    # 小 demo：直接執行這個檔案時會看到行為
-    x_out, z_out = harder_scope_example()
-    print("outside x:", x_out)
-    print("z:", z_out)
+    # 小 demo：直接執行這個檔案才會跑到這裡
+    run_f_example()
+    run_g_example()
