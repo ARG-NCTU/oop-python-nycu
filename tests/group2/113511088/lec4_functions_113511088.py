@@ -1,76 +1,48 @@
 #########################
-# EXAMPLE: shows accessing variables outside scope
+# EXAMPLE: harder scope example from slides
 #########################
 
 
-def scope_example_f():
+def g(x):
     """
-    對應原本：
+    原始範例：
 
-        def f(y):
-            x = 1
-            x += 1
-            print(x)
-        x = 5
-        f(x)
-        print(x)
-
-    輸出應該是：
-        2
-        5
+        def g(x):
+            def h():
+                x = 'abc'
+            x = x + 1
+            print('in g(x): x =', x)
+            h()
+            return x
     """
-    def f_inner(y):
-        x = 1
-        x += 1
-        print(x)
+    def h():
+        # 這個 x 其實是 h 裡面的「區域變數」
+        # 不會改到 g 外面的 x
+        x_local = "abc"
+        return x_local
 
-    x = 5
-    f_inner(x)
-    print(x)
+    x = x + 1
+    print("in g(x): x =", x)
+    h()
+    return x
 
 
-def scope_example_g():
+def harder_scope_example():
     """
-    對應原本：
+    模擬原本 script：
 
-        def g(y):
-            print(x)
-            print(x+1)
-        x = 5
-        g(x)
-        print(x)
+        x = 3
+        z = g(x)
 
-    輸出應該是：
-        5
-        6
-        5
+    回傳 (x, z)，方便在 pytest 裡檢查。
     """
-    def g_inner(y):
-        print(x)
-        print(x + 1)
-
-    x = 5
-    g_inner(x)
-    print(x)
+    x = 3
+    z = g(x)
+    return x, z
 
 
-def scope_example_h():
-    """
-    對應原本：
-
-        def h(y):
-            pass
-            # x += 1  # 如果沒 global x 會出錯
-        x = 5
-        h(x)
-        print(x)
-
-    這裡我們只保留「不動到 x」的效果，輸出：
-        5
-    """
-    def h_inner(y):
-        pass  # 不動 x
-
-    x = 5
-    h_inner(x)
-    print(x)
+if __name__ == "__main__":
+    # 小 demo：直接執行這個檔案時會看到行為
+    x_out, z_out = harder_scope_example()
+    print("outside x:", x_out)
+    print("z:", z_out)
