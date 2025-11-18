@@ -113,4 +113,5 @@ def is_palindrome(s):
     Returns True if s is a palindrome, False otherwise
     """
     s = s.lower()  # 忽略大小寫
+    s = ''.join(c for c in s if c.isalnum())  # 忽略非字母數字字符
     return s == s[::-1]
