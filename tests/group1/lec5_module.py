@@ -18,7 +18,7 @@ pylab.rcParams['ytick.major.size'] = 7
 # set size of markers, e.g., circles representing points
 # set numpoints for legend
 pylab.rcParams['legend.numpoints'] = 1
-print("hello world")          
+
 
 class Location:
     def __init__(self, x, y):
