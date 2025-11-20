@@ -2,8 +2,6 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
-print("hello from lec8_module.py")
-
 def make_hist(data, title, xlabel, ylabel, bins=20):
     # Create histogram of data using Matplotlib
     plt.hist(data, bins=bins)
