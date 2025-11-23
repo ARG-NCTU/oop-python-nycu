@@ -152,16 +152,16 @@ def printClustering(clustering):
               round(fracPos, 4))
     return numpy.array(posFracs)
 
-def testClustering(patients, numClusters, seed = 0, numTrials = 5):
+# 正確的（改名即可！）
+def run_kmeans_test(patients, numClusters, seed=0, numTrials=20):
     random.seed(seed)
-    bestClustering = trykmeans(patients, numClusters, numTrials)
-    posFracs = printClustering(bestClustering)
-    return posFracs
-
+    best = trykmeans(patients, numClusters, numTrials)
+    return printClustering(best)
+  
 patients = getData()
 for k in (2,):
     print('Test k-means (k = ' + str(k) + ')')
-    posFracs = testClustering(patients, k, 2)
+    posFracs = run_kmeans_test(patients, k, 2)
 
 #numPos = 0
 #for p in patients:
