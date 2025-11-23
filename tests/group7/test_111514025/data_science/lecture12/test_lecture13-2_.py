@@ -168,3 +168,14 @@ for k in (2,):
 #    if p.getLabel() == 1:
 #        numPos += 1
 #print('Total number of positive patients =', numPos)
+
+def test_k2_result():
+    assert len(patients) == 250
+    # 這是 2024-2025 學期常見的正確答案範圍
+    assert 0.3 < posFracs[0] < 0.80 or 0.3 < posFracs[1] < 0.80
+
+def test_k4_possible():
+    random.seed(2)
+    clustering4 = trykmeans(patients, 4, numTrials=30)
+    assert len(clustering4) == 4
+    assert all(len(list(c.members())) > 0 for c in clustering4)
