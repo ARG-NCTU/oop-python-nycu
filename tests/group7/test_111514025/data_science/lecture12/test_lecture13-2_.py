@@ -4,6 +4,14 @@ import numpy
 
 import cluster
 
+import pytest
+
+@pytest.fixture(scope="module")
+def patients():
+    """提供給 pytest 使用的 patients fixture"""
+    print("\n正在載入心臟病患資料（pytest fixture）...")
+    return getData(toScale=False)
+
 class Patient(cluster.Example):
     pass
 
@@ -14,37 +22,52 @@ def scaleAttrs(vals):
     vals = vals - mean
     return vals/sd
 
-def getData(toScale = False):
-    #read in data
-    hrList, stElevList, ageList, prevACSList, classList = [],[],[],[],[]
-    cardiacData = open('tests/group7/test_111514025/data_science/lecture12/cardiacData.txt', 'r')
-    #j = 0
-    for l in cardiacData:
-        #j += 1
-        #print(j)
-        # handle the csv line properly; remove \n; check for empty lines
-        if l == '\n':
-            continue
-        l = l.replace('\n', '')
-        l = l.split(',')
-        #breakpoint()
-        hrList.append(int(l[0]))
-        stElevList.append(int(l[1]))
-        ageList.append(int(l[2]))
-        prevACSList.append(int(l[3]))
-        classList.append(int(l[4]))
-    if toScale:
-        hrList = scaleAttrs(hrList)
-        stElevList = scaleAttrs(stElevList)
-        ageList = scaleAttrs(ageList)
-        prevACSList = scaleAttrs(prevACSList)
-    #Build points
+import os
+
+def getData(toScale=False):
+    # 萬能找檔案法：不管你在哪裡執行，都能找到 cardiacData.txt
+    possible_paths = [
+        'cardiacData.txt',                                          # 正常情況
+        'data_science/lecture12/cardiacData.txt',                   # 你自己跑的時候
+        'tests/group7/test_111514025/data_science/lecture12/cardiacData.txt',  # 助教測資路徑
+        os.path.join(os.path.dirname(__file__), 'cardiacData.txt'), # 相對於.py檔
+    ]
+    
+    file_path = None
+    for path in possible_paths:
+        if os.path.exists(path):
+            file_path = path
+            break
+    
+    if file_path is None:
+        print("錯誤：找不到 cardiacData.txt")
+        print("我試過這些路徑都找不到：")
+        for p in possible_paths:
+            print("  ", p, "→", os.path.exists(p))
+        print("目前工作目錄：", os.getcwd())
+        raise FileNotFoundError("cardiacData.txt 不見了！")
+    
+    print(f"找到資料檔：{file_path}")
+    
+    hrList, stElevList, ageList, prevACSList, classList = [], [], [], [], []
+    with open(file_path, 'r') as f:
+        for line in f:
+            if line.strip() == '':
+                continue
+            vals = line.strip().split(',')
+            hrList.append(int(vals[0]))
+            stElevList.append(int(vals[1]))
+            ageList.append(int(vals[2]))
+            prevACSList.append(int(vals[3]))
+            classList.append(int(vals[4]))
+    
+    # 後面不變
     points = []
     for i in range(len(hrList)):
-        features = numpy.array([hrList[i], prevACSList[i],\
-                                stElevList[i], ageList[i]])
-        pIndex = str(i)
-        points.append(Patient('P'+ pIndex, features, classList[i]))
+        features = numpy.array([hrList[i], prevACSList[i], stElevList[i], ageList[i]])
+        points.append(Patient('P'+str(i), features, classList[i]))
+    
+    print(f"成功載入 {len(points)} 筆資料")
     return points
     
 def kmeans(examples, k, verbose = False):
