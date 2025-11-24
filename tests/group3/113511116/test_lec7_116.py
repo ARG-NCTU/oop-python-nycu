@@ -6,6 +6,18 @@ def test_rev_list():
     L = [1,2,3,4]
     lec7.rev_list(L)
     assert L == [4,3,2,1]
+    L = [1, 2, 3, 4, 5, 6]
+    lec7.rev_list(L)
+    assert L == [6, 5, 4, 3, 2, 1]
+    L = ['a', 'b', 'c']
+    lec7.rev_list(L)
+    assert L == ['c', 'b', 'a']
+    L = []
+    lec7.rev_list(L)
+    assert L == []
+    L = [1]
+    lec7.rev_list(L)
+    assert L == [1]
 
 def test_primes_list():
     assert lec7.primes_list(10) == [2,3,5,7]
