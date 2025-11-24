@@ -1,5 +1,6 @@
 import add_path
 import numpy as np
+import pytest
 import mit_ocw_data_science.lec11.lec11_module as data_lec11
 
 def test_variance():
