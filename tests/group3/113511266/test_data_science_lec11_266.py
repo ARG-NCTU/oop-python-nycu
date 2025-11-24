@@ -19,3 +19,23 @@ def test_stdDev():
     data2 = [10]
     assert stdDev(data2) == 0.0
 
+def test_minkowskiDist():
+    a1 = np.array([1, 2, 3])
+    b1 = np.array([4, 5, 6])
+    assert minkowskiDist(a1, b1, p=2) == 5.196152422706632
+    a2 = np.array([1, 2, 3, 4])
+    b2 = np.array([4, 5, 6, 7])
+    assert minkowskiDist(a2, b2, p=3) == 4.762203155904598
+    a3 = np.array([0, 0])
+    b3 = np.array([3, 4])
+    assert minkowskiDist(a3, b3, p=1) == 7.0
+
+def test_Animal():
+    animal0 = Animal("Dog", [10, 20, 30])
+    assert animal0.getName() == "Dog"
+    assert np.array_equal(animal0.getFeatures(), np.array([10, 20, 30]))
+    animal1 = Animal("Cat", [1, 2, 3])
+    assert animal1.getName() == "Cat"
+    assert np.array_equal(animal1.getFeatures(), np.array([1, 2, 3]))
+    assert animal0.distance(animal1) == 33.67491648096547
+
