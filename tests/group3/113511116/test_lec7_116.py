@@ -33,6 +33,11 @@ def test_get_ratios():
     assert lec7.get_ratios([8, 5, 49], [2, 20, 7]) == [4.0, 0.25, 7.0]
     with pytest.raises(ValueError):
         lec7.get_ratios([1,2,'a'], [1,2,3])
+    assert lec7.get_ratios([1, 2, 3], [1, 2, 3]) == [1.0, 1.0, 1.0]
+    assert lec7.get_ratios([0, 0, 0], [5, 2, 4]) == [0.0, 0.0, 0.0]
+    assert lec7.get_ratios([8, 5, 49], [2, 20, 7]) == [4.0, 0.25, 7.0]
+    assert lec7.get_ratios([], []) == []
+
 
     
   
