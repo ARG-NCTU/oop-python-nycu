@@ -93,7 +93,7 @@ user.name=Brian2074
 | ❌        | Group 1      | bryson7736 : 26     | Chiang-Ian : 9     | peppa1122ee13 : 0         |
 | ❌        | Group 2      | ginny923 : 12       | joanna0420 : 23    | bondyhung : 0             |
 | ❌        | Group 3      | tpvupu : 25         | xiaotin22 : 26     |                           |
-| ❌        | Group 4      | yt-chen1230 : 15    | Huang-Kun-wei : 12 |                           |
+| ❌        | Group 4      | yt-chen1230 : 26    | Huang-Kun-wei : 12 |                           |
 | ❌        | Group 5      | htyunn : 0          | okkohero : 2       |                           |
 | ❌        | Group 6      | jerrywustarwars : 0 | FrosterMonster : 3 | doralu950413ee13-gif : 10 |
 | ✅        | Group 7      | unknown899 : 17     | LeeYinWei : 29     |                           |
