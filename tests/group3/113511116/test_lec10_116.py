@@ -16,4 +16,17 @@ def test_search():
     assert lec10.search(lst, 30) == False
     assert lec10.search([], 1) == False
 
+def test_isSubset():
+    assert lec10.isSubset([1, 2], [2, 1, 3]) == True
+    assert lec10.isSubset([1, 4], [2, 1, 3]) == False
+    assert lec10.isSubset([], [1, 2, 3]) == True
+    assert lec10.isSubset([1, 2], []) == False
+
+
+def test_intersect():
+    assert lec10.intersect([1, 2, 3], [2, 3, 4]) == [2, 3]
+    assert lec10.intersect([1, 1, 2], [1, 2, 2]) == [1, 2]
+    assert lec10.intersect([5, 6], [7, 8]) == []
+    assert lec10.intersect([], [1, 2]) == []
+
 
