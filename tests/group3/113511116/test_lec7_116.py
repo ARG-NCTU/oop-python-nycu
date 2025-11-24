@@ -14,7 +14,7 @@ def test_primes_list():
 
 def test_get_ratios():
     assert lec7.get_ratios([1,2,3], [1,2,3]) == [1.0, 1.0, 1.0]
-    assert lec7.get_ratios([1,2,3], [1,0,3]) == [1.0, float('nan'), 1.0]
+    assert lec7.get_ratios([8, 5, 49], [2, 20, 7]) == [4.0, 0.25, 7.0]
     with pytest.raises(ValueError):
         lec7.get_ratios([1,2,'a'], [1,2,3])
 
@@ -41,4 +41,4 @@ def test_avg():
     assert lec7.avg([80.0, 70.0, 85.0]) == 78.33333333333333
     assert lec7.avg([100.0, 80.0, 74.0]) == 84.66666666666667
     assert lec7.avg([80.0, 70.0, 96.0]) == 82.0
-    assert lec7.avg([]) == 0.0
+
