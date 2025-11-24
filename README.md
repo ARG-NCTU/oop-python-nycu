@@ -104,5 +104,5 @@ user.name=Brian2074
 | ✅        | Group 12     | jui-pixel : 68      |                    |                           |
 | ✅        | Group 13     | max052028 : 3       | jeffjun113 : 0     | ngvihoee11-nycu : 1       |
 | ✅        | Group 14     | lilil0724 : 9       | noobLeo536 : 11    |                           |
-| ❌        | Group 15     | minopeng : 18       | KuoShengHsin : 7   |                           |
+| ❌        | Group 15     | minopeng : 18       | KuoShengHsin : 8   |                           |
 <!--END_SECTION:pytest-->
