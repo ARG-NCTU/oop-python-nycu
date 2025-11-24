@@ -60,16 +60,3 @@ def genSubsets(L):
 
 testSet = [1,2,3,4]
 print(genSubsets(testSet))
-def genPerms(L):
-    res = []
-    if len(L) == 0:
-        return [[]] #list of empty list
-    first = L[0]
-    rest = L[1:]
-    permsWithoutFirst = genPerms(rest)
-    for perm in permsWithoutFirst:
-        for i in range(len(perm)+1):
-            res.append(perm[:i] + [first] + perm[i:])
-    return res
-testSet = []
-print(genPerms(testSet))
