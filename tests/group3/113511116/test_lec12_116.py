@@ -39,4 +39,7 @@ def test_merge_sort_np():
     arr = [38, 27, 43, 3, 9, 82, 10]
     sorted_arr = lec12.merge_sort_np(arr)
     assert sorted_arr == [3, 9, 10, 27, 38, 43, 82]
-
+    arr1 = [5,45,23,87,1,4,99,34,12]
+    sorted_arr1 = lec12.merge_sort_np(arr1)
+    assert sorted_arr1 == [1,4,5,12,23,34,45,87,99]
+5
