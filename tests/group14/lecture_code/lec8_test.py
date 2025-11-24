@@ -1,5 +1,5 @@
 import pytest
-# 假設你的檔案名稱是 lec8_classes.py
+
 from lec8_classes import Coordinate, Fraction, intSet
 
 # ==================================
