@@ -91,7 +91,7 @@ user.name=Brian2074
 | Pytest Status   | Group Name   | Group Leader        | Group Member 1     | Group Member 2            |
 |:---------|:-------------|:--------------------|:-------------------|:--------------------------|
 | ❌        | Group 1      | bryson7736 : 26     | Chiang-Ian : 9     | peppa1122ee13 : 0         |
-| ❌        | Group 2      | ginny923 : 4        | joanna0420 : 0     | bondyhung : 0             |
+| ❌        | Group 2      | ginny923 : 12       | joanna0420 : 23    | bondyhung : 0             |
 | ❌        | Group 3      | tpvupu : 25         | xiaotin22 : 26     |                           |
 | ❌        | Group 4      | yt-chen1230 : 15    | Huang-Kun-wei : 12 |                           |
 | ❌        | Group 5      | htyunn : 0          | okkohero : 2       |                           |
