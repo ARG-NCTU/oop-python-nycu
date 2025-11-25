@@ -123,17 +123,23 @@ class Rabbit(Animal):
         return Rabbit(0, self, other)
 
     def __eq__(self, other):
-        if (self.parent1 is None or self.parent2 is None or
-            other.parent1 is None or other.parent2 is None):
-            return False
+    # If same object, always equal
+    if self is other:
+        return True
 
-        parents_same = (self.parent1.rid == other.parent1.rid and
-                        self.parent2.rid == other.parent2.rid)
+    # If any parent is missing, cannot compare family
+    if (self.parent1 is None or self.parent2 is None or
+        other.parent1 is None or other.parent2 is None):
+        return False
 
-        parents_swapped = (self.parent1.rid == other.parent2.rid and
-                           self.parent2.rid == other.parent1.rid)
+    parents_same = (self.parent1.rid == other.parent1.rid and
+                    self.parent2.rid == other.parent2.rid)
 
-        return parents_same or parents_swapped
+    parents_swapped = (self.parent1.rid == other.parent2.rid and
+                       self.parent2.rid == other.parent1.rid)
+
+    return parents_same or parents_swapped
+
 
     def __str__(self):
         return "rabbit:" + self.get_rid()
