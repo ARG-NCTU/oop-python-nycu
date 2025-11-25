@@ -1,7 +1,7 @@
 import re
 import random
 import pytest
-from classes_examples import Animal, Cat, Person, Student, Rabbit
+from lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
 ####################################
 # Animal Tests
