@@ -122,7 +122,7 @@ class Rabbit(Animal):
     def __add__(self, other):
         return Rabbit(0, self, other)
 
-     def __eq__(self, other):
+    def __eq__(self, other):
         # If same exact object, automatically equal
         if self is other:
             return True
