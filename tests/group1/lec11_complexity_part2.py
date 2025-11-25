@@ -46,7 +46,7 @@ print(bisect_search1(testList, 76))
 print(bisect_search2(testList, 76))
 
 
-def genSubsets(L):
+de genSubsets(L):
     res = []
     if len(L) == 0:
         return [[]] #list of empty list
