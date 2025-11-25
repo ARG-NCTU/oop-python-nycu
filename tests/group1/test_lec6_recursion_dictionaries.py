@@ -19,7 +19,7 @@ def test_towers_of_hanoi_moves(capsys):
     assert moves_1[0] == 'move from A to C'
 
     # Test for 2 disks
-    moves_2 = get_towers_moves(2, 'A', 'C', 'B')
+    moves_2 = get_towers_moves(2, 'A', 'C', 'B', capsys)
     assert len(moves_2) == 3 # $2^2 - 1 = 3$ moves
     assert moves_2 == [
         'move from A to B',
