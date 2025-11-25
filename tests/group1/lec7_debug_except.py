@@ -54,7 +54,7 @@ def primes_list(n):
 # Ratios (Exceptions)
 ########################################
 
-def get_ratios(L1, L2)
+def get_ratios(L1, L2):
     """ L1 and L2 are lists of numbers, equal length """
     ratios = []
     for i in range(len(L1)):
