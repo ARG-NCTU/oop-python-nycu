@@ -46,22 +46,27 @@ def test_fib_standard():
     assert fib(10) == 89
     
     
+# 修正後的 test_fib_efficient_memoization 測試函數
 def test_fib_efficient_memoization():
-    """Tests the memoization version of fib (F(1)=1, F(2)=2)."""
-    d_eff = {1: 1, 2: 2}
+    """Tests the memoization version of fib using F(0)=1, F(1)=1 base cases."""
+    # 將基礎案例統一為與 fib 函數一致：F(0)=1, F(1)=1
+    d_eff = {0: 1, 1: 1} # 注意: F(0) 和 F(1) 是基礎案例
+    
+    # 執行 fib_efficient，這會根據 F(0)=1, F(1)=1 開始計算
     
     assert fib_efficient(1, d_eff) == 1
-    assert fib_efficient(2, d_eff) == 2
+    assert fib_efficient(2, d_eff) == 2  # F(2)=2
+    assert fib_efficient(3, d_eff) == 3  # F(3)=3
     
-    assert fib_efficient(3, d_eff) == 3
-    # 修正 F(5) 的預期值：1, 2, 3, 5, 8 -> F(5) = 8
+    # F(5) 預期值為 8 (1, 1, 2, 3, 5, 8)
     assert fib_efficient(5, d_eff) == 8 
-    # 修正 F(10) 的預期值：1, 2, ..., 34, 55 -> F(10) = 55
-    assert fib_efficient(10, d_eff) == 55
     
-    # Test if memoization is actually used (by checking if the dictionary is populated)
-    assert len(d_eff) == 10
-    assert d_eff[10] == 55
+    # 修正 F(10) 的預期值：89
+    assert fib_efficient(10, d_eff) == 89
+    
+    # 檢查緩存是否正確 populated
+    assert len(d_eff) == 11 # 包含 0 到 10，共 11 個項目
+    assert d_eff[10] == 89
     
 
 # --- 3. Palindrome Tests ---
