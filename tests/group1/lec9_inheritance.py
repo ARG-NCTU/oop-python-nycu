@@ -122,23 +122,26 @@ class Rabbit(Animal):
     def __add__(self, other):
         return Rabbit(0, self, other)
 
-    def __eq__(self, other):
-    # If same object, always equal
-    if self is other:
-        return True
+     def __eq__(self, other):
+        # If same exact object, automatically equal
+        if self is other:
+            return True
 
-    # If any parent is missing, cannot compare family
-    if (self.parent1 is None or self.parent2 is None or
-        other.parent1 is None or other.parent2 is None):
-        return False
+        # If any parent is None, cannot compare family lines
+        if (self.parent1 is None or self.parent2 is None or
+            other.parent1 is None or other.parent2 is None):
+            return False
 
-    parents_same = (self.parent1.rid == other.parent1.rid and
-                    self.parent2.rid == other.parent2.rid)
+        # Check parents same order
+        parents_same = (self.parent1.rid == other.parent1.rid and
+                        self.parent2.rid == other.parent2.rid)
 
-    parents_swapped = (self.parent1.rid == other.parent2.rid and
-                       self.parent2.rid == other.parent1.rid)
+        # Check parents reversed order
+        parents_swapped = (self.parent1.rid == other.parent2.rid and
+                           self.parent2.rid == other.parent1.rid)
 
-    return parents_same or parents_swapped
+        return parents_same or parents_swapped
+
 
 
     def __str__(self):
