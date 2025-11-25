@@ -38,16 +38,7 @@ def primes_list(n):
 
     primes = [2]
 
-    for j in range(3, n + 1):
-        is_divisible = False
-        for p in primes:
-            if j % p == 0:
-                is_divisible = True
-                break   # MUST break once divisible
-        if not is_divisible:
-            primes.append(j)
-
-    return primes
+    
 
 
 ########################################
