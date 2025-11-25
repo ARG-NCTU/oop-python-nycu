@@ -86,7 +86,7 @@ def get_stats(class_list):
     Returns:
       [ ['first','last'], [grades], avg ]
     """
-    new_stats = 
+    new_stats = []
     for person in class_list:
         name = person[0]
         grades = person[1]
