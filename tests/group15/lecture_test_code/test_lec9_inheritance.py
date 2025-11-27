@@ -1,12 +1,9 @@
 import pytest
 import io
 import sys
-# 假設你的主檔案名稱是 lec9_inheritance.py
 from lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
-# =============================
 # ===== 測試 Animal (父類別) ===
-# ============================
 def test_animal_base():
     """測試 Animal 基礎功能的設定與取得"""
     animal = Animal(10)
