@@ -138,6 +138,7 @@ assert str(s) == "{3,4,6}"
 s.remove(3)
 assert str(s) == "{4,6}"
 
+####
 try:
     s.remove(3)  # 應該拋出 ValueError
 except ValueError as e:
