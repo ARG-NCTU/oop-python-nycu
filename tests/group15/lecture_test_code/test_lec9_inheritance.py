@@ -45,7 +45,7 @@ def test_cat_inheritance_and_methods():
     assert captured_output.getvalue().strip() == "meow"
 
 # =========================================
-# ===== 測試 Person (繼承 Animal) =====
+# ===== 測試 Person (繼承 Animal) ===
 # =========================================
 def test_person_extended_init_and_methods():
     """測試 Person 擴充的 __init__ 和自己的方法"""
