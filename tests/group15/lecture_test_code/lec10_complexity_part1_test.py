@@ -2,7 +2,6 @@
 import pytest
 import lec10_complexity_part1 as lec
 
-# ---------- linear_search ----------
 
 @pytest.mark.parametrize(
     "L,e,expect",
