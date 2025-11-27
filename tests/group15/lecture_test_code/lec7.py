@@ -1,5 +1,5 @@
 import math
-########################################
+#####################################
 ### EXAMPLE: Buggy code to reverse a list
 ### Try to debug it! (fixes needed are explained below)
 #####################################
