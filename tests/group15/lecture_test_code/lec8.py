@@ -38,7 +38,7 @@ def Coordinate_test():
 ## EXAMPLE: simple class to represent fractions
 ## Try adding more built-in operations like multiply, divide
 ### Try adding a reduce method to reduce the fraction (use gcd)
-#################
+##############
 class Fraction(object):
     """
     A number represented as a fraction
