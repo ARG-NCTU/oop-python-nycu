@@ -2,7 +2,7 @@ import math
 ########################################
 ### EXAMPLE: Buggy code to reverse a list
 ### Try to debug it! (fixes needed are explained below)
-########################################
+#####################################
 ##def rev_list_buggy(L):
 ##    """
 ##    input: L, a list
