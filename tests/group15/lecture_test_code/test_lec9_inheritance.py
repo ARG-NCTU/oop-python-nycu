@@ -62,10 +62,8 @@ def test_person_extended_init_and_methods():
     p1.age_diff(p2)
     sys.stdout = sys.__stdout__
     assert captured_output.getvalue().strip() == "5 year difference"
-
-# =========================================
+    
 # ===== 測試 Student (繼承 Person) =====
-# =========================================
 def test_student_further_inheritance():
     """測試 Student 的多層繼承和方法"""
     s = Student("Alice", 20, "CS")
