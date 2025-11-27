@@ -122,8 +122,6 @@ def test_rabbit_special_methods_add_and_eq():
     # 測試 __eq__
     r4 = r2 + r1 # rid: 4, parents: r2, r1
     
-    # 現在，使用 '==' 來測試你定義的值相等邏輯
-    # 假設你採用了修正後的 __eq__ 方法
     assert r3 == r4
     
     # 測試與沒有父母的兔子比較
