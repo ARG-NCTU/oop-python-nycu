@@ -175,4 +175,4 @@ def test_Rabbit():
     print("r6 parent1:", r6.get_parent1())
     print("r6 parent2:", r6.get_parent2())
     print("r5 and r6 have same parents?", r5 == r6)
-    print("r4 and r6 have same parents?", r4 == r6)#
+    print("r4 and r6 have same parents?", r4 == r6)##
