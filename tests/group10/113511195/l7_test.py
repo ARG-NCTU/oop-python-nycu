@@ -16,3 +16,12 @@ def test_rev_list():
     L = [1]
     lec7.rev_list(L)
     assert L == [1]
+
+def test_rev_list_generalize():
+    for _ in range(100):
+        length = random.randint(0, 100)
+        tar = [random.randint(0, 1000) for _ in range(length)]
+        expected = tar[::-1]
+        lec7.rev_list(tar)
+        assert tar == expected
+
