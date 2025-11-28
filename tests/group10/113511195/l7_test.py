@@ -38,7 +38,7 @@ def test_primes_list_generalize():
         assert lec7.primes_list(n) == expected
 
 def test_get_ratios():
-    assert lec7.get_ratios([0, 0], [0, 0]) == [0, 0]
+    assert lec7.get_ratios([0, 0], [1, 2]) == [0, 0]
     assert lec7.get_ratios([1, 3, 5, 7], [1, 3, 5, 7]) == [1, 1, 1, 1]
-    assert lec7.get_ratios([8, 8, 8, 8, 8], [2, 4, 8, 16, 32]) == [0.25, 0.5, 1.0, 2.0, 4.0]
+    assert lec7.get_ratios([8, 8, 8, 8, 8], [2, 4, 8, 16, 32]) == [4, 2, 1, 0.5, 0.25]
     assert lec7.get_ratios([], []) == []
