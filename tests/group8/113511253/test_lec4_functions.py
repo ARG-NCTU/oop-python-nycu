@@ -1,22 +1,12 @@
-import sys
-import os
-import pytest
-import importlib
-
-# 強制加入路徑
+import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import lec4_functions
 
-def test_lec4_functions_load():
-    """
-    Smoke test: Try to import the module.
-    If it fails due to missing libraries (numpy etc.), skip it.
-    """
-    try:
-        # 動態 import
-        module = importlib.import_module("lec4_functions")
-        assert module is not None
-    except ImportError as e:
-        pytest.skip(f"Skipping lec4_functions because dependency is missing: {e}")
-    except Exception as e:
-        # 如果是程式碼本身寫錯，為了讓你過，我們也先 Skip 掉 (或者你可以改成 fail)
-        pytest.skip(f"Skipping lec4_functions due to runtime error: {e}")
+def test_eval_quadratic():
+    # x^2 + 2x + 1 at x=2 => 4 + 4 + 1 = 9
+    assert lec4_functions.eval_quadratic(1, 2, 1, 2) == 9
+
+def test_clip():
+    assert lec4_functions.clip(0, 5, 10) == 5
+    assert lec4_functions.clip(0, -5, 10) == 0
+    assert lec4_functions.clip(0, 15, 10) == 10

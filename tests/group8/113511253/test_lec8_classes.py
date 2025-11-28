@@ -1,22 +1,12 @@
-import sys
-import os
-import pytest
-import importlib
-
-# 強制加入路徑
+import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import lec8_classes
 
-def test_lec8_classes_load():
-    """
-    Smoke test: Try to import the module.
-    If it fails due to missing libraries (numpy etc.), skip it.
-    """
-    try:
-        # 動態 import
-        module = importlib.import_module("lec8_classes")
-        assert module is not None
-    except ImportError as e:
-        pytest.skip(f"Skipping lec8_classes because dependency is missing: {e}")
-    except Exception as e:
-        # 如果是程式碼本身寫錯，為了讓你過，我們也先 Skip 掉 (或者你可以改成 fail)
-        pytest.skip(f"Skipping lec8_classes due to runtime error: {e}")
+def test_coordinate_distance():
+    c1 = lec8_classes.Coordinate(0, 0)
+    c2 = lec8_classes.Coordinate(3, 4)
+    assert c1.distance(c2) == 5.0
+
+def test_coordinate_str():
+    c = lec8_classes.Coordinate(10, 20)
+    assert str(c) == "<10,20>"

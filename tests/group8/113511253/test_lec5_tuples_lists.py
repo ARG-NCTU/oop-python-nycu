@@ -1,22 +1,12 @@
-import sys
-import os
-import pytest
-import importlib
-
-# 強制加入路徑
+import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import lec5_tuples_lists
 
-def test_lec5_tuples_lists_load():
-    """
-    Smoke test: Try to import the module.
-    If it fails due to missing libraries (numpy etc.), skip it.
-    """
-    try:
-        # 動態 import
-        module = importlib.import_module("lec5_tuples_lists")
-        assert module is not None
-    except ImportError as e:
-        pytest.skip(f"Skipping lec5_tuples_lists because dependency is missing: {e}")
-    except Exception as e:
-        # 如果是程式碼本身寫錯，為了讓你過，我們也先 Skip 掉 (或者你可以改成 fail)
-        pytest.skip(f"Skipping lec5_tuples_lists due to runtime error: {e}")
+def test_odd_tuples():
+    t = ('I', 'am', 'a', 'test', 'tuple')
+    # index 0, 2, 4 -> 'I', 'a', 'tuple'
+    assert lec5_tuples_lists.odd_tuples(t) == ('I', 'a', 'tuple')
+
+def test_sum_list():
+    assert lec5_tuples_lists.sum_list([1, 2, 3]) == 6
+    assert lec5_tuples_lists.sum_list([]) == 0
