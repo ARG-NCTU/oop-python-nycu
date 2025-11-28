@@ -1,4 +1,4 @@
-from src.mit_ocw_exercises.lec3_strings_algos import *
+from lec3_strings_algos import *
 
 def test_find_vowels():
     assert find_vowels("unicorn") == [0, 2]  # 修正索引
