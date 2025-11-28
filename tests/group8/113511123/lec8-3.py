@@ -56,4 +56,4 @@ def test_intSet():
     try:
         s.remove(3)  # 應該拋出 ValueError
     except ValueError as e:
-        assert str(e) == "3 not found"
+        assert str(e) == "3 not found" #
