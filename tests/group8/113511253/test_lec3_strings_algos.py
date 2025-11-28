@@ -37,3 +37,5 @@ def test_is_palindrome():
     assert not is_palindrome("python")
     assert is_palindrome("A man a plan a canal Panama")
 
+
+# 113511253 submission check

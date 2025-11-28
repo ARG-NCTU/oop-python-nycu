@@ -114,3 +114,5 @@ def is_palindrome(s):
     """
     s = s.lower()  # 忽略大小寫
     return s == s[::-1]
+
+# 113511253 submission check

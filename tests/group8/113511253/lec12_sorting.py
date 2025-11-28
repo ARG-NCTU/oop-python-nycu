@@ -103,3 +103,5 @@ def merge_sort_np(L):
         left = merge_sort_np(L[:middle])
         right = merge_sort_np(L[middle:])
         return merge_np(left, right)
+
+# 113511253 submission check

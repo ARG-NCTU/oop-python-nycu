@@ -60,3 +60,5 @@ def genSubsets(L):
 
 testSet = [1,2,3,4]
 print(genSubsets(testSet))
+
+# 113511253 submission check
