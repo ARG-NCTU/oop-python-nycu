@@ -135,5 +135,3 @@ def test_rabbit_special_methods_add_and_eq():
     
     # 測試與沒有父母的兔子比較
     assert (r3 == r1) is False
-
-###
