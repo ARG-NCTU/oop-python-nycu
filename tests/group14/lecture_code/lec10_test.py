@@ -17,7 +17,7 @@ import lec10_complexity_part1 as lec
 )
 def test_linear_search(L, e, expect):
     assert lec.linear_search(L, e) == expect
-
+###
 
 # ---------- search (假設 L 已排序遞增) ----------
 
