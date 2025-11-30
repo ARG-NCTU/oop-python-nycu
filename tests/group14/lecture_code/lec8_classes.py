@@ -77,6 +77,7 @@ class Fraction(object):
         return str(self.num) + "/" + str(self.denom)
     def __add__(self, other):
         """回傳兩分數相加後的新 Fraction 物件。"""
+        # 分數相加公式： a/b + c/d = (a*d + b*c) / (b*d)
         top = self.num*other.denom + self.denom*other.num
         bott = self.denom*other.denom
         return Fraction(top, bott)
@@ -95,6 +96,9 @@ class Fraction(object):
 a = Fraction(1,4)
 b = Fraction(3,4)
 c = a + b # c is a Fraction object
+# 以下為示範輸出：
+# 注意：此區塊會在模組被 import 時執行（例如 pytest 匯入測試模組時），
+# 因此若不希望在匯入時有輸出，請將示範程式碼移入 `if __name__ == "__main__":`。
 print(c)
 print(float(c))
 print(Fraction.__float__(c))
@@ -170,6 +174,10 @@ try:
     s.remove(3)  # 應該拋出 ValueError
 except ValueError as e:
     assert str(e) == "3 not found"
+
+# 注意：上方測試用斷言為教學用途，當此檔被作為模組匯入時會執行。
+# 若在測試環境不希望執行這些示範斷言/列印，應將它們包在
+# `if __name__ == "__main__":` 之下。
 
 """
 s = intSet()
