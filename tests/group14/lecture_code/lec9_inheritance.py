@@ -1,25 +1,50 @@
 import random
 
+
+"""
+lec9_inheritance.py
+
+示範繼承 (inheritance) 的多個例子：
+- `Animal` 為基底類別，包含年齡與名稱屬性與基本存取與表示方法。
+- `Cat`、`Person`、`Student`、`Rabbit` 等類別示範如何從 `Animal` 繼承並擴充行為。
+
+注意：本檔包含許多示範用的 `print` 與即時測試程式片段，
+這些會在模組被 import 時執行（例如在 pytest 匯入模組時），
+若不希望匯入時執行示範程式，建議把示範程式碼放入
+`if __name__ == "__main__":` 下。
+"""
+
+
 #################################
-## Animal abstract data type 
+## Animal 抽象資料型別（基底類別）
 #################################
 class Animal(object):
-    '''Animal Class 
-    Attributes: age, name
-    Methods: get_age, get_name, set_age, set_name, __str__
-    '''
+    """Animal 基底類別
+
+    屬性：
+    - age: 年齡
+    - name: 名稱（預設 None）
+
+    方法：基本的存取器與字串表示，用於子類別繼承。
+    """
     def __init__(self, age):
+        # 建構子：設定年齡，名稱預設為 None
         self.age = age
         self.name = None
     def get_age(self):
+        # 回傳年齡
         return self.age
     def get_name(self):
+        # 回傳名稱（可能為 None 或空字串）
         return self.name
     def set_age(self, newage):
+        # 設定年齡
         self.age = newage
     def set_name(self, newname=""):
+        # 設定名稱（預設空字串）
         self.name = newname
     def __str__(self):
+        # 字串表示，子類別通常會覆寫此方法
         return "animal:"+str(self.name)+":"+str(self.age)
         
 print("\n---- animal tests ----")
@@ -35,9 +60,12 @@ print(a)
 ## Inheritance example 
 #################################
 class Cat(Animal):
+    """Cat 繼承自 Animal，示範簡單的覆寫與新增方法。"""
     def speak(self):
+        # Cat 的行為：發出喵叫
         print("meow")
     def __str__(self):
+        # 覆寫字串表示，顯示為 cat:name:age
         return "cat:"+str(self.name)+":"+str(self.age)
     
 print("\n---- cat tests ----")
