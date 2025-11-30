@@ -79,21 +79,30 @@ print(c.get_age())
 ## Inheritance example
 #################################
 class Person(Animal):
+    """Person 也是從 Animal 繼承，並示範如何在子類別加入自己的屬性與方法。"""
     def __init__(self, name, age):
+        # 呼叫基底類別的建構子來設定 age
         Animal.__init__(self, age)
+        # 使用 set_name 初始化 name
         self.set_name(name)
+        # Person 特有的欄位：朋友清單
         self.friends = []
     def get_friends(self):
+        # 回傳朋友清單
         return self.friends
     def speak(self):
+        # Person 的說話方式
         print("hello")
     def add_friend(self, fname):
+        # 加入朋友（避免重複）
         if fname not in self.friends:
             self.friends.append(fname)
     def age_diff(self, other):
+        # 計算年齡差並印出絕對值
         diff = self.age - other.age
         print(abs(diff), "year difference")
     def __str__(self):
+        # 覆寫字串表示
         return "person:"+str(self.name)+":"+str(self.age)
 
 print("\n---- person tests ----")
@@ -111,14 +120,20 @@ p1.age_diff(p2)
 ## Inheritance example
 #################################
 class Student(Person):
+    """Student 繼承自 Person，示範覆寫 __str__ 與新增屬性（major）。"""
     def __init__(self, name, age, major=None):
+        # 呼叫 Person 的建構子設定 name 與 age
         Person.__init__(self, name, age)
+        # Student 特有欄位：主修科目
         self.major = major
     def __str__(self):
+        # 顯示 student:name:age:major
         return "student:"+str(self.name)+":"+str(self.age)+":"+str(self.major)
     def change_major(self, major):
+        # 變更主修
         self.major = major
     def speak(self):
+        # 覆寫 speak，使用隨機輸出做示範（教學用途）
         r = random.random()
         if r < 0.25:
             print("i have homework")
@@ -219,4 +234,5 @@ print("r6 parent1:", r6.get_parent1())
 print("r6 parent2:", r6.get_parent2())
 print("r5 and r6 have same parents?", r5 == r6)
 print("r4 and r6 have same parents?", r4 == r6)
+    
 
