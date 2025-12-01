@@ -1,4 +1,6 @@
 import random
+from add_path import add_path
+add_path()
 
 
 # ----------------------------- Dice Simulation -----------------------------

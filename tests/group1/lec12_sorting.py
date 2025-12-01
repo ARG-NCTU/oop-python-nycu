@@ -4,6 +4,9 @@ Created on Wed Oct 19 09:21:39 2016
 
 @author: ericgrimson
 """
+from add_path import add_path
+add_path()
+
 def bubble_sort(L):
     swap = False
     while not swap:

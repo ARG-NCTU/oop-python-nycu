@@ -5,6 +5,9 @@ Created on Wed Sep 21 11:52:34 2016
 """
 import time
 import sys
+from add_path import add_path
+add_path()
+
 
 # Increase recursion limit for potentially deep recursive calls
 sys.setrecursionlimit(2000) 

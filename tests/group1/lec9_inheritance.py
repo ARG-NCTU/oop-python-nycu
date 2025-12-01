@@ -1,4 +1,7 @@
 import random
+from add_path import add_path
+add_path()
+
 
 #################################
 ## Animal abstract data type 
