@@ -8,6 +8,7 @@ from typing import List
 # ---------- Sorting functions ----------
 
 def bubble_sort(L: List[int]) -> List[int]:
+    """Bubble sort with print statements for debugging."""
     swap = False
     while not swap:
         print('bubble sort:', L)
@@ -15,20 +16,22 @@ def bubble_sort(L: List[int]) -> List[int]:
         for j in range(1, len(L)):
             if L[j-1] > L[j]:
                 swap = False
-                L[j-1], L[j] = L[j], L[j-1]
+                L[j-1], L[j] = L[j], L[j-1]  # Swap adjacent elements
     return L
 
 def selection_sort(L: List[int]) -> List[int]:
+    """Selection sort with print statements for debugging."""
     suffixSt = 0
     while suffixSt != len(L):
         print('selection sort:', L)
         for i in range(suffixSt, len(L)):
-            if L[i] < L[suffixSt]:
+            if L[i] < L[suffixSt]:  # Find minimum in unsorted portion
                 L[suffixSt], L[i] = L[i], L[suffixSt]
         suffixSt += 1
     return L
 
 def merge(left: List[int], right: List[int]) -> List[int]:
+    """Merge two sorted lists into one sorted list."""
     result = []
     i, j = 0, 0
     while i < len(left) and j < len(right):
@@ -36,6 +39,7 @@ def merge(left: List[int], right: List[int]) -> List[int]:
             result.append(left[i]); i += 1
         else:
             result.append(right[j]); j += 1
+    # Append remaining elements
     while i < len(left):
         result.append(left[i]); i += 1
     while j < len(right):
@@ -44,15 +48,17 @@ def merge(left: List[int], right: List[int]) -> List[int]:
     return result
 
 def merge_sort(L: List[int]) -> List[int]:
+    """Merge sort with print statements for debugging. Returns new list."""
     print('merge sort:', L)
     if len(L) < 2:
         return L[:]
     middle = len(L) // 2
-    left = merge_sort(L[:middle])
-    right = merge_sort(L[middle:])
+    left = merge_sort(L[:middle])  # Recursively sort left half
+    right = merge_sort(L[middle:])  # Recursively sort right half
     return merge(left, right)
 
 def bubble_sort_np(L: List[int]) -> List[int]:
+    """Bubble sort without print statements (np = no print)."""
     swap = False
     while not swap:
         swap = True
@@ -63,6 +69,7 @@ def bubble_sort_np(L: List[int]) -> List[int]:
     return L
 
 def selection_sort_np(L: List[int]) -> List[int]:
+    """Selection sort without print statements (np = no print)."""
     suffixSt = 0
     while suffixSt != len(L):
         for i in range(suffixSt, len(L)):
@@ -72,6 +79,7 @@ def selection_sort_np(L: List[int]) -> List[int]:
     return L
 
 def merge_np(left: List[int], right: List[int]) -> List[int]:
+    """Merge two sorted lists without print statements (np = no print)."""
     result = []
     i, j = 0, 0
     while i < len(left) and j < len(right):
@@ -86,6 +94,7 @@ def merge_np(left: List[int], right: List[int]) -> List[int]:
     return result
 
 def merge_sort_np(L: List[int]) -> List[int]:
+    """Merge sort without print statements (np = no print). Returns new list."""
     if len(L) < 2:
         return L[:]
     middle = len(L) // 2
@@ -109,6 +118,7 @@ from copy import deepcopy
     [1, 3, 2, 2, 3, 1]
 ])
 def test_sort_correctness(func, data):
+    """Test that all sorting functions produce correct sorted output."""
     L = deepcopy(data)
     # merge_sort 會回傳新 list
     result = func(L if "merge" not in func.__name__ else data[:])
