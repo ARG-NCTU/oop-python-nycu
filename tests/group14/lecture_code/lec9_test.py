@@ -16,7 +16,7 @@ def test_animal_base():
     animal.set_name("buddy")
     assert animal.get_name() == "buddy"
     
-    animal.set_name() # 測試預設參數 .
+    animal.set_name() # 測試預設參數  .
     assert animal.get_name() == ""
     
     assert str(animal) == "animal::10"
