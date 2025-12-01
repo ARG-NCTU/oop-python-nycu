@@ -125,6 +125,7 @@ def test_sort_correctness(func, data):
     assert result == sorted(data)
 
 def test_inplace_behavior():
+    """Test that bubble_sort and selection_sort modify the list in-place."""
     L1 = [3, 1, 2]
     L2 = [3, 1, 2]
     id_before1 = id(L1)
@@ -137,6 +138,7 @@ def test_inplace_behavior():
     assert L2 == [1, 2, 3]
 
 def test_merge_sort_new_object():
+    """Test that merge_sort returns a new list, not the original."""
     L = [3, 1, 2]
     out = merge_sort(L)
     assert out is not L
