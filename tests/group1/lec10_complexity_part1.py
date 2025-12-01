@@ -4,6 +4,9 @@ Created on Sun Oct  9 11:27:54 2016
 
 @author: ericgrimson
 """
+from add_path import add_path
+add_path()
+
 
 def linear_search(L, e):
     found = False

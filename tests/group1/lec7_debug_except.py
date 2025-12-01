@@ -7,6 +7,9 @@ Examples:
 - Ratios with errors
 - Stats with error handling
 """
+from add_path import add_path
+add_path()
+
 
 ########################################
 # Reverse list

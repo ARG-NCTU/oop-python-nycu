@@ -1,3 +1,6 @@
+from add_path import add_path
+add_path()
+
 ####################
 ## EXAMPLE: for loops over strings
 ####################
