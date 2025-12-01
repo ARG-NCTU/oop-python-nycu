@@ -4,6 +4,9 @@ Created on Sun Oct  9 12:13:13 2016
 
 @author: ericgrimson
 """
+from add_path import add_path
+add_path()
+
 
 def bisect_search1(L, e):
     print('low: ' + str(L[0]) + '; high: ' + str(L[-1]))
