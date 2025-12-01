@@ -145,6 +145,7 @@ def test_merge_sort_new_object():
     assert out == [1, 2, 3]
 
 def test_verbose_output(capsys):
+    """Test that verbose (with print) versions produce expected debug output."""
     L = [3, 2, 1]
     bubble_sort(L)
     captured = capsys.readouterr().out
