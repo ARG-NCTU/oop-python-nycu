@@ -56,20 +56,25 @@ def genSubsets(L):
     for small in smaller:
         new.append(small+extra)  # for all smaller solutions, add one with last element
     return smaller+new  # combine those with last element and those without
+def genPerms(L):
+    """
+    回傳 L 所有排列的 list，每一個排列也是一個 list。
+    例如：
+        genPerms([1, 2]) -> [[1, 2], [2, 1]]
+    """
+    if len(L) == 0:
+        return [[]]
+    if len(L) == 1:
+        return [L[:]]  # 複製一份
+
+    res = []
+    for i in range(len(L)):
+        first = L[i]
+        rest = L[:i] + L[i+1:]
+        for p in genPerms(rest):
+            res.append([first] + p)
+    return res
 
 
 testSet = [1,2,3,4]
 print(genSubsets(testSet))
-def genPerms(L):
-    res = []
-    if len(L) == 0:
-        return [[]] #list of empty list
-    first = L[0]
-    rest = L[1:]
-    permsWithoutFirst = genPerms(rest)
-    for perm in permsWithoutFirst:
-        for i in range(len(perm)+1):
-            res.append(perm[:i] + [first] + perm[i:])
-    return res
-testSet = []
-print(genPerms(testSet))
