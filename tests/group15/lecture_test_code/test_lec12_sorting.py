@@ -1,6 +1,5 @@
-import tests.group15.lecture_test_code.add_path
 import pytest
-import mit_ocw_exercises.lec12_sorting as S
+import lec12_sorting as S
 
 
 @pytest.mark.parametrize(

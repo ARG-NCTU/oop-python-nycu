@@ -34,11 +34,11 @@ def Coordinate_test():
 # print(c)
 
 
-#################
+################
 ## EXAMPLE: simple class to represent fractions
 ## Try adding more built-in operations like multiply, divide
 ### Try adding a reduce method to reduce the fraction (use gcd)
-#################
+##############
 class Fraction(object):
     """
     A number represented as a fraction
@@ -138,6 +138,7 @@ assert str(s) == "{3,4,6}"
 s.remove(3)
 assert str(s) == "{4,6}"
 
+####
 try:
     s.remove(3)  # 應該拋出 ValueError
 except ValueError as e:

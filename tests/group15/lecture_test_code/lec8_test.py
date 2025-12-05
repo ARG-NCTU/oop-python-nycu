@@ -1,6 +1,6 @@
 import pytest
 
-from lec8_classes import Coordinate, Fraction, intSet
+from lec8 import Coordinate, Fraction, intSet
 
 # ==================================
 # ===== 測試 Coordinate Class =====
