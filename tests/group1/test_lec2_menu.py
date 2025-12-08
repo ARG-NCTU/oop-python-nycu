@@ -1,6 +1,8 @@
 import os
 import sys 
 import pytest
+from add_path import add_path
+add_path()
 
 # Ensure repo root is on sys.path so lec2_menu can be imported consistently
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))

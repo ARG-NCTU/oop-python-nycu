@@ -1,6 +1,8 @@
 import pytest
 import add_path
 import random
+from add_path import add_path
+add_path()
 from lec10_complexity_part1 import linear_search, search, isSubset, intersect
 
 def test_linear_search_found():

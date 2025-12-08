@@ -1,6 +1,8 @@
 import pytest
 import numpy as np
 import random
+from add_path import add_path
+add_path()
 from lec8_module import get_highs, get_means_and_sds
 
 @pytest.fixture
