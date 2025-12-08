@@ -60,7 +60,6 @@ def test_intset_multiple_inserts_sorted():
     assert str(s) == "{2,5,8,10}"
 
 def test_coordinate_and_fraction_together():
-    # 簡單檢查兩者不衝突
     c = l8.Coordinate(3, 4)
     f = l8.Fraction(1, 2)
     assert "<" in str(c)
