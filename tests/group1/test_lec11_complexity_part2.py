@@ -1,3 +1,5 @@
+from add_path import add_path
+add_path()
 from lec11_complexity_part2 import bisect_search1, bisect_search2, genSubsets, genPerms
 import pytest
 import add_path

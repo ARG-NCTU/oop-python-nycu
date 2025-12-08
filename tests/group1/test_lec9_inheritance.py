@@ -1,6 +1,8 @@
 import re
 import random
 import pytest
+from add_path import add_path
+add_path()
 from lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
 ####################################
