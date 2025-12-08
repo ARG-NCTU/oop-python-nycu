@@ -90,7 +90,7 @@ user.name=Brian2074
 
 | Pytest Status   | Group Name   | Group Leader        | Group Member 1     | Group Member 2            |
 |:---------|:-------------|:--------------------|:-------------------|:--------------------------|
-| ❌        | Group 1      | bryson7736 : 27     | Chiang-Ian : 29    | peppa1122ee13 : 0         |
+| ❌        | Group 1      | bryson7736 : 27     | Chiang-Ian : 32    | peppa1122ee13 : 4         |
 | ❌        | Group 2      | ginny923 : 12       | joanna0420 : 23    | bondyhung : 0             |
 | ❌        | Group 3      | tpvupu : 25         | xiaotin22 : 26     |                           |
 | ❌        | Group 4      | yt-chen1230 : 26    | Huang-Kun-wei : 12 |                           |
