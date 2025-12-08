@@ -59,7 +59,5 @@ def test_rabbit_equality():
     r4 = r1 + r2
     r5 = r3 + r4
     r6 = r4 + r3
-    # r5 and r6 should have same parents (but swapped)
     assert r5 == r6
-    # r4 and r6 should not have same parents
     assert not (r4 == r6)
