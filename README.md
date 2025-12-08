@@ -103,6 +103,6 @@ user.name=Brian2074
 | ✅        | Group 11     | Nelson0314 : 5      |                    |                           |
 | ✅        | Group 12     | jui-pixel : 68      |                    |                           |
 | ✅        | Group 13     | max052028 : 3       | jeffjun113 : 0     | ngvihoee11-nycu : 13      |
-| ✅        | Group 14     | lilil0724 : 9       | noobLeo536 : 11    |                           |
+| ✅        | Group 14     | lilil0724 : 9       | noobLeo536 : 27    |                           |
 | ❌        | Group 15     | minopeng : 18       | KuoShengHsin : 13  |                           |
 <!--END_SECTION:pytest-->
