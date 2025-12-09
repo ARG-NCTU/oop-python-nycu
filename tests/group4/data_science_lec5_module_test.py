@@ -32,3 +32,16 @@ def test_walk():
     f.add_drunk(d, loc)
     distance = walk(f, d, 10)
     assert distance >= 0
+
+def test_sim_walks():
+    distances = sim_walks(10, 5, UsualDrunk)
+    assert len(distances) == 5
+    for dist in distances:
+        assert dist >= 0
+    
+def test_sim_drunk():
+    walk_lengths = [10, 100, 1000]
+    mean_distances = sim_drunk(5, UsualDrunk, walk_lengths)
+    assert len(mean_distances) == len(walk_lengths)
+    for mean in mean_distances:
+        assert mean >= 0
