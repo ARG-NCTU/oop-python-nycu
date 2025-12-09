@@ -58,7 +58,7 @@ def test_isSubset_basic_false():
     assert lec.isSubset([1, 6], [1, 2, 3, 4, 5]) is False
 
 def test_isSubset_edge_cases():
-    assert lec.isSubset([], []) is True                  # 空是任何集合子集合
+    assert lec.isSubset([], []) is True                 # 空是任何集合子集合
     assert lec.isSubset([], [1, 2, 3]) is True          # 空是子集合
     assert lec.isSubset([1], []) is False               # 非空不可能是空的子集合
 
