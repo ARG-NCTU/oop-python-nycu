@@ -10,3 +10,9 @@ def test_rev_list():
     L = ['q', 'w', 'e', 'r', 't', 'y']
     lec7.rev_list(L)
     assert L == ['y', 't', 'r', 'e', 'w', 'q']
+    L = []
+    lec7.rev_list(L)
+    assert L == []
+    L = [1]
+    lec7.rev_list(L)
+    assert L == [1]
