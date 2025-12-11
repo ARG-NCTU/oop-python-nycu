@@ -24,3 +24,7 @@ def test_rev_list_generalize():
         expected = tar[::-1]
         lec7.rev_list(tar)
         assert tar == expected
+    
+def test_primes_list():
+    assert lec7.primes_list(5) == [2, 3, 5]
+    assert lec7.primes_list(10) == [2, 3, 5, 7]
