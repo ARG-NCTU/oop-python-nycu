@@ -28,3 +28,5 @@ def test_rev_list_generalize():
 def test_primes_list():
     assert lec7.primes_list(5) == [2, 3, 5]
     assert lec7.primes_list(10) == [2, 3, 5, 7]
+    assert lec7.primes_list(20) == [2, 3, 5, 7, 11, 13, 17, 19]
+    assert lec7.primes_list(40) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
