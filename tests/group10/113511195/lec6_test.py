@@ -15,3 +15,9 @@ def test_fib():
     assert lec6.fib(8) == 34
     assert lec6.fib(9) == 55
     assert lec6.fib(10) == 89
+
+def test_fib_efficient():
+    d = {1: 1, 2: 2}
+    assert lec6.fib_efficient(5, d) == 8
+    assert lec6.fib_efficient(6, d) == 13
+    assert d[6] == 13
