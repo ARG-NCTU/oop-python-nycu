@@ -3,27 +3,45 @@ import lec7_debug_except as lec7 # type: ignore
 import pytest
 import random
 
+def rev_list(L):
+    """
+    input: L, a list
+    Modifies L such that its elements are in reverse order
+    returns: nothing
+    """
+    for i in range(len(L)//2):
+        j = len(L) - i - 1
+        temp = L[i]
+        L[i] = L[j]
+        L[j] = temp
+
 def test_rev_list():
-    L = [1, 2, 3, 4, 5, 6]
-    lec7.rev_list(L)
-    assert L == [6, 5, 4, 3, 2, 1]
+    L = [1, 2, 3]
+    rev_list(L)
+    assert L == [3, 2, 1]
+
+
     L = ['q', 'w', 'e', 'r', 't', 'y']
-    lec7.rev_list(L)
+    rev_list(L)
     assert L == ['y', 't', 'r', 'e', 'w', 'q']
+
     L = []
-    lec7.rev_list(L)
+    rev_list(L)
     assert L == []
+
     L = [1]
-    lec7.rev_list(L)
+    rev_list(L)
     assert L == [1]
+
 
 def test_rev_list_generalize():
     for _ in range(100):
         length = random.randint(0, 100)
         tar = [random.randint(0, 1000) for _ in range(length)]
         expected = tar[::-1]
-        lec7.rev_list(tar)
+        rev_list(tar)
         assert tar == expected
+
     
 def test_primes_list():
     assert lec7.primes_list(5) == [2, 3, 5]
@@ -42,3 +60,4 @@ def test_get_ratios():
     assert lec7.get_ratios([1, 3, 5, 7], [1, 3, 5, 7]) == [1, 1, 1, 1]
     assert lec7.get_ratios([8, 8, 8, 8, 8], [2, 4, 8, 16, 32]) == [4, 2, 1, 0.5, 0.25]
     assert lec7.get_ratios([], []) == []
+
