@@ -61,3 +61,14 @@ def test_get_ratios():
     assert lec7.get_ratios([8, 8, 8, 8, 8], [2, 4, 8, 16, 32]) == [4, 2, 1, 0.5, 0.25]
     assert lec7.get_ratios([], []) == []
 
+def rev_list(L):
+    """
+    input: L, a list
+    Modifies L such that its elements are in reverse order
+    returns: nothing
+    """
+    for i in range(len(L)//2):
+        j = len(L) - i - 1
+        temp = L[i]
+        L[i] = L[j]
+        L[j] = temp
