@@ -21,3 +21,13 @@ def test_fib_efficient():
     assert lec6.fib_efficient(5, d) == 8
     assert lec6.fib_efficient(6, d) == 13
     assert d[6] == 13
+
+def test_whichIsEfficient():
+    d = {1: 1, 2: 2}
+    n = 30
+    t1 = time.time()
+    lec6.fib_efficient(n, d)
+    t2 = time.time()
+    lec6.fib(n)
+    t3 = time.time()
+    assert (t2 - t1) < (t3 - t2)
