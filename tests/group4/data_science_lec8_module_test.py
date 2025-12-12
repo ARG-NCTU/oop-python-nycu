@@ -11,6 +11,8 @@ def test_make_hist():
         make_hist(data, 'Test Histogram', 'Value', 'Frequency', bins=30)
     except Exception as e:
         assert False, f"make_hist raised an exception: {e}"
+
+
 """
 def test_get_highs():
     population = get_highs()
