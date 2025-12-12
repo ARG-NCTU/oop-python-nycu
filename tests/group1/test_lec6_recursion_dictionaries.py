@@ -1,5 +1,7 @@
 import pytest
 import time
+from add_path import add_path
+add_path()
 # 假設您的原始程式碼檔案名為 examples.py
 from lec6_recursion_dictionaries import Towers, fib, is_palindrome, lyrics_to_frequencies, most_common_words, words_often, fib_efficient
 

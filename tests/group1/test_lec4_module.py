@@ -2,6 +2,8 @@ import pytest
 import random
 import io
 import sys
+from add_path import add_path
+add_path()
 # 假設 lec4_module.py 包含您提供的程式碼
 from lec4_module import roll_die, same_date, birthday_prob, run_sim, run_birthday_experiments
 

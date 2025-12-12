@@ -1,4 +1,6 @@
 import math
+from add_path import add_path
+add_path()
 from lec7_debug_except import rev_list, primes_list, get_ratios, avg, get_stats
 
 def test_rev_list():
