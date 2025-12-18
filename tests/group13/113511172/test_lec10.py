@@ -26,3 +26,13 @@ def test_search_sorted():
     assert search(testList, 100) is False
     
     assert search([], 5) is False
+
+def test_isSubset():
+    assert isSubset(testSet1, testSet) is True
+    
+    assert isSubset(testSet2, testSet) is False
+    
+    assert isSubset([], testSet) is True
+    
+    assert isSubset([1], []) is False
+    assert isSubset([], []) is True
