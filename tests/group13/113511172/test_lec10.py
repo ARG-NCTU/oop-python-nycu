@@ -16,3 +16,13 @@ def test_linear_search():
     assert linear_search(testList, 100) is False
     
     assert linear_search([], 5) is False
+
+def test_search_sorted():
+    assert search(testList, 5) is True
+    assert search(testList, 27) is True
+    
+    assert search(testList, 6) is False 
+    
+    assert search(testList, 100) is False
+    
+    assert search([], 5) is False
