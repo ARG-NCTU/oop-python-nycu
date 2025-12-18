@@ -85,5 +85,24 @@ user.email=brian910724@gmail.com
 user.name=Brian2074
 ```
 
+# 2025 AOOP Commit & Pytest Result
 <!--START_SECTION:pytest-->
+
+| Pytest Status   | Group Name   | Group Leader        | Group Member 1     | Group Member 2            |
+|:---------|:-------------|:--------------------|:-------------------|:--------------------------|
+| ❌        | Group 1      | bryson7736 : 27     | Chiang-Ian : 36    | peppa1122ee13 : 4         |
+| ❌        | Group 2      | ginny923 : 12       | joanna0420 : 23    | bondyhung : 0             |
+| ❌        | Group 3      | tpvupu : 25         | xiaotin22 : 26     |                           |
+| ❌        | Group 4      | yt-chen1230 : 26    | Huang-Kun-wei : 12 |                           |
+| ❌        | Group 5      | htyunn : 0          | okkohero : 2       |                           |
+| ❌        | Group 6      | jerrywustarwars : 0 | FrosterMonster : 3 | doralu950413ee13-gif : 10 |
+| ✅        | Group 7      | unknown899 : 17     | LeeYinWei : 29     |                           |
+| ❌        | Group 8      | hatthebutterfly : 1 | August0117 : 0     | hungchi0222 : 0           |
+| ❌        | Group 9      | pieapple1587 : 9    | terrycc9375 : 0    |                           |
+| ❌        | Group 10     | iamkyleh : 30       | billlllllllly : 5  |                           |
+| ✅        | Group 11     | Nelson0314 : 5      |                    |                           |
+| ✅        | Group 12     | jui-pixel : 68      |                    |                           |
+| ✅        | Group 13     | max052028 : 3       | jeffjun113 : 0     | ngvihoee11-nycu : 13      |
+| ✅        | Group 14     | lilil0724 : 9       | noobLeo536 : 27    |                           |
+| ❌        | Group 15     | minopeng : 18       | KuoShengHsin : 13  |                           |
 <!--END_SECTION:pytest-->
