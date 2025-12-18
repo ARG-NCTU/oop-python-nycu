@@ -50,3 +50,16 @@ def test_rabbit_creation_and_addition():
     assert r4.get_parent1() is r1
     assert r4.get_parent2() is r2
     assert isinstance(r4, l9.Rabbit)
+
+def test_rabbit_equality():
+    l9.Rabbit.tag = 10  # reset again
+    r1 = l9.Rabbit(1)
+    r2 = l9.Rabbit(2)
+    r3 = l9.Rabbit(3)
+    r4 = r1 + r2
+    r5 = r3 + r4
+    r6 = r4 + r3
+    # r5 and r6 should have same parents (but swapped)
+    assert r5 == r6
+    # r4 and r6 should not have same parents
+    assert not (r4 == r6)
