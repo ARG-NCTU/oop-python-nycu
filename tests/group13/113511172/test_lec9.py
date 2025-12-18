@@ -34,3 +34,19 @@ def test_person_methods(capsys):
     captured = capsys.readouterr()
     assert "1 year difference" in captured.out
     assert "person:P1:101" == str(p1)
+
+def test_rabbit_creation_and_addition():
+    l9.Rabbit.tag = 1
+    r1 = l9.Rabbit(3)
+    r2 = l9.Rabbit(4)
+    r3 = l9.Rabbit(5)
+    assert r1.get_rid() == "001"
+    assert r2.get_rid() == "002"
+    assert r3.get_rid() == "003"
+    assert r1.get_parent1() is None
+    assert r1.get_parent2() is None
+
+    r4 = r1 + r2
+    assert r4.get_parent1() is r1
+    assert r4.get_parent2() is r2
+    assert isinstance(r4, l9.Rabbit)
