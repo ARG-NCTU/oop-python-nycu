@@ -28,3 +28,7 @@ def test_fraction_add_and_sub():
     b = l8.Fraction(1, 6)
     assert str(a + b) == "9/18" 
     assert str(a - b) == "3/18" 
+
+def test_fraction_assertion_error():
+    with pytest.raises(AssertionError):
+        l8.Fraction(3.14, 2.7)
