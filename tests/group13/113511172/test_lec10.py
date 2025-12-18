@@ -36,3 +36,15 @@ def test_isSubset():
     
     assert isSubset([1], []) is False
     assert isSubset([], []) is True
+
+def test_intersect():
+    L1 = [1, 2, 3, 4]
+    L2 = [3, 4, 5, 6]
+    assert intersect(L1, L2) == [3, 4]
+
+    L_no_match = [1, 2]
+    L_no_match_2 = [3, 4]
+    assert intersect(L_no_match, L_no_match_2) == []
+
+    assert intersect(L1, []) == []
+    assert intersect([], L2) == []
