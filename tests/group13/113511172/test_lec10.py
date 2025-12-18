@@ -48,3 +48,9 @@ def test_intersect():
 
     assert intersect(L1, []) == []
     assert intersect([], L2) == []
+
+def test_intersect_with_duplicates():
+    L1 = [1, 2, 2, 3, 5]
+    L2 = [2, 2, 4, 5]
+    
+    assert sorted(intersect(L1, L2)) == [2, 5]
