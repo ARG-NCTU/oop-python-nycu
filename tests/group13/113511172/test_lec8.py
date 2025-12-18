@@ -58,3 +58,9 @@ def test_intset_multiple_inserts_sorted():
     for val in [10, 5, 8, 5, 2]:
         s.insert(val)
     assert str(s) == "{2,5,8,10}"
+
+def test_coordinate_and_fraction_together():
+    c = l8.Coordinate(3, 4)
+    f = l8.Fraction(1, 2)
+    assert "<" in str(c)
+    assert "/" in str(f)
