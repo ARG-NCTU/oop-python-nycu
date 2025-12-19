@@ -57,6 +57,10 @@ def test_Rabbit():
     assert r4.get_parent1() is r1
     assert str(r4) == "rabbit:009"
     r5 = r2 + r1
-    assert (r4 == r5) is True 
-
+    assert (r4 == r5) is True
+    r6 = lec9.Rabbit(1)
+    assert (r4 == r6) is False
+    assert str(r6) == "rabbit:010"
+    assert lec9.Rabbit.tag == 10
     
+
