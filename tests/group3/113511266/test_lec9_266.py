@@ -60,7 +60,7 @@ def test_Rabbit():
     assert (r4 == r5) is True
     r6 = lec9.Rabbit(1)
     assert (r4 == r6) is False
-    assert str(r6) == "rabbit:010"
-    assert lec9.Rabbit.tag == 10
+    assert str(r6) == "rabbit:011"
+    assert lec9.Rabbit.tag == 12
     
 
