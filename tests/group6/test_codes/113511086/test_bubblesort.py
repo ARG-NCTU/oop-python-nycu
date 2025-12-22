@@ -19,3 +19,4 @@ def bubble_sort(lst):
                 result[j], result[j + 1] = result[j + 1], result[j]
 
     return result
+
