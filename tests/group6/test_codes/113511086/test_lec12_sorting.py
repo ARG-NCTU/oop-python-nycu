@@ -1,50 +1,41 @@
-import add_path
-from mit_ocw_exercises.lec12_sorting import *
 import pytest
-import time
 import random
-# Test bubble_sort
-def test_bubble_sort():
-    testList = [1,3,5,7,2,6,25,18,13]
-    assert bubble_sort(testList) == [1,2,3,5,6,7,13,18,25]
-    
-    print('')
-    print(bubble_sort(testList))
-    print(testList)
+import time
+from mit_ocw_exercises.lec12_sorting import bubble_sort, selection_sort, merge_sort
 
-# Test selection_sort
-def test_selection_sort():
+@pytest.mark.parametrize("L, expected", [
+    ([1, 3, 5, 7, 2, 6, 25, 18, 13], [1,2,3,5,6,7,13,18,25]),
+    ([5, 4, 3, 2, 1], [1,2,3,4,5]),
+    ([], [])
+])
+def test_bubble_sort(L, expected):
+    assert bubble_sort(L) == expected
 
-    testList = [1,3,5,7,2,6,25,18,13]
+@pytest.mark.parametrize("L, expected", [
+    ([1, 3, 5, 7, 2, 6, 25, 18, 13], [1,2,3,5,6,7,13,18,25]),
+    ([5, 4, 3, 2, 1], [1,2,3,4,5]),
+    ([], [])
+])
+def test_selection_sort(L, expected):
+    assert selection_sort(L) == expected
 
-    assert bubble_sort(testList) == [1,2,3,5,6,7,13,18,25]
-    print('')
-    print(selection_sort(testList))
-    print(testList)
+@pytest.mark.parametrize("L, expected", [
+    ([1, 3, 5, 7, 2, 6, 25, 18, 13], [1,2,3,5,6,7,13,18,25]),
+    ([5, 4, 3, 2, 1], [1,2,3,4,5]),
+    ([], [])
+])
+def test_merge_sort(L, expected):
+    assert merge_sort(L) == expected
 
-# Test merge_sort
-def test_merge_sort():
+@pytest.mark.slow
+def test_sort_performance():
+    sorting_methods = [("bubble sort", bubble_sort),
+                       ("selection sort", selection_sort),
+                       ("merge sort", merge_sort)]
+    test_list = [random.randint(0, 100) for _ in range(5000)]
 
-    testList = [1,3,5,7,2,6,25,18,13]
-
-    assert merge_sort(testList) == [1,2,3,5,6,7,13,18,25]
-    print('')
-    print(merge_sort(testList))
-
-def diff_in_time():
-    sorting_methods = ['selection sort', 'bubble sort', 'merge sort'] 
-    sorting_methods_func = [selection_sort, bubble_sort, merge_sort]
-    test_list = []
-
-    for i in range(50):
-        a = random.randrange(50)
-        test_list.append(a)
-
-    for i in range(3):
-        test = test_list.copy()
-        start_time = time.time()
-        test = sorting_methods_func[i](test)
-        end_time = time.time()
-        print(f'The time that {sorting_methods[i]} cost is {end_time - start_time}')
-
-diff_in_time()
+    for name, func in sorting_methods:
+        start = time.time()
+        func(test_list)
+        end = time.time()
+        print(f"{name} time: {end-start:.4f}s")
