@@ -3,7 +3,6 @@ import pytest
 
 import lec8_classes as lec8
 
-
 def test_coordinate_basic():
     c1 = lec8.Coordinate(3, 4)
     c2 = lec8.Coordinate(0, 0)
