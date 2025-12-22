@@ -3,7 +3,6 @@ import pytest
 
 import lec11_complexity_part2 as lec11
 
-
 @pytest.mark.parametrize("e, expected", [
     (0, True),
     (50, True),
