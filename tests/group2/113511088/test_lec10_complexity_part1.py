@@ -2,7 +2,6 @@
 import pytest
 import lec10_complexity_part1 as lec10
 
-
 def test_linear_search_found_and_not_found():
     L = [1, 3, 4, 5, 9, 18, 27]
     assert lec10.linear_search(L, 4) is True
