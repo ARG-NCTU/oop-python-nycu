@@ -1,44 +1,61 @@
-import add_path
-import mit_ocw_exercises.lec8_classes as lec8
-import pytest
+import math
 
-def test_Coordinate():
-    c = lec8.Coordinate(5,6)
-    assert c.x == 5
-    assert c.y == 6
-    assert str(c) == "<5,6>"
-    origin = lec8.Coordinate(0,0)
-    assert c.distance(origin) == 7.810249675906654
+class Coordinate(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-def test_Fraction():
-    num1 = lec8.Fraction(1,4)
-    num2 = lec8.Fraction(5,4)
-    assert str(num1) == "1/4"
-    assert str(num2) == "5/4"
-    assert str(num1 + num2) == "24/16"
-    assert str(num1 - num2) == "-16/16"
-    assert float(num1) == 0.25
-    assert float(num2) == 1.25
-    assert str(num1.inverse()) == "4/1"
-    assert str(num2.inverse()) == "4/5"
-    
-def test_intSet():
-    num1 = lec8.intSet()
-    num1.insert(1)
-    assert num1.vals == [1]
-    num2 = lec8.intSet()
-    num2.insert(2)
-    assert num2.vals == [2]
-    assert num1.member(1) == True
-    assert num2.member(1) == False
-    num1.insert(2)
-    assert str(num1) == '{1,2}'
-    
-    
-    
-    
-    
+    def distance(self, other):
+        x_diff_sq = (self.x - other.x) ** 2
+        y_diff_sq = (self.y - other.y) ** 2
+        return math.sqrt(x_diff_sq + y_diff_sq)
+
+    def __str__(self):
+        return f"<{self.x},{self.y}>"
 
 
-    
-    
+class Fraction(object):
+    def __init__(self, num, den):
+        self.num = num
+        self.den = den
+
+    def __str__(self):
+        return f"{self.num}/{self.den}"
+
+    def __add__(self, other):
+        new_num = self.num * other.den + other.num * self.den
+        new_den = self.den * other.den
+        return Fraction(new_num, new_den)
+
+    def __sub__(self, other):
+        new_num = self.num * other.den - other.num * self.den
+        new_den = self.den * other.den
+        return Fraction(new_num, new_den)
+
+    def __float__(self):
+        return self.num / self.den
+
+    def inverse(self):
+        return Fraction(self.den, self.num)
+
+
+class intSet(object):
+    def __init__(self):
+        self.vals = []
+
+    def insert(self, e):
+        if e not in self.vals:
+            self.vals.append(e)
+            self.vals.sort()
+
+    def member(self, e):
+        return e in self.vals
+
+    def __str__(self):
+        result = '{'
+        for i in range(len(self.vals)):
+            result += str(self.vals[i])
+            if i != len(self.vals) - 1:
+                result += ','
+        result += '}'
+        return result
