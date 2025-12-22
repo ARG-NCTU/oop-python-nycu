@@ -3,7 +3,6 @@ import pytest
 
 import lec6_recursion_dictionaries as lec6
 
-
 def test_fib_base_and_small():
     assert lec6.fib(0) == 1
     assert lec6.fib(1) == 1
