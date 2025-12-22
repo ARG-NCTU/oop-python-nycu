@@ -1,33 +1,29 @@
-def bisect_search2(L, e):
+def bisect_search2(L, e, start=0, end=None):
     """
     Assumes L is a sorted list.
     Returns True if e is in L, otherwise False.
-    Uses recursive bisection search.
+    Uses recursive bisection search without slicing.
     """
-    if L == []:
+    if end is None:
+        end = len(L)
+    if start >= end:
         return False
 
-    mid = len(L) // 2
-
+    mid = (start + end) // 2
     if L[mid] == e:
         return True
     elif e < L[mid]:
-        return bisect_search2(L[:mid], e)
+        return bisect_search2(L, e, start, mid)
     else:
-        return bisect_search2(L[mid+1:], e)
+        return bisect_search2(L, e, mid + 1, end)
 def genSubsets(L):
     """
     Returns a list of all subsets of list L.
-    Order follows MIT OCW lecture example.
+    Uses iterative bit manipulation for performance.
     """
-    if len(L) == 0:
-        return [[]]
-
-    smaller = genSubsets(L[:-1])
-    extra = L[-1:]
-
-    new = []
-    for subset in smaller:
-        new.append(subset + extra)
-
-    return smaller + new
+    n = len(L)
+    result = []
+    for i in range(2 ** n):
+        subset = [L[j] for j in range(n) if (i >> j) & 1]
+        result.append(subset)
+    return result
