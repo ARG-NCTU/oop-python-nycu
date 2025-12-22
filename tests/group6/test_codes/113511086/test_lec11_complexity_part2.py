@@ -1,16 +1,33 @@
-import add_path
-import mit_ocw_exercises.lec11_complexity_part2 as lec11
-import pytest
+def bisect_search2(L, e):
+    """
+    Assumes L is a sorted list.
+    Returns True if e is in L, otherwise False.
+    Uses recursive bisection search.
+    """
+    if L == []:
+        return False
 
-def test_bisect_search2():
-    testList= [0,1,2,3,4,5,6,7,8,9]
-    assert lec11.bisect_search2(testList, 5) == True
-    assert lec11.bisect_search2(testList, 10) == False
-    assert lec11.bisect_search2(testList, -1) == False
-    assert lec11.bisect_search2([], 5) == False
+    mid = len(L) // 2
 
-def test_genSubsets():
-    testSet = [1,2,3,4]
-    subsets = lec11.genSubsets(testSet)
-    assert subsets== [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3],[4],[1,4],[2,4],[1,2,4],[3,4],[1,3,4],[2,3,4],[1,2,3,4]]
+    if L[mid] == e:
+        return True
+    elif e < L[mid]:
+        return bisect_search2(L[:mid], e)
+    else:
+        return bisect_search2(L[mid+1:], e)
+def genSubsets(L):
+    """
+    Returns a list of all subsets of list L.
+    Order follows MIT OCW lecture example.
+    """
+    if len(L) == 0:
+        return [[]]
 
+    smaller = genSubsets(L[:-1])
+    extra = L[-1:]
+
+    new = []
+    for subset in smaller:
+        new.append(subset + extra)
+
+    return smaller + new
