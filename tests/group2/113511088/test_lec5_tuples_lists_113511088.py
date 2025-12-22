@@ -3,7 +3,6 @@ import pytest
 
 import lec5_tuples_lists_113511088 as lec5
 
-
 @pytest.mark.parametrize("L, expected", [
     ([1, 2, 3, 4], 10),
     ([0], 0),
