@@ -3,7 +3,6 @@ import pytest
 
 import lec9_inheritance as lec9
 
-
 def test_animal_basic():
     a = lec9.Animal(4)
     assert a.get_age() == 4
@@ -93,8 +92,9 @@ def test_rabbit_rid_format_and_parents_and_add_and_eq():
     assert r1.get_parent2() is None
 
     r4 = r1 + r2
-    assert r4.get_parent1() == r1
-    assert r4.get_parent2() == r2
+    assert r4.get_parent1() is r1
+    assert r4.get_parent2() is r2
+
     assert r4.get_age() == 0
 
     # Equality: same parents regardless of order
