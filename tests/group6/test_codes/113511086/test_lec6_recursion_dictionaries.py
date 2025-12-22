@@ -2,376 +2,93 @@ import add_path
 import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
 import pytest
 
-# please write a test for fib function
-def test_fib():
-    assert lec6.fib(0) == 1
-    assert lec6.fib(1) == 1
-    assert lec6.fib(2) == 2
-    assert lec6.fib(3) == 3
-    assert lec6.fib(4) == 5
-    assert lec6.fib(5) == 8
-    assert lec6.fib(6) == 13
-    assert lec6.fib(7) == 21
-    assert lec6.fib(8) == 34
-    assert lec6.fib(9) == 55
-    assert lec6.fib(10) == 89
+# =========================
+# Tests for fib
+# =========================
+@pytest.mark.parametrize("n,expected", [
+    (0, 1),
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 5),
+    (5, 8),
+    (6, 13),
+    (7, 21),
+    (8, 34),
+    (9, 55),
+    (10, 89)
+])
+def test_fib(n, expected):
+    assert lec6.fib(n) == expected
 
-# please write a test for is_palindrome function
-def test_is_palindrome():
-    assert lec6.is_palindrome('eve') == True
-    assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
-    assert lec6.is_palindrome('Is this a palindrome') == False
-    assert lec6.is_palindrome('eillie') == True
-    assert lec6.is_palindrome('cookieliileikooc') == True
-# 2
-def test_18_fib():
-    assert lec6.fib(0) == 1
-    assert lec6.fib(1) == 1
-    assert lec6.fib(2) == 2
-    assert lec6.fib(3) == 3
-    assert lec6.fib(4) == 5
-    assert lec6.fib(5) == 8
-    assert lec6.fib(6) == 13
-    assert lec6.fib(7) == 21
-    assert lec6.fib(8) == 34
-    assert lec6.fib(9) == 55
-    assert lec6.fib(10) == 89
 
-def test_18_is_palindrome():
-    assert lec6.is_palidrome('eve') == True
-    assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
-    assert lec6.is_palindrome('Is this a palindrome') == False
-    assert lec6.is_palindrome('eillie') == True
-    assert lec6.is_palindrome('cookieliileikooc') == True
+# =========================
+# Tests for is_palindrome
+# =========================
+@pytest.mark.parametrize("s,expected", [
+    ("eve", True),
+    ("Able was I, ere I saw Elba", True),
+    ("Is this a palindrome", False),
+    ("eillie", True),
+    ("cookieliileikooc", True),
+    ("owo", True),
+    ("ALPHAahpla", True),
+    (",\\-=*", True),  # only non-alpha chars => empty string => True
+    ("cAwAc", True)
+])
+def test_is_palindrome(s, expected):
+    assert lec6.is_palindrome(s) == expected
 
-def test_most_common_words():
+
+# =========================
+# Tests for lyrics_to_frequencies
+# =========================
+def test_lyrics_to_frequencies_basic():
+    words = ['wuo', 'due', 'ni', 'i', 'i', 'i', 'bu', 'wan']
+    expected = {'wuo': 1, 'due': 1, 'ni': 1, 'i': 3, 'bu': 1, 'wan': 1}
+    assert lec6.lyrics_to_frequencies(words) == expected
+
+
+# =========================
+# Tests for most_common_words
+# =========================
+def test_most_common_words_basic():
+    freqs = {'wuo': 1, 'due': 1, 'ni': 1, 'i': 3, 'bu': 1, 'wan': 1}
+    assert lec6.most_common_words(freqs) == (['i'], 3)
+
+
+def test_most_common_words_beatles():
     she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
-    'yeah','she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-        
-    'you', 'think', "you've", 'lost', 'your', 'love',
-    'well', 'i', 'saw', 'her', 'yesterday-yi-yay',
-    "it's", 'you', "she's", 'thinking', 'of',
-    'and', 'she', 'told', 'me', 'what', 'to', 'say-yi-yay',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'she', 'said', 'you', 'hurt', 'her', 'so',
-    'she', 'almost', 'lost', 'her', 'mind',
-    'and', 'now', 'she', 'says', 'she', 'knows',
-    "you're", 'not', 'the', 'hurting', 'kind',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'you', 'know', "it's", 'up', 'to', 'you',
-    'i', 'think', "it's", 'only', 'fair',
-    'pride', 'can', 'hurt', 'you', 'too',
-    'pologize', 'to', 'her',
-    
-    'Because', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'Yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'yeah', 'yeah', 'yeah',
-    'yeah', 'yeah', 'yeah', 'yeah'
-    ]
-
-    assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
-    assert lec6.is_palindrome('cookieliileikooc') == True
-
-# 3
-import add_path
-import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
-import pytest
-
-# please write a test for fib function
-def test_fib():
-    assert lec6.fib(0) == 1
-    assert lec6.fib(1) == 1
-    assert lec6.fib(2) == 2
-    assert lec6.fib(3) == 3
-    assert lec6.fib(4) == 5
-    assert lec6.fib(5) == 8
-    assert lec6.fib(6) == 13
-    assert lec6.fib(7) == 21
-    assert lec6.fib(8) == 34
-    assert lec6.fib(9) == 55
-    assert lec6.fib(10) == 89
-    
-    
-# please write a test for is_palindrome function
-def test_is_palindrome():
-    assert lec6.is_palindrome('eve') == True
-    assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
-    assert lec6.is_palindrome('Is this a palindrome') == False
-    assert lec6.is_palindrome('eillie') == True
-    assert lec6.is_palindrome('cookieliileikooc') == True
-
-fuchengguo = ['wuo','due','ni','i','i','i','bu','wan']
-beatles = lec6.lyrics_to_frequencies(fuchengguo)
-def test_lyrics_to_frequencies():
-    assert lec6.lyrics_to_frequencies(fuchengguo) == {'wuo': 1, 'due': 1, 'ni': 1, 'i': 3, 'bu': 1, 'wan': 1}
-def test_most_common_words():
-    assert lec6.most_common_words(beatles) == (['i'], 3)
-def test_words_often():
-    assert lec6.words_often(beatles, 3) == [(['i'], 3)]
-    assert lec6.words_often(beatles, 2) == []
-        
+                     'yeah','she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
+                     'she', 'loves', 'you', 'yeah', 'yeah', 'yeah']
+    freqs = lec6.lyrics_to_frequencies(she_loves_you)
+    assert lec6.most_common_words(freqs) == (['you', 'yeah'], 6)
 
 
-def test_most_common_words():
-    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
-    'yeah','she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-        
-    'you', 'think', "you've", 'lost', 'your', 'love',
-    'well', 'i', 'saw', 'her', 'yesterday-yi-yay',
-    "it's", 'you', "she's", 'thinking', 'of',
-    'and', 'she', 'told', 'me', 'what', 'to', 'say-yi-yay',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'she', 'said', 'you', 'hurt', 'her', 'so',
-    'she', 'almost', 'lost', 'her', 'mind',
-    'and', 'now', 'she', 'says', 'she', 'knows',
-    "you're", 'not', 'the', 'hurting', 'kind',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'you', 'know', "it's", 'up', 'to', 'you',
-    'i', 'think', "it's", 'only', 'fair',
-    'pride', 'can', 'hurt', 'you', 'too',
-    'pologize', 'to', 'her',
-    
-    'Because', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'Yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'yeah', 'yeah', 'yeah',
-    'yeah', 'yeah', 'yeah', 'yeah'
-    ]
-
-    assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
-    assert lec6.is_palindrome('cookieliileikooc') == True
-
-# 4
-# please write a test for fib function
-def test_fib():
-    assert lec6.fib(0) == 1
-    assert lec6.fib(1) == 1
-    assert lec6.fib(2) == 2
-    assert lec6.fib(3) == 3
-    assert lec6.fib(4) == 5
-    assert lec6.fib(5) == 8
-    assert lec6.fib(6) == 13
-    assert lec6.fib(7) == 21
-    assert lec6.fib(8) == 34
-    assert lec6.fib(9) == 55
-    assert lec6.fib(10) == 89
+# =========================
+# Tests for words_often
+# =========================
+def test_words_often_basic():
+    freqs = lec6.lyrics_to_frequencies(['wuo', 'due', 'ni', 'i', 'i', 'i', 'bu', 'wan'])
+    # words appearing at least 3 times
+    assert lec6.words_often(freqs.copy(), 3) == [(['i'], 3)]
+    # words appearing at least 2 times
+    assert lec6.words_often(freqs.copy(), 2) == [(['i'], 3)]
+    # words appearing at least 4 times => none
+    assert lec6.words_often(freqs.copy(), 4) == []
 
 
-# please write a test for is_palindrome function
-def test_is_palindrome():
-    assert lec6.is_palindrome('eve') == True
-    assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
-    assert lec6.is_palindrome('Is this a palindrome') == False
-    assert lec6.is_palindrome('eillie') == True
-    assert lec6.is_palindrome('cookieliileikooc') == True
-# 5
-def test_18_fib():
-    assert lec6.fib(0) == 1
-    assert lec6.fib(1) == 1
-    assert lec6.fib(2) == 2
-    assert lec6.fib(3) == 3
-    assert lec6.fib(4) == 5
-    assert lec6.fib(5) == 8
-    assert lec6.fib(6) == 13
-    assert lec6.fib(7) == 21
-    assert lec6.fib(8) == 34
-    assert lec6.fib(9) == 55
-    assert lec6.fib(10) == 89
-
-def test_18_is_palindrome():
-    assert lec6.is_palindrome('eve') == True
-    assert lec6.is_palindrome('Able was I, ere I saw Elba') == True
-    assert lec6.is_palindrome('Is this a palindrome') == False
-    assert lec6.is_palindrome('eillie') == True
-    assert lec6.is_palindrome('cookieliileikooc') == True
+# =========================
+# Large-scale lyrics test
+# =========================
+def test_words_often_large():
+    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
+                     'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
+                     'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
+                     'you', 'think', "you've", 'lost', 'your', 'love']
+    freqs = lec6.lyrics_to_frequencies(she_loves_you)
+    result = lec6.words_often(freqs.copy(), 3)
+    # "you" and "yeah" appear 6 times each
+    assert (['you', 'yeah'] in [group[0] for group in result])
 
 
-def test_most_common_words():
-    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
-    'yeah','she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-        
-    'you', 'think', "you've", 'lost', 'your', 'love',
-    'well', 'i', 'saw', 'her', 'yesterday-yi-yay',
-    "it's", 'you', "she's", 'thinking', 'of',
-    'and', 'she', 'told', 'me', 'what', 'to', 'say-yi-yay',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'she', 'said', 'you', 'hurt', 'her', 'so',
-    'she', 'almost', 'lost', 'her', 'mind',
-    'and', 'now', 'she', 'says', 'she', 'knows',
-    "you're", 'not', 'the', 'hurting', 'kind',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'you', 'know', "it's", 'up', 'to', 'you',
-    'i', 'think', "it's", 'only', 'fair',
-    'pride', 'can', 'hurt', 'you', 'too',
-    'pologize', 'to', 'her',
-    
-    'Because', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'Yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'yeah', 'yeah', 'yeah',
-    'yeah', 'yeah', 'yeah', 'yeah'
-    ]
-
-    assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
-    assert lec6.is_palindrome('cookieliileikooc') == True
-
-
-# mytemp
-import add_path
-import mit_ocw_exercises.lec6_recursion_dictionaries as lec6
-import pytest
-
-# please write a test for fib function
-def test_3_3_fib():
-    assert lec6.fib(0) == 1
-    assert lec6.fib(1) == 1
-    assert lec6.fib(2) == 2
-    assert lec6.fib(3) == 3
-    assert lec6.fib(4) == 5
-    assert lec6.fib(5) == 8
-    assert lec6.fib(6) == 13
-    assert lec6.fib(7) == 21
-    assert lec6.fib(8) == 34
-    assert lec6.fib(9) == 55
-    assert lec6.fib(10) == 89
-
-# please write a test for is_palindrome function
-def test_is_palindrome():
-    assert lec6.is_palindrome('owo') == True
-    assert lec6.is_palindrome('ALPHAahpla') == True
-    assert lec6.is_palindrome(',\-=*') == True # abcdefghijklmnopqrstuvwxyz
-    assert lec6.is_palindrome('cAwAc') == True
-
-def test_most_common_words():
-    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
-    'yeah','she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-        
-    'you', 'think', "you've", 'lost', 'your', 'love',
-    'well', 'i', 'saw', 'her', 'yesterday-yi-yay',
-    "it's", 'you', "she's", 'thinking', 'of',
-    'and', 'she', 'told', 'me', 'what', 'to', 'say-yi-yay',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'she', 'said', 'you', 'hurt', 'her', 'so',
-    'she', 'almost', 'lost', 'her', 'mind',
-    'and', 'now', 'she', 'says', 'she', 'knows',
-    "you're", 'not', 'the', 'hurting', 'kind',
-    
-    'she', 'says', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'you', 'know', "it's", 'up', 'to', 'you',
-    'i', 'think', "it's", 'only', 'fair',
-    'pride', 'can', 'hurt', 'you', 'too',
-    'pologize', 'to', 'her',
-    
-    'Because', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'that', "can't", 'be', 'bad',
-    'Yes', 'she', 'loves', 'you',
-    'and', 'you', 'know', 'you', 'should', 'be', 'glad',
-    
-    'oo', 'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'with', 'a', 'love', 'like', 'that',
-    'you', 'know', 'you', 'should', 'be', 'glad',
-    'yeah', 'yeah', 'yeah',
-    'yeah', 'yeah', 'yeah', 'yeah'
-    ]
-
-    assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
-    assert lec6.most_common_words(lec6.lyrics_to_frequencies(she_loves_you)) == (['you'], 36)
