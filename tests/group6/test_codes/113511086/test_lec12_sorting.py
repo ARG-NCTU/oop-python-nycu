@@ -1,50 +1,65 @@
-import add_path
-from mit_ocw_exercises.lec12_sorting import *
-import pytest
-import time
-import random
-# Test bubble_sort
-def test_bubble_sort():
-    testList = [1,3,5,7,2,6,25,18,13]
-    assert bubble_sort(testList) == [1,2,3,5,6,7,13,18,25]
-    
-    print('')
-    print(bubble_sort(testList))
-    print(testList)
+# mit_ocw_exercises/lec12_sorting.py
 
-# Test selection_sort
-def test_selection_sort():
+def bubble_sort(L):
+    """
+    Returns a sorted copy of L using bubble sort.
+    """
+    L = L[:]  # copy to avoid mutating input
+    n = len(L)
 
-    testList = [1,3,5,7,2,6,25,18,13]
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if L[j] > L[j + 1]:
+                L[j], L[j + 1] = L[j + 1], L[j]
+    return L
 
-    assert bubble_sort(testList) == [1,2,3,5,6,7,13,18,25]
-    print('')
-    print(selection_sort(testList))
-    print(testList)
 
-# Test merge_sort
-def test_merge_sort():
+def selection_sort(L):
+    """
+    Returns a sorted copy of L using selection sort.
+    """
+    L = L[:]  # copy to avoid mutating input
+    n = len(L)
 
-    testList = [1,3,5,7,2,6,25,18,13]
+    for i in range(n):
+        min_index = i
+        for j in range(i + 1, n):
+            if L[j] < L[min_index]:
+                min_index = j
+        L[i], L[min_index] = L[min_index], L[i]
 
-    assert merge_sort(testList) == [1,2,3,5,6,7,13,18,25]
-    print('')
-    print(merge_sort(testList))
+    return L
 
-def diff_in_time():
-    sorting_methods = ['selection sort', 'bubble sort', 'merge sort'] 
-    sorting_methods_func = [selection_sort, bubble_sort, merge_sort]
-    test_list = []
 
-    for i in range(50):
-        a = random.randrange(50)
-        test_list.append(a)
+def merge_sort(L):
+    """
+    Returns a sorted copy of L using merge sort.
+    """
+    if len(L) <= 1:
+        return L[:]
 
-    for i in range(3):
-        test = test_list.copy()
-        start_time = time.time()
-        test = sorting_methods_func[i](test)
-        end_time = time.time()
-        print(f'The time that {sorting_methods[i]} cost is {end_time - start_time}')
+    mid = len(L) // 2
+    left = merge_sort(L[:mid])
+    right = merge_sort(L[mid:])
 
-diff_in_time()
+    return merge(left, right)
+
+
+def merge(left, right):
+    """
+    Helper function for merge_sort.
+    """
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
