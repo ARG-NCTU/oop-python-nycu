@@ -66,8 +66,3 @@ def test_intersect():
     result, complexity = intersect([1, 2, 3], [2, 3, 4])
     assert result == [2, 3]
     assert complexity == 9
-# -*- coding: utf-8 -*-
-"""Created on Sun Oct  9 11:56:23 2016      
-
-
-:"""
