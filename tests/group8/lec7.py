@@ -52,7 +52,7 @@ def avg(grades):
     return sum(grades) / len(grades)
   except ZeroDivisionError:
     return 0.0
-# 5. get_stats — 回傳學生平均成績
+# 5. get_stats — (return the average grade)
 def get_stats(class_list):
   new_stats = []
   for person in class_list:
