@@ -50,7 +50,6 @@ def get_ratios(L1, L2):
 
 ########################################
 # 4. avg — 計算平均值（空 list 會回傳 0）
-########################################
 def avg(grades):
   try:
     return sum(grades) / len(grades)
