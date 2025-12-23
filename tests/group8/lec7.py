@@ -46,7 +46,7 @@ def get_ratios(L1, L2):
       pass
 
   return ratios
-# 4. avg — 計算平均值（calculating average）
+# 4. avg —（calculating average）
 def avg(grades):
   try:
     return sum(grades) / len(grades)
