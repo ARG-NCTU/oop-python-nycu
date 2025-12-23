@@ -2,11 +2,6 @@ import math
 
 # 1. 反轉串列 rev_list
 def rev_list(L):
-  """
-  input: L, a list
-  Modifies L such that its elements are in reverse order
-  returns: nothing
-  """
   for i in range(len(L) // 2):
     j = len(L) - i - 1
     temp = L[i]
