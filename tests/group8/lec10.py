@@ -17,7 +17,6 @@ def search(L, e):
         if L[i] > e:
             return False, complexity
     return False, complexity
-
 def isSubset(L1, L2):
     complexity = 0
     for e1 in L1:
@@ -30,7 +29,6 @@ def isSubset(L1, L2):
         if not matched:
             return False, complexity
     return True, complexity
-
 def intersect(L1, L2):
     tmp = []
     complexity = 0
