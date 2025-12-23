@@ -1,4 +1,3 @@
-
 def linear_search(L, e):
     found = False
     complexity = 0 #time complexity  
