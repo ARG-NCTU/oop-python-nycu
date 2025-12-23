@@ -53,7 +53,7 @@ def test_search():
 def test_isSubset():
     is_subset, complexity = isSubset([1, 3, 5], [1, 2, 3, 4, 5])
     assert is_subset is True
-    assert complexity == 9
+    assert complexity ==9
 def test_intersect():
     result, complexity = intersect([1, 2, 3], [2, 3, 4])
     assert result == [2, 3]
