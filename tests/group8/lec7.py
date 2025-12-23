@@ -32,11 +32,7 @@ def primes_list(n):
       primes.append(j)
 
   return primes
-
-
-########################################
 # 3. get_ratios — 比例計算（含例外處理）
-########################################
 def get_ratios(L1, L2):
   """
   假設 L1 和 L2 是長度相等的數字列表。
