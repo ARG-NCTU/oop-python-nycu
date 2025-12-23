@@ -11,7 +11,7 @@ def search(L, e):
     complexity = 0
     for i in range(len(L)):
         complexity += 1
-        if L[i] == e:
+        if L[i] == e:   
             return True, complexity
         if L[i] > e:
             return False, complexity
