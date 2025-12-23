@@ -7,7 +7,6 @@ def linear_search(L, e):
         if e == L[i]:
             found = True
     return found, complexity
-
 def search(L, e):
     complexity = 0
     for i in range(len(L)):
