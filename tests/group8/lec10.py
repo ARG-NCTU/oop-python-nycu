@@ -1,10 +1,9 @@
 
 def linear_search(L, e):
     found = False
-    complexity = 0  # 計算複雜度
+    complexity = 0
     for i in range(len(L)):
-        complexity += 1  # 每次迴圈執行計數
-        # print(f"Checking index {i}, value {L[i]}, complexity{complexity}")  # 顯示目前檢查的元素
+        complexity += 1
         if e == L[i]:
             found = True
     return found, complexity
