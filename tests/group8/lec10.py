@@ -43,22 +43,18 @@ def intersect(L1, L2):
         if not(e in res):
             res.append(e)
     return res, complexity
-
 def test_linear_search():
     found, complexity = linear_search([1, 3, 4, 5, 9, 18, 27], 5)
     assert found is True
     assert complexity == 7
-
 def test_search():
     found, complexity = search([1, 3, 4, 5, 9, 18, 27], 6)
     assert found is False
     assert complexity == 5
-
 def test_isSubset():
     is_subset, complexity = isSubset([1, 3, 5], [1, 2, 3, 4, 5])
     assert is_subset is True
     assert complexity == 9
-
 def test_intersect():
     result, complexity = intersect([1, 2, 3], [2, 3, 4])
     assert result == [2, 3]
