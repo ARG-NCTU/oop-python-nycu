@@ -17,7 +17,7 @@ def search(L, e):
             return False, complexity
     return False, complexity
 def isSubset(L1, L2):
-    complexity = 0
+    complexity = 0 #time complexity
     for e1 in L1:
         matched = False
         for e2 in L2:
