@@ -7,12 +7,8 @@ def rev_list(L):
     temp = L[i]
     L[i] = L[j]
     L[j] = temp
-# 2. primes_list
+# 2. primes_list(generating primes)
 def primes_list(n):
-  """
-  input: n an integer > 1
-  returns: list of all primes up to and including n
-  """
   if n < 2:
     return []
 
