@@ -1,7 +1,7 @@
 
 def linear_search(L, e):
     found = False
-    complexity = 0
+    complexity = 0 #time complexity
     for i in range(len(L)):
         complexity += 1
         if e == L[i]:
