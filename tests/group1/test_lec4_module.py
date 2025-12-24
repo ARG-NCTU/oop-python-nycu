@@ -79,3 +79,11 @@ def test_birthday_prob_stability():
     # 根據生日問題理論，23 人的機率大約是 0.507。
     # 測試結果必須在合理的範圍內 (例如 0.48 到 0.53 之間)
     assert 0.48 <= prob1 <= 0.53
+
+
+def test_birthday_prob_return_type():
+    """Ensure birthday_prob returns a float in [0, 1]."""
+    random.seed(42)
+    p = birthday_prob(num_people=23, num_same=2, num_trials=1000)
+    assert isinstance(p, float)
+    assert 0.0 <= p <= 1.0
