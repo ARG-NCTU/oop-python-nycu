@@ -2,9 +2,16 @@ import os
 import sys
 import pytest
 
+"""Tests for `lec3_strings_algos.py` covering common edge cases and robustness.
+
+Small additions: ensure repository path helper is invoked so imports succeed
+when tests run from different working directories.
+"""
+
 # Ensure repo root is on sys.path so module can be imported
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import add_path  # keep existing repo pattern
+add_path()
 
 from lec3_strings_algos import is_palindrome
 
