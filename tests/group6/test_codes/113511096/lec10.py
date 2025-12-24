@@ -63,7 +63,7 @@ def isSubset(L1, L2):
 
 def intersect(L1, L2):
     """
-    Returns a list without duplicates that are in both L1 and L2.
+    
     Complexity: O(N^2) due to "e in result" check inside loop
     """
     tmp = []
