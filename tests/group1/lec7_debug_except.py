@@ -47,18 +47,18 @@ def primes_list(n):
     Generate all prime numbers up to and including n using trial division.
     
     Args:
-        n: Upper bound (int > 1)
+        n: Upper bound (int >= 0)
     
     Returns:
-        List of all primes <= n
+        List of all primes <= n (empty list if n < 2)
     
     Raises:
-        ValueError: If n < 2
+        TypeError: If n is not an integer
     """
     if not isinstance(n, int):
         raise TypeError(f"Expected int, got {type(n).__name__}")
     if n < 2:
-        raise ValueError(f"n must be >= 2, got {n}")
+        return []
 
     primes = [2]
 
