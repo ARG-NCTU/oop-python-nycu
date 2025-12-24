@@ -41,9 +41,9 @@ def test_is_palindrome_true(candidate):
 
 
 @pytest.mark.parametrize("candidate", [
-    "hello",
-    "Python",
-    "12345",
+    "helloworld",
+    "Pythonandc++",
+    "987654",
     "not a palindrome"
 ])
 def test_is_palindrome_false(candidate):
