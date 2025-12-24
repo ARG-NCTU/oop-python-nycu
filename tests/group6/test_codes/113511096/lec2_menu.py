@@ -20,7 +20,7 @@ def sample_menu():
     """Creates a standard menu for reuse in multiple tests."""
     names = ["wine", "beer", "pizza", "burger", "fries", "cola", "apple", "donut"]
     values = [89, 90, 95, 100, 90, 79, 50, 10]
-    calories = [123, 154, 258, 354, 365, 150, 95, 195]
+    calories = [146, 145, 268, 374, 385, 140, 90, 190]
     return Menu(names, values, calories)
 
 
