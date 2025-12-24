@@ -19,7 +19,7 @@ from lec2_menu import Food, Menu, greedy, max_val, fast_max_val
 def sample_menu():
     """Creates a standard menu for reuse in multiple tests."""
     names = ["wine", "beer", "pizza", "burger", "fries", "cola", "apple", "donut"]
-    values = [89, 90, 95, 100, 90, 79, 50, 10]
+    values = [89, 90, 95, 1000, 900, 709, 50, 10]
     calories = [146, 145, 268, 374, 385, 140, 90, 190]
     return Menu(names, values, calories)
 
@@ -28,9 +28,11 @@ def sample_menu():
 
 def test_food_basic():
     """Test the basic properties of the Food class."""
-    f = Food("apple", 50, 60)
+    f = Food("apple", 50, 70)
     assert f.get_value() == 50
-    assert f.get_cost() == 60
+    assert f.get_cost() == 70
+    assert f.get_density() == pytest.approx(50 / 70, rel=1e-6)
+    assert f.get_name() == "apple"
     # Use pytest.approx for floating point comparisons
     assert f.density() == pytest.approx(50 / 60, rel=1e-6)
     assert str(f) == "apple: <50, 60>"  # added string representation check
