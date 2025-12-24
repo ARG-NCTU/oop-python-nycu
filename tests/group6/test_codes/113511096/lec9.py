@@ -1,8 +1,5 @@
 import random
-
-# NOTE: Commented out local dependency to ensure script runs standalone.
-# from add_path import add_path
-# add_path()
+from typing import List, Optional, Union
 
 # ==============================================================================
 # 1. Base Class: Animal 🐾
@@ -11,16 +8,16 @@ import random
 class Animal:
     """
     Abstract Data Type for an Animal.
-    Attributes: age, name
+    Demonstrates Encapsulation (attributes are managed via methods).
     """
     def __init__(self, age: int):
         self.age = age
-        self.name = None
+        self.name: Optional[str] = None
 
     def get_age(self) -> int:
         return self.age
 
-    def get_name(self):
+    def get_name(self) -> Union[str, None]:
         return self.name
 
     def set_age(self, newage: int):
@@ -33,6 +30,7 @@ class Animal:
         return f"animal:{self.name}:{self.age}"
 
 
+
 # ==============================================================================
 # 2. Inheritance: Cat 🐱
 # ==============================================================================
@@ -40,7 +38,7 @@ class Animal:
 class Cat(Animal):
     """
     Cat inherits from Animal.
-    Demonstrates polymorphism (speak method).
+    Demonstrates Polymorphism: 'speak' behaves differently than other Animals.
     """
     def speak(self):
         print("meow")
@@ -56,15 +54,15 @@ class Cat(Animal):
 class Person(Animal):
     """
     Person inherits from Animal.
-    Adds 'friends' list and specific behavior.
+    Extends functionality by adding a 'friends' list.
     """
     def __init__(self, name: str, age: int):
-        # Use super() to initialize the parent class
+        # Use super() to initialize the parent (Animal) class
         super().__init__(age)
         self.set_name(name)
-        self.friends = []
+        self.friends: List[str] = []
 
-    def get_friends(self):
+    def get_friends(self) -> List[str]:
         return self.friends
 
     def speak(self):
@@ -89,7 +87,7 @@ class Person(Animal):
 class Student(Person):
     """
     Student inherits from Person.
-    Demonstrates overriding methods (speak).
+    Demonstrates Method Overriding (modifying 'speak' from the Person class).
     """
     def __init__(self, name: str, age: int, major: str = None):
         super().__init__(name, age)
@@ -99,7 +97,7 @@ class Student(Person):
         self.major = major
 
     def speak(self):
-        # Student specific speech logic
+        # Student specific speech logic overriding Person.speak()
         r = random.random()
         if r < 0.25:
             print("I have homework... 📚")
@@ -121,38 +119,37 @@ class Student(Person):
 class Rabbit(Animal):
     """
     Rabbit class demonstrates:
-    1. Class Variables (tag) to create unique IDs.
-    2. Operator Overloading (+ for reproduction, == for genetic equality).
+    1. Class Variables (tag) -> Shared memory across all instances.
+    2. Operator Overloading (+, ==) -> Custom behavior for standard symbols.
     """
     tag = 1  # Class variable: shared by ALL instances of Rabbit
 
-    def __init__(self, age: int, parent1=None, parent2=None):
+    def __init__(self, age: int, parent1: Optional['Rabbit'] = None, parent2: Optional['Rabbit'] = None):
         super().__init__(age)
         self.parent1 = parent1
         self.parent2 = parent2
         self.rid = Rabbit.tag
         Rabbit.tag += 1  # Increment tag for the next rabbit
 
-    def get_rid(self):
+    def get_rid(self) -> str:
         # Format ID to be 3 digits (e.g., 001)
         return str(self.rid).zfill(3)
 
-    def get_parent1(self):
-        return self.parent1
-
-    def get_parent2(self):
-        return self.parent2
-
-    # Operator Overloading: +
-
-    def __add__(self, other: 'Rabbit'):
+    # --- Operator Overloading: + ---
+    def __add__(self, other: 'Rabbit') -> 'Rabbit':
+        """
+        Defines behavior for: rabbit_instance + rabbit_instance
+        Returns a new Rabbit (child) with age 0.
+        """
         # Returns a new Rabbit, age 0, with self and other as parents
         return Rabbit(0, self, other)
 
-    # Operator Overloading: ==
-    # Define what it means for two Rabbits to be "equal"
-    # Here: Same parents implies equality (siblings are equal in this logic)
-    def __eq__(self, other: 'Rabbit'):
+    # --- Operator Overloading: == ---
+    def __eq__(self, other: object) -> bool:
+        """
+        Defines behavior for: rabbit_instance == rabbit_instance
+        Logic: Two rabbits are 'equal' if they have the same parents (Siblings).
+        """
         # 1. Identity check
         if self is other:
             return True
@@ -166,7 +163,7 @@ class Rabbit(Animal):
             other.parent1 is None or other.parent2 is None):
             return False
 
-        # 4. Check if parents match (order doesn't matter)
+        # 4. Check if parents match (Order doesn't matter: p1+p2 is same as p2+p1)
         parents_same = (self.parent1.rid == other.parent1.rid and
                         self.parent2.rid == other.parent2.rid)
 
@@ -191,13 +188,13 @@ def main():
     # --- 1. Basic Inheritance (Person & Student) ---
     print("\n--- Person & Student ---")
     p1 = Person("Alice", 40)
-    s1 = Student("Bob", 40, "CS")
+    s1 = Student("Bob", 20, "CS") # Adjusted age to be realistic for a student
     
-    print(p1)
+    print(f"Person:  {p1}")
     p1.speak()
     
-    print(s1)
-    s1.speak()  # Random student response
+    print(f"Student: {s1}")
+    s1.speak() 
     
     p1.age_diff(s1)
 
@@ -212,15 +209,19 @@ def main():
     print("\n--- Rabbit Reproduction ---")
     r1 = Rabbit(3)
     r2 = Rabbit(4)
-    r3 = r1 + r2  # Uses __add__
-    r4 = r2 + r1  # Different order addition
     
-    print(f"Parent 1: {r1}, Parent 2: {r2}")
-    print(f"Child 1: {r3}") 
+    # Uses __add__ to create children
+    r3 = r1 + r2 
+    r4 = r2 + r1 
+    
+    print(f"Rabbit 1 ID: {r1.get_rid()}")
+    print(f"Rabbit 2 ID: {r2.get_rid()}")
+    print(f"Rabbit 3 (Child of 1+2): {r3}")
+    print(f"Rabbit 4 (Child of 2+1): {r4}")
     
     # Check Equality (Sibling logic)
-    print(f"Are r3 and r4 equal? {r3 == r4}") # Should be True (same parents)
-    print(f"Are r1 and r3 equal? {r1 == r3}") # Should be False
+    print(f"Are r3 and r4 equal (siblings)? {r3 == r4}") # Expected: True
+    print(f"Are r1 and r3 equal? {r1 == r3}") # Expected: False
 
 if __name__ == "__main__":
     main()
