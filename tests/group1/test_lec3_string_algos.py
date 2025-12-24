@@ -1,6 +1,7 @@
 import os
 import sys
 import pytest
+# Ensure repo root is on sys.path so module can be imported
 from add_path import add_path
 add_path()
 # Ensure repo root is on sys.path so module can be imported
@@ -96,6 +97,12 @@ def test_whitespace_variations():
     assert is_palindrome("a b a")
     assert is_palindrome("a\tb\ta")  # tabs
     assert is_palindrome("a\nb\na")  # newlines
+
+
+def test_leading_trailing_spaces():
+    """Leading/trailing spaces should be ignored by the implementation."""
+    assert is_palindrome(" radar ")
+    assert is_palindrome("  A man, a plan, a canal: Panama  ")
 
 
 def test_punctuation_heavy():
