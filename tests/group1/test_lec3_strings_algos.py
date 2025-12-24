@@ -196,7 +196,7 @@ def test_unicode_palindrome():
 def test_mixed_unicode_and_ascii():
     """Test mixed unicode and ASCII."""
     assert is_palindrome("a日a")
-    assert is_palindrome("A中文a")
+    assert is_palindrome("A中A")  # Fixed: "a中a" is a palindrome
     assert not is_palindrome("a日b")
 
 
