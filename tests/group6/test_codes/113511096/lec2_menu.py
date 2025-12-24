@@ -68,10 +68,10 @@ def test_memoized_equals_bruteforce(sample_menu):
     max_units = 750
 
     # 1. Run Brute Force (Slow)
-    val_brute, items_brute = max_val(foods, max_units)
+    val_brute, items_brute = max_val(foods, max_units) # pyright: ignore[reportCallIssue]
 
     # 2. Run Memoized (Fast)
-    val_fast, items_fast = fast_max_val(foods, max_units)
+    val_fast, items_fast = fast_max_val(foods, max_units) # type: ignore
 
     # 3. Compare Results
     assert val_brute == val_fast
