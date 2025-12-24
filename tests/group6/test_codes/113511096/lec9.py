@@ -215,10 +215,8 @@ def main():
     r3 = r1 + r2  # Uses __add__
     r4 = r2 + r1  # Different order addition
     
-    print(f"Rabbit 1: {r1}")
-    print(f"Rabbit 2: {r2}")
-    print(f"Rabbit 3 (Child of 1+2): {r3}")
-    print(f"Rabbit 4 (Child of 2+1): {r4}")
+    print(f"Parent 1: {r1}, Parent 2: {r2}")
+    print(f"Child 1: {r3}") 
     
     # Check Equality (Sibling logic)
     print(f"Are r3 and r4 equal? {r3 == r4}") # Should be True (same parents)
