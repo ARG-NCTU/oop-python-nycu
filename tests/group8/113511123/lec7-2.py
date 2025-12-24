@@ -1,3 +1,6 @@
+#
+#
+########################################
 ### EXAMPLE: Buggy code to get a list of primes
 ### Try to debug it! (fixes needed are explained below)
 ########################################
@@ -50,7 +53,11 @@ def primes_list(n):
             primes.append(j)
     return primes
 
-print(primes_list(2) )               
-print(primes_list(15)  )              
+print(primes_list(234) )               
+print(primes_list(15343)  )      
 
-
+def test_primes_list():
+    assert primes_list(2) == [2]
+    assert primes_list(4) == [2, 3]
+    assert primes_list(21) == [2, 3, 5, 7, 11, 13, 17, 19]
+    assert primes_list(11) == [2, 3, 5, 7, 11]

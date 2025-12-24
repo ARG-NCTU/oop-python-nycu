@@ -1,3 +1,4 @@
+######################################
 # EXAMPLE: Exceptions and input
 ######################################
 #a = int(input("Tell me one number: "))
@@ -24,7 +25,12 @@ except ZeroDivisionError:
     print("Can't divide by zero")
 except:
     print("Something went very wrong.")
-
-
-
-
+    
+    
+def test_exceptions():
+    try:
+        a = int("hello")
+    except ValueError:
+        assert True  # Test passes if ValueError is caught
+        return
+    assert False  # Test fails if no exception is raised

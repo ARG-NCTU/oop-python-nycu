@@ -1,3 +1,4 @@
+########################################
 ### EXAMPLE: Buggy code to reverse a list
 ### Try to debug it! (fixes needed are explained below)
 ########################################
@@ -30,6 +31,19 @@ def rev_list(L):
         L[i] = L[j]
         L[j] = temp
         
-L = [1,2,3,4]
+L = [4,324,45,6]
 rev_list(L)
 print(L)
+
+def test_rev_list():
+    L = [5457, 245, 3545, 47, 54]
+    rev_list(L)
+    assert L == [54, 47, 3545, 245, 5457]
+    
+    L = ['p', 'b', 's']
+    rev_list(L)
+    assert L == ['s', 'b', 'p']
+    
+    L = []
+    rev_list(L)
+    assert L == []
