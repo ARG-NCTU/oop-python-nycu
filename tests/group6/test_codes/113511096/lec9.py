@@ -144,7 +144,7 @@ class Rabbit(Animal):
         return self.parent2
 
     # Operator Overloading: +
-    # Allows syntax: r3 = r1 + r2
+
     def __add__(self, other: 'Rabbit'):
         # Returns a new Rabbit, age 0, with self and other as parents
         return Rabbit(0, self, other)
@@ -190,8 +190,8 @@ def main():
 
     # --- 1. Basic Inheritance (Person & Student) ---
     print("\n--- Person & Student ---")
-    p1 = Person("Alice", 30)
-    s1 = Student("Bob", 20, "CS")
+    p1 = Person("Alice", 40)
+    s1 = Student("Bob", 40, "CS")
     
     print(p1)
     p1.speak()
