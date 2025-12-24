@@ -97,7 +97,7 @@ def test_search_found():
  
 def test_search_not_found():
     L = [1, 3, 4, 5, 9, 18, 27]
-    e = 10
+    e = 8
     assert search(L, e) is False
 
 def test_isSubset_true():
