@@ -95,7 +95,7 @@ user.name=Brian2074
 | ❌        | Group 3      | tpvupu : 25         | xiaotin22 : 26     |                           |
 | ❌        | Group 4      | yt-chen1230 : 26    | Huang-Kun-wei : 12 |                           |
 | ❌        | Group 5      | htyunn : 0          | okkohero : 2       |                           |
-| ❌        | Group 6      | jerrywustarwars : 0 | FrosterMonster : 3 | doralu950413ee13-gif : 10 |
+| ❌        | Group 6      | jerrywustarwars : 0 | FrosterMonster : 3 | doralu950413ee13-gif : 17 |
 | ✅        | Group 7      | unknown899 : 17     | LeeYinWei : 29     |                           |
 | ✅        | Group 8      | hatthebutterfly : 5 | August0117 : 25    | hungchi0222 : 5           |
 | ❌        | Group 9      | pieapple1587 : 9    | terrycc9375 : 0    |                           |
