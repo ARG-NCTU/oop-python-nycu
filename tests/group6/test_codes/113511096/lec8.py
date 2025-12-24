@@ -90,7 +90,7 @@ def main():
     print(f"Loaded {len(population)} temperature records.")
 
     # 2. Take a Random Sample
-    sample_size = 200
+    sample_size = 272
     if sample_size > len(population):
         sample_size = len(population)
         
