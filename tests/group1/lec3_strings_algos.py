@@ -114,7 +114,8 @@ add_path()
 def is_palindrome(s):
     """
     Returns True if s is a palindrome, False otherwise.
-    Minor docstring update.
+    Ignores case, spaces, and punctuation.
     """
-    s = s.lower()  # 忽略大小寫
-    return s == s[::-1]
+    # 保留字母與數字，忽略大小寫與標點符號
+    cleaned = ''.join(char.lower() for char in s if char.isalnum())
+    return cleaned == cleaned[::-1]
