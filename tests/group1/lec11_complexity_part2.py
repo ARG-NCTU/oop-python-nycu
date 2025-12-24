@@ -152,14 +152,9 @@ def count_perms(n):
     return n * count_perms(n - 1)
 
 
-testSet = [1, 2, 3, 4]
-print("\n--- Subset Generation ---")
-subsets = genSubsets(testSet)
-print(f"Number of subsets for {testSet}: {len(subsets)} (expected 2^{len(testSet)} = {count_subsets(len(testSet))})")
-
-print("\n--- Permutation Generation ---")
-perms = genPerms([1, 2, 3])
-print(f"Number of permutations for [1, 2, 3]: {len(perms)} (expected 3! = {count_perms(3)})")
+# Demonstration of subset and permutation generation is performed
+# after the function definitions below so the functions are defined
+# before they are invoked (avoids NameError during import/test collection).
 
 
 
