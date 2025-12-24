@@ -49,3 +49,9 @@ def test_get_stats():
 
     assert s[0][2] == 80   # avg
     assert s[1][2] == 0.0  # no grades → handled
+
+
+def test_primes_list_small_inputs():
+    """Sanity checks for small inputs to primes_list."""
+    assert primes_list(0) == []
+    assert primes_list(-5) == []
