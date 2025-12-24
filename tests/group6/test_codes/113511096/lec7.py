@@ -174,8 +174,8 @@ def main():
     print("-" * 40)
     
     test_grades = [
-        [['Peter', 'Parker'], [80, 70, 85]],
-        [['Bruce', 'Wayne'],  [100, 95, 90]],
+        [['Peter', 'Parker'], [82, 77, 86]],
+        [['Bruce', 'Wayne'],  [102, 92, 99]],  # Invalid grade to test robustness
         [['Clark', 'Kent'],   []],  # Empty list to trigger assertion
         [['Tony', 'Stark'],   [95, 100, 100, 90]]
     ]
