@@ -1,29 +1,14 @@
 import math
 
-########################################
 # 1. 反轉串列 rev_list
-########################################
 def rev_list(L):
-  """
-  input: L, a list
-  Modifies L such that its elements are in reverse order
-  returns: nothing
-  """
   for i in range(len(L) // 2):
     j = len(L) - i - 1
     temp = L[i]
     L[i] = L[j]
     L[j] = temp
-
-
-########################################
-# 2. primes_list — 質數產生器
-########################################
+# 2. primes_list(generating primes)
 def primes_list(n):
-  """
-  input: n an integer > 1
-  returns: list of all primes up to and including n
-  """
   if n < 2:
     return []
 
@@ -38,11 +23,7 @@ def primes_list(n):
       primes.append(j)
 
   return primes
-
-
-########################################
-# 3. get_ratios — 比例計算（含例外處理）
-########################################
+# 3. get_ratios - (calcilating the ratio)
 def get_ratios(L1, L2):
   """
   假設 L1 和 L2 是長度相等的數字列表。
@@ -65,21 +46,13 @@ def get_ratios(L1, L2):
       pass
 
   return ratios
-
-
-########################################
-# 4. avg — 計算平均值（空 list 會回傳 0）
-########################################
+# 4. avg —（calculating average）
 def avg(grades):
   try:
     return sum(grades) / len(grades)
   except ZeroDivisionError:
     return 0.0
-
-
-########################################
-# 5. get_stats — 回傳學生平均成績
-########################################
+# 5. get_stats — (return the average grade)
 def get_stats(class_list):
   new_stats = []
   for person in class_list:

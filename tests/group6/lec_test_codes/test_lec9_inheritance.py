@@ -63,6 +63,7 @@ def test_rabbit_creation_and_addition():
         return parents_same or parents_opposite
     '''
     assert isinstance(r4, l9.Rabbit)
+    
 def test_rabbit_equality():
     l9.Rabbit.tag = 10  # reset again
     r1 = l9.Rabbit(1)
