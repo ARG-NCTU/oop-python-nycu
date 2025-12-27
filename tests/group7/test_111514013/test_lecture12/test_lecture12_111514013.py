@@ -17,7 +17,7 @@ def scaleAttrs(vals):
 def getData(toScale = False):
     #read in data
     hrList, stElevList, ageList, prevACSList, classList = [],[],[],[],[]
-    cardiacData = open('cardiacData.txt', 'r')
+    cardiacData = open('./test_111514013/test_lecture12/cardiacData.txt', 'r')
     #j = 0
     for l in cardiacData:
         #j += 1
@@ -129,22 +129,18 @@ def printClustering(clustering):
               round(fracPos, 4))
     return numpy.array(posFracs)
 
-def testClustering(patients, numClusters, seed = 0, numTrials = 5):
+# 將 testClustering 改名為 run_clustering_test (或任何不以 test 開頭的名字)
+def run_clustering_test(patients, numClusters, seed = 0, numTrials = 5):
     random.seed(seed)
     bestClustering = trykmeans(patients, numClusters, numTrials)
     posFracs = printClustering(bestClustering)
     return posFracs
 
-
-
-patients = getData()
-for k in (2,):
-    print('Test k-means (k = ' + str(k) + ')')
-    posFracs = testClustering(patients, k, 2)
-    
+# 你的測試主體保持不變，呼叫新的名字
 def test_testClustering():
     patients = getData()
-    posFracs = testClustering(patients, 2, 2)
+    # 這裡改成呼叫 run_clustering_test
+    posFracs = run_clustering_test(patients, 2, 2)
     assert len(posFracs) == 2
 
 
