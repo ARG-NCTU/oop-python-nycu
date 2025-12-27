@@ -19,13 +19,28 @@ sys.setrecursionlimit(2000)
 #####################################
 
 def printMove(fr, to):
-    # Output in English
+    """Print a move instruction from one peg to another.
+    
+    Args:
+        fr: Source peg identifier
+        to: Destination peg identifier
+    """
     print('move from ' + str(fr) + ' to ' + str(to))
 
 def Towers(n, fr, to, spare):
+    """Recursively solves the Towers of Hanoi problem.
+    
+    Args:
+        n: Number of disks (int > 0)
+        fr: Source peg identifier
+        to: Destination peg identifier
+        spare: Auxiliary peg identifier
+    
+    Raises:
+        ValueError: If n is not a positive integer
     """
-    Recursively solves the Towers of Hanoi problem.
-    """
+    if n <= 0:
+        raise ValueError(f"Number of disks must be positive, got {n}")
     if n == 1:
         printMove(fr, to)
     else:
@@ -37,11 +52,26 @@ def Towers(n, fr, to, spare):
         Towers(n-1, spare, to, fr)
 
 #####################################
-# EXAMPLE:  fibonacci (Inefficient recursion)
+# EXAMPLE:  fibonacci (Inefficient recursion)
 #####################################
 
 def fib(x):
-    """assumes x an int >= 0; returns Fibonacci of x (F(0)=1, F(1)=1)"""
+    """Calculate Fibonacci number using naive recursion.
+    
+    WARNING: This is very inefficient for large x due to exponential time complexity.
+    Use fib_efficient() with memoization for x >= 20.
+    
+    Args:
+        x: Non-negative integer
+    
+    Returns:
+        Fibonacci number at position x (F(0)=1, F(1)=1)
+    
+    Raises:
+        ValueError: If x is negative
+    """
+    if x < 0:
+        raise ValueError(f"Fibonacci index must be non-negative, got {x}")
     if x == 0 or x == 1:
         return 1
     else:
@@ -52,8 +82,16 @@ def fib(x):
 #####################################
         
 def is_palindrome(s): 
-    """Checks if a string s is a palindrome, ignoring non-letters and case."""
+    """Check if a string is a palindrome, ignoring non-letters and case.
+    
+    Args:
+        s: String to check
+    
+    Returns:
+        True if s is a palindrome (ignoring non-alphanumeric chars and case), False otherwise
+    """
     def to_chars(s):
+        """Convert string to lowercase letters only."""
         s = s.lower()
         ans = ''
         for c in s:
@@ -62,6 +100,7 @@ def is_palindrome(s):
         return ans
 
     def is_pal(s):
+        """Recursively check if string s is a palindrome."""
         if len(s) <= 1:
             return True
         else:
@@ -74,7 +113,19 @@ def is_palindrome(s):
 #####################################
 
 def lyrics_to_frequencies(lyrics):
-    """Returns a dictionary of word frequencies from a list of words."""
+    """Convert a list of words into a frequency dictionary.
+    
+    Args:
+        lyrics: List of words (strings)
+    
+    Returns:
+        Dictionary mapping words to their frequencies
+    
+    Raises:
+        ValueError: If lyrics is empty
+    """
+    if not lyrics:
+        raise ValueError("lyrics list cannot be empty")
     myDict = {}
     for word in lyrics:
         if word in myDict:
@@ -139,7 +190,19 @@ beatles = lyrics_to_frequencies(she_loves_you)
 
 
 def most_common_words(freqs):
-    """Finds the word(s) with the highest frequency."""
+    """Find the word(s) appearing most frequently.
+    
+    Args:
+        freqs: Dictionary mapping words to frequencies
+    
+    Returns:
+        Tuple (list of words with max frequency, max frequency count)
+    
+    Raises:
+        ValueError: If freqs dictionary is empty
+    """
+    if not freqs:
+        raise ValueError("frequencies dictionary cannot be empty")
     best = max(freqs.values())
     words = []
     for k in freqs:
@@ -148,7 +211,21 @@ def most_common_words(freqs):
     return (words, best)
     
 def words_often(freqs, minTimes):
-    """Finds all words appearing at least minTimes."""
+    """Find all words appearing at least minTimes in frequency dictionary.
+    
+    Args:
+        freqs: Dictionary mapping words to frequencies
+        minTimes: Minimum frequency threshold (int > 0)
+    
+    Returns:
+        List of tuples (words, frequency) for words appearing >= minTimes
+    
+    Raises:
+        ValueError: If minTimes is not positive
+    """
+    if minTimes <= 0:
+        raise ValueError(f"minTimes must be positive, got {minTimes}")
+    
     result = []
     freqs_copy = freqs.copy() 
     
@@ -168,15 +245,76 @@ def words_often(freqs, minTimes):
 #####################################
 
 def fib_efficient(n, d):
-    """Efficient recursive Fibonacci using memoization (dictionary d)."""
+    """Calculate Fibonacci number efficiently using memoization.
+    
+    This approach dramatically improves performance by caching results,
+    reducing time complexity from O(2^n) to O(n).
+    
+    Args:
+        n: Non-negative integer for Fibonacci calculation
+        d: Dictionary for memoization (should contain {1: 1, 2: 2} as base cases)
+    
+    Returns:
+        Fibonacci number at position n
+    
+    Raises:
+        ValueError: If n is negative
+    """
+    if n < 0:
+        raise ValueError(f"Fibonacci index must be non-negative, got {n}")
     if n in d:
         return d[n] 
     else:
-        ans = fib_efficient(n-1, d)+fib_efficient(n-2, d)
+        ans = fib_efficient(n-1, d) + fib_efficient(n-2, d)
         d[n] = ans
         return ans
+
+
+def compare_fib_performance(n, max_recursion_depth=2000):
+    """Compare performance of naive vs memoized Fibonacci calculation.
+    
+    Args:
+        n: Fibonacci index to calculate
+        max_recursion_depth: Maximum recursion depth limit
+    
+    Returns:
+        Dictionary with results from both approaches
+    """
+    results = {'input': n, 'naive_result': None, 'naive_time': None, 
+               'efficient_result': None, 'efficient_time': None, 'speedup': None}
+    
+    # Try naive approach
+    if n <= 25:  # Only for small values to avoid excessive computation
+        print(f"\nUsing fib (Standard Recursion) for F({n}):")
+        start_time = time.time()
+        try:
+            results['naive_result'] = fib(n)
+            results['naive_time'] = time.time() - start_time
+            print(f"F({n}) = {results['naive_result']}")
+            print(f"Time taken: {results['naive_time']:.6f} seconds")
+        except RecursionError:
+            print("RecursionError: Recursion depth exceeded.")
+            results['naive_time'] = float('inf')
+    else:
+        print(f"\nSkipping naive approach for F({n}) (would be too slow)")
+    
+    # Memoized approach
+    d = {1: 1, 2: 2}
+    print(f"\nUsing fib_efficient (Memoization) for F({n}):")
+    start_time = time.time()
+    results['efficient_result'] = fib_efficient(n, d)
+    results['efficient_time'] = time.time() - start_time
+    print(f"F({n}) = {results['efficient_result']}")
+    print(f"Time taken: {results['efficient_time']:.6f} seconds")
+    
+    # Calculate speedup if both methods completed
+    if results['naive_time'] and results['efficient_time']:
+        results['speedup'] = results['naive_time'] / results['efficient_time']
+        print(f"Speedup: {results['speedup']:.2f}x faster with memoization")
+    
+    return results
         
-# --- Program Execution and English Output ---
+
 
 print("="*50)
 print("           💻 PROGRAM EXAMPLES OUTPUT 📈")
@@ -211,23 +349,6 @@ print("\n" + "-"*50)
 argToUse = 34
 print(f"## 4. Comparing Fibonacci Efficiency (Calculating F({argToUse}))")
 
-# --- Inefficient Recursion ---
-print("\nUsing fib (Standard Recursion):")
-start_time = time.time()
-try:
-    result_fib = fib(argToUse)
-    end_time = time.time()
-    print(f"F({argToUse}) = {result_fib}")
-    print(f"Time taken: {end_time - start_time:.6f} seconds")
-except RecursionError:
-    print("RecursionError: Recursion depth exceeded.")
-
-# --- Efficient Recursion (Memoization) ---
-d = {1:1, 2:2} 
-print("\nUsing fib_efficient (Memoization):")
-start_time = time.time()
-result_efficient = fib_efficient(argToUse, d)
-end_time = time.time()
-print(f"F({argToUse}) = {result_efficient}")
-print(f"Time taken: {end_time - start_time:.6f} seconds")
+# Use the new comparison utility function
+results = compare_fib_performance(argToUse)
 print("="*50)

@@ -113,8 +113,9 @@ add_path()
 #print(guess, 'is close to the cube root of', cube)
 def is_palindrome(s):
     """
-    Returns True if s is a palindrome, False otherwise
+    Returns True if s is a palindrome, False otherwise.
+    Ignores case, spaces, and punctuation.
     """
-    s = s.lower()  # 忽略大小寫
-    s = ''.join(c for c in s if c.isalnum())  # 忽略非字母數字字符
-    return s == s[::-1]
+    # 保留字母與數字，忽略大小寫與標點符號
+    cleaned = ''.join(char.lower() for char in s if char.isalnum())
+    return cleaned == cleaned[::-1]

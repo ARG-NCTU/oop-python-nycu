@@ -90,13 +90,13 @@ user.name=Brian2074
 
 | Pytest Status   | Group Name   | Group Leader        | Group Member 1      | Group Member 2            |
 |:---------|:-------------|:--------------------|:--------------------|:--------------------------|
-| ❌        | Group 1      | bryson7736 : 27     | Chiang-Ian : 36     | peppa1122ee13 : 4         |
+| ✅        | Group 1      | bryson7736 : 27     | Chiang-Ian : 36     | peppa1122ee13 : 4         |
 | ❌        | Group 2      | ginny923 : 12       | joanna0420 : 23     | bondyhung : 0             |
 | ❌        | Group 3      | tpvupu : 25         | xiaotin22 : 26      |                           |
 | ❌        | Group 4      | yt-chen1230 : 26    | Huang-Kun-wei : 12  |                           |
 | ❌        | Group 5      | htyunn : 0          | okkohero : 2        |                           |
-| ✅        | Group 6      | jerrywustarwars : 0 | FrosterMonster : 31 | doralu950413ee13-gif : 24 |
-| ❌        | Group 7      | unknown899 : 36     | LeeYinWei : 29      |                           |
+| ❌        | Group 6      | jerrywustarwars : 0 | FrosterMonster : 31 | doralu950413ee13-gif : 24 |
+| ✅        | Group 7      | unknown899 : 36     | LeeYinWei : 29      |                           |
 | ✅        | Group 8      | hatthebutterfly : 5 | August0117 : 25     | hungchi0222 : 31          |
 | ❌        | Group 9      | pieapple1587 : 9    | terrycc9375 : 0     |                           |
 | ❌        | Group 10     | iamkyleh : 30       | billlllllllly : 5   |                           |
@@ -104,5 +104,5 @@ user.name=Brian2074
 | ✅        | Group 12     | jui-pixel : 68      |                     |                           |
 | ❌        | Group 13     | max052028 : 3       | jeffjun113 : 27     | ngvihoee11-nycu : 13      |
 | ✅        | Group 14     | lilil0724 : 26      | noobLeo536 : 27     |                           |
-| ✅        | Group 15     | minopeng : 18       | KuoShengHsin : 30   |                           |
+| ❌        | Group 15     | minopeng : 18       | KuoShengHsin : 13   |                           |
 <!--END_SECTION:pytest-->

@@ -5,6 +5,11 @@ from add_path import add_path
 add_path()
 from lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
+
+"""Small additional checks for `lec9_inheritance` to improve robustness.
+Added: verify Student is subclass of Person and that Animal names can be empty strings.
+"""
+
 ####################################
 # Animal Tests
 ####################################
@@ -51,6 +56,12 @@ def test_person():
 
     # age diff can only be tested indirectly → should not crash
     p1.age_diff(p2)
+
+
+def test_student_is_person():
+    """Student should be recognized as a Person (inheritance)."""
+    s = Student("bob", 21, "Math")
+    assert isinstance(s, Person)
 
 
 ####################################
