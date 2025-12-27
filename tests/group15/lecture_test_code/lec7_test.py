@@ -1,6 +1,6 @@
 import pytest
 import math
-import lec7_debug_except as lec
+import lec7 as lec
 
 def test_rev_list():
     """測試串列反轉函式"""
