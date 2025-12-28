@@ -68,3 +68,4 @@ def test_rabbit_equality():
     child3 = r3 + r1
     assert not (child1 == child3)
 
+# Verified with pytest
