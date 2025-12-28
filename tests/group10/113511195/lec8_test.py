@@ -17,3 +17,9 @@ def test_coordinate_distance_symmetry():
     c1 = lec8.Coordinate(3, 4)
     c2 = lec8.Coordinate(0, 0)
     assert c1.distance(c2) == c2.distance(c1)
+
+def test_coordinate_distance_call_via_class_method_style():
+    c1 = lec8.Coordinate(3, 4)
+    c2 = lec8.Coordinate(0, 0)
+    # Equivalent to c1.distance(c2)
+    assert lec8.Coordinate.distance(c1, c2) == 5.0
