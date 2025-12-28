@@ -48,3 +48,4 @@ def test_search_random_sizes(n):
     L = sorted(random.sample(range(0, 1000), n))
     e = random.choice(L)
     assert search(L, e)
+# End of file
