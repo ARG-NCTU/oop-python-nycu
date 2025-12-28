@@ -152,3 +152,13 @@ def test_rabbit_add_creates_child_with_parents(reset_rabbit_tag):
     assert lec9.Rabbit.get_parent1(r4) is r1
     assert lec9.Rabbit.get_parent2(r4) is r2
     assert str(r4) == "rabbit:003"
+
+def test_rabbit_eq_false_when_missing_parents(reset_rabbit_tag):
+    r1 = lec9.Rabbit(3)
+    r2 = lec9.Rabbit(4)
+    assert (r1 == r2) is False
+
+    r3 = lec9.Rabbit(5)
+    r4 = r1 + r2
+    # r3 has no parents, so equality should be False
+    assert (r3 == r4) is False
