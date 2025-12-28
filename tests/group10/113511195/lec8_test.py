@@ -44,3 +44,11 @@ def test_fraction_init_requires_ints():
 def test_fraction_str():
     f = lec8.Fraction(1, 4)
     assert str(f) == "1/4"
+
+def test_fraction_add():
+    a = lec8.Fraction(1, 4)
+    b = lec8.Fraction(3, 4)
+    c = a + b
+    assert isinstance(c, lec8.Fraction)
+    assert (c.num, c.denom) == (16, 16)  # (1*4 + 4*3)/(4*4) = 16/16
+    assert str(c) == "16/16"
