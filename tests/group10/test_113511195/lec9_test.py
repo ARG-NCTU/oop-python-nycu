@@ -172,3 +172,13 @@ def test_rabbit_eq_true_same_parents_order_independent(reset_rabbit_tag):
 
     assert (r5 == r6) is True
     assert (r6 == r5) is True
+
+
+def test_rabbit_eq_false_different_parents(reset_rabbit_tag):
+    r1 = lec9.Rabbit(3)
+    r2 = lec9.Rabbit(4)
+    r3 = lec9.Rabbit(5)
+
+    child_a = r1 + r2
+    child_b = r1 + r3
+    assert (child_a == child_b) is False
