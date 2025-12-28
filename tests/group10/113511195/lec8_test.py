@@ -12,3 +12,8 @@ def test_coordinate_distance_origin():
     c = lec8.Coordinate(3, 4)
     origin = lec8.Coordinate(0, 0)
     assert c.distance(origin) == 5.0
+
+def test_coordinate_distance_symmetry():
+    c1 = lec8.Coordinate(3, 4)
+    c2 = lec8.Coordinate(0, 0)
+    assert c1.distance(c2) == c2.distance(c1)
