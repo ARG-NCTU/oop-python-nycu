@@ -7,3 +7,8 @@ def test_coordinate_init_and_str():
     assert c.x == 3
     assert c.y == 4
     assert str(c) == "<3,4>"
+
+def test_coordinate_distance_origin():
+    c = lec8.Coordinate(3, 4)
+    origin = lec8.Coordinate(0, 0)
+    assert c.distance(origin) == 5.0
