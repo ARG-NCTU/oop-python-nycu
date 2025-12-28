@@ -76,3 +76,6 @@ def rev_list(L):
         temp = L[i]
         L[i] = L[j]
         L[j] = temp
+
+def avg_test():
+    assert lec7.avg([1, 2, 3]) == 2
