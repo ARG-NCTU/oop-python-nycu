@@ -70,7 +70,6 @@ def test_get_ratios():
     - 長度不符：應拋出 ValueError，訊息包含 'different lengths'
     - 型別錯誤：例如數字除以非數字，應拋出 ValueError，訊息包含 'bad argument type'
     """
-    # 正常情況與除以零的情況
     ratios = lec.get_ratios([1, 4, 6], [2, 0, 3])
     assert ratios[0] == 0.5
     assert math.isnan(ratios[1])
