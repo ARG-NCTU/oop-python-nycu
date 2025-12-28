@@ -60,3 +60,11 @@ def test_person_add_friend_unique_only():
     lec9.Person.add_friend(p, "jill")  # duplicate should not be added
     lec9.Person.add_friend(p, "bob")
     assert lec9.Person.get_friends(p) == ["jill", "bob"]
+
+
+def test_person_age_diff_prints_absolute_difference(capsys):
+    p1 = lec9.Person("jack", 30)
+    p2 = lec9.Person("jill", 25)
+    lec9.Person.age_diff(p1, p2)
+    out = capsys.readouterr().out.strip()
+    assert out == "5 year difference"
