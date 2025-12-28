@@ -112,3 +112,11 @@ def test_intset_remove_missing_raises_valueerror_message():
     with pytest.raises(ValueError) as excinfo:
         s.remove(99)
     assert str(excinfo.value) == "99 not found"
+
+def test_intset_str_sorts_output():
+    s = lec8.intSet()
+    s.insert(10)
+    s.insert(2)
+    s.insert(7)
+    # __str__ sorts before joining
+    assert str(s) == "{2,7,10}"
