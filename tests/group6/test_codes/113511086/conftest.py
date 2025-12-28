@@ -6,6 +6,7 @@ Adds the src directory to Python path so tests can import from mit_ocw_exercises
 
 import os
 import sys
+import pytest
 
 # Get the directory containing this conftest.py file (student's directory)
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -26,3 +27,21 @@ if src_dir not in sys.path:
 
 if project_root not in sys.path:
     sys.path.append(project_root)
+
+
+def pytest_configure(config):
+    """Register custom pytest markers."""
+    config.addinivalue_line(
+        "markers", "slow: marks tests as slow (deselect with '-m \"not slow\"')"
+    )
+
+
+@pytest.fixture(autouse=True)
+def reset_rabbit_tag():
+    """Reset Rabbit class tag counter before each test to ensure consistent RIDs."""
+    try:
+        import lec9_inheritance
+        lec9_inheritance.Rabbit.tag = 27
+    except (ImportError, AttributeError):
+        pass
+    yield
