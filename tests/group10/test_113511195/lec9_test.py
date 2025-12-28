@@ -75,3 +75,10 @@ def test_person_age_diff_symmetric_value(capsys):
     lec9.Person.age_diff(p2, p1)
     out = capsys.readouterr().out.strip()
     assert out == "5 year difference"
+
+def test_student_init_major_default_none_and_str():
+    s = lec9.Student("beth", 18)
+    assert lec9.Animal.get_name(s) == "beth"
+    assert lec9.Animal.get_age(s) == 18
+    assert s.major is None
+    assert str(s) == "student:beth:18:None"
