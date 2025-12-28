@@ -1,12 +1,9 @@
 import pytest
 import io
 import sys
-# 假設你的主檔案名稱是 lec9_inheritance.py
 from lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
-# ===============================
-# ===== 測試 Animal (父類別) =====
-# ===============================
+# ===== 測試 Animal (父類別) ===
 def test_animal_base():
     """測試 Animal 基礎功能的設定與取得"""
     animal = Animal(10)
@@ -21,9 +18,7 @@ def test_animal_base():
     
     assert str(animal) == "animal::10"
 
-# ========================================
 # ===== 測試 Cat (繼承 Animal) =====
-# ========================================
 def test_cat_inheritance_and_methods():
     """測試 Cat 是否繼承了 Animal 的屬性，以及自己的方法"""
     cat = Cat(5)
@@ -45,7 +40,7 @@ def test_cat_inheritance_and_methods():
     assert captured_output.getvalue().strip() == "meow"
 
 # =========================================
-# ===== 測試 Person (繼承 Animal) =====
+# ===== 測試 Person (繼承 Animal) ===
 # =========================================
 def test_person_extended_init_and_methods():
     """測試 Person 擴充的 __init__ 和自己的方法"""
@@ -67,10 +62,8 @@ def test_person_extended_init_and_methods():
     p1.age_diff(p2)
     sys.stdout = sys.__stdout__
     assert captured_output.getvalue().strip() == "5 year difference"
-
-# =========================================
+    
 # ===== 測試 Student (繼承 Person) =====
-# =========================================
 def test_student_further_inheritance():
     """測試 Student 的多層繼承和方法"""
     s = Student("Alice", 20, "CS")
@@ -98,7 +91,7 @@ def test_student_further_inheritance():
 
 # ====================================================
 # ===== 測試 Rabbit (類別變數和特殊方法) =====
-# ====================================================
+# =================================================
 @pytest.fixture(autouse=True)
 def reset_rabbit_tag():
     """這個 fixture 會在每次測試 Rabbit 前自動重設 tag，確保測試獨立性"""
@@ -129,8 +122,6 @@ def test_rabbit_special_methods_add_and_eq():
     # 測試 __eq__
     r4 = r2 + r1 # rid: 4, parents: r2, r1
     
-    # 現在，使用 '==' 來測試你定義的值相等邏輯
-    # 假設你採用了修正後的 __eq__ 方法
     assert r3 == r4
     
     # 測試與沒有父母的兔子比較
