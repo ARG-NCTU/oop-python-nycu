@@ -34,3 +34,9 @@ def test_cat_inherits_animal_getters_setters_and_str():
     assert lec9.Animal.get_name(c) == "fluffy"
     # Cat overrides __str__
     assert str(c) == "cat:fluffy:5"
+
+def test_cat_speak_prints_meow(capsys):
+    c = lec9.Cat(5)
+    lec9.Cat.speak(c)
+    out = capsys.readouterr().out.strip()
+    assert out == "meow"
