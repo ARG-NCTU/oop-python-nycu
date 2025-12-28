@@ -162,3 +162,13 @@ def test_rabbit_eq_false_when_missing_parents(reset_rabbit_tag):
     r4 = r1 + r2
     # r3 has no parents, so equality should be False
     assert (r3 == r4) is False
+
+def test_rabbit_eq_true_same_parents_order_independent(reset_rabbit_tag):
+    r3 = lec9.Rabbit(5)
+    r4 = lec9.Rabbit(6)
+
+    r5 = r3 + r4
+    r6 = r4 + r3
+
+    assert (r5 == r6) is True
+    assert (r6 == r5) is True
