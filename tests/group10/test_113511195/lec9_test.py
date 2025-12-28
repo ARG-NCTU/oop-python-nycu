@@ -16,3 +16,9 @@ def test_animal_set_name_explicit():
     lec9.Animal.set_name(a, "fluffy")
     assert lec9.Animal.get_name(a) == "fluffy"
     assert str(a) == "animal:fluffy:4"
+
+def test_animal_set_name_default_empty_string():
+    a = lec9.Animal(4)
+    lec9.Animal.set_name(a)  # default newname=""
+    assert lec9.Animal.get_name(a) == ""
+    assert str(a) == "animal::4"
