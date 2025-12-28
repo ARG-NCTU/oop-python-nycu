@@ -1,5 +1,6 @@
 import add_path
 import lec9_inheritance as lec9
+import pytest
 
 def test_animal_init_defaults():
     a = lec9.Animal(4)
@@ -93,3 +94,23 @@ def test_student_change_major():
     lec9.Student.change_major(s, "Math")
     assert s.major == "Math"
     assert str(s) == "student:alice:20:Math"
+
+@pytest.mark.parametrize(
+    "r, expected",
+    [
+        (0.00, "i have homework"),
+        (0.24, "i have homework"),
+        (0.25, "i need sleep"),
+        (0.49, "i need sleep"),
+        (0.50, "i should eat"),
+        (0.74, "i should eat"),
+        (0.75, "i am watching tv"),
+        (0.99, "i am watching tv"),
+    ],
+)
+def test_student_speak_deterministic(monkeypatch, capsys, r, expected):
+    s = lec9.Student("alice", 20, "CS")
+    monkeypatch.setattr(lec9.random, "random", lambda: r)
+    lec9.Student.speak(s)
+    out = capsys.readouterr().out.strip()
+    assert out == expected
