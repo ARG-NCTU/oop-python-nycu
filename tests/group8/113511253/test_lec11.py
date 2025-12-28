@@ -67,3 +67,4 @@ def test_bisect_search1_random_sizes(n):
     L = sorted(random.sample(range(0, 1000), n))
     e = random.choice(L)
     assert bisect_search1(L, e)
+
