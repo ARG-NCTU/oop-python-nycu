@@ -5,6 +5,12 @@ from add_path import add_path
 add_path()
 from lec8_module import get_highs, get_means_and_sds
 
+
+"""Basic tests for `lec8_module` helpers.
+
+Small additions: ensure returned population is non-empty and has numeric values.
+"""
+
 @pytest.fixture
 def sample_data():
     # Generate some sample data for testing
@@ -18,6 +24,9 @@ def test_get_highs():
     population = get_highs()
     expected = [3.1, 0.55, 0.0] 
     assert population[0:3] == expected
+    # quick sanity: population should be non-empty and numeric
+    assert len(population) > 0
+    assert all(isinstance(x, (int, float)) for x in population)
 
 def test_get_means_and_sds(sample_data):
     # Test that get_means_and_sds returns the expected values
