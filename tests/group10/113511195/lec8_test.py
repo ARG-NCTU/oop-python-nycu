@@ -76,3 +76,10 @@ def test_fraction_inverse():
     assert (inv.num, inv.denom) == (4, 1)
     assert str(inv) == "4/1"
     assert float(inv) == 4.0
+
+def test_fraction_sub_does_not_mutate_operands():
+    a = lec8.Fraction(3, 4)
+    b = lec8.Fraction(1, 4)
+    _ = a - b
+    assert (a.num, a.denom) == (3, 4)
+    assert (b.num, b.denom) == (1, 4)
