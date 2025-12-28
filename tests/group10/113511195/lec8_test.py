@@ -68,3 +68,11 @@ def test_fraction_float():
 def test_fraction_float_via_dunder_call():
     f = lec8.Fraction(1, 4)
     assert lec8.Fraction.__float__(f) == 0.25
+
+def test_fraction_inverse():
+    f = lec8.Fraction(1, 4)
+    inv = f.inverse()
+    assert isinstance(inv, lec8.Fraction)
+    assert (inv.num, inv.denom) == (4, 1)
+    assert str(inv) == "4/1"
+    assert float(inv) == 4.0
