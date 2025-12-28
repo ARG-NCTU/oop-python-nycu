@@ -88,8 +88,6 @@ def test_genSubsets():
     sorted_result_two = sorted([sorted(sub) for sub in result_two])
     assert len(result_two) == 4 # 2^2
     assert sorted_result_two == expected_two
-
-    # 測試三個元素
     result_three = genSubsets([1, 2, 3])
     expected_three = sorted([
         [], [1], [2], [3],
