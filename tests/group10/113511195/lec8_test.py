@@ -83,3 +83,8 @@ def test_fraction_sub_does_not_mutate_operands():
     _ = a - b
     assert (a.num, a.denom) == (3, 4)
     assert (b.num, b.denom) == (1, 4)
+
+def test_intset_init_empty_str():
+    s = lec8.intSet()
+    assert str(s) == "{}"
+    assert s.vals == []
