@@ -96,3 +96,12 @@ def test_intset_insert_unique():
     s.insert(3)  # duplicate should not be added
     assert sorted(s.vals) == [3, 4]
     assert str(s) == "{3,4}"
+
+def test_intset_remove_existing():
+    s = lec8.intSet()
+    s.insert(4)
+    s.insert(6)
+    s.remove(4)
+    assert s.member(4) is False
+    assert s.member(6) is True
+    assert str(s) == "{6}"
