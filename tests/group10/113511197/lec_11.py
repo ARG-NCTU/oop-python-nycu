@@ -24,9 +24,7 @@ def test_bisect_search1():
     assert bisect_search1([5], 5) is True       # 單一元素 (找到)
     assert bisect_search1([5], 4) is False      # 單一元素 (沒找到)
 
-# -----------------
-# 測試 bisect_search2 (索引版本)
-# -----------------
+
 def test_bisect_search2():
 
     assert bisect_search2(L_100, 76) is True
@@ -35,12 +33,10 @@ def test_bisect_search2():
     assert bisect_search2(L_small, 9) is True  # 找結尾
     assert bisect_search2(L_even, 20) is True
 
-    # 測試沒找到
     assert bisect_search2(L_small, 6) is False  # 沒找到 (在範圍內)
     assert bisect_search2(L_small, 100) is False # 沒找到 (太大)
     assert bisect_search2(L_small, 0) is False   # 沒找到 (太小)
 
-    # 測試邊界條件
     assert bisect_search2([], 5) is False        # 空列表
     assert bisect_search2([5], 5) is True       # 單一元素 (找到)
     assert bisect_search2([5], 4) is False      # 單一元素 (沒找到)
