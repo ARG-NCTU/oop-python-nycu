@@ -7,3 +7,7 @@ def test_linear_search():
     assert lec10.linear_search(L, 1) is True
     assert lec10.linear_search(L, 27) is True
     assert lec10.linear_search(L, 9) is True
+    L = [1, 3, 4, 5, 9, 18, 27]
+    assert lec10.linear_search(L, 0) is False
+    assert lec10.linear_search(L, 2) is False
+    assert lec10.linear_search(L, 28) is False
