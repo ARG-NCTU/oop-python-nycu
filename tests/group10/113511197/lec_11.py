@@ -4,26 +4,23 @@ from lec11_complexity_part2 import bisect_search1, bisect_search2, genSubsets
 
 
 L_100 = list(range(100)) 
-# 一個小列表 (奇數長度)
+
 L_small = [1, 3, 5, 7, 9] 
-# 一個小列表 (偶數長度)
+
 L_even = [10, 20, 30, 40] 
 
 def test_bisect_search1():
-    # 測試找到
+   
     assert bisect_search1(L_100, 76) is True
     assert bisect_search1(L_small, 5) is True  # 找中間
     assert bisect_search1(L_small, 1) is True  # 找開頭
     assert bisect_search1(L_small, 9) is True  # 找結尾
     assert bisect_search1(L_even, 20) is True
 
-    # 測試沒找到
     assert bisect_search1(L_small, 6) is False  # 沒找到 (在範圍內)
     assert bisect_search1(L_small, 100) is False # 沒找到 (太大)
     assert bisect_search1(L_small, 0) is False   # 沒找到 (太小)
 
-    # 測試邊界條件
-    #assert bisect_search1([], 5) is False        # 空列表
     assert bisect_search1([5], 5) is True       # 單一元素 (找到)
     assert bisect_search1([5], 4) is False      # 單一元素 (沒找到)
 
