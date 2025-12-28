@@ -34,6 +34,7 @@ def test_sum_elem_method2():
     assert lec5.sum_elem_method2([5]) == 5
     assert lec5.sum_elem_method2([]) == 0
 
+
 def new_test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(24, 6) == (4, 0)
     assert lec5.quotient_and_remainder(25, 7) == (3, 4)
