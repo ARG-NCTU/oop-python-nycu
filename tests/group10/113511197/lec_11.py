@@ -61,14 +61,7 @@ def test_bisect_search2():
 # -----------------
 
 def test_genSubsets():
-    """
-    測試 genSubsets (產生冪集合)
-    我們不應該依賴子集的順序，所以最好的方法是
-    1. 把每個子集排序
-    2. 把排好序的子集列表再排序
-    3. 跟預期的結果 (也經過同樣處理) 比較
-    """
-    
+
     # 測試空列表
     result_empty = genSubsets([])
     assert result_empty == [[]] # 規範定義
