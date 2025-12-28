@@ -114,3 +114,13 @@ def test_student_speak_deterministic(monkeypatch, capsys, r, expected):
     lec9.Student.speak(s)
     out = capsys.readouterr().out.strip()
     assert out == expected
+
+@pytest.fixture
+def reset_rabbit_tag():
+    """
+    Ensure Rabbit.tag is reset for deterministic rid numbering across tests.
+    """
+    old = lec9.Rabbit.tag
+    lec9.Rabbit.tag = 1
+    yield
+    lec9.Rabbit.tag = old
