@@ -52,3 +52,11 @@ def test_fraction_add():
     assert isinstance(c, lec8.Fraction)
     assert (c.num, c.denom) == (16, 16)  # (1*4 + 4*3)/(4*4) = 16/16
     assert str(c) == "16/16"
+
+def test_fraction_sub():
+    a = lec8.Fraction(3, 4)
+    b = lec8.Fraction(1, 4)
+    c = a - b
+    assert isinstance(c, lec8.Fraction)
+    assert (c.num, c.denom) == (8, 16)  # (3*4 - 4*1)/(4*4) = 8/16
+    assert str(c) == "8/16"
