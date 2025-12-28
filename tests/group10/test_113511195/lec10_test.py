@@ -14,3 +14,6 @@ def test_linear_search():
     assert lec10.linear_search(L, 28) is False
 
     assert lec10.linear_search([], 1) is False
+
+    L = [1, 2, 2, 2, 3]
+    assert lec10.linear_search(L, 2) is True
