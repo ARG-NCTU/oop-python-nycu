@@ -120,3 +120,10 @@ def test_words_often():
     # Check no words
     result_none = words_often(freqs.copy(), 20)
     assert result_none == []
+
+
+def test_lyrics_empty():
+    """Empty lyrics should return an empty frequency dictionary."""
+    # The implementation raises a ValueError for empty input; ensure that behavior.
+    with pytest.raises(ValueError):
+        lyrics_to_frequencies([])

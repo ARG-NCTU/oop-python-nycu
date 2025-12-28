@@ -1,5 +1,5 @@
+# Minor comment change for version control
 import unittest
-# 假設 lec12_sorting.py 就在同一目錄下
 from add_path import add_path
 add_path()
 from lec12_sorting import bubble_sort_np, selection_sort_np, merge_sort_np
@@ -10,6 +10,7 @@ class TestSortingAlgorithms(unittest.TestCase):
     """
     
     def setUp(self):
+        self.flag = True 
         """
         設定測試用的列表數據
         """

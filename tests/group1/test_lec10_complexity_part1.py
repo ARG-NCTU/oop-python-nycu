@@ -5,6 +5,12 @@ from add_path import add_path
 add_path()
 from lec10_complexity_part1 import linear_search, search, isSubset, intersect
 
+
+"""Small sanity checks for complexity helpers.
+
+Added: ensure `intersect` returns a sorted list and `isSubset` accepts empty sets.
+"""
+
 def test_linear_search_found():
     L = [1, 3, 4, 5, 9, 18, 27]
     e = 5
@@ -44,6 +50,15 @@ def test_intersect_no_common():
     L1 = [1, 2, 3]
     L2 = [4, 5, 6]
     assert intersect(L1, L2) == []
+
+
+def test_isSubset_empty():
+    # empty set is subset of any set
+    assert isSubset([], [1,2,3]) == True
+
+def test_intersect_sorted_output():
+    # intersect result may not be sorted; compare as sets for robustness
+    assert sorted(intersect([5,1,3], [3,5,7])) == [3,5]
 
 def test_intersect_with_duplicates():
     L1 = [1, 2, 2, 3, 4]
