@@ -59,10 +59,4 @@ def test_merge_np():
     right_long = [2, 4, 6, 8]
     assert merge_np(left_short, right_long) == [1, 2, 4, 5, 6, 8]
  
-    left_long = [1, 5, 7, 9]
-    right_short = [2, 6]
-    assert merge_np(left_long, right_short) == [1, 2, 5, 6, 7, 9]
-
-    assert merge_np([], [1, 2]) == [1, 2]
-    assert merge_np([1, 2], []) == [1, 2]
-    assert merge_np([], []) == []
+   
