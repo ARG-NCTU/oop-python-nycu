@@ -124,3 +124,19 @@ def reset_rabbit_tag():
     lec9.Rabbit.tag = 1
     yield
     lec9.Rabbit.tag = old
+
+def test_rabbit_init_rid_and_parents_none(reset_rabbit_tag):
+    r1 = lec9.Rabbit(3)
+    r2 = lec9.Rabbit(4)
+    r3 = lec9.Rabbit(5)
+
+    assert lec9.Rabbit.get_rid(r1) == "001"
+    assert lec9.Rabbit.get_rid(r2) == "002"
+    assert lec9.Rabbit.get_rid(r3) == "003"
+
+    assert lec9.Rabbit.get_parent1(r1) is None
+    assert lec9.Rabbit.get_parent2(r1) is None
+
+    assert str(r1) == "rabbit:001"
+    assert str(r2) == "rabbit:002"
+    assert str(r3) == "rabbit:003"
