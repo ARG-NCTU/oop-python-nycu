@@ -22,3 +22,7 @@ def test_animal_set_name_default_empty_string():
     lec9.Animal.set_name(a)  # default newname=""
     assert lec9.Animal.get_name(a) == ""
     assert str(a) == "animal::4"
+
+def test_animal_str_when_name_none():
+    a = lec9.Animal(4)
+    assert str(a) == "animal:None:4"
