@@ -87,3 +87,9 @@ def test_student_init_major_provided_and_str():
     s = lec9.Student("alice", 20, "CS")
     assert s.major == "CS"
     assert str(s) == "student:alice:20:CS"
+
+def test_student_change_major():
+    s = lec9.Student("alice", 20, "CS")
+    lec9.Student.change_major(s, "Math")
+    assert s.major == "Math"
+    assert str(s) == "student:alice:20:Math"
