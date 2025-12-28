@@ -9,6 +9,7 @@ def test_is_palindrome():
     assert lec3.is_palindrome("hello") == False
     assert lec3.is_palindrome("A man a plan a canal Panama") == False
     assert lec3.is_palindrome("AmanaplanacanalPanama") == True
+    assert
     assert lec3.is_palindrome("") == True
 
 def test_is_palindrome_random():
