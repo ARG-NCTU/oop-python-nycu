@@ -64,3 +64,7 @@ def test_fraction_sub():
 def test_fraction_float():
     f = lec8.Fraction(1, 4)
     assert float(f) == 0.25
+
+def test_fraction_float_via_dunder_call():
+    f = lec8.Fraction(1, 4)
+    assert lec8.Fraction.__float__(f) == 0.25
