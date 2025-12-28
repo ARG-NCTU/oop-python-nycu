@@ -53,3 +53,10 @@ def test_person_speak_prints_hello(capsys):
     lec9.Person.speak(p)
     out = capsys.readouterr().out.strip()
     assert out == "hello"
+
+def test_person_add_friend_unique_only():
+    p = lec9.Person("jack", 30)
+    lec9.Person.add_friend(p, "jill")
+    lec9.Person.add_friend(p, "jill")  # duplicate should not be added
+    lec9.Person.add_friend(p, "bob")
+    assert lec9.Person.get_friends(p) == ["jill", "bob"]
