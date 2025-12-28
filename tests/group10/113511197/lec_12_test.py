@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
+
 """
 pytest version of sorting algorithms
 """
 
 from typing import List
 
-# ---------- Sorting functions ----------
+
 
 def bubble_sort(L: List[int]) -> List[int]:
     """Bubble sort with print statements for debugging."""
