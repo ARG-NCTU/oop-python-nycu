@@ -47,3 +47,9 @@ def test_person_init_sets_name_age_and_friends():
     assert lec9.Animal.get_age(p) == 30
     assert lec9.Person.get_friends(p) == []
     assert str(p) == "person:jack:30"
+
+def test_person_speak_prints_hello(capsys):
+    p = lec9.Person("jack", 30)
+    lec9.Person.speak(p)
+    out = capsys.readouterr().out.strip()
+    assert out == "hello"
