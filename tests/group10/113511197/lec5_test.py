@@ -46,4 +46,4 @@ def new_test_quotient_and_remainder():
         lec5.quotient_and_remainder(11, 0)
     except ZeroDivisionError:
          print("ZeroDivisionError")
-    assert lec5.quotient_and_remainder(23, 13) == (1, 10
+    assert lec5.quotient_and_remainder(23, 13) == (1, 10)
