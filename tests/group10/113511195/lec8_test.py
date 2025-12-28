@@ -1,6 +1,7 @@
 import add_path
 import lec8_classes as lec8
 import math
+import pytest
 
 def test_coordinate_init_and_str():
     c = lec8.Coordinate(3, 4)
@@ -29,3 +30,13 @@ def test_fraction_init_sets_fields():
     f = lec8.Fraction(1, 4)
     assert f.num == 1
     assert f.denom == 4
+
+def test_fraction_init_requires_ints():
+    with pytest.raises(AssertionError):
+        lec8.Fraction(3.14, 2)
+
+    with pytest.raises(AssertionError):
+        lec8.Fraction(3, 2.7)
+
+    with pytest.raises(AssertionError):
+        lec8.Fraction("3", 2)
