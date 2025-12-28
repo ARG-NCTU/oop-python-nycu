@@ -120,3 +120,25 @@ def test_intset_str_sorts_output():
     s.insert(7)
     # __str__ sorts before joining
     assert str(s) == "{2,7,10}"
+
+def test_intset_multiple_operations_sequence_matches_lecture_asserts():
+    s = lec8.intSet()
+    assert str(s) == "{}"
+
+    s.insert(3)
+    s.insert(4)
+    s.insert(3)
+    assert str(s) == "{3,4}"
+
+    assert s.member(3) is True
+    assert s.member(5) is False
+
+    s.insert(6)
+    assert str(s) == "{3,4,6}"
+
+    s.remove(3)
+    assert str(s) == "{4,6}"
+
+    with pytest.raises(ValueError) as excinfo:
+        s.remove(3)
+    assert str(excinfo.value) == "3 not found"
