@@ -40,3 +40,7 @@ def test_fraction_init_requires_ints():
 
     with pytest.raises(AssertionError):
         lec8.Fraction("3", 2)
+    
+def test_fraction_str():
+    f = lec8.Fraction(1, 4)
+    assert str(f) == "1/4"
