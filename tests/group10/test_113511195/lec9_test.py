@@ -140,3 +140,15 @@ def test_rabbit_init_rid_and_parents_none(reset_rabbit_tag):
     assert str(r1) == "rabbit:001"
     assert str(r2) == "rabbit:002"
     assert str(r3) == "rabbit:003"
+
+def test_rabbit_add_creates_child_with_parents(reset_rabbit_tag):
+    r1 = lec9.Rabbit(3)
+    r2 = lec9.Rabbit(4)
+
+    r4 = r1 + r2  # uses __add__
+
+    # rid sequence: r1=001 r2=002 r4=003
+    assert lec9.Rabbit.get_rid(r4) == "003"
+    assert lec9.Rabbit.get_parent1(r4) is r1
+    assert lec9.Rabbit.get_parent2(r4) is r2
+    assert str(r4) == "rabbit:003"
