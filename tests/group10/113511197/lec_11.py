@@ -9,9 +9,6 @@ L_small = [1, 3, 5, 7, 9]
 # 一個小列表 (偶數長度)
 L_even = [10, 20, 30, 40] 
 
-# -----------------
-# 測試 bisect_search1 (切片版本)
-# -----------------
 def test_bisect_search1():
     # 測試找到
     assert bisect_search1(L_100, 76) is True
