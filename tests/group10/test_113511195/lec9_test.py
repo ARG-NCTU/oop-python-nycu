@@ -68,3 +68,10 @@ def test_person_age_diff_prints_absolute_difference(capsys):
     lec9.Person.age_diff(p1, p2)
     out = capsys.readouterr().out.strip()
     assert out == "5 year difference"
+
+def test_person_age_diff_symmetric_value(capsys):
+    p1 = lec9.Person("jack", 30)
+    p2 = lec9.Person("jill", 25)
+    lec9.Person.age_diff(p2, p1)
+    out = capsys.readouterr().out.strip()
+    assert out == "5 year difference"
