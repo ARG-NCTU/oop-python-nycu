@@ -13,8 +13,14 @@ _ORIG_CWD = os.getcwd()
 os.chdir(LEC12_DIR)
 
 import cluster as cluster_mod
-from src.mit_ocw_data_science.lec12.lect12 import scaleAttrs, getData, kmeans, trykmeans, printClustering
+import src.mit_ocw_data_science.lec12.lect12 as lect12
 
+scaleAttrs = lect12.scaleAttrs
+getData = lect12.getData
+kmeans = lect12.kmeans
+trykmeans = lect12.trykmeans
+printClustering = lect12.printClustering
+runClustering = lect12.testClustering
 Example = cluster_mod.Example
 
 def teardown_module(module):
@@ -51,3 +57,10 @@ def test_trykmeans_and_printClustering():
     output = printClustering(clusters)
     assert isinstance(output, np.ndarray)
     assert len(output) == 3
+
+def test_testClustering():
+    data = getData(toScale=True)
+    posFracs = runClustering(data, numClusters=2, seed=42, numTrials=2)
+    assert isinstance(posFracs, np.ndarray)
+    assert len(posFracs) == 2
+    assert all(0.0 <= frac <= 1.0 for frac in posFracs)
