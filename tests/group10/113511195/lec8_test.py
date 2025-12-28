@@ -23,3 +23,9 @@ def test_coordinate_distance_call_via_class_method_style():
     c2 = lec8.Coordinate(0, 0)
     # Equivalent to c1.distance(c2)
     assert lec8.Coordinate.distance(c1, c2) == 5.0
+
+
+def test_fraction_init_sets_fields():
+    f = lec8.Fraction(1, 4)
+    assert f.num == 1
+    assert f.denom == 4
