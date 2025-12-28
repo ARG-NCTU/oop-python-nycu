@@ -40,3 +40,10 @@ def test_cat_speak_prints_meow(capsys):
     lec9.Cat.speak(c)
     out = capsys.readouterr().out.strip()
     assert out == "meow"
+
+def test_person_init_sets_name_age_and_friends():
+    p = lec9.Person("jack", 30)
+    assert lec9.Animal.get_name(p) == "jack"
+    assert lec9.Animal.get_age(p) == 30
+    assert lec9.Person.get_friends(p) == []
+    assert str(p) == "person:jack:30"
