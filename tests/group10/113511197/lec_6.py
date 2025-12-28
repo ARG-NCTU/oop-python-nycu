@@ -30,4 +30,4 @@ def test_whichIsEfficient():
     t2 = time.time()
     lec6.fib(n)
     t3 = time.time()
-    assert (t2 - t1) < (t3 - t2)2
+    assert (t2 - t1) < (t3 - t2)
