@@ -88,3 +88,11 @@ def test_intset_init_empty_str():
     s = lec8.intSet()
     assert str(s) == "{}"
     assert s.vals == []
+
+def test_intset_insert_unique():
+    s = lec8.intSet()
+    s.insert(3)
+    s.insert(4)
+    s.insert(3)  # duplicate should not be added
+    assert sorted(s.vals) == [3, 4]
+    assert str(s) == "{3,4}"
