@@ -26,3 +26,11 @@ def test_animal_set_name_default_empty_string():
 def test_animal_str_when_name_none():
     a = lec9.Animal(4)
     assert str(a) == "animal:None:4"
+
+def test_cat_inherits_animal_getters_setters_and_str():
+    c = lec9.Cat(5)
+    lec9.Animal.set_name(c, "fluffy")
+    assert lec9.Animal.get_age(c) == 5
+    assert lec9.Animal.get_name(c) == "fluffy"
+    # Cat overrides __str__
+    assert str(c) == "cat:fluffy:5"
