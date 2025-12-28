@@ -77,5 +77,9 @@ def rev_list(L):
         L[i] = L[j]
         L[j] = temp
 
-def avg_test():
+def test_avg():
     assert lec7.avg([1, 2, 3]) == 2
+
+def test_get_status():
+    stats = lec7.get_stats([[['s1'], [1, 2, 3]], [['s2'], [0]]])
+    assert stats == [[['s1'], [1, 2, 3], 2.0], [['s2'], [0], 0.0]]
