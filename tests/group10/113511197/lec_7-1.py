@@ -85,37 +85,18 @@ def test_get_ratios():
         lec.get_ratios([1, 'a'], [2, 3])
 
 def test_avg():
-    """單獨測試 avg 輔助函式
-
-    測試要點：
-    - 非空列表回傳正確平均
-    - 空列表回傳 0.0
-    - 支援浮點數
-    """
     assert lec.avg([80, 90, 100]) == 90.0
     assert lec.avg([]) == 0.0
     assert lec.avg([10.5, 20.5]) == 15.5
 
 def test_get_stats():
-    """測試主函式 get_stats
-
-    測試要點：
-    - 確認回傳結構為 [name_list, grades_list, average]
-    - 使用 pytest.approx 比較浮點平均值
-    - 空成績列應回傳 0.0（由 avg 處理）
-    """
     test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
                    [['bruce', 'wayne'], [100.0, 80.0, 74.0]],
                    [['deadpool'], []]]
 
     stats = lec.get_stats(test_grades)
-
-    # 驗證 peter 的平均成績
     assert stats[0][0] == ['peter', 'parker']
-    # 療法：將期望值修正為正確的計算結果，並使用 pytest.approx 比較浮點數
     assert stats[0][2] == pytest.approx(78.33333333333333)
-
-    # 同樣地，我們也應該為 Bruce Wayne 使用 approx
     assert stats[1][2] == pytest.approx(84.66666666666667)
     
-    # 驗證 deadpool 的平均成績
+
