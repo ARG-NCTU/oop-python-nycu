@@ -30,10 +30,10 @@ def rev_list(L):
         temp = L[i]
         L[i] = L[j]
         L[j] = temp
-        
-L = [1,2,3,4]
-rev_list(L)
-print(L)
+
+    # 注意：以下範例/印出/輸入碼會在直接以腳本執行時示範使用，
+    # 不應在 module 被 import（例如 pytest 匯入測試模組）時執行。
+    # 因此我們把示範程式碼放到 __main__ 檢查中（見檔案底部）。
 #
 #
 ########################################
@@ -89,9 +89,6 @@ def primes_list(n):
             primes.append(j)
     return primes
 
-print(primes_list(2) )               
-print(primes_list(15)  )              
-
 
 ######################################
 # EXAMPLE: Exceptions and input
@@ -142,8 +139,41 @@ def get_ratios(L1, L2):
         finally:
             print("executed no matter what!")
     return ratios
-    
-print(get_ratios([1, 4], [2, 4]))
+
+
+# 將所有互動式或示範程式碼放入 main guard，避免在 import 時執行
+if __name__ == "__main__":
+    # rev_list 範例
+    L = [1, 2, 3, 4]
+    rev_list(L)
+    print(L)
+
+    # primes_list 範例
+    print(primes_list(2))
+    print(primes_list(15))
+
+    # 簡單的互動示範（供手動執行時體驗，pytest 匯入時不會執行）
+    try:
+        a = int(input("Tell me one number: "))
+        b = int(input("Tell me another number: "))
+        print("a/b = ", a / b)
+    except Exception:
+        print("Bug in user input.")
+
+    try:
+        a = int(input("Tell me one number: "))
+        b = int(input("Tell me another number: "))
+        print("a/b = ", a / b)
+        print("a+b = ", a + b)
+    except ValueError:
+        print("Could not convert to a number.")
+    except ZeroDivisionError:
+        print("Can't divide by zero")
+    except Exception:
+        print("Something went very wrong.")
+
+    # get_ratios 範例
+    print(get_ratios([1, 4], [2, 4]))
 
 
 #######################################

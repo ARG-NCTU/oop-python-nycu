@@ -49,3 +49,5 @@ def test_intSet():
         s.remove(3)  
     except ValueError as e:
         assert str(e) == "3 not found"
+    else:
+        assert False, "Expected ValueError not raised"
