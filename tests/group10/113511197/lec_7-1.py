@@ -80,7 +80,6 @@ def test_get_ratios():
     with pytest.raises(ValueError, match='different lengths'):
         lec.get_ratios([1, 2], [1])
 
-    # 測試傳入錯誤型別參數時是否拋出 ValueError
     with pytest.raises(ValueError, match='bad argument type'):
         lec.get_ratios([1, 'a'], [2, 3])
 
