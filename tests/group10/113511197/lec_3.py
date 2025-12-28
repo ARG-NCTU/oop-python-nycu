@@ -18,4 +18,4 @@ def test_is_palindrome_random():
         for _ in range(length):
             char = chr(random.randint(97, 122))
             tar = char + tar + char
-        assert lec3.is_palindrome(tar) == True
+        assert lec3.is_palindrome(tar) == 
