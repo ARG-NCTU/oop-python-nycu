@@ -75,8 +75,6 @@ def test_get_ratios():
     assert ratios[0] == 0.5
     assert math.isnan(ratios[1])
     assert ratios[2] == 2.0
-
-    # 測試傳入不同長度串列時是否拋出 ValueError
     with pytest.raises(ValueError, match='different lengths'):
         lec.get_ratios([1, 2], [1])
 
