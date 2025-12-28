@@ -2,6 +2,7 @@ import add_path
 import lec7_debug_except as lec7 # type: ignore
 import pytest
 import random
+import math
 
 def rev_list(L):
     """
@@ -60,6 +61,9 @@ def test_get_ratios():
     assert lec7.get_ratios([1, 3, 5, 7], [1, 3, 5, 7]) == [1, 1, 1, 1]
     assert lec7.get_ratios([8, 8, 8, 8, 8], [2, 4, 8, 16, 32]) == [4, 2, 1, 0.5, 0.25]
     assert lec7.get_ratios([], []) == []
+    assert lec7.get_ratios([-1, -2, -3], [1, 2, 3]) == [-1.0, -1.0, -1.0]
+    result = lec7.get_ratios([1, 2, 3], [0, 0, 0])
+    assert all(math.isnan(x) for x in result)
 
 def rev_list(L):
     """
@@ -72,3 +76,10 @@ def rev_list(L):
         temp = L[i]
         L[i] = L[j]
         L[j] = temp
+
+def test_avg():
+    assert lec7.avg([1, 2, 3]) == 2
+
+def test_get_status():
+    stats = lec7.get_stats([[['s1'], [1, 2, 3]], [['s2'], [0]]])
+    assert stats == [[['s1'], [1, 2, 3], 2.0], [['s2'], [0], 0.0]]
