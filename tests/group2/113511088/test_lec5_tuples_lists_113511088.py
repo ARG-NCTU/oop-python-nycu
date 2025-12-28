@@ -1,72 +1,53 @@
+# -*- coding: utf-8 -*-
 import pytest
 
-from lec5_tuples_lists_113511088 import (
-    quotient_and_remainder,
-    get_data,
-)
+import lec5_tuples_lists_113511088 as lec5
 
-# ----------------------
-# tests for quotient_and_remainder
-# ----------------------
-
-
-def test_quotient_and_remainder_basic():
-    # 5 // 3 = 1, 5 % 3 = 2
-    q, r = quotient_and_remainder(5, 3)
-    assert q == 1
-    assert r == 2
+@pytest.mark.parametrize("L, expected", [
+    ([1, 2, 3, 4], 10),
+    ([0], 0),
+    ([], 0),
+    ([-1, -2, -3], -6),
+    ([10, -5, 2], 7),
+    ([1.5, 2.5, 3.0], 7.0),
+])
+def test_sum_elem_method1(L, expected):
+    assert lec5.sum_elem_method1(L) == expected
 
 
-def test_quotient_and_remainder_divisible():
-    # 10 // 5 = 2, 10 % 5 = 0
-    q, r = quotient_and_remainder(10, 5)
-    assert q == 2
-    assert r == 0
+@pytest.mark.parametrize("L, expected", [
+    ([1, 2, 3, 4], 10),
+    ([0], 0),
+    ([], 0),
+    ([-1, -2, -3], -6),
+    ([10, -5, 2], 7),
+    ([1.5, 2.5, 3.0], 7.0),
+])
+def test_sum_elem_method2(L, expected):
+    assert lec5.sum_elem_method2(L) == expected
 
 
-def test_quotient_and_remainder_type_and_length():
-    result = quotient_and_remainder(7, 4)
-    # 回傳型態要是 tuple，且長度為 2
-    assert isinstance(result, tuple)
-    assert len(result) == 2
+@pytest.mark.parametrize("L", [
+    [1, 2, 3, 4],
+    [],
+    [-3, 0, 3],
+    [1.2, 3.4],
+])
+def test_two_methods_same_result(L):
+    assert lec5.sum_elem_method1(L) == lec5.sum_elem_method2(L)
 
 
-# ----------------------
-# tests for get_data
-# ----------------------
+def test_original_list_not_modified():
+    L = [1, 2, 3, 4]
+    before = L.copy()
+    lec5.sum_elem_method1(L)
+    lec5.sum_elem_method2(L)
+    assert L == before
 
 
-def test_get_data_simple_example():
-    test = ((1, "a"), (2, "b"), (1, "a"), (7, "b"))
-    a, b, c = get_data(test)
+def test_non_numeric_raises_typeerror():
+    with pytest.raises(TypeError):
+        lec5.sum_elem_method1([1, "2", 3])
 
-    # ints: 1,2,1,7 → min=1, max=7
-    assert a == 1
-    assert b == 7
-    # unique strings: "a","b" → 2
-    assert c == 2
-
-
-def test_get_data_tswift_example():
-    tswift = (
-        (2014, "Katy"),
-        (2014, "Harry"),
-        (2012, "Jake"),
-        (2010, "Taylor"),
-        (2008, "Joe"),
-    )
-    min_year, max_year, num_people = get_data(tswift)
-
-    assert min_year == 2008
-    assert max_year == 2014
-    # unique names: Katy, Harry, Jake, Taylor, Joe → 5
-    assert num_people == 5
-
-
-def test_get_data_works_with_single_element():
-    data = ((42, "onlyone"),)
-    mn, mx, count = get_data(data)
-
-    assert mn == 42
-    assert mx == 42
-    assert count == 1
+    with pytest.raises(TypeError):
+        lec5.sum_elem_method2([1, "2", 3])
