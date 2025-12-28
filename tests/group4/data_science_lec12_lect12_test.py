@@ -12,10 +12,10 @@ sys.path.insert(0, LEC12_DIR)
 _ORIG_CWD = os.getcwd()
 os.chdir(LEC12_DIR)
 
-import cluster
-from src.mit_ocw_data_science.lec12.lect12 import scaleAttrs, getData
+import cluster as cluster_mod
+from src.mit_ocw_data_science.lec12.lect12 import scaleAttrs, getData, kmeans, trykmeans, printClustering
 
-Example = cluster.Example
+Example = cluster_mod.Example
 
 def teardown_module(module):
     os.chdir(_ORIG_CWD)
@@ -34,3 +34,20 @@ def test_getData():
     assert first_patient.getName() == "P0"
     assert len(first_patient.getFeatures()) == 4
     assert first_patient.getLabel() in [0, 1]
+
+
+def test_kmeans():
+    data = getData(toScale=True)
+    clusters = kmeans(data, k=3, verbose=False)
+    assert len(clusters) == 3
+    for c in clusters:
+        assert isinstance(c, cluster_mod.Cluster)
+        assert list(c.members())  # non-empty
+
+def test_trykmeans_and_printClustering():
+    data = getData(toScale=True)
+    clusters = trykmeans(data, numClusters=3, numTrials=2, verbose=False)
+    assert len(clusters) == 3
+    output = printClustering(clusters)
+    assert isinstance(output, np.ndarray)
+    assert len(output) == 3
