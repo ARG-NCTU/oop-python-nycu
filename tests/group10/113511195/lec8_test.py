@@ -105,3 +105,10 @@ def test_intset_remove_existing():
     assert s.member(4) is False
     assert s.member(6) is True
     assert str(s) == "{6}"
+
+def test_intset_remove_missing_raises_valueerror_message():
+    s = lec8.intSet()
+    s.insert(1)
+    with pytest.raises(ValueError) as excinfo:
+        s.remove(99)
+    assert str(excinfo.value) == "99 not found"
