@@ -82,3 +82,8 @@ def test_student_init_major_default_none_and_str():
     assert lec9.Animal.get_age(s) == 18
     assert s.major is None
     assert str(s) == "student:beth:18:None"
+
+def test_student_init_major_provided_and_str():
+    s = lec9.Student("alice", 20, "CS")
+    assert s.major == "CS"
+    assert str(s) == "student:alice:20:CS"
