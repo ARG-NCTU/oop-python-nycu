@@ -56,8 +56,6 @@ def test_primes_list():
     
     # 邊界情況
     assert lec.primes_list(2) == [2]
-
-    # 測試修正後 n < 2 的情況
     assert lec.primes_list(1) == []
     assert lec.primes_list(0) == []
     assert lec.primes_list(-10) == []
