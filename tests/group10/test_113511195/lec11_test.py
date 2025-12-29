@@ -1,0 +1,116 @@
+import lec_code.lec11 as lec11
+import pytest
+
+def test_bisect_search1_empty_list_raises_indexerror():
+    # Lecture code prints L[0] and L[-1] before checking empty -> IndexError
+    with pytest.raises(IndexError):
+        lec11.bisect_search1([], 0)
+
+@pytest.mark.parametrize(
+    "L,e,expected",
+    [
+        ([0], 0, True),
+        ([0], 1, False),
+        ([0, 1, 2, 3, 4], 0, True),
+        ([0, 1, 2, 3, 4], 4, True),
+        ([0, 1, 2, 3, 4], 2, True),
+        ([0, 1, 2, 3, 4], 5, False),
+        ([0, 1, 2, 3, 4], -1, False),
+        (list(range(100)), 76, True),
+        (list(range(100)), 100, False),
+    ],
+)
+def test_bisect_search1_results_nonempty(L, e, expected, capsys):
+    result = lec11.bisect_search1(L, e)
+    capsys.readouterr()
+    assert result is expected
+
+def test_bisect_search1_prints_trace_for_nonempty(capsys):
+    L = list(range(10))
+    _ = lec11.bisect_search1(L, 7)
+    printed = capsys.readouterr().out
+    assert "low:" in printed
+    assert "high:" in printed
+
+@pytest.mark.parametrize(
+    "L,e,expected",
+    [
+        ([], 0, False),
+        ([0], 0, True),
+        ([0], 1, False),
+        ([0, 1, 2, 3, 4], 0, True),
+        ([0, 1, 2, 3, 4], 4, True),
+        ([0, 1, 2, 3, 4], 2, True),
+        ([0, 1, 2, 3, 4], 5, False),
+        ([0, 1, 2, 3, 4], -1, False),
+        (list(range(100)), 76, True),
+        (list(range(100)), 100, False),
+    ],
+)
+def test_bisect_search2_results(L, e, expected, capsys):
+    result = lec11.bisect_search2(L, e)
+    capsys.readouterr()
+    assert result is expected
+
+def test_bisect_search2_prints_index_trace(capsys):
+    L = list(range(10))
+    _ = lec11.bisect_search2(L, 7)
+    printed = capsys.readouterr().out
+    assert "low:" in printed
+    assert "high:" in printed
+    assert "low: 0; high: 9" in printed
+
+@pytest.mark.parametrize("n", [1, 2, 3, 10, 50, 100])
+def test_bisect_search1_and_2_consistent_on_range_lists(n, capsys):
+    L = list(range(n))
+    queries = [0, n // 2, n - 1, -1, n]  # includes out-of-range
+
+    for e in queries:
+        r1 = lec11.bisect_search1(L, e)
+        capsys.readouterr()
+        r2 = lec11.bisect_search2(L, e)
+        capsys.readouterr()
+        assert r1 == r2
+    
+
+def test_genSubsets_empty_list():
+    assert lec11.genSubsets([]) == [[]]
+
+@pytest.mark.parametrize(
+    "L",
+    [
+        [1],
+        [1, 2],
+        [1, 2, 3],
+        [1, 2, 3, 4],
+        ["a", "b", "c"],
+    ],
+)
+def test_genSubsets_size_is_power_of_two(L):
+    subsets = lec11.genSubsets(L)
+    assert len(subsets) == 2 ** len(L)
+
+def test_genSubsets_contains_empty_and_full_set():
+    L = [1, 2, 3, 4]
+    subsets = lec11.genSubsets(L)
+    assert [] in subsets
+    assert L in subsets
+
+def test_genSubsets_all_elements_are_from_input():
+    L = [1, 2, 3, 4]
+    subsets = lec11.genSubsets(L)
+    for s in subsets:
+        for x in s:
+            assert x in L
+        
+def test_genSubsets_no_duplicate_subsets_for_unique_input():
+    L = [1, 2, 3, 4]
+    subsets = lec11.genSubsets(L)
+    as_tuples = [tuple(s) for s in subsets]
+    assert len(as_tuples) == len(set(as_tuples))
+
+def test_genSubsets_expected_subsets_for_small_case():
+    L = [1, 2]
+    expected = {(), (1,), (2,), (1, 2)}
+    got = {tuple(s) for s in lec11.genSubsets(L)}
+    assert got == expected

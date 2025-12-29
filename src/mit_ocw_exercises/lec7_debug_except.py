@@ -29,7 +29,7 @@ def rev_list(L):
         j = len(L) - i - 1
         temp = L[i]
         L[i] = L[j]
-    #        L[j] = temp
+        L[j] = temp
 
     # 注意：以下範例/印出/輸入碼會在直接以腳本執行時示範使用，
     # 不應在 module 被 import（例如 pytest 匯入測試模組）時執行。

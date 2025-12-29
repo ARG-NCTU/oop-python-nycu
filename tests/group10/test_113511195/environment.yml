@@ -1,0 +1,6 @@
+name: base 
+dependencies:
+ - python=3.10 
+ - pytest
+ - numpy 
+ - pandas

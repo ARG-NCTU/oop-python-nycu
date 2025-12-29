@@ -1,0 +1,86 @@
+# -*- coding: utf-8 -*-
+import math
+import pytest
+
+import lec7_debug_except as lab7
+
+def test_rev_list_even():
+    L = [1, 2, 3, 4]
+    lab7.rev_list(L)
+    assert L == [4, 3, 2, 1]
+
+
+def test_rev_list_odd():
+    L = [1, 2, 3, 4, 5]
+    lab7.rev_list(L)
+    assert L == [5, 4, 3, 2, 1]
+
+
+def test_rev_list_empty_and_single():
+    L1 = []
+    lab7.rev_list(L1)
+    assert L1 == []
+
+    L2 = [99]
+    lab7.rev_list(L2)
+    assert L2 == [99]
+
+
+def test_primes_list_basic():
+    assert lab7.primes_list(2) == [2]
+    assert lab7.primes_list(3) == [2, 3]
+    assert lab7.primes_list(15) == [2, 3, 5, 7, 11, 13]
+
+
+def test_primes_list_invalid():
+    with pytest.raises(ValueError):
+        lab7.primes_list(1)
+    with pytest.raises(ValueError):
+        lab7.primes_list(-5)
+    with pytest.raises(ValueError):
+        lab7.primes_list(3.5)
+
+
+def test_get_ratios_normal():
+    assert lab7.get_ratios([10, 6], [2, 3]) == [5.0, 2.0]
+
+
+def test_get_ratios_zero_division_returns_nan():
+    r = lab7.get_ratios([1, 4, 9], [1, 0, 3])
+    assert r[0] == 1.0
+    assert math.isnan(r[1])
+    assert r[2] == 3.0
+
+
+def test_get_ratios_bad_args():
+    with pytest.raises(ValueError):
+        lab7.get_ratios([1, 2], [1])  # length mismatch
+    with pytest.raises(ValueError):
+        lab7.get_ratios("not a list", [1, 2])
+    with pytest.raises(ValueError):
+        lab7.get_ratios([1, "2"], [1, 2])  # non-numeric division
+
+
+def test_avg():
+    assert lab7.avg([80.0, 70.0, 90.0]) == pytest.approx(80.0)
+    assert lab7.avg([]) == 0.0
+
+
+def test_get_stats():
+    test_grades = [
+        [['peter', 'parker'], [80.0, 70.0, 85.0]],
+        [['bruce', 'wayne'], [100.0, 80.0, 74.0]],
+        [['captain', 'america'], [80.0, 70.0, 96.0]],
+        [['deadpool'], []],
+    ]
+
+    stats = lab7.get_stats(test_grades)
+
+    assert stats[0][0] == ['peter', 'parker']
+    assert stats[0][2] == pytest.approx((80.0 + 70.0 + 85.0) / 3)
+
+    assert stats[1][0] == ['bruce', 'wayne']
+    assert stats[1][2] == pytest.approx((100.0 + 80.0 + 74.0) / 3)
+
+    assert stats[3][0] == ['deadpool']
+    assert stats[3][2] == 0.0
