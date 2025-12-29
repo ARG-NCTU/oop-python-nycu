@@ -75,3 +75,17 @@ def test_bisect_search1_and_2_consistent_on_range_lists(n, capsys):
 
 def test_genSubsets_empty_list():
     assert lec11.genSubsets([]) == [[]]
+
+@pytest.mark.parametrize(
+    "L",
+    [
+        [1],
+        [1, 2],
+        [1, 2, 3],
+        [1, 2, 3, 4],
+        ["a", "b", "c"],
+    ],
+)
+def test_genSubsets_size_is_power_of_two(L):
+    subsets = lec11.genSubsets(L)
+    assert len(subsets) == 2 ** len(L)
