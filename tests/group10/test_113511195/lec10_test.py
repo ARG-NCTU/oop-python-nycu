@@ -27,3 +27,6 @@ def test_search_singleton_list():
     assert lec10.search([5], 5) is True
     assert lec10.search([5], 4) is False
     assert lec10.search([5], 6) is False
+
+def test_isSubset_true_when_subset():
+    assert lec10.isSubset([1, 5, 3], [1, 2, 3, 4, 5]) is True
