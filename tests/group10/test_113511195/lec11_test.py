@@ -89,3 +89,9 @@ def test_genSubsets_empty_list():
 def test_genSubsets_size_is_power_of_two(L):
     subsets = lec11.genSubsets(L)
     assert len(subsets) == 2 ** len(L)
+
+def test_genSubsets_contains_empty_and_full_set():
+    L = [1, 2, 3, 4]
+    subsets = lec11.genSubsets(L)
+    assert [] in subsets
+    assert L in subsets
