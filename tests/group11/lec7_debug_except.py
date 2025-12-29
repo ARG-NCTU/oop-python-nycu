@@ -31,9 +31,9 @@ def rev_list(L):
         L[i] = L[j]
         L[j] = temp
         
-L = [1,2,3,4]
-rev_list(L)
-print(L)
+# L = [1,2,3,4]
+# rev_list(L)
+# print(L)
 #
 #
 ########################################
@@ -89,8 +89,8 @@ def primes_list(n):
             primes.append(j)
     return primes
 
-print(primes_list(2) )               
-print(primes_list(15)  )              
+# print(primes_list(2) )               
+# print(primes_list(15)  )              
 
 
 ######################################
@@ -101,25 +101,25 @@ print(primes_list(15)  )
 #print("a/b = ", a/b)
 #print("a+b = ", a+b)
 
-try:
-    a = int(input("Tell me one number: "))
-    b = int(input("Tell me another number: "))
-    print("a/b = ", a/b)
-except:
-    print("Bug in user input.")
+# try:
+#     a = int(input("Tell me one number: "))
+#     b = int(input("Tell me another number: "))
+#     print("a/b = ", a/b)
+# except:
+#     print("Bug in user input.")
 
 
-try:
-    a = int(input("Tell me one number: "))
-    b = int(input("Tell me another number: "))
-    print("a/b = ", a/b)
-    print("a+b = ", a+b)
-except ValueError:
-    print("Could not convert to a number.")
-except ZeroDivisionError:
-    print("Can't divide by zero")
-except:
-    print("Something went very wrong.")
+# try:
+#     a = int(input("Tell me one number: "))
+#     b = int(input("Tell me another number: "))
+#     print("a/b = ", a/b)
+#     print("a+b = ", a+b)
+# except ValueError:
+#     print("Could not convert to a number.")
+# except ZeroDivisionError:
+#     print("Can't divide by zero")
+# except:
+#     print("Something went very wrong.")
 
 
 
@@ -143,7 +143,7 @@ def get_ratios(L1, L2):
             print("executed no matter what!")
     return ratios
     
-print(get_ratios([1, 4], [2, 4]))
+# print(get_ratios([1, 4], [2, 4]))
 
 
 #######################################
