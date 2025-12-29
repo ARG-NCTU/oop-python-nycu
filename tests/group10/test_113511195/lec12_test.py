@@ -124,3 +124,12 @@ def test_merge_sort_np_sorts_correctly_and_does_not_mutate_input(L):
     assert out == sorted(original)
     assert L == original
     assert out is not L
+
+
+def test_merge_merges_two_sorted_lists_and_prints(capsys):
+    left = [1, 3, 5]
+    right = [2, 4, 6]
+    out = lec12.merge(left, right)
+    printed = capsys.readouterr().out
+    assert out == [1, 2, 3, 4, 5, 6]
+    assert "merge:" in printed
