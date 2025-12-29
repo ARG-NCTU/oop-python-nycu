@@ -23,7 +23,7 @@ import lec10_complexity_part1 as lec
         ([10, 20, 30, 40], 10, True),     # 頭部命中
         ([10, 20, 30, 40], 40, True),     # 尾部命中
         
-        # --- 不同資料型態 (Python list 特性) ---
+        # --- 不同資料型態 (Python list 特性) -
         (["apple", "banana", "cherry"], "banana", True), # 字串搜尋
         (["a", "b", "c"], "z", False),                   # 字串未命中
     ]
