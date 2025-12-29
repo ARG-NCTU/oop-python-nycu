@@ -141,3 +141,10 @@ def test_merge_handles_empty_sides(capsys):
     capsys.readouterr()
     assert lec12.merge([], []) == []
     capsys.readouterr()
+
+def test_merge_np_merges_two_sorted_lists_stable_on_ties():
+    # merge_np uses <= which prefers left element on ties (stable)
+    left = [1, 2, 2, 5]
+    right = [2, 3, 4]
+    out = lec12.merge_np(left, right)
+    assert out == sorted(left + right)
