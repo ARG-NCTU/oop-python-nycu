@@ -58,11 +58,12 @@ def test_most_common_words_basic():
 
 
 def test_most_common_words_beatles():
-    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 
-                     'yeah','she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-                     'she', 'loves', 'you', 'yeah', 'yeah', 'yeah']
+    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 'you',
+                     'she', 'loves', 'you', 'yeah', 'yeah', 'you',
+                     'she', 'loves', 'you', 'yeah', 'yeah', 'you']
     freqs = lec6.lyrics_to_frequencies(she_loves_you)
-    assert lec6.most_common_words(freqs) == (['you', 'yeah'], 6)
+    result = lec6.most_common_words(freqs)
+    assert result[1] == 6 and sorted(result[0]) == ['yeah', 'you']
 
 
 # =========================
@@ -82,13 +83,13 @@ def test_words_often_basic():
 # Large-scale lyrics test
 # =========================
 def test_words_often_large():
-    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-                     'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-                     'she', 'loves', 'you', 'yeah', 'yeah', 'yeah',
-                     'you', 'think', "you've", 'lost', 'your', 'love']
+    she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah', 'you',
+                     'she', 'loves', 'you', 'yeah', 'yeah', 'you',
+                     'she', 'loves', 'you', 'yeah', 'yeah', 'you',
+                     'think', "you've", 'lost', 'your', 'love']
     freqs = lec6.lyrics_to_frequencies(she_loves_you)
     result = lec6.words_often(freqs.copy(), 3)
     # "you" and "yeah" appear 6 times each
-    assert (['you', 'yeah'] in [group[0] for group in result])
+    assert any(sorted(group[0]) == ['yeah', 'you'] for group in result)
 
 
