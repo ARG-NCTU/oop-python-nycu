@@ -1,91 +1,156 @@
 import pytest
 import lec10_complexity_part1 as lec
 
+# ==========================================
+# 1. Linear Search (線性搜尋)
+# 適用於任何無序列表，O(N)
+# ==========================================
 
 @pytest.mark.parametrize(
-    "L,e,expect",
+    "L, e, expect",
     [
-        ([], 1, False),                         # 空清單
-        ([1], 1, True),                         # 單一元素，命中
-        ([1], 2, False),                        # 單一元素，未命中
-        ([1, 3, 4, 5, 9, 18, 27], 9, True),     # 中間命中
-        ([1, 3, 4, 5, 9, 18, 27], 28, False),   # 不存在
-        ([-3, -1, 0, 2], -1, True),             # 負數命中
-    ],
+        # --- 基礎整數測試 ---
+        ([], 10, False),                  # 空列表
+        ([10], 10, True),                 # 單一元素命中
+        ([10], 20, False),                # 單一元素未命中
+        ([5, 2, 9, 1, 7], 9, True),       # 一般命中
+        ([5, 2, 9, 1, 7], 3, False),      # 一般未命中
+        
+        # --- 重複元素 ---
+        ([1, 2, 2, 2, 3], 2, True),       # 列表中有多個目標
+        
+        # --- 邊界位置 ---
+        ([10, 20, 30, 40], 10, True),     # 頭部命中
+        ([10, 20, 30, 40], 40, True),     # 尾部命中
+        
+        # --- 不同資料型態 (Python list 特性) ---
+        (["apple", "banana", "cherry"], "banana", True), # 字串搜尋
+        (["a", "b", "c"], "z", False),                   # 字串未命中
+    ]
 )
-def test_linear_search(L, e, expect):
+def test_linear_search_comprehensive(L, e, expect):
     assert lec.linear_search(L, e) == expect
 
 
-# ---------- search (假設 L 已排序遞增) ----------
+# ==========================================
+# 2. Search (針對已排序列表的優化搜尋)
+# 假設 L 遞增排序，O(N) 但有早停機制
+# ==========================================
 
 @pytest.mark.parametrize(
-    "L,e,expect",
+    "L, e, expect",
     [
-        ([], 1, False),                 # 空清單
-        ([1], 1, True),                 # 命中
-        ([1], 2, False),                # 未命中
-        ([1, 3, 4, 5, 9], 4, True),     # 中間命中
-        ([1, 3, 4, 5, 9], 2, False),    # 早停：遇到 3 > 2 直接 False
-        ([1, 3, 4, 5, 9], 10, False),   # 大於最大值，掃到結尾
-        ([-5, -2, 0, 7], -3, False),    # 負數範圍內早停
-    ],
+        # --- 基礎測試 ---
+        ([], 1, False),
+        ([1, 2, 3], 1, True),
+        ([1, 2, 3], 3, True),
+        ([1, 2, 3], 2, True),
+        
+        # --- 早停 (Early Stopping) 測試 ---
+        # 邏輯：當 L[i] > e 時，程式應立即回傳 False
+        ([2, 4, 6, 8, 10], 5, False),     # 遇到 6 時發現 6 > 5，應早停
+        ([2, 4, 6, 8, 10], 1, False),     # 比最小值還小 (第一個元素就早停)
+        
+        # --- 掃描到底 ---
+        ([2, 4, 6, 8, 10], 12, False),    # 比最大值還大 (需掃完整個 list)
+        
+        # --- 負數區間 ---
+        ([-10, -5, 0, 5, 10], -5, True),  # 負數命中
+        ([-10, -5, 0, 5, 10], -3, False), # 負數區間未命中 (0 > -3 早停)
+    ]
 )
-def test_search_sorted_increasing(L, e, expect):
+def test_search_sorted_logic(L, e, expect):
     assert lec.search(L, e) == expect
 
 
-def test_search_assumes_sorted_behavior():
+def test_search_behavior_on_unsorted_list():
     """
-    若 L 未排序，此函式的行為不可靠（設計上假設遞增排序）。
-    這裡僅確認：在未排序情況下，可能得到與線性搜尋不同的結果。
+    特意測試：當輸入未排序列表時，這個函式會發生什麼事？
+    這能驗證演算法是否真的依賴 '大於即停止' 的邏輯。
     """
-    L = [3, 1, 4]  # 未排序
-    # 正確答案（線性掃描）應為 True
-    assert lec.linear_search(L, 1) is True
-    # search 可能早停造成 False（這裡因為 3 > 1 直接回傳 False）
-    assert lec.search(L, 1) is False
+    # 列表未排序：5 在 3 之後
+    unsorted_L = [1, 3, 5, 2, 4] 
+    
+    # search(2) 會失敗，因為遇到 3 時 (3 > 2) 就會停止檢查，
+    # 儘管 2 其實在後面。這證明了它依賴排序性質。
+    assert lec.search(unsorted_L, 2) is False 
+    
+    # 相比之下，linear_search 應該要找得到
+    assert lec.linear_search(unsorted_L, 2) is True
 
 
-# ---------- isSubset ----------
+# ==========================================
+# 3. isSubset (子集檢查)
+# 檢查 L1 是否包含於 L2
+# ==========================================
 
-def test_isSubset_basic_true():
-    assert lec.isSubset([1, 5, 3], [1, 2, 3, 4, 5]) is True
+@pytest.mark.parametrize(
+    "L1, L2, expect",
+    [
+        # --- 基礎邏輯 ---
+        ([1, 2], [1, 2, 3, 4], True),       # 真子集
+        ([1, 5], [1, 2, 3, 4], False),      # 有元素不在 L2
+        ([1, 2, 3], [1, 2, 3], True),       # 集合相等
+        
+        # --- 空集合邏輯 ---
+        ([], [1, 2, 3], True),              # 空集是任何集合的子集
+        ([], [], True),                     # 空集是空集的子集
+        ([1], [], False),                   # 非空不能包含於空
+        
+        # --- 重複元素與順序 ---
+        ([2, 1], [1, 2, 3], True),          # L1順序不影響結果
+        ([1, 1, 1], [1, 2], True),          # L1重複元素不影響 (視為 Set 邏輯)
+        
+        # --- 字串列表 ---
+        (["a", "c"], ["a", "b", "c", "d"], True),
+        (["a", "z"], ["a", "b", "c"], False),
+    ]
+)
+def test_isSubset_variations(L1, L2, expect):
+    assert lec.isSubset(L1, L2) is expect
 
-def test_isSubset_basic_false():
-    assert lec.isSubset([1, 6], [1, 2, 3, 4, 5]) is False
 
-def test_isSubset_edge_cases():
-    assert lec.isSubset([], []) is True                  # 空是任何集合子集合
-    assert lec.isSubset([], [1, 2, 3]) is True          # 空是子集合
-    assert lec.isSubset([1], []) is False               # 非空不可能是空的子集合
+# ==========================================
+# 4. Intersect (交集)
+# 回傳兩列表共同元素，不重複，順序依據 L1
+# ==========================================
 
-def test_isSubset_ignores_multiplicity():
+def test_intersect_order_and_uniqueness():
     """
-    此實作不考慮多重度（像 set 子集合）。[1,1] 對 [1] 仍會回 True。
+    測試重點：
+    1. 去重 (Uniqueness)
+    2. 順序性 (Order preservation by L1)
     """
-    assert lec.isSubset([1, 1], [1]) is True
+    # L1: 順序是 5 -> 2 -> 3 -> 5
+    # L2: 包含 2, 5, 9
+    # 交集元素應為: 5, 2
+    L1 = [5, 2, 3, 5, 2]
+    L2 = [2, 5, 9]
+    
+    result = lec.intersect(L1, L2)
+    
+    # 驗證內容正確
+    assert 5 in result
+    assert 2 in result
+    assert 3 not in result
+    assert 9 not in result
+    
+    # 驗證去重 (長度應為 2)
+    assert len(result) == 2
+    
+    # 驗證順序 (必須跟隨 L1 的出現順序：先 5 再 2)
+    assert result == [5, 2]
 
+def test_intersect_empty_cases():
+    assert lec.intersect([], [1, 2, 3]) == []
+    assert lec.intersect([1, 2], []) == []
+    assert lec.intersect([], []) == []
 
-# ---------- intersect ----------
+def test_intersect_no_common_elements():
+    assert lec.intersect([1, 2], [3, 4]) == []
 
-def test_intersect_basic():
-    assert lec.intersect([1, 2, 3], [2, 3, 4]) == [2, 3]
-
-def test_intersect_unique_and_order_by_L1():
-    """
-    intersect 先收集所有相等元素到 tmp，再去重到 res。
-    因此結果：
-      1) 只包含唯一元素（去重）
-      2) 元素順序以 L1 的出現順序為準
-    """
-    L1 = [3, 1, 2, 2, 1, 3]
-    L2 = [2, 2, 3, 5, 1]
-    # L1 中相交元素出現順序：3 -> 1 -> 2 -> (2/1/3 之後因去重不再加入)
-    assert lec.intersect(L1, L2) == [3, 1, 2]
-
-def test_intersect_no_overlap():
-    assert lec.intersect([7, 8], [1, 2, 3]) == []
-
-def test_intersect_with_negatives():
-    assert lec.intersect([-2, -1, 0, 1], [-1, 1, 2]) == [-1, 1]
+def test_intersect_strings():
+    L1 = ["red", "blue", "green", "red"]
+    L2 = ["green", "red", "yellow"]
+    # L1順序: red 先出現，green 後出現
+    assert lec.intersect(L1, L2) == ["red", "green"]
