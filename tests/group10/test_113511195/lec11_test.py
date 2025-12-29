@@ -108,3 +108,9 @@ def test_genSubsets_no_duplicate_subsets_for_unique_input():
     subsets = lec11.genSubsets(L)
     as_tuples = [tuple(s) for s in subsets]
     assert len(as_tuples) == len(set(as_tuples))
+
+def test_genSubsets_expected_subsets_for_small_case():
+    L = [1, 2]
+    expected = {(), (1,), (2,), (1, 2)}
+    got = {tuple(s) for s in lec11.genSubsets(L)}
+    assert got == expected
