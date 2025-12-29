@@ -102,3 +102,9 @@ def test_genSubsets_all_elements_are_from_input():
     for s in subsets:
         for x in s:
             assert x in L
+        
+def test_genSubsets_no_duplicate_subsets_for_unique_input():
+    L = [1, 2, 3, 4]
+    subsets = lec11.genSubsets(L)
+    as_tuples = [tuple(s) for s in subsets]
+    assert len(as_tuples) == len(set(as_tuples))
