@@ -128,7 +128,7 @@ she_loves_you = ['she', 'loves', 'you', 'yeah', 'yeah',
 'yeah', 'yeah', 'yeah', 'yeah'
 ]
 
-beatles = lyrics_to_frequencies(she_loves_you)
+# beatles = lyrics_to_frequencies(she_loves_you)
 
 
 def most_common_words(freqs):
@@ -166,7 +166,7 @@ def fib_mem(n):
     elif n == 2:
         return 2
     else:
-        return fib1(n-1) + fib1(n-2)
+        return fib_mem(n-1) + fib_mem(n-2)
 
 
 def fib_efficient(n, d):
@@ -177,12 +177,12 @@ def fib_efficient(n, d):
         d[n] = ans
         return ans
         
-d = {1:1, 2:2}
+# d = {1:1, 2:2}
 
-argToUse = 34
-#print("")
-#print('using fib')
-#print(fib(argToUse))
-#print("")
-#print('using fib_efficient')
-#print(fib_efficient(argToUse, d))
+# argToUse = 34
+# #print("")
+# #print('using fib')
+# #print(fib(argToUse))
+# #print("")
+# #print('using fib_efficient')
+# #print(fib_efficient(argToUse, d))
