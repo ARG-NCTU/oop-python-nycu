@@ -162,6 +162,9 @@ class EventManager:
         if "wood" in opt["cost"]: self.engine.wood -= opt["cost"]["wood"]
         if "food" in opt["cost"]: self.engine.food -= opt["cost"]["food"]
         
+        # 追蹤完成事件
+        self.engine.events_completed += 1
+        
         self.apply_effect(opt["effect"])
         self.showing_result = True
         return False
@@ -199,6 +202,9 @@ class EventManager:
         elif effect == "event_refugees_accept":
             for i in range(2): 
                 self.engine.villagers.append(Villager(self.engine, f"難民{i}", (200, 200, 200), "Farmer"))
+            # 更新最高人口數
+            current_pop = len([v for v in self.engine.villagers if v.is_alive])
+            self.engine.max_population = max(self.engine.max_population, current_pop)
             self.set_result(True, "人口增加", "村莊接納了新成員 (+2 人)。")
 
         elif effect == "event_bandit_pay":
@@ -252,6 +258,7 @@ class EventManager:
                 if living:
                     victim = random.choice(living)
                     victim.is_alive = False
+                    self.engine.total_deaths += 1  # 追蹤死亡
                     self.set_result(False, "狩獵失敗", f"{victim.name} 在狩獵中犧牲了...")
                 else:
                     self.set_result(True, "僥倖", "雖然狩獵失敗，但無人傷亡。")

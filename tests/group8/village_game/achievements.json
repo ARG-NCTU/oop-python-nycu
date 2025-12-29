@@ -1,0 +1,305 @@
+{
+  "achievements": [
+    {
+      "id": "survive_day1",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 04:41:06",
+      "progress": 100
+    },
+    {
+      "id": "survive_day5",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 10:47:51",
+      "progress": 100
+    },
+    {
+      "id": "survive_day10",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "survive_day15",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "zero_deaths",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "hard_survivor",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "hell_survivor",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "wall_master",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "wall_fortress",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "no_wall_damage",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "first_night",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 10:46:12",
+      "progress": 100
+    },
+    {
+      "id": "10_nights",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "15_nights",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "low_damage",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "wall_broken",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 10:47:51",
+      "progress": 100
+    },
+    {
+      "id": "rebuild_master",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "beast_slayer",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "perfect_defense",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "first_resource",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 04:41:06",
+      "progress": 100
+    },
+    {
+      "id": "collector_100",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 10:46:12",
+      "progress": 100
+    },
+    {
+      "id": "collector_500",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "collector_1000",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "food_rich",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 04:41:06",
+      "progress": 100
+    },
+    {
+      "id": "wood_stock",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 10:48:01",
+      "progress": 100
+    },
+    {
+      "id": "gold_hoarder",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "all_resources",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 10:47:04",
+      "progress": 100
+    },
+    {
+      "id": "efficient_collector",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "treasure_hunter",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "starting_crew",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 04:41:06",
+      "progress": 100
+    },
+    {
+      "id": "growing_village",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 05:24:35",
+      "progress": 100
+    },
+    {
+      "id": "thriving_village",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "max_population",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "no_hunger_death",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "refugee_helper",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "full_health",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 04:41:06",
+      "progress": 100
+    },
+    {
+      "id": "lone_survivor",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "first_event",
+      "unlocked": true,
+      "unlock_time": "2025-12-29 04:41:06",
+      "progress": 100
+    },
+    {
+      "id": "event_master",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "event_veteran",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "shopper",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "gambler",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "lucky_one",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "event_avoider",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "speed_demon",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "golden_touch",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "healer_angel",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "builder_legend",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "oracle_wisdom",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "s_rank",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    },
+    {
+      "id": "completionist",
+      "unlocked": false,
+      "unlock_time": null,
+      "progress": 0
+    }
+  ],
+  "last_save": "2025-12-29 10:48:01"
+}

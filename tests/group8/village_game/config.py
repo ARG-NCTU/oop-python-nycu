@@ -18,8 +18,8 @@ COLOR_FOOD = (0, 255, 0)
 COLOR_WOOD = (139, 69, 19)      
 COLOR_GOLD = (255, 215, 0)      
 COLOR_DEATH = (100, 100, 100)   
-COLOR_DAMAGE = (255, 50, 50)    # [新增] 傷害數字顏色
-COLOR_HEAL = (100, 255, 255)    # [新增] 治療/修復顏色
+COLOR_DAMAGE = (255, 50, 50)  # [新增] 傷害數字顏色
+COLOR_HEAL = (100, 255, 255)  # [新增] 治療/修復顏色
 
 # --- 圖片設定 ---
 IMG_DIR = "assets"
@@ -39,8 +39,8 @@ HUNGER_RATE = 0.05
 FOOD_NUTRITION = 30   
 WOOD_VALUE = 5        
 GOLD_VALUE = 50       
-
 PROSPERITY_THRESHOLD = 300 
-MAX_HEROES = 5             
-
+MAX_HEROES = 5
+             
+#字體
 FONT_FILE = "font.ttf"
