@@ -95,3 +95,10 @@ def test_genSubsets_contains_empty_and_full_set():
     subsets = lec11.genSubsets(L)
     assert [] in subsets
     assert L in subsets
+
+def test_genSubsets_all_elements_are_from_input():
+    L = [1, 2, 3, 4]
+    subsets = lec11.genSubsets(L)
+    for s in subsets:
+        for x in s:
+            assert x in L
