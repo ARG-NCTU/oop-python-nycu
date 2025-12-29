@@ -133,3 +133,11 @@ def test_merge_merges_two_sorted_lists_and_prints(capsys):
     printed = capsys.readouterr().out
     assert out == [1, 2, 3, 4, 5, 6]
     assert "merge:" in printed
+
+def test_merge_handles_empty_sides(capsys):
+    assert lec12.merge([], [1, 2]) == [1, 2]
+    capsys.readouterr()
+    assert lec12.merge([1, 2], []) == [1, 2]
+    capsys.readouterr()
+    assert lec12.merge([], []) == []
+    capsys.readouterr()
