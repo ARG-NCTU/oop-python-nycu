@@ -30,3 +30,8 @@ def test_search_singleton_list():
 
 def test_isSubset_true_when_subset():
     assert lec10.isSubset([1, 5, 3], [1, 2, 3, 4, 5]) is True
+
+def test_intersect_empty_inputs():
+    assert lec10.intersect([], [1, 2, 3]) == []
+    assert lec10.intersect([1, 2, 3], []) == []
+    assert lec10.intersect([], []) == []
