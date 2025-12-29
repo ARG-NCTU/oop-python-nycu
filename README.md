@@ -100,7 +100,7 @@ user.name=Brian2074
 | ✅        | Group 8      | hatthebutterfly : 5  | August0117 : 42     | hungchi0222 : 31          |
 | ❌        | Group 9      | pieapple1587 : 9     | terrycc9375 : 0     |                           |
 | ❌        | Group 10     | iamkyleh : 30        | billlllllllly : 77  |                           |
-| ✅        | Group 11     | Nelson0314 : 5       |                     |                           |
+| ✅        | Group 11     | Nelson0314 : 19      |                     |                           |
 | ✅        | Group 12     | jui-pixel : 68       |                     |                           |
 | ❌        | Group 13     | max052028 : 3        | jeffjun113 : 27     | ngvihoee11-nycu : 13      |
 | ✅        | Group 14     | lilil0724 : 26       | noobLeo536 : 27     |                           |
