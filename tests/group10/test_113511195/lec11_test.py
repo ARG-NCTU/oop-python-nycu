@@ -71,3 +71,7 @@ def test_bisect_search1_and_2_consistent_on_range_lists(n, capsys):
         r2 = lec11.bisect_search2(L, e)
         capsys.readouterr()
         assert r1 == r2
+    
+
+def test_genSubsets_empty_list():
+    assert lec11.genSubsets([]) == [[]]
