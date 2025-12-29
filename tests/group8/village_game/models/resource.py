@@ -8,7 +8,7 @@ class Resource:
         self.y = y
         self.pos = pygame.math.Vector2(x, y)
         self.active = True
-        
+            
         rand_val = random.random()
         if rand_val < 0.7:
             self.type = "Food"
@@ -20,7 +20,7 @@ class Resource:
             self.type = "Gold"
             self.color = config.COLOR_GOLD
 
-    def draw(self, screen):
+    def draw(self, screen):    
         if self.active:
             # 嘗試從 engine 獲取圖片
             img = None
@@ -53,7 +53,7 @@ class Resource:
         
         img = None
         if self.type == "Food": img = assets.get('food')
-        elif self.type == "Wood": img = assets.get('wood')
+        elif self.type == "Wood": img = assets.get('wood')    
         elif self.type == "Gold": img = assets.get('gold')
         
         if img:

@@ -2,9 +2,9 @@ import pygame
 import os
 
 # 設定圖片大小與資料夾
+
 IMG_SIZE = 32
 ASSET_DIR = "assets"
-
 if not os.path.exists(ASSET_DIR):
     os.makedirs(ASSET_DIR)
 
@@ -12,7 +12,6 @@ pygame.init()
 
 def create_surface(color, shape_type):
     s = pygame.Surface((IMG_SIZE, IMG_SIZE), pygame.SRCALPHA)
-    
     # 邊框
     if shape_type != "wall":
         pygame.draw.circle(s, (0,0,0, 50), (IMG_SIZE//2, IMG_SIZE-2), 10) # 陰影
@@ -30,23 +29,23 @@ def create_surface(color, shape_type):
         pygame.draw.circle(s, (255, 220, 180), (16, 10), 8)
         
     elif shape_type == "food":
-        # 畫一顆蘋果
+        # 畫蘋果    
         pygame.draw.circle(s, (220, 20, 20), (16, 18), 10)
         pygame.draw.rect(s, (0, 150, 0), (16, 6, 6, 6)) # 葉子
         
     elif shape_type == "wood":
-        # 畫木頭堆
+        # 畫木頭    
         pygame.draw.rect(s, (100, 60, 20), (4, 10, 24, 6))
         pygame.draw.rect(s, (120, 80, 30), (6, 18, 20, 6))
         pygame.draw.circle(s, (140, 100, 50), (6, 13), 3) # 年輪
         
     elif shape_type == "gold":
-        # 畫金幣/金塊
+        # 畫金幣    
         pygame.draw.polygon(s, (255, 215, 0), [(16, 2), (28, 16), (16, 30), (4, 16)])
         pygame.draw.polygon(s, (255, 255, 200), [(16, 6), (24, 16), (16, 26), (8, 16)])
         
     elif shape_type == "wall":
-        # 畫磚牆
+        # 畫磚牆    
         s.fill((100, 100, 100))
         pygame.draw.line(s, (50, 50, 50), (0, 10), (32, 10), 2)
         pygame.draw.line(s, (50, 50, 50), (0, 20), (32, 20), 2)
@@ -66,7 +65,6 @@ assets = {
     "gold.png": (None, "gold"),
     "wall.png": (None, "wall")
 }
-
 for filename, (color, kind) in assets.items():
     surf = create_surface(color, kind)
     pygame.image.save(surf, os.path.join(ASSET_DIR, filename))
