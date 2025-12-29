@@ -59,3 +59,15 @@ def test_bisect_search2_prints_index_trace(capsys):
     assert "low:" in printed
     assert "high:" in printed
     assert "low: 0; high: 9" in printed
+
+@pytest.mark.parametrize("n", [1, 2, 3, 10, 50, 100])
+def test_bisect_search1_and_2_consistent_on_range_lists(n, capsys):
+    L = list(range(n))
+    queries = [0, n // 2, n - 1, -1, n]  # includes out-of-range
+
+    for e in queries:
+        r1 = lec11.bisect_search1(L, e)
+        capsys.readouterr()
+        r2 = lec11.bisect_search2(L, e)
+        capsys.readouterr()
+        assert r1 == r2
