@@ -51,3 +51,11 @@ def test_bisect_search2_results(L, e, expected, capsys):
     result = lec11.bisect_search2(L, e)
     capsys.readouterr()
     assert result is expected
+
+def test_bisect_search2_prints_index_trace(capsys):
+    L = list(range(10))
+    _ = lec11.bisect_search2(L, 7)
+    printed = capsys.readouterr().out
+    assert "low:" in printed
+    assert "high:" in printed
+    assert "low: 0; high: 9" in printed
