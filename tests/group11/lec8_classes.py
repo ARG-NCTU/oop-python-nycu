@@ -61,6 +61,34 @@ class Fraction(object):
         top = self.num*other.denom - self.denom*other.num
         bott = self.denom*other.denom
         return Fraction(top, bott)
+    def __mul__(self, other):
+        """ Returns a new fraction representing the multiplication """
+        top = self.num * other.num
+        bott = self.denom * other.denom
+        return Fraction(top, bott)
+    def __truediv__(self, other):
+        """ Returns a new fraction representing the division """
+        top = self.num * other.denom
+        bott = self.denom * other.num
+        return Fraction(top, bott)
+    def reduce(self):
+        """ Returns a new fraction representing the reduced form of self """
+        def gcd(n, d):
+            while d != 0:
+                (d, n) = (n%d, d)
+            return n
+        if self.denom == 0:
+            return None
+        elif self.num == 0:
+            return Fraction(0, 1)
+        else:
+            common_factor = gcd(self.num, self.denom)
+            return Fraction(self.num//common_factor, self.denom//common_factor)
+    def __eq__(self, other):
+        """ Returns True if two fractions are equivalent """
+        f1 = self.reduce()
+        f2 = other.reduce()
+        return f1.num == f2.num and f1.denom == f2.denom
     def __float__(self):
         """ Returns a float value of the fraction """
         return self.num/self.denom
