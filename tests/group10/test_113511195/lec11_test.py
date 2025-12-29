@@ -24,3 +24,10 @@ def test_bisect_search1_results_nonempty(L, e, expected, capsys):
     result = lec11.bisect_search1(L, e)
     capsys.readouterr()
     assert result is expected
+
+def test_bisect_search1_prints_trace_for_nonempty(capsys):
+    L = list(range(10))
+    _ = lec11.bisect_search1(L, 7)
+    printed = capsys.readouterr().out
+    assert "low:" in printed
+    assert "high:" in printed
