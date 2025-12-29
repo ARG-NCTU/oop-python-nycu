@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from lec4_functions import (
     is_even_with_return, is_even_without_return, is_even,
     bisection_cuberoot_approx,
-    func_a, func_b, func_c, f
+    func_a, func_b, func_c, f_closure
 )
 
 def test_is_even_functions():
@@ -47,6 +47,6 @@ def test_functions_as_args():
 def test_returning_functions():
     """測試返回函數"""
     # f() 返回一個函數 x(a, b) -> a+b
-    my_adder = f()
+    my_adder = f_closure()
     assert callable(my_adder)
     assert my_adder(3, 4) == 7
