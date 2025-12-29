@@ -67,24 +67,6 @@ class Fraction(object):
     def inverse(self):
         """ Returns a new fraction representing 1/self """
         return Fraction(self.denom, self.num)
-    def __mul__(self, other):
-        """ Returns a new fraction representing the multiplication """
-        top = self.num * other.num
-        bott = self.denom * other.denom
-        return Fraction(top, bott)
-    def __truediv__(self, other):
-        """ Returns a new fraction representing the division """
-        return self * other.inverse()
-    def reduce(self):
-        """ Reduces the fraction to its simplest form """
-        def gcd(a, b):
-            while b:
-                a, b = b, a % b
-            return a
-        gcdFrac = gcd(self.num, self.denom)
-        return Fraction(self.num // gcdFrac, self.denom // gcdFrac)
-    def __eq__(self, other):
-        return self.num // other.num == self.denom // other.denom
 
 a = Fraction(1,4)
 b = Fraction(3,4)
@@ -93,10 +75,6 @@ print(c)
 print(float(c))
 print(Fraction.__float__(c))
 print(float(b.inverse()))
-print(a * b)
-print(a / b)
-print((a + a).reduce())
-print(Fraction(4, 12) == Fraction(2, 6)) 
 
 # try:
 #     c = Fraction(3.14,2.7)
