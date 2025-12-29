@@ -1,7 +1,7 @@
 import pytest
 import io
 import sys
-# 假設你的主檔案名稱是 lec9_inheritance.py
+
 from lec9_inheritance import Animal, Cat, Person, Student, Rabbit
 
 # ===============================
@@ -25,7 +25,7 @@ def test_animal_base():
 # ===== 測試 Cat (繼承 Animal) =====
 # ========================================
 def test_cat_inheritance_and_methods():
-    """測試 Cat 是否繼承了 Animal 的屬性，以及自己的方法"""
+    """測試 Cat 是否繼承了 Animal  的屬性，以及自己的方法"""
     cat = Cat(5)
     cat.set_name("whiskers")
     
@@ -135,4 +135,3 @@ def test_rabbit_special_methods_add_and_eq():
     
     # 測試與沒有父母的兔子比較
     assert (r3 == r1) is False
-

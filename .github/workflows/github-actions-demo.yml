@@ -221,6 +221,7 @@ jobs:
           echo "Artifact uploaded successfully."
 
   Fetch-Commits-By-Authors:
+    # if: false  # Disable this job for now
     needs: Run-Pytest-Tests
     runs-on: ubuntu-latest
     steps:
@@ -245,17 +246,45 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          AUTHORS_FILE="$GITHUB_WORKSPACE/utils/authors.txt"
-          if [ ! -f "$AUTHORS_FILE" ]; then
-            echo "Authors file not found: $AUTHORS_FILE"
-            exit 1
-          fi
-          # read trimmed, non-empty lines into array
-          mapfile -t AUTHORS < <(sed 's/^[[:space:]]*//;s/[[:space:]]*$//' "$AUTHORS_FILE" | sed '/^$/d')
+          AUTHORS=(
+            "unknown899"
+            "LeeYinWei"
+            "Huang-Kun-wei"
+            "ngvihoee11-nycu"
+            "KuoShengHsin"
+            "lilil0724"
+            "noobLeo536"
+            "minopeng"
+            "pieapple1587"
+            "terrycc9375"
+            "Nelson0314"
+            "yt-chen1230"
+            "jui-pixel"
+            "peppa1122ee13"
+            "doralu950413ee13-gif"
+            "ginny923"
+            "jerrywustarwars"
+            "joanna0420"
+            "htyunn"
+            "FrosterMonster"
+            "tpvupu"
+            "hatthebutterfly"
+            "bondyhung"
+            "jeffjun113"
+            "hungchi0222"
+            "billlllllllly"
+            "iamkyleh"
+            "okkohero"
+            "bryson7736"
+            "Chiang-Ian"
+            "August0117"
+            "xiaotin22"
+            "max052028"
+          )
           for author in "${AUTHORS[@]}"; do
             COUNT=$(gh api \
               -H "Accept: application/vnd.github.v3+json" \
-              "repos/ARG-NCTU/oop-python-nycu/commits?author=${author}&per_page=100" \
+              "repos/ARG-NCTU/oop-python-nycu/commits?author=${author}&since=2025-09-01T00:00:00Z&path=tests/&per_page=100" \
               --paginate \
               --jq 'length')
             echo "$author: $COUNT" >> $GITHUB_WORKSPACE/utils/commit_counts.txt
