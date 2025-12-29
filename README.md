@@ -99,7 +99,7 @@ user.name=Brian2074
 | ✅        | Group 7      | unknown899 : 37      | LeeYinWei : 29      |                           |
 | ✅        | Group 8      | hatthebutterfly : 5  | August0117 : 42     | hungchi0222 : 31          |
 | ❌        | Group 9      | pieapple1587 : 9     | terrycc9375 : 0     |                           |
-| ❌        | Group 10     | iamkyleh : 30        | billlllllllly : 77  |                           |
+| ❌        | Group 10     | iamkyleh : 30        | billlllllllly : 100 |                           |
 | ✅        | Group 11     | Nelson0314 : 19      |                     |                           |
 | ✅        | Group 12     | jui-pixel : 68       |                     |                           |
 | ❌        | Group 13     | max052028 : 3        | jeffjun113 : 27     | ngvihoee11-nycu : 13      |
