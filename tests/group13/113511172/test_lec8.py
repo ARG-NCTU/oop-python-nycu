@@ -1,66 +1,110 @@
-import lec_test_codes.add_path
-import mit_ocw_exercises.lec8_classes as l8
+import add_path
+import mit_ocw_exercises.lec8_classes as l8 # type: ignore
 import pytest
 
-def test_coordinate_basic():
-    c1 = l8.Coordinate(3, 4)
-    c2 = l8.Coordinate(0, 0)
-    assert c1.x == 3 and c1.y == 4
-    assert c2.x == 0 and c2.y == 0
-    assert pytest.approx(c1.distance(c2), rel=1e-9) == 5.0
-    assert str(c1) == "<3,4>"
+import random
 
-def test_coordinate_distance_symmetry():
-    a = l8.Coordinate(1, 2)
-    b = l8.Coordinate(4, 6)
-    assert pytest.approx(a.distance(b), rel=1e-9) == pytest.approx(b.distance(a), rel=1e-9)
-    
-def test_fraction_str_and_float():
-    a = l8.Fraction(1, 4)
-    b = l8.Fraction(3, 4)
-    c = a + b
-    assert str(c) == "16/16" or str(c) == "1/1"
-    assert pytest.approx(float(c), rel=1e-9) == 1.0
-    assert pytest.approx(float(b.inverse()), rel=1e-9) == 4 / 3
+def test_coordinate():
+    x1 = random.uniform(-100, 100)
+    y1 = random.uniform(-100, 100)
+    x2 = random.uniform(-100, 100)
+    y2 = random.uniform(-100, 100)
 
-def test_fraction_add_and_sub():
-    a = l8.Fraction(1, 3)
-    b = l8.Fraction(1, 6)
-    assert str(a + b) == "9/18" 
-    assert str(a - b) == "3/18" 
+    c1 = l8.Coordinate(x1, y1)
+    c2 = l8.Coordinate(x2, y2)
 
-def test_fraction_assertion_error():
+    assert c1.x == x1 and c1.y == y1
+    assert c2.x == x2 and c2.y == y2
+    expected_distance = ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+    assert c1.distance(c2) == pytest.approx(expected_distance)
+    assert str(c1) == f"<{x1},{y1}>"
+    assert str(c2) == f"<{x2},{y2}>"
+
+########################
+
+def test_fraction():
+    n1 = random.randint(1, 100)
+    d1 = random.randint(1, 100)
+    n2 = random.randint(1, 100)
+    d2 = random.randint(1, 100)
+
+    f1 = l8.Fraction(n1, d1)
+    f2 = l8.Fraction(n2, d2)
+
+    assert f1.num == n1 and f1.denom == d1
+    assert f2.num == n2 and f2.denom == d2
+    assert str(f1) == f"{n1}/{d1}"
+    assert str(f2) == f"{n2}/{d2}"
+    assert float(f1) == pytest.approx(n1 / d1)
+    assert float(f2) == pytest.approx(n2 / d2)
+
+def test_fraction_add_sub():
+    n1 = random.randint(1, 100)
+    d1 = random.randint(1, 100)
+    n2 = random.randint(1, 100)
+    d2 = random.randint(1, 100)
+
+    f1 = l8.Fraction(n1, d1)
+    f2 = l8.Fraction(n2, d2)
+
+    f_add = f1 + f2
+    assert float(f_add) == pytest.approx(n1/d1 + n2/d2)
+
+    f_sub = f1 - f2
+    assert float(f_sub) == pytest.approx(n1/d1 - n2/d2)
+
+def test_fraction_inverse():
+    n = random.randint(1, 100)
+    d = random.randint(1, 100)
+
+    f = l8.Fraction(n, d)
+    f_inv = f.inverse()
+
+    assert f_inv.num == d and f_inv.denom == n
+    assert float(f_inv) == pytest.approx(d / n)
+
+def test_fraction_invalid_init():
     with pytest.raises(AssertionError):
-        l8.Fraction(3.14, 2.7)
+        l8.Fraction(1.5, 2)
+    with pytest.raises(AssertionError):
+        l8.Fraction(1, '2')
+    with pytest.raises(AssertionError):
+        l8.Fraction('1', 2.0)
 
-def test_intset_insert_and_str():
+def test_fraction_zero_denom():
+    f = l8.Fraction(1, 0)
+    with pytest.raises(ZeroDivisionError):
+        float(f)  # This will raise ZeroDivisionError when converting to float
+
+def test_fraction_multiply_divide():
+    n1 = random.randint(1, 100)
+    d1 = random.randint(1, 100)
+    n2 = random.randint(1, 100)
+    d2 = random.randint(1, 100)
+
+    f1 = l8.Fraction(n1, d1)
+    f2 = l8.Fraction(n2, d2)
+
+    with pytest.raises(TypeError):
+        f1 * f2
+    with pytest.raises(TypeError):
+        f1 / f2
+
+########################
+
+def test_intset():
     s = l8.intSet()
     assert str(s) == "{}"
-    s.insert(3)
-    s.insert(4)
-    s.insert(3)  # duplicate
-    assert str(s) == "{3,4}"
 
-def test_intset_member_and_remove():
-    s = l8.intSet()
-    s.insert(3)
-    s.insert(6)
-    assert s.member(3)
-    assert not s.member(5)
-    s.remove(3)
-    assert str(s) == "{6}"
-    with pytest.raises(ValueError) as e:
-        s.remove(3)
-    assert "3 not found" in str(e.value)
+    assert s.insert(3) == None
+    assert s.insert(5) == None
+    assert s.member(3) == True
+    assert s.member(4) == False
+    assert str(s) == "{3,5}"
 
-def test_intset_multiple_inserts_sorted():
-    s = l8.intSet()
-    for val in [10, 5, 8, 5, 2]:
-        s.insert(val)
-    assert str(s) == "{2,5,8,10}"
+    assert s.remove(3) == None
+    assert s.member(3) == False
+    assert str(s) == "{5}"
 
-def test_coordinate_and_fraction_together():
-    c = l8.Coordinate(3, 4)
-    f = l8.Fraction(1, 2)
-    assert "<" in str(c)
-    assert "/" in str(f)
+    with pytest.raises(ValueError):
+        s.remove(10)
