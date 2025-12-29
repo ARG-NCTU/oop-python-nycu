@@ -1,6 +1,7 @@
 import os
 import sys
 import pytest
+import lec_test_codes.add_path
 
 # --- Path Setup ---
 # Add the directory containing this file to the path so we can import add_path

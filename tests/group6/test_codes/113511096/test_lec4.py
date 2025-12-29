@@ -1,5 +1,6 @@
 import random
 import pytest
+import lec_test_codes.add_path
 
 # NOTE: Commented out local dependency to ensure script runs standalone.
 # from add_path import add_path

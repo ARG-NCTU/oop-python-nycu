@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import pytest
+import lec_test_codes.add_path
 
 
 # ----------------- Configuration -----------------

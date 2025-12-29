@@ -2,7 +2,8 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 import os
-
+import pytest
+import lec_test_codes.add_path
 # NOTE: Commented out local dependency to ensure script runs standalone.
 # from add_path import add_path
 # add_path()

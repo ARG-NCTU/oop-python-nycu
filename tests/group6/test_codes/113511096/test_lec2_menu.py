@@ -2,6 +2,7 @@ import os
 import sys
 import pytest
 import random
+import lec_test_codes.add_path
 
 # --- Path Setup ---
 # Robustly add the parent directory to sys.path to find the local modules
