@@ -1,4 +1,4 @@
-import lec9 as lec9
+import lec_code.lec9 as lec9
 import pytest
 
 def test_animal_init_defaults():
