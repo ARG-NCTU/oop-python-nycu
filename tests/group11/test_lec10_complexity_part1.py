@@ -1,4 +1,7 @@
 import pytest
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from lec10_complexity_part1 import linear_search, search, isSubset, intersect
 
 # -----------------
