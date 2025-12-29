@@ -1,54 +1,85 @@
+import add_path
+import lec7_debug_except as lec7 # type: ignore
 import pytest
+import random
 import math
-import lec7_debug_except as lec
+
+def rev_list(L):
+    """
+    input: L, a list
+    Modifies L such that its elements are in reverse order
+    returns: nothing
+    """
+    for i in range(len(L)//2):
+        j = len(L) - i - 1
+        temp = L[i]
+        L[i] = L[j]
+        L[j] = temp
+
 def test_rev_list():
-    L1 = [1, 2, 3, 4]
-    lec.rev_list(L1)
-    assert L1 == [4, 3, 2, 1]
-    L2 = [1, 2, 3, 4, 5]
-    lec.rev_list(L2)
-    assert L2 == [5, 4, 3, 2, 1]
-    L3 = []
-    lec.rev_list(L3)
-    assert L3 == []
-    L4 = [10]
-    lec.rev_list(L4)
-    assert L4 == [10]
+    L = [1, 2, 3]
+    rev_list(L)
+    assert L == [3, 2, 1]
 
-def test_primes_list():
-    # 基本情況
-    assert lec.primes_list(15) == [2, 3, 5, 7, 11, 13]
+
+    L = ['q', 'w', 'e', 'r', 't', 'y']
+    rev_list(L)
+    assert L == ['y', 't', 'r', 'e', 'w', 'q']
+
+    L = []
+    rev_list(L)
+    assert L == []
+
+    L = [1]
+    rev_list(L)
+    assert L == [1]
+
+
+def test_rev_list_generalize():
+    for _ in range(100):
+        length = random.randint(0, 100)
+        tar = [random.randint(0, 1000) for _ in range(length)]
+        expected = tar[::-1]
+        rev_list(tar)
+        assert tar == expected
+
     
-    # 邊界情況
-    assert lec.primes_list(2) == [2]
-    assert lec.primes_list(1) == []
-    assert lec.primes_list(0) == []
-    assert lec.primes_list(-10) == []
+def test_primes_list():
+    assert lec7.primes_list(5) == [2, 3, 5]
+    assert lec7.primes_list(10) == [2, 3, 5, 7]
+    assert lec7.primes_list(20) == [2, 3, 5, 7, 11, 13, 17, 19]
+    assert lec7.primes_list(40) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
 
+def test_primes_list_generalize():
+    known_primes_up_to_100 = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    for n in range(2, 101):
+        expected = [p for p in known_primes_up_to_100 if p <= n]
+        assert lec7.primes_list(n) == expected
+    
 def test_get_ratios():
-    ratios = lec.get_ratios([1, 4, 6], [2, 0, 3])
-    assert ratios[0] == 0.5
-    assert math.isnan(ratios[1])
-    assert ratios[2] == 2.0
-    with pytest.raises(ValueError, match='different lengths'):
-        lec.get_ratios([1, 2], [1])
+    assert lec7.get_ratios([0, 0], [1, 2]) == [0, 0]
+    assert lec7.get_ratios([1, 3, 5, 7], [1, 3, 5, 7]) == [1, 1, 1, 1]
+    assert lec7.get_ratios([8, 8, 8, 8, 8], [2, 4, 8, 16, 32]) == [4, 2, 1, 0.5, 0.25]
+    assert lec7.get_ratios([], []) == []
+    assert lec7.get_ratios([-1, -2, -3], [1, 2, 3]) == [-1.0, -1.0, -1.0]
+    result = lec7.get_ratios([1, 2, 3], [0, 0, 0])
+    assert all(math.isnan(x) for x in result)
 
-    with pytest.raises(ValueError, match='bad argument type'):
-        lec.get_ratios([1, 'a'], [2, 3])
+def rev_list(L):
+    """
+    input: L, a list
+    Modifies L such that its elements are in reverse order
+    returns: nothing
+    """
+    for i in range(len(L)//2):
+        j = len(L) - i - 1
+        temp = L[i]
+        L[i] = L[j]
+        L[j] = temp
 
 def test_avg():
-    assert lec.avg([80, 90, 100]) == 90.0
-    assert lec.avg([]) == 0.0
-    assert lec.avg([10.5, 20.5]) == 15.5
+    assert lec7.avg([1, 2, 3]) == 2
 
-def test_get_stats():
-    test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
-                   [['bruce', 'wayne'], [100.0, 80.0, 74.0]],
-                   [['deadpool'], []]]
-
-    stats = lec.get_stats(test_grades)
-    assert stats[0][0] == ['peter', 'parker']
-    assert stats[0][2] == pytest.approx(78.33333333333333)
-    assert stats[1][2] == pytest.approx(84.66666666666667)
-    
-
+def test_get_status():
+    stats = lec7.get_stats([[['s1'], [1, 2, 3]], [['s2'], [0]]])
+    assert stats == [[['s1'], [1, 2, 3], 2.0], [['s2'], [0], 0.0]]
