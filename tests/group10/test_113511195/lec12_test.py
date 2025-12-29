@@ -148,3 +148,9 @@ def test_merge_np_merges_two_sorted_lists_stable_on_ties():
     right = [2, 3, 4]
     out = lec12.merge_np(left, right)
     assert out == sorted(left + right)
+
+def test_merge_sort_and_merge_sort_np_agree_on_results():
+    L = [3, 1, 2, 3, 0, -1, 2]
+    out1 = lec12.merge_sort(L)
+    out2 = lec12.merge_sort_np(L)
+    assert out1 == out2 == sorted(L)
