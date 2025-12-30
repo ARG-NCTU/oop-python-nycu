@@ -1,6 +1,8 @@
 from engine import GameEngine
 import traceback
 
+
+
 if __name__ == "__main__":
     try:
         game = GameEngine()

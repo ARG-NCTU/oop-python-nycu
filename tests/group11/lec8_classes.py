@@ -61,12 +61,6 @@ class Fraction(object):
         top = self.num*other.denom - self.denom*other.num
         bott = self.denom*other.denom
         return Fraction(top, bott)
-    def __float__(self):
-        """ Returns a float value of the fraction """
-        return self.num/self.denom
-    def inverse(self):
-        """ Returns a new fraction representing 1/self """
-        return Fraction(self.denom, self.num)
     def __mul__(self, other):
         """ Returns a new fraction representing the multiplication """
         top = self.num * other.num
@@ -74,17 +68,33 @@ class Fraction(object):
         return Fraction(top, bott)
     def __truediv__(self, other):
         """ Returns a new fraction representing the division """
-        return self * other.inverse()
+        top = self.num * other.denom
+        bott = self.denom * other.num
+        return Fraction(top, bott)
     def reduce(self):
-        """ Reduces the fraction to its simplest form """
-        def gcd(a, b):
-            while b:
-                a, b = b, a % b
-            return a
-        gcdFrac = gcd(self.num, self.denom)
-        return Fraction(self.num // gcdFrac, self.denom // gcdFrac)
+        """ Returns a new fraction representing the reduced form of self """
+        def gcd(n, d):
+            while d != 0:
+                (d, n) = (n%d, d)
+            return n
+        if self.denom == 0:
+            return None
+        elif self.num == 0:
+            return Fraction(0, 1)
+        else:
+            common_factor = gcd(self.num, self.denom)
+            return Fraction(self.num//common_factor, self.denom//common_factor)
     def __eq__(self, other):
-        return self.num // other.num == self.denom // other.denom
+        """ Returns True if two fractions are equivalent """
+        f1 = self.reduce()
+        f2 = other.reduce()
+        return f1.num == f2.num and f1.denom == f2.denom
+    def __float__(self):
+        """ Returns a float value of the fraction """
+        return self.num/self.denom
+    def inverse(self):
+        """ Returns a new fraction representing 1/self """
+        return Fraction(self.denom, self.num)
 
 a = Fraction(1,4)
 b = Fraction(3,4)
@@ -93,10 +103,6 @@ print(c)
 print(float(c))
 print(Fraction.__float__(c))
 print(float(b.inverse()))
-print(a * b)
-print(a / b)
-print((a + a).reduce())
-print(Fraction(4, 12) == Fraction(2, 6)) 
 
 # try:
 #     c = Fraction(3.14,2.7)

@@ -1,0 +1,15 @@
+{
+  "purchased_items": [],
+  "owned_items": {
+    "map_theme": "default",
+    "villager_skin": "default",
+    "hero_effect": "none",
+    "warehouse": false,
+    "wall_upgrade": false,
+    "campfire": false,
+    "watchtower": false,
+    "magnet": false,
+    "time_freeze": false,
+    "group_heal": false
+  }
+}

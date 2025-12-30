@@ -1,7 +1,7 @@
 import add_path
-import mit_ocw_exercises.lec5_tuples_lists as lec5
+import lec5_tuples_lists as lec5 # type: ignore
 import pytest
-
+import random
 
 # please write a test for quotient_and_remainder function
 def test_quotient_and_remainder():
@@ -33,6 +33,7 @@ def test_sum_elem_method2():
     assert lec5.sum_elem_method2([13, 34, 0, 88, 88, 0, 9]) == 232
     assert lec5.sum_elem_method2([5]) == 5
     assert lec5.sum_elem_method2([]) == 0
+
 
 def new_test_quotient_and_remainder():
     assert lec5.quotient_and_remainder(24, 6) == (4, 0)
