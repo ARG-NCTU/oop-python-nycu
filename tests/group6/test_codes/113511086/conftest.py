@@ -39,9 +39,34 @@ def pytest_configure(config):
 @pytest.fixture(autouse=True)
 def reset_rabbit_tag():
     """Reset Rabbit class tag counter before each test to ensure consistent RIDs."""
-    try:
-        import lec9_inheritance
-        lec9_inheritance.Rabbit.tag = 27
-    except (ImportError, AttributeError):
-        pass
+    # Try to reset the tag in all possible module locations
+    import sys
+
+    # Reset in local module if it exists
+    if 'lec9_inheritance' in sys.modules:
+        try:
+            sys.modules['lec9_inheritance'].Rabbit.tag = 27
+        except (AttributeError, KeyError):
+            pass
+
+    # Reset in mit_ocw_exercises.lec9_inheritance if it exists
+    if 'mit_ocw_exercises.lec9_inheritance' in sys.modules:
+        try:
+            sys.modules['mit_ocw_exercises.lec9_inheritance'].Rabbit.tag = 27
+        except (AttributeError, KeyError):
+            pass
+
     yield
+
+    # Reset again after the test (in case test execution changes it)
+    if 'lec9_inheritance' in sys.modules:
+        try:
+            sys.modules['lec9_inheritance'].Rabbit.tag = 27
+        except (AttributeError, KeyError):
+            pass
+
+    if 'mit_ocw_exercises.lec9_inheritance' in sys.modules:
+        try:
+            sys.modules['mit_ocw_exercises.lec9_inheritance'].Rabbit.tag = 27
+        except (AttributeError, KeyError):
+            pass
