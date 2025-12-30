@@ -44,7 +44,7 @@ class Fraction(object):
     def inverse(self):
         return Fraction(self.denom, self.num)
 
-# --- Pytest Functions ---
+# ---- Pytest Functions ----
 
 def test_Fraction_math():
     a = Fraction(1, 2)
