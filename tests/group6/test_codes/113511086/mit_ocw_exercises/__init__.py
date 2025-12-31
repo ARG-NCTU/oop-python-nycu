@@ -1,1 +1,1 @@
-# Student 113511086's implementations
+# MIT OCW Exercises Package
