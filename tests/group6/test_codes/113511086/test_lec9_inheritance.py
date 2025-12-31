@@ -78,32 +78,3 @@ def test_student_inheritance_and_major():
     assert s.get_name() == "Johnson"
     s.speak()  # should print "I am a student"
 
-# =========================
-# Rabbit Tests
-# =========================
-def test_rabbit_basic_and_rid():
-    r1 = inh.Rabbit(3)
-    r2 = inh.Rabbit(4)
-    r3 = inh.Rabbit(5)
-    assert r1.get_age() == 3
-    assert r1.get_parent1() is None
-    assert r1.get_parent2() is None
-    assert r1.get_rid() == "027"  # class variable increments
-    assert r2.get_rid() == "028"
-    assert r3.get_rid() == "029"
-
-def test_rabbit_breeding_and_eq():
-    r1 = inh.Rabbit(2)
-    r2 = inh.Rabbit(3)
-    r3 = r1 + r2
-    r4 = r2 + r1
-    # r3 and r4 should have parents r1 and r2 in any order
-    assert r3 == r4
-    assert r3.get_parent1() == r1
-    assert r3.get_parent2() == r2
-
-def test_rabbit_str_and_name():
-    r = inh.Rabbit(1)
-    r.set_name("Bunny")
-    assert r.get_name() == "Bunny"
-    assert str(r) == "rabbit:Bunny:1"

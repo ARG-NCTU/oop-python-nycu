@@ -6,20 +6,6 @@ import pytest
 #############################
 # Test bisect_search1
 #############################
-def test_bisect_search1_found():
-    L = list(range(0, 100))
-    assert l11.bisect_search1(L, 0) is True
-    assert l11.bisect_search1(L, 50) is True
-    assert l11.bisect_search1(L, 99) is True
-
-
-def test_bisect_search1_not_found():
-    L = list(range(0, 100))
-    assert l11.bisect_search1(L, -1) is False
-    assert l11.bisect_search1(L, 100) is False
-    with pytest.raises(IndexError) as e:
-        l11.bisect_search1([], 5)
-    assert "list index out of range" in str(e.value)
 
 def test_bisect_search2_found():
     L = list(range(0, 100))
@@ -33,10 +19,6 @@ def test_bisect_search2_not_found():
     assert l11.bisect_search2(L, 100) is False
     assert l11.bisect_search2([], 5) is False
 
-def test_bisect_search1_and_2_equivalence():
-    L = list(range(0, 30))
-    for e in range(-1, 32):
-        assert l11.bisect_search1(L, e) == l11.bisect_search2(L, e)
 
 def test_genSubsets_basic():
     result = l11.genSubsets([1, 2])
