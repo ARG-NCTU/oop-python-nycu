@@ -56,7 +56,7 @@ Enter WSL cli,
 ```bash
 sudo apt install docker.io
 ```
-> [!CAUTION] Do not use docker desktop on windows! 有回報說WSL共用Windows docker desktop 會有一些問題更麻煩，建議就改裝在Ubuntu, 基本上可以在Windows那邊資源取消啟動這個distro
+> [!CAUTION] Do not use docker desktop on windows! 有回報說WSL共用Windows docker desktop 會有一些問題更麻煩，建議就改裝在Ubuntu
 
 If you encounter permission issue. Make sure you add the user to docker group in WSL
 
@@ -79,7 +79,7 @@ If you can run docker-compose but not docker compose (v2), or you can not locate
 
 ---
 
-## 4. (Developer Only) IDE (VS Code) and GitHub Copilot
+## 4. IDE (VS Code) and GitHub Copilot
 
 ### Install VS Code on Windows
 
