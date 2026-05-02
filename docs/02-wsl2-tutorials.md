@@ -79,7 +79,122 @@ If you can run docker-compose but not docker compose (v2), or you can not locate
 
 ---
 
-## 4. IDE (VS Code) and GitHub Copilot
+
+
+This may install VS Code Server for Linux 64 and take a while to start VS Code.
+
+## 4. VPN
+
+Make sure you add your Windows and WSL to two VPN clients..
+Ask VPN manager (ask Nick).
+
+### Install WireGuard
+
+First, update your system and install the WireGuard package:
+
+```bash
+sudo apt update
+sudo apt install wireguard
+```
+### 2. Generate Private and Public Keys
+
+Generate a pair of private and public keys for the client. These keys will be stored in the `/etc/wireguard/` directory.
+
+```bash
+wg genkey | sudo tee /etc/wireguard/privatekey | wg pubkey | sudo tee /etc/wireguard/publickey
+```
+
+To verify, you can check the contents of the keys:
+
+```bash
+cat /etc/wireguard/privatekey
+cat /etc/wireguard/publickey
+```
+
+Try the same procedure as in Ubuntu.
+Proivde to VPN manager.
+* Your Ubuntu public key (note this should be different from Windows)
+
+VPN manager will give a 10.66.66.XX IP. to finish the setup.
+
+### Configure WireGuard Client Interface
+
+Create the WireGuard configuration file for the client. This file will define how the client connects to the WireGuard server.
+
+```bash
+sudo vim /etc/wireguard/wg1.conf
+```
+
+Example `wg1.conf` file (client-side):
+
+```ini
+[Interface]
+PrivateKey = CLIENT_PRIVATE_KEY
+ListenPort = 51820
+Address = 10.66.66.XXX/24
+
+[Peer]
+PublicKey = JVchoWoC1CR9CM3MdNU32Zsr0cTYWTTyWHT3UhgcxSQ=
+Endpoint =140.113.148.110:51820
+AllowedIPs = 10.66.66.0/24
+PersistentKeepalive = 25
+```
+
+Ensure the keys and endpoint information are correct, based on the server’s configuration.
+
+### Set File Permissions
+
+For security, set proper file permissions to restrict access to the keys and configuration files.
+
+```bash
+sudo chmod 600 /etc/wireguard/privatekey
+sudo chmod 600 /etc/wireguard/wg1.conf
+```
+
+This ensures that the private key and configuration file are only readable by the root user.
+
+### Start the WireGuard Interface
+
+To bring up the WireGuard interface on the client, use the `wg-quick` command. It doesn't work in ARM architecture:
+
+```bash
+sudo wg-quick up wg1
+```
+
+To shut down the interface:
+
+```bash
+sudo wg-quick down wg1
+```
+
+To start at system boot:
+
+```bash
+sudo systemctl enable wg-quick@wg1
+```
+
+### Verify the Connection
+
+To verify if the client is connected successfully, you can ping the server’s VPN IP address (e.g., `10.66.66.1`):
+
+```bash
+ping 10.66.66.1
+```
+
+If the ping is successful, the VPN connection is working correctly.
+
+### Wireguard on Windows
+
+Install Wireguard for Windows.
+
+Try the same procedure as in Ubuntu.
+Proivde to VPN manager.
+* Your Windows public key (note this should be different from Ubuntu)
+
+VPN manager will give a 10.66.66.XX IP. to finish the setup.
+
+
+## 5. IDE (VS Code) and GitHub Copilot
 
 ### Install VS Code on Windows
 
@@ -97,8 +212,6 @@ You can clone a repo in Ubuntu and
 ```bash
 code .
 ```
-
-This may install VS Code Server for Linux 64 and take a while to start VS Code.
 
 ### Try Remote-SSH to a IPC
 
@@ -141,8 +254,40 @@ Login to your GitHub account.
 Students can use xxx.edu.tw to apply for free GitHub copilot.
 If you do  not have Copilot subscribed, ask Nick.
 
+### VSCode Copilot Commit Configuration
 
-## 5. Try MOOS Tutorial
+This repository provides custom configuration for GitHub Copilot's commit message generation in VSCode.
+
+
+For WSL 2 users with Github Copilot extension installed:
+
+1. Navigate to your .vscode-server user settings in WSL2 terminal:
+```bash
+cd ~/.vscode-server/data/Machine
+```
+
+2. Add or modify the `settings.json` file with one of the configurations below.
+
+This configuration enhances Git commit message generation by providing structured templates and guidelines through GitHub Copilot in VSCode.
+
+### [template](https://hackmd.io/@Eudicotz/Syt1jooIJg)
+```json
+{
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "Write a concise commit message from 'git diff --staged' output in the format `[GITEMOJI] [TYPE](file/topic): [description in {locale}]`. Use GitMoji emojis (e.g., ✨ → feat), present tense, active voice, max 240 characters per line, no code blocks."
+        },
+        {
+            "text": "Present tense, active voice, max 240 characters per line, no code blocks."
+        },
+        {
+            "text": "Provide a detailed body explaining the changes (wrap lines less then 72 characters)."
+        }
+    ]
+}
+```
+
+## 6. Try MOOS Tutorial
 
 Install Essentials
 ```bash
@@ -193,11 +338,11 @@ Some hotkeys to remember:
 * Ctrl + 'a': Toggle InfoCasting
 
 
-## 6. VPN
-
-Make sure you add your Windows and WSL to two VPN clients. See the VPN setup folder.
-
 ## 7. Windows Network Settings (ssh, ports, etc)
+
+We will need the Windows to be accessed via VPN network as well.
+
+### Access Windows via SSH
 
 Download OpenSSH-Win64.
 
@@ -251,27 +396,22 @@ cd /mnt/c/Users/WIN_USERNAME/Downloads/
 
 ---
 
-## 9. Install WinTAK, Foxglove, or other JetSea AI Apps (Windows)
-
-### Public Repo
+## 9. Install Foxglove and WinTAK (Windows)
 
 You should be able to download WinTAK and Foxglove and install them on Windows.
 
-### JetSea AI Apps
+Foxglove
+https://foxglove.dev/download
 
-Install USV-Control-GUI.
+WinTAK
+https://argnas.dsmynas.com:5001/sharing/pWCaIyz0K
 
-Install Unity Apps.
+Version 5.4.0.149
 
 ## 10. ROS2 Topics (MVSim on Ubuntu) to Foxglove
 
-See the detail in JetSea AI Quick Start 
-https://github.com/JetSeaAI/mvsim
+Fork and clone https://github.com/MRPT/mvsim
 
-## 11. MOOS pShare
 
-mvsim 和MOOS uSimMarine對接，可以參考alpha pShare 
-
-https://oceanai.mit.edu/ivpman/pmwiki/pmwiki.php?n=Lab.ClassMultivAutonomyPreLab&utm_source=chatgpt.com
 
 
