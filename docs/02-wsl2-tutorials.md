@@ -102,17 +102,19 @@ This may install VS Code Server for Linux 64 and take a while to start VS Code.
 
 ### Try Remote-SSH to a IPC
 
+Ask a partner for a testing remote machine (with 10.66.66.xxx) and username/password.
+
 You need to setup ssh config file. In WSL add the following to ~/.ssh/config
 ```bash
 Host argarm01
-    HostName 10.66.66.128
+    HostName 10.66.66.xxx
     User arg
     IdentityFile ~/.ssh/id_ed25519
 ```
 
 Copy your public key to argarm01
 ```bash
-ssh-copy-id arg@10.66.66.128
+ssh-copy-id arg@10.66.66.xxx
 ```
 
 Make sure you can
@@ -128,7 +130,7 @@ cp ~/.ssh/config /mnt/c/User/XXXX/.ssh
 This is perhaps not the best way, but make sure you own both WSL and Windows users.
 
 Now in Windows VS Code
-- Ctrl + Shift + p
+- Ctrl + Shift + p or click bottom left icon
 - Remote-SSH: Connect to Host. 
 - You should be able to find argarm01
 - Pick Ubuntu, and the VS Code will try to install its server on argarm01
@@ -136,6 +138,7 @@ Now in Windows VS Code
 ### Enable GitHub Copilot
 
 Login to your GitHub account.
+Students can use xxx.edu.tw to apply for free GitHub copilot.
 If you do  not have Copilot subscribed, ask Nick.
 
 
@@ -174,14 +177,21 @@ Run alpha mission
 
 ```bash
 cd ~/moos-ivp/ivp/missions/s1_alpha
-pAntler --MOOSTimeWarp=10 alpha.moos
+pAntler alpha.moos
 ```
 
 You should be able to see the pMarineViewer.
 Click "Deploy" to start the msssion.
 
-In official MOOS-IvP repo, the Windows WSL docs may be outdated.
-https://github.com/moos-ivp/moos-ivp/blob/main/README-WINDOWS.txt
+Some hotkeys to remember:
+* 'c': centered at alpha
+* 'i' or 'o': Zoom in or out
+* 'UP', 'DOWN', 'LEFT', 'RIGHT': move around the map
+* 'b': Toggle Tiff background
+* 'h': Toggle hash lines (default: 50 meters)
+* 'f': Toggle full screen
+* Ctrl + 'a': Toggle InfoCasting
+
 
 ## 6. VPN
 
