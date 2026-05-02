@@ -270,6 +270,22 @@ cd ~/.vscode-server/data/Machine
 
 This configuration enhances Git commit message generation by providing structured templates and guidelines through GitHub Copilot in VSCode.
 
+### Multiple Terminals with tmux
+
+VS Code Terminal
+* Open terminal via Ctrl + '`'
+* Enable Copilot via Ctrl + 'i'
+
+For multiple terminals
+```bash
+tmux
+```
+
+Hotkeys for tmux:
+* Create a new tmux window (Ctrl+b, c)
+* Move among tmux windows (Ctrl+b, n/p)
+* Detach (Ctrl+b, d)
+
 ### [template](https://hackmd.io/@Eudicotz/Syt1jooIJg)
 ```json
 {
